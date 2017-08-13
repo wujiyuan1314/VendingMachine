@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- 开启Shiro注解 -->
+    <bean
+        class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager" />
+    </bean>
+    
+    <!-- 缓存管理器 使用Ehcache实现 -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/>
+    </bean>
+
+    <!-- 凭证匹配器 -->
+    <!-- <bean id="credentialsMatcher" class="shiro.RetryLimitHashedCredentialsMatcher">
+        <constructor-arg ref="cacheManager"/>
+        <property name="hashAlgorithmName" value="md5"/>
+        <property name="hashIterations" value="2"/>
+        <property name="storedCredentialsHexEncoded" value="true"/>
+    </bean> -->
+
+
+    <!-- Realm实现 -->
+    <bean id="userRealm" class="shiro.UserRealm" />
+    <!-- 可以自定义实现 -->
+        <!-- <property name="credentialsMatcher" ref="credentialsMatcher"/> -->
+    
+
+    <!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="userRealm"/>
+    </bean>
+    
+    <!-- 退出登录过滤器 -->
+    <bean id="userLogoutFilter" class="filter.UserLogoutFilter"></bean>
+    
+    <!-- Shiro的Web过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/login"/>
+        <property name="successUrl" value="/welcome"/>
+        <property name="filters">
+		  <map>
+		   <entry key="logout" value-ref="userLogoutFilter" />
+		  </map>
+		</property>
+        <property name="unauthorizedUrl" value="/error.jsp"/>
+        <property name="filterChainDefinitions">
+         <!-- 拦截顺序是按照写的顺序从上到下,拦截后就不再往下执行 -->
+            <value>
+                <!-- 某个角色的访问权限-->
+                /stu/** = roles[admin]
+                <!-- 静态资源访问权限 -->
+                /resources/** =anon
+                <!-- 退出登录过滤器-->
+                /logout = logout
+                <!-- 登录拦截-->
+                /** = anon
+            </value>	
+        </property>
+    </bean>
+
+    <!-- Shiro生命周期处理器-->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+</beans>
