@@ -50,7 +50,7 @@ body { background-color:#2E363F;    padding: 0;    margin-top:10%;}
 #loginbox form#recoverform { z-index: 100;     display:none;}
 #loginbox form#recoverform .form-actions {    margin-top: 10px;}
 #loginbox .main_input_box { margin:0 auto; text-align:center; font-size:13px;}
-#loginbox .main_input_box .add-on{  padding:9px 9px; *line-height:31px; color:#fff;  width:30px; display:inline-block;}
+#loginbox .main_input_box .add-on{  padding:12.6px 9px; *line-height:31px; color:#fff;  width:30px; display:inline-block;}
 #loginbox .main_input_box input{ height:30px; border:0px; display:inline-block; width:75%; line-height:28px;  margin-bottom:3px;}
 #loginbox .controls{ padding:0 20px;}
 #loginbox .control-group{ padding:20px 0; margin-bottom:0px;}
