@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="vend.dao.VendAdMapper" >
+  <resultMap id="BaseResultMap" type="vend.entity.VendAd" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ad_name" property="adName" jdbcType="VARCHAR" />
+    <result column="ad_type" property="adType" jdbcType="VARCHAR" />
+    <result column="ad_arealist" property="adArealist" jdbcType="VARCHAR" />
+    <result column="ad_url" property="adUrl" jdbcType="VARCHAR" />
+    <result column="ad_screen" property="adScreen" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="extend1" property="extend1" jdbcType="VARCHAR" />
+    <result column="extend2" property="extend2" jdbcType="VARCHAR" />
+    <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ad_name, ad_type, ad_arealist, ad_url, ad_screen, start_time, end_time, create_time, 
+    update_time, extend1, extend2, extend3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_ad
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from vend_ad
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="vend.entity.VendAd" >
+    insert into vend_ad (id, ad_name, ad_type, 
+      ad_arealist, ad_url, ad_screen, 
+      start_time, end_time, create_time, 
+      update_time, extend1, extend2, 
+      extend3)
+    values (#{id,jdbcType=INTEGER}, #{adName,jdbcType=VARCHAR}, #{adType,jdbcType=VARCHAR}, 
+      #{adArealist,jdbcType=VARCHAR}, #{adUrl,jdbcType=VARCHAR}, #{adScreen,jdbcType=INTEGER}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="vend.entity.VendAd" >
+    insert into vend_ad
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="adName != null" >
+        ad_name,
+      </if>
+      <if test="adType != null" >
+        ad_type,
+      </if>
+      <if test="adArealist != null" >
+        ad_arealist,
+      </if>
+      <if test="adUrl != null" >
+        ad_url,
+      </if>
+      <if test="adScreen != null" >
+        ad_screen,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="extend1 != null" >
+        extend1,
+      </if>
+      <if test="extend2 != null" >
+        extend2,
+      </if>
+      <if test="extend3 != null" >
+        extend3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="adName != null" >
+        #{adName,jdbcType=VARCHAR},
+      </if>
+      <if test="adType != null" >
+        #{adType,jdbcType=VARCHAR},
+      </if>
+      <if test="adArealist != null" >
+        #{adArealist,jdbcType=VARCHAR},
+      </if>
+      <if test="adUrl != null" >
+        #{adUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="adScreen != null" >
+        #{adScreen,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="vend.entity.VendAd" >
+    update vend_ad
+    <set >
+      <if test="adName != null" >
+        ad_name = #{adName,jdbcType=VARCHAR},
+      </if>
+      <if test="adType != null" >
+        ad_type = #{adType,jdbcType=VARCHAR},
+      </if>
+      <if test="adArealist != null" >
+        ad_arealist = #{adArealist,jdbcType=VARCHAR},
+      </if>
+      <if test="adUrl != null" >
+        ad_url = #{adUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="adScreen != null" >
+        ad_screen = #{adScreen,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="vend.entity.VendAd" >
+    update vend_ad
+    set ad_name = #{adName,jdbcType=VARCHAR},
+      ad_type = #{adType,jdbcType=VARCHAR},
+      ad_arealist = #{adArealist,jdbcType=VARCHAR},
+      ad_url = #{adUrl,jdbcType=VARCHAR},
+      ad_screen = #{adScreen,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      extend1 = #{extend1,jdbcType=VARCHAR},
+      extend2 = #{extend2,jdbcType=VARCHAR},
+      extend3 = #{extend3,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

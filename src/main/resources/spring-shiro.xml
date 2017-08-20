@@ -27,7 +27,7 @@
 
 
     <!-- Realm实现 -->
-    <bean id="userRealm" class="shiro.UserRealm" />
+    <bean id="userRealm" class="base.shiro.UserRealm" />
     <!-- 可以自定义实现 -->
         <!-- <property name="credentialsMatcher" ref="credentialsMatcher"/> -->
     
@@ -38,7 +38,7 @@
     </bean>
     
     <!-- 退出登录过滤器 -->
-    <bean id="userLogoutFilter" class="filter.UserLogoutFilter"></bean>
+    <bean id="userLogoutFilter" class="base.filter.UserLogoutFilter"></bean>
     
     <!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">

@@ -242,6 +242,6 @@
         </dependency>
 	</dependencies>
   <build>
-    <finalName>VendingMachine</finalName>
+    <finalName>vend</finalName>
   </build>
 </project>

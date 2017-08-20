@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="vend.dao.VendQrcodeAttendMapper" >
+  <resultMap id="BaseResultMap" type="vend.entity.VendQrcodeAttend" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="qrcode_id" property="qrcodeId" jdbcType="INTEGER" />
+    <result column="usercode" property="usercode" jdbcType="VARCHAR" />
+    <result column="attend_time" property="attendTime" jdbcType="TIMESTAMP" />
+    <result column="extend1" property="extend1" jdbcType="VARCHAR" />
+    <result column="extend2" property="extend2" jdbcType="VARCHAR" />
+    <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, qrcode_id, usercode, attend_time, extend1, extend2, extend3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_qrcode_attend
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from vend_qrcode_attend
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="vend.entity.VendQrcodeAttend" >
+    insert into vend_qrcode_attend (id, qrcode_id, usercode, 
+      attend_time, extend1, extend2, 
+      extend3)
+    values (#{id,jdbcType=INTEGER}, #{qrcodeId,jdbcType=INTEGER}, #{usercode,jdbcType=VARCHAR}, 
+      #{attendTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="vend.entity.VendQrcodeAttend" >
+    insert into vend_qrcode_attend
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="qrcodeId != null" >
+        qrcode_id,
+      </if>
+      <if test="usercode != null" >
+        usercode,
+      </if>
+      <if test="attendTime != null" >
+        attend_time,
+      </if>
+      <if test="extend1 != null" >
+        extend1,
+      </if>
+      <if test="extend2 != null" >
+        extend2,
+      </if>
+      <if test="extend3 != null" >
+        extend3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="qrcodeId != null" >
+        #{qrcodeId,jdbcType=INTEGER},
+      </if>
+      <if test="usercode != null" >
+        #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="attendTime != null" >
+        #{attendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="vend.entity.VendQrcodeAttend" >
+    update vend_qrcode_attend
+    <set >
+      <if test="qrcodeId != null" >
+        qrcode_id = #{qrcodeId,jdbcType=INTEGER},
+      </if>
+      <if test="usercode != null" >
+        usercode = #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="attendTime != null" >
+        attend_time = #{attendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="vend.entity.VendQrcodeAttend" >
+    update vend_qrcode_attend
+    set qrcode_id = #{qrcodeId,jdbcType=INTEGER},
+      usercode = #{usercode,jdbcType=VARCHAR},
+      attend_time = #{attendTime,jdbcType=TIMESTAMP},
+      extend1 = #{extend1,jdbcType=VARCHAR},
+      extend2 = #{extend2,jdbcType=VARCHAR},
+      extend3 = #{extend3,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

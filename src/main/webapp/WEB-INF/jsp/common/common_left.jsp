@@ -8,7 +8,12 @@
 %>
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> 控制台</a>
   <ul>
-    <li class="active"><a href="index.html"><i class="icon icon-home"></i> <span>首页</span></a> </li>
+    <li class="active"><a href="<%=basePath3 %>welcome"><i class="icon icon-home"></i> <span>首页</span></a></li>
+    <li class="submenu"> <a href=""><i class="icon icon-briefcase"></i> <span>商品管理</span></a> 
+       <ul>
+	        <li><a href="<%=basePath3 %>goods/goodss">商品列表</a></li>
+       </ul>
+    </li>
     <li> <a href="charts.html"><i class="icon icon-signal"></i> <span>图表统计</span></a> </li>
     <li> <a href="widgets.html"><i class="icon icon-inbox"></i> <span>插件</span></a> </li>
     <li><a href="tables.html"><i class="icon icon-th"></i> <span>数据表格</span></a></li>

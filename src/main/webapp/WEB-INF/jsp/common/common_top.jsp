@@ -1,5 +1,8 @@
 <!-- 顶部导航栏 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
 <div id="header">
   <h1><a href="dashboard.html"></a></h1>
 </div>
@@ -16,7 +19,7 @@
         <li><a href="login.html"><i class="icon-key"></i> 退出</a></li>
       </ul>
     </li>
-    <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">消息</span> <span class="label label-important">5</span> <b class="caret"></b></a>
+    <!-- <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">消息</span> <span class="label label-important">5</span> <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <li><a class="sAdd" title="" href="#"><i class="icon-plus"></i> 新消息</a></li>
         <li class="divider"></li>
@@ -27,7 +30,7 @@
         <li><a class="sTrash" title="" href="#"><i class="icon-trash"></i> 发送</a></li>
       </ul>
     </li>
-    <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">设置</span></a></li>
+    <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">设置</span></a></li>-->
     <li class=""><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span class="text">退出</span></a></li>
   </ul>
 </div>

@@ -13,12 +13,12 @@
     
     <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                    connectionURL="jdbc:mysql://127.0.0.1:3306/tmms" 
+                    connectionURL="jdbc:mysql://127.0.0.1:3306/vendmachine" 
                     userId="root" password="mingming45" >
     </jdbcConnection>
     
     <!-- 生成模型的包名和位置-->
-    <javaModelGenerator targetPackage="vend/entity" targetProject="VendingMachine\src\main\java">
+    <javaModelGenerator targetPackage="vend.entity" targetProject="VendingMachine\src\main\java">
         <!-- enableSubPackages:是否让schema作为包的后缀 -->  
         <property name="enableSubPackages" value="false" />  
         <!-- 从数据库返回的值被清理前后的空格  -->  
@@ -31,12 +31,12 @@
     </sqlMapGenerator> 
     
     <!-- 配置生成相应的接口类，对应与Mapper.xml中的一系列CRUD方法SQL语句 -->  
-    <javaClientGenerator targetPackage="vend/dao" targetProject="VendingMachine\src\main\java" type="XMLMAPPER">  
+    <javaClientGenerator targetPackage="vend.dao" targetProject="VendingMachine\src\main\java" type="XMLMAPPER">  
         <property name="enableSubPackages" value="false" />  
     </javaClientGenerator> 
         
     <!-- 用户表 -->  
-    <table schema="t" tableName="menuitem" domainObjectName="Menuitem"  
+    <table schema="t" tableName="vend_order" domainObjectName="VendOrder"  
         enableCountByExample="false"  
         enableUpdateByExample="false"  
         enableDeleteByExample="false"  

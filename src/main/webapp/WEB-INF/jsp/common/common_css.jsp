@@ -18,4 +18,5 @@
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/matrix-media.css" />
 <link rel="stylesheet" href="<%=basePath1 %>resources/font-awesome/css/font-awesome.css"/>
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/jquery.gritter.css" />
+<link rel="stylesheet" href="<%=basePath1 %>resources/css/uniform.css" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>

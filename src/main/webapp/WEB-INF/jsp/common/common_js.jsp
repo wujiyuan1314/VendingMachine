@@ -24,6 +24,7 @@
 <script src="<%=basePath2 %>resources/js/matrix.popover.js"></script> 
 <script src="<%=basePath2 %>resources/js/jquery.dataTables.min.js"></script> 
 <script src="<%=basePath2 %>resources/js/matrix.tables.js"></script> 
+<script src="<%=basePath2 %>resources/js/back/list.js"></script> 
 <script type="text/javascript">
   // This function is called from the pop-up menus to transfer to
   // a different page. Ignore if the value returned is a null string:

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="vend.dao.VendAccountMapper" >
+  <resultMap id="BaseResultMap" type="vend.entity.VendAccount" >
+    <id column="usercode" property="usercode" jdbcType="VARCHAR" />
+    <result column="own_amount" property="ownAmount" jdbcType="DECIMAL" />
+    <result column="moneyencrypt" property="moneyencrypt" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="extend1" property="extend1" jdbcType="VARCHAR" />
+    <result column="extend2" property="extend2" jdbcType="VARCHAR" />
+    <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    usercode, own_amount, moneyencrypt, create_time, update_time, extend1, extend2, extend3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_account
+    where usercode = #{usercode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from vend_account
+    where usercode = #{usercode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="vend.entity.VendAccount" >
+    insert into vend_account (usercode, own_amount, moneyencrypt, 
+      create_time, update_time, extend1, 
+      extend2, extend3)
+    values (#{usercode,jdbcType=VARCHAR}, #{ownAmount,jdbcType=DECIMAL}, #{moneyencrypt,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, 
+      #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="vend.entity.VendAccount" >
+    insert into vend_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="usercode != null" >
+        usercode,
+      </if>
+      <if test="ownAmount != null" >
+        own_amount,
+      </if>
+      <if test="moneyencrypt != null" >
+        moneyencrypt,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="extend1 != null" >
+        extend1,
+      </if>
+      <if test="extend2 != null" >
+        extend2,
+      </if>
+      <if test="extend3 != null" >
+        extend3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="usercode != null" >
+        #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="ownAmount != null" >
+        #{ownAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="moneyencrypt != null" >
+        #{moneyencrypt,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="vend.entity.VendAccount" >
+    update vend_account
+    <set >
+      <if test="ownAmount != null" >
+        own_amount = #{ownAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="moneyencrypt != null" >
+        moneyencrypt = #{moneyencrypt,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where usercode = #{usercode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="vend.entity.VendAccount" >
+    update vend_account
+    set own_amount = #{ownAmount,jdbcType=DECIMAL},
+      moneyencrypt = #{moneyencrypt,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      extend1 = #{extend1,jdbcType=VARCHAR},
+      extend2 = #{extend2,jdbcType=VARCHAR},
+      extend3 = #{extend3,jdbcType=VARCHAR}
+    where usercode = #{usercode,jdbcType=VARCHAR}
+  </update>
+</mapper>

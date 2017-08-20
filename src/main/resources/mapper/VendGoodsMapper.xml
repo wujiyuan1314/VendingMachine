@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="vend.dao.VendGoodsMapper" >
+  <resultMap id="BaseResultMap" type="vend.entity.VendGoods" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="pic" property="pic" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="goods_info" property="goodsInfo" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="extend1" property="extend1" jdbcType="VARCHAR" />
+    <result column="extend2" property="extend2" jdbcType="VARCHAR" />
+    <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, goods_name, pic, price, goods_info, create_time, update_time, extend1, extend2, 
+    extend3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from vend_goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="vend.entity.VendGoods" >
+    insert into vend_goods (id, goods_name, pic, 
+      price, goods_info, create_time, 
+      update_time, extend1, extend2, 
+      extend3)
+    values (#{id,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{goodsInfo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="vend.entity.VendGoods" >
+    insert into vend_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="goodsInfo != null" >
+        goods_info,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="extend1 != null" >
+        extend1,
+      </if>
+      <if test="extend2 != null" >
+        extend2,
+      </if>
+      <if test="extend3 != null" >
+        extend3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsInfo != null" >
+        #{goodsInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="vend.entity.VendGoods" >
+    update vend_goods
+    <set >
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsInfo != null" >
+        goods_info = #{goodsInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="vend.entity.VendGoods" >
+    update vend_goods
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      goods_info = #{goodsInfo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      extend1 = #{extend1,jdbcType=VARCHAR},
+      extend2 = #{extend2,jdbcType=VARCHAR},
+      extend3 = #{extend3,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- 一下为自定义方法 -->
+  <select id="listVendGoods" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_goods
+	<where>
+		<if test="vendGoods.goodsName != null and !&quot;&quot;.equals(vendGoods.goodsName.trim())">
+			and goods_name = #{vendGoods.goodsName}
+		</if>
+	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="countVendGoods" resultType="int" parameterType="vend.entity.VendGoods">
+ 	select count(*) from vend_goods
+ 	<where>
+ 		<if test="goodsName != null and !&quot;&quot;.equals(goodsName.trim())">
+		and goods_name = #{goodsName}
+	</if>
+ 	</where>
+  </select>
+  
+   <select id="findAll" resultMap="BaseResultMap">
+ 	select * from vend_goods
+  </select>
+  <!-- 批量添加 -->
+  <insert id="insertBatch" parameterType="java.util.List">
+	  insert into vend_goods (goods_name,pic,price,goods_info,create_time,update_time,extend1,extend2,extend3)
+	        values
+       <foreach collection="list" item="item" index="index" separator=",">
+           (#{item.goodsName,jdbcType=VARCHAR},
+            #{item.pic,jdbcType=VARCHAR},
+            #{item.price,jdbcType=DECIMAL},
+            #{item.goodsInfo,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.extend1,jdbcType=VARCHAR},
+            #{item.extend2,jdbcType=VARCHAR},
+            #{item.extend3,jdbcType=VARCHAR}
+            )
+       </foreach>
+  </insert>
+  <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="int">
+        delete from vend_goods where id in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

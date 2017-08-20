@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="vend.dao.VendSyslogMapper" >
+  <resultMap id="BaseResultMap" type="vend.entity.VendSyslog" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="oper_ip" property="operIp" jdbcType="VARCHAR" />
+    <result column="oper_time" property="operTime" jdbcType="TIMESTAMP" />
+    <result column="oper_type" property="operType" jdbcType="VARCHAR" />
+    <result column="EXTEND0" property="extend0" jdbcType="VARCHAR" />
+    <result column="EXTEND1" property="extend1" jdbcType="VARCHAR" />
+    <result column="EXTEND2" property="extend2" jdbcType="VARCHAR" />
+    <result column="EXTEND3" property="extend3" jdbcType="VARCHAR" />
+    <result column="EXTEND4" property="extend4" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="vend.entity.VendSyslogWithBLOBs" extends="BaseResultMap" >
+    <result column="oper_url" property="operUrl" jdbcType="LONGVARCHAR" />
+    <result column="oper_description" property="operDescription" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, user_id, user_name, oper_ip, oper_time, oper_type, EXTEND0, EXTEND1, EXTEND2, 
+    EXTEND3, EXTEND4
+  </sql>
+  <sql id="Blob_Column_List" >
+    oper_url, oper_description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from vend_syslog
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from vend_syslog
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="vend.entity.VendSyslogWithBLOBs" >
+    insert into vend_syslog (ID, user_id, user_name, 
+      oper_ip, oper_time, oper_type, 
+      EXTEND0, EXTEND1, EXTEND2, 
+      EXTEND3, EXTEND4, oper_url, 
+      oper_description)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, 
+      #{operIp,jdbcType=VARCHAR}, #{operTime,jdbcType=TIMESTAMP}, #{operType,jdbcType=VARCHAR}, 
+      #{extend0,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}, #{operUrl,jdbcType=LONGVARCHAR}, 
+      #{operDescription,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="vend.entity.VendSyslogWithBLOBs" >
+    insert into vend_syslog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="operIp != null" >
+        oper_ip,
+      </if>
+      <if test="operTime != null" >
+        oper_time,
+      </if>
+      <if test="operType != null" >
+        oper_type,
+      </if>
+      <if test="extend0 != null" >
+        EXTEND0,
+      </if>
+      <if test="extend1 != null" >
+        EXTEND1,
+      </if>
+      <if test="extend2 != null" >
+        EXTEND2,
+      </if>
+      <if test="extend3 != null" >
+        EXTEND3,
+      </if>
+      <if test="extend4 != null" >
+        EXTEND4,
+      </if>
+      <if test="operUrl != null" >
+        oper_url,
+      </if>
+      <if test="operDescription != null" >
+        oper_description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="operIp != null" >
+        #{operIp,jdbcType=VARCHAR},
+      </if>
+      <if test="operTime != null" >
+        #{operTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operType != null" >
+        #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="extend0 != null" >
+        #{extend0,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="operUrl != null" >
+        #{operUrl,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="operDescription != null" >
+        #{operDescription,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="vend.entity.VendSyslogWithBLOBs" >
+    update vend_syslog
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="operIp != null" >
+        oper_ip = #{operIp,jdbcType=VARCHAR},
+      </if>
+      <if test="operTime != null" >
+        oper_time = #{operTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operType != null" >
+        oper_type = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="extend0 != null" >
+        EXTEND0 = #{extend0,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        EXTEND4 = #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="operUrl != null" >
+        oper_url = #{operUrl,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="operDescription != null" >
+        oper_description = #{operDescription,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="vend.entity.VendSyslogWithBLOBs" >
+    update vend_syslog
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      oper_ip = #{operIp,jdbcType=VARCHAR},
+      oper_time = #{operTime,jdbcType=TIMESTAMP},
+      oper_type = #{operType,jdbcType=VARCHAR},
+      EXTEND0 = #{extend0,jdbcType=VARCHAR},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      EXTEND4 = #{extend4,jdbcType=VARCHAR},
+      oper_url = #{operUrl,jdbcType=LONGVARCHAR},
+      oper_description = #{operDescription,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="vend.entity.VendSyslog" >
+    update vend_syslog
+    set user_id = #{userId,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      oper_ip = #{operIp,jdbcType=VARCHAR},
+      oper_time = #{operTime,jdbcType=TIMESTAMP},
+      oper_type = #{operType,jdbcType=VARCHAR},
+      EXTEND0 = #{extend0,jdbcType=VARCHAR},
+      EXTEND1 = #{extend1,jdbcType=VARCHAR},
+      EXTEND2 = #{extend2,jdbcType=VARCHAR},
+      EXTEND3 = #{extend3,jdbcType=VARCHAR},
+      EXTEND4 = #{extend4,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
