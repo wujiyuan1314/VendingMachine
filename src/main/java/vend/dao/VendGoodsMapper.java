@@ -26,7 +26,7 @@ public interface VendGoodsMapper {
     
     void insertBatch(List<VendGoods> list);
     
-    void deleteBatch(int ids[]);
+    int deleteBatch(int ids[]);
     
     List<VendGoods> findAll();
 }

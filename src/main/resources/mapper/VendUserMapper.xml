@@ -139,4 +139,57 @@
       extend3 = #{extend3,jdbcType=VARCHAR}
     where usercode = #{usercode,jdbcType=VARCHAR}
   </update>
+   <!-- 一下为自定义方法 -->
+  <select id="listVendUser" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_user
+	<where>
+		<if test="vendUser.username != null and !&quot;&quot;.equals(vendUser.username.trim())">
+			and username = #{vendUser.username}
+		</if>
+		<if test="vendUser.roleId != null and !&quot;&quot;.equals(vendUser.roleId.trim())">
+			and role_id = #{vendUser.roleId}
+		</if>  
+	</where>order by usercode limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="countVendUser" resultType="int" parameterType="vend.entity.VendUser">
+ 	select count(*) from vend_user
+ 	<where>
+ 		<if test="username != null and !&quot;&quot;.equals(username.trim())">
+		  and username = #{username}
+	    </if>
+	    <if test="roleId != null and !&quot;&quot;.equals(roleId.trim())">
+		  and role_id = #{roleId}
+	    </if>
+ 	</where>
+  </select>
+  
+   <select id="findAll" resultMap="BaseResultMap">
+ 	select * from vend_user
+  </select>
+  <!-- 批量添加 -->
+  <insert id="insertBatch" parameterType="java.util.List">
+	  insert into vend_user (username,password,role_id,create_time,update_time,extend1,extend2,extend3)
+	        values
+       <foreach collection="list" item="item" index="index" separator=",">
+           (#{item.username,jdbcType=VARCHAR},
+            #{item.password,jdbcType=VARCHAR},
+            #{item.roleId,jdbcType=INTEGER},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.extend1,jdbcType=VARCHAR},
+            #{item.extend2,jdbcType=VARCHAR},
+            #{item.extend3,jdbcType=VARCHAR}
+            )
+       </foreach>
+  </insert>
+  <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="int">
+        delete from vend_user where usercode in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

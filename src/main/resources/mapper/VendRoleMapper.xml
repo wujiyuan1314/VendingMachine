@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="vend.dao.VendRoleMapper" >
   <resultMap id="BaseResultMap" type="vend.entity.VendRole" >
-    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="id" property="id" jdbcType="INTEGER" />
     <result column="role_name" property="roleName" jdbcType="VARCHAR" />
     <result column="role_description" property="roleDescription" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -14,21 +14,27 @@
   <sql id="Base_Column_List" >
     id, role_name, role_description, create_time, update_time, extend1, extend2, state
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from vend_role
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <select id="selectByRoleName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_role
+    where role_name = #{roleName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from vend_role
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="vend.entity.VendRole" >
     insert into vend_role (id, role_name, role_description, 
       create_time, update_time, extend1, 
       extend2, state)
-    values (#{id,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{roleDescription,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{roleDescription,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, 
       #{extend2,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT})
   </insert>
@@ -62,7 +68,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=BIGINT},
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="roleName != null" >
         #{roleName,jdbcType=VARCHAR},
@@ -112,7 +118,7 @@
         state = #{state,jdbcType=TINYINT},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="vend.entity.VendRole" >
     update vend_role
@@ -123,6 +129,53 @@
       extend1 = #{extend1,jdbcType=VARCHAR},
       extend2 = #{extend2,jdbcType=VARCHAR},
       state = #{state,jdbcType=TINYINT}
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
   </update>
+     <!-- 一下为自定义方法 -->
+  <select id="listVendRole" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_role
+	<where>
+		<if test="vendRole.roleName != null and !&quot;&quot;.equals(vendRole.roleName.trim())">
+			and role_name = #{vendRole.roleName}
+		</if>
+	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="countVendRole" resultType="int" parameterType="vend.entity.VendRole">
+ 	select count(*) from vend_role
+ 	<where>
+ 		<if test="roleName != null and !&quot;&quot;.equals(roleName.trim())">
+		and role_name = #{roleName}
+	</if>
+ 	</where>
+  </select>
+  
+   <select id="findAll" resultMap="BaseResultMap">
+ 	select * from vend_role
+  </select>
+  <!-- 批量添加 -->
+  <insert id="insertBatch" parameterType="java.util.List">
+	  insert into vend_role (role_name,role_description,create_time,update_time,extend1,extend2,extend3,state)
+	        values
+       <foreach collection="list" item="item" index="index" separator=",">
+           (#{item.roleName,jdbcType=VARCHAR},
+            #{item.roleDescription,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.extend1,jdbcType=VARCHAR},
+            #{item.extend2,jdbcType=VARCHAR},
+            #{item.extend3,jdbcType=VARCHAR},
+            #{item.state,jdbcType=VARCHAR}
+            )
+       </foreach>
+  </insert>
+  <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="int">
+        delete from vend_role where id in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

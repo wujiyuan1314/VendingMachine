@@ -3,7 +3,7 @@ package vend.entity;
 import java.util.Date;
 
 public class VendRole {
-    private Long id;
+    private Integer id;
 
     private String roleName;
 
@@ -19,11 +19,11 @@ public class VendRole {
 
     private Byte state;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

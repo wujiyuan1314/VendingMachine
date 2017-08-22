@@ -17,6 +17,11 @@ public static String getUUID(){
 	String uuid=Function.ClearTrim(UUID.randomUUID()).replaceAll("-", "");
 	return uuid;
 }
+//得到用户usercode
+public static String getUsercode(){
+	String usercode="VM"+DateUtil.getCurrentDateStr();
+	return usercode;
+}
 //清除字符串两边的空格
 public static String ClearTrim(Object obj){
 	String result="";

@@ -1,10 +1,12 @@
 package vend.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import base.util.DateUtil;
 import base.util.Page;
 import vend.dao.VendGoodsMapper;
 import vend.entity.VendGoods;
@@ -31,6 +33,9 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 	 * @return
 	 */
 	public int insertVendGoods(VendGoods vendGoods){
+		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+		vendGoods.setCreateTime(createTime);
+		vendGoods.setUpdateTime(createTime);
 		return vendGoodsMapper.insertSelective(vendGoods);
 	}
 	/**
@@ -52,8 +57,8 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 	 * 批量删除商品
 	 * @param id
 	 */
-	public void delVendGoodss(int ids[]){
-		vendGoodsMapper.deleteBatch(ids);
+	public int delVendGoodss(int ids[]){
+		return vendGoodsMapper.deleteBatch(ids);
 	}
 	/**
 	 * 根据ID查找一个商品

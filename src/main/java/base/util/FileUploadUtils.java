@@ -32,7 +32,7 @@ public class FileUploadUtils {
                     
                     String path =request.getSession().getServletContext().getRealPath(storePath);
                     //得到存储到本地的文件名
-                    String localFileName=UUID.randomUUID().toString()+getFileSuffix(originalFileName);
+                    String localFileName=DateUtil.getCurrentDateTimeKeyStr()+getFileSuffix(originalFileName);
                     int num=path.indexOf(".metadata");
                     String basePath=path.substring(0,num)+request.getContextPath()+"/src/main/webapp"+storePath;
                     //新建本地文件
@@ -45,7 +45,7 @@ public class FileUploadUtils {
                     }
                     
                     
-                    String src=basePath+"/"+localFileName;
+                    String src=storePath+"/"+localFileName;
                     //写文件到本地
                     try {
                         file.transferTo(localFile);

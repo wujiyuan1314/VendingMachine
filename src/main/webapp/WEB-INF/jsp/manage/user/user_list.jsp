@@ -23,7 +23,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>goods/goodss" class="current">商品列表</a>
+      <a href="<%=basePath1%>user/users" class="current">用户列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -31,47 +31,47 @@
 <!--Action boxes-->
   <div class="container-fluid">
     <div class="row fluid">
-      <sf:form action="goodss" method="post" id="Paramform" class="form-horizontal">
+      <sf:form action="users" method="post" id="Paramform" class="form-horizontal">
       <input type="hidden" name="currentPage" id="currentPage" value="1" />
 		<div class="span12">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-                 <h5>商品列表</h5>
+                 <h5>用户列表</h5>
               </div>
               
 			  <div class="widget-content">
 			      <table style="margin-bottom:5px;">
 			            <tr>
 			              <th>商品名:</th>
-			              <th><input type="text" name="goodsName" id="goodsName" placeholder="按商品名搜索"/>&nbsp;&nbsp;</th>
+			              <th><input type="text" name="username" id="username" placeholder="按用户名搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>
-		                  <td><input type="button" onclick="dels('goods');" value="批量删除" class="btn btn-danger"/></td>
+		                  <td><input type="button" onclick="dels('user');" value="批量删除" class="btn btn-danger"/></td>
 		                </tr>
 			      </table>
 			
 			      <table class="table table-bordered table-striped with-check">
 			         <thead>
 			            <tr>
-			              <th><input type="checkbox" onclick="selectAll('Id');" id="all" name="title-table-checkbox" /></th>
+			              <th><input type="checkbox" onclick="selectAll('usercode');" id="all" name="title-table-checkbox" /></th>
 		                  <th style="width:25px;">序号</th>
-		                  <th>商品名</th>
-		                  <th>价格</th>
-		                  <th>商品描述</th>
+		                  <th>用户名</th>
+		                  <th>角色</th>
+		                  <th>创建时间</th>
 		                  <th>操作</th>
 		                </tr>
 			         </thead>
 			         <tbody>
-			           <c:forEach items="${vendGoodss}" var="vendGoods" varStatus="st">
+			           <c:forEach items="${vendUsers}" var="vendUser" varStatus="st">
 				           <tr class="gradeX">
-					          <th><input type="checkbox" name="Id" id="Id" value="${vendGoods.id}"/></th>
+					          <th><input type="checkbox" name="Id" id="Id" value="${vendUser.usercode}"/></th>
 					          <td style="text-align:center;">${st.index+1}</td>
-			                  <td>${vendGoods.goodsName}</td>
-			                  <td>${vendGoods.price}</td>
-			                  <td>${vendGoods.goodsInfo}</td>
+			                  <td>${vendUser.username}</td>
+			                  <td>${vendUser.roleId}</td>
+			                  <td>${vendUser.createTime}</td>
 			                  <td class="center">
-			                     <a href="${vendGoods.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
-			                     <a href="javascript:void(0);" onclick="delconfirm(${vendGoods.id});" class="btn btn-danger  icon-trash"/></a>
+			                     <a href="${vendUser.usercode}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                     <a href="javascript:void(0);" onclick="delconfirm(${vendUser.usercode});" class="btn btn-danger  icon-trash"/></a>
 			                  </td>
 			                </tr>
 			           </c:forEach>
@@ -106,9 +106,9 @@
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
 <script type="text/javascript">
-function delconfirm(id){
+function delconfirm(usercode){
 	 if(confirm("确定要删除吗?")){
-		window.location.href=basePath+"goods/"+id+"/del";
+		window.location.href=basePath+"user/"+usercode+"/del";
 	 }
 }
 </script>

@@ -3,6 +3,11 @@ package vend.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class VendGoods {
     private Integer id;
 
@@ -18,7 +23,7 @@ public class VendGoods {
 
     private Date updateTime;
 
-    private String exend1;
+    private String extend1;
 
     private String extend2;
 
@@ -31,7 +36,7 @@ public class VendGoods {
     public void setId(Integer id) {
         this.id = id;
     }
-
+    @NotEmpty(message="商品名不能为空")
     public String getGoodsName() {
         return goodsName;
     }
@@ -39,7 +44,7 @@ public class VendGoods {
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName == null ? null : goodsName.trim();
     }
-
+    @NotEmpty(message="商品图片不能为空")
     public String getPic() {
         return pic;
     }
@@ -47,7 +52,8 @@ public class VendGoods {
     public void setPic(String pic) {
         this.pic = pic == null ? null : pic.trim();
     }
-
+    @NotNull(message="价格不能为空")
+    @DecimalMin("0")
     public BigDecimal getPrice() {
         return price;
     }
@@ -80,12 +86,12 @@ public class VendGoods {
         this.updateTime = updateTime;
     }
 
-    public String getExend1() {
-        return exend1;
+    public String getExtend1() {
+        return extend1;
     }
 
-    public void setExend1(String exend1) {
-        this.exend1 = exend1 == null ? null : exend1.trim();
+    public void setExtend1(String extend1) {
+        this.extend1 = extend1 == null ? null : extend1.trim();
     }
 
     public String getExtend2() {

@@ -34,7 +34,7 @@ public interface VendGoodsService {
 	 * 批量删除商品
 	 * @param id
 	 */
-	void delVendGoodss(int id[]);
+	int delVendGoodss(int id[]);
 	/**
 	 * 根据ID查找一个商品
 	 * @param id

@@ -74,12 +74,7 @@ public class DateUtil{
   //返回当前时间毫秒数字符串。格式:yyyyMMddhhmmss+7为随机数
     public static String  getCurrentDateTimeKeyHMStr(){
     		Random random = new Random();
-    		String key=format(new Date(), "yyyyMMddHHmmssSSS");
-    			   key+=String.valueOf(random.nextInt(10));
-    			   key+=String.valueOf(random.nextInt(10));
-    			   key+=String.valueOf(random.nextInt(10));
-    			   key+=String.valueOf(random.nextInt(10));
-    			   key+=String.valueOf(random.nextInt(10));
+    		String key=format(new Date(), "yyyyMMddHHmmss");
     			   key+=String.valueOf(random.nextInt(10));
     			   key+=String.valueOf(random.nextInt(10));
     		return key;

@@ -3,18 +3,17 @@
 	String basePath2 = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path2 + "/";
 	//System.out.println(basePath);
 %>
+<<script type="text/javascript">
+var basePath="<%=basePath2%>";
+</script>
 <script src="<%=basePath2 %>resources/js/excanvas.min.js"></script> 
 <script src="<%=basePath2 %>resources/js/jquery.min.js"></script> 
 <script src="<%=basePath2 %>resources/js/jquery.ui.custom.js"></script> 
 <script src="<%=basePath2 %>resources/js/bootstrap.min.js"></script> 
-<script src="<%=basePath2 %>resources/js/jquery.flot.min.js"></script> 
-<script src="<%=basePath2 %>resources/js/jquery.flot.resize.min.js"></script> 
 <script src="<%=basePath2 %>resources/js/jquery.peity.min.js"></script> 
 <script src="<%=basePath2 %>resources/js/fullcalendar.min.js"></script> 
 <script src="<%=basePath2 %>resources/js/matrix.js"></script> 
-<script src="<%=basePath2 %>resources/js/matrix.dashboard.js"></script> 
 <script src="<%=basePath2 %>resources/js/jquery.gritter.min.js"></script> 
-<script src="<%=basePath2 %>resources/js/matrix.interface.js"></script> 
 <script src="<%=basePath2 %>resources/js/matrix.chat.js"></script> 
 <script src="<%=basePath2 %>resources/js/jquery.validate.js"></script> 
 <script src="<%=basePath2 %>resources/js/matrix.form_validation.js"></script> 

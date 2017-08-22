@@ -14,6 +14,18 @@
 	        <li><a href="<%=basePath3 %>goods/goodss">商品列表</a></li>
        </ul>
     </li>
+    <li class="submenu"> <a href=""><i class="icon icon-align-justify"></i> <span>菜单管理</span></a> 
+       <ul>
+	        <li><a href="<%=basePath3 %>goods/goodss">菜单列表</a></li>
+       </ul>
+    </li>
+    <li class="submenu"> <a href=""><i class="icon icon-user"></i> <span>用户权限管理</span></a> 
+       <ul>
+	        <li><a href="<%=basePath3 %>user/users">用户管理</a></li>
+	        <li><a href="<%=basePath3 %>role/roles">角色管理</a></li>
+	        <li><a href="<%=basePath3 %>permission/permissions">权限设置</a></li>
+       </ul>
+    </li>
     <li> <a href="charts.html"><i class="icon icon-signal"></i> <span>图表统计</span></a> </li>
     <li> <a href="widgets.html"><i class="icon icon-inbox"></i> <span>插件</span></a> </li>
     <li><a href="tables.html"><i class="icon icon-th"></i> <span>数据表格</span></a></li>

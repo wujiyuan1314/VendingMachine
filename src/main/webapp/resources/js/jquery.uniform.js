@@ -29,8 +29,8 @@ Enjoy!
       fileClass: 'uploader',
       filenameClass: 'filename',
       fileBtnClass: 'action',
-      fileDefaultText: 'No file selected',
-      fileBtnText: 'Choose File',
+      fileDefaultText: '未选择',
+      fileBtnText: '请选择',
       checkedClass: 'checked',
       focusClass: 'focus',
       disabledClass: 'disabled',
@@ -424,6 +424,9 @@ Enjoy!
         {
           filename = filename.split(/[\/\\]+/);
           filename = filename[(filename.length-1)];
+        }
+        if(filename!='未选择'){
+        	$(".filepath").val(filename);
         }
         filenameTag.text(filename);
       };
