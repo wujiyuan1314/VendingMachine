@@ -22,6 +22,12 @@
     from vend_permission
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByPermissionName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_permission
+    where permission_name = #{permissionName,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from vend_permission
     where id = #{id,jdbcType=INTEGER}
@@ -139,4 +145,57 @@
       extend3 = #{extend3,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+   <!-- 一下为自定义方法 -->
+  <select id="listVendPermission" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_permission
+	<where>
+		<if test="VendPermission.parentId != null and !&quot;&quot;.equals(VendPermission.parentId.trim())">
+			and parent_id = #{VendPermission.parentId}
+		</if>
+		<if test="VendPermission.permissionName != null and !&quot;&quot;.equals(VendPermission.permissionName.trim())">
+			and permission_name = #{VendPermission.permissionName}
+		</if>
+	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="countVendPermission" resultType="int" parameterType="vend.entity.VendPermission">
+ 	select count(*) from vend_permission
+ 	<where>
+ 		<if test="parentId != null and !&quot;&quot;.equals(parentId.trim())">
+			and parent_id = #{parentId}
+		</if>
+		<if test="permissionName != null and !&quot;&quot;.equals(permissionName.trim())">
+			and permission_name = #{permissionName}
+		</if>
+ 	</where>
+  </select>
+  
+   <select id="findAll" resultMap="BaseResultMap">
+ 	select * from vend_permission
+  </select>
+  <!-- 批量添加 -->
+  <insert id="insertBatch" parameterType="java.util.List">
+	  insert into vend_permission (parent_id,permission_name,permission_description,create_time,update_time,extend1,extend2,extend3)
+	        values
+       <foreach collection="list" item="item" index="index" separator=",">
+           (#{item.parentId,jdbcType=VARCHAR},
+            #{item.permissionName,jdbcType=VARCHAR},
+            #{item.permissionDescription,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.extend1,jdbcType=VARCHAR},
+            #{item.extend2,jdbcType=VARCHAR},
+            #{item.extend3,jdbcType=VARCHAR}
+            )
+       </foreach>
+  </insert>
+  <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="int">
+        delete from vend_permission where id in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>
