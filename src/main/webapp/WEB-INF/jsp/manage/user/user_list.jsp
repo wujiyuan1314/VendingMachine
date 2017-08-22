@@ -68,7 +68,7 @@
 					          <td style="text-align:center;">${st.index+1}</td>
 			                  <td>${vendUser.username}</td>
 			                  <td>${vendUser.roleId}</td>
-			                  <td>${vendUser.createTime}</td>
+			                  <td><fmt:formatDate value="${vendUser.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td class="center">
 			                     <a href="${vendUser.usercode}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
 			                     <a href="javascript:void(0);" onclick="delconfirm(${vendUser.usercode});" class="btn btn-danger  icon-trash"/></a>
