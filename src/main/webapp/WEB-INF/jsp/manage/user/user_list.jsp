@@ -42,7 +42,7 @@
 			  <div class="widget-content">
 			      <table style="margin-bottom:5px;">
 			            <tr>
-			              <th>商品名:</th>
+			              <th>用户名:</th>
 			              <th><input type="text" name="username" id="username" placeholder="按用户名搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>
@@ -64,7 +64,7 @@
 			         <tbody>
 			           <c:forEach items="${vendUsers}" var="vendUser" varStatus="st">
 				           <tr class="gradeX">
-					          <th><input type="checkbox" name="Id" id="Id" value="${vendUser.usercode}"/></th>
+					          <th><input type="checkbox" name="usercode" id="usercode" value="${vendUser.usercode}"/></th>
 					          <td style="text-align:center;">${st.index+1}</td>
 			                  <td>${vendUser.username}</td>
 			                  <td>${vendUser.roleId}</td>

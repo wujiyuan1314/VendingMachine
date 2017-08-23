@@ -14,6 +14,11 @@
 	        <li><a href="<%=basePath3 %>goods/goodss">商品列表</a></li>
        </ul>
     </li>
+     <li class="submenu"> <a href=""><i class="icon icon-briefcase"></i> <span>广告管理</span></a> 
+       <ul>
+	        <li><a href="<%=basePath3 %>ad/ads">广告列表</a></li>
+       </ul>
+    </li>
     <li class="submenu"> <a href=""><i class="icon icon-align-justify"></i> <span>菜单管理</span></a> 
        <ul>
 	        <li><a href="<%=basePath3 %>goods/goodss">菜单列表</a></li>
@@ -23,7 +28,12 @@
        <ul>
 	        <li><a href="<%=basePath3 %>user/users">用户管理</a></li>
 	        <li><a href="<%=basePath3 %>role/roles">角色管理</a></li>
-	        <li><a href="<%=basePath3 %>permission/permissions">权限设置</a></li>
+	        <li><a href="<%=basePath3 %>permission/permissions" onclick="permission();">权限设置</a></li>
+       </ul>
+    </li>
+    <li class="submenu"> <a href=""><i class="icon icon-user"></i> <span>订单管理</span></a> 
+       <ul>
+	        <li><a href="<%=basePath3 %>order/orders">订单列表</a></li>
        </ul>
     </li>
     <li> <a href="charts.html"><i class="icon icon-signal"></i> <span>图表统计</span></a> </li>

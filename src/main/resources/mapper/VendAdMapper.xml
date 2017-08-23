@@ -185,4 +185,35 @@
       extend3 = #{extend3,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+       <!-- 一下为自定义方法 -->
+  <select id="listVendAd" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_ad
+	<where>
+		<if test="vendAd.adName != null and !&quot;&quot;.equals(vendAd.adName.trim())">
+			and ad_name = #{vendAd.adName}
+		</if>
+	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="countVendAd" resultType="int" parameterType="vend.entity.VendAd">
+ 	select count(*) from vend_ad
+ 	<where>
+ 		<if test="adName != null and !&quot;&quot;.equals(adName.trim())">
+		and ad_name = #{adName}
+	</if>
+ 	</where>
+  </select>
+  
+   <select id="findAll" resultMap="BaseResultMap">
+ 	select * from vend_ad
+  </select>
+  <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="int">
+        delete from vend_ad where id in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

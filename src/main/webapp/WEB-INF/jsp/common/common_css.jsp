@@ -23,4 +23,5 @@
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/jquery.gritter.css" />
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/uniform.css" />
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/select2.css" />
+<link rel="stylesheet" href="<%=basePath1 %>resources/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>

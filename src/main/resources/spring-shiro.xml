@@ -12,10 +12,10 @@
         <property name="securityManager" ref="securityManager" />
     </bean>
     
-    <!-- 缓存管理器 使用Ehcache实现 -->
+    <!-- 缓存管理器 使用Ehcache实现 
     <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
         <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/>
-    </bean>
+    </bean>-->
 
     <!-- 凭证匹配器 -->
     <!-- <bean id="credentialsMatcher" class="shiro.RetryLimitHashedCredentialsMatcher">

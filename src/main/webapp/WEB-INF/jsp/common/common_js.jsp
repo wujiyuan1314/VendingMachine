@@ -3,7 +3,7 @@
 	String basePath2 = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path2 + "/";
 	//System.out.println(basePath);
 %>
-<<script type="text/javascript">
+<script type="text/javascript">
 var basePath="<%=basePath2%>";
 </script>
 <script src="<%=basePath2 %>resources/js/excanvas.min.js"></script> 
@@ -23,7 +23,12 @@ var basePath="<%=basePath2%>";
 <script src="<%=basePath2 %>resources/js/matrix.popover.js"></script> 
 <script src="<%=basePath2 %>resources/js/jquery.dataTables.min.js"></script> 
 <script src="<%=basePath2 %>resources/js/matrix.tables.js"></script> 
+<script src="<%=basePath2 %>resources/js/bootstrap-treeview.js"></script> 
 <script src="<%=basePath2 %>resources/js/back/list.js"></script> 
+<script type="text/javascript" src="<%=basePath2 %>resources/ztree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="<%=basePath2 %>resources/ztree/js/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="<%=basePath2 %>resources/ztree/js/jquery.ztree.exedit.js"></script>
+<script src="<%=basePath2 %>resources/js/back/permission_tree.js"></script>
 <script type="text/javascript">
   // This function is called from the pop-up menus to transfer to
   // a different page. Ignore if the value returned is a null string:

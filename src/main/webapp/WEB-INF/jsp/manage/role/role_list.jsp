@@ -42,7 +42,7 @@
 			  <div class="widget-content">
 			      <table style="margin-bottom:5px;">
 			            <tr>
-			              <th>商品名:</th>
+			              <th>角色名:</th>
 			              <th><input type="text" name="roleName" id="roleName" placeholder="按角色名搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>

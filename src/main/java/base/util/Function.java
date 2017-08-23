@@ -19,7 +19,12 @@ public static String getUUID(){
 }
 //得到用户usercode
 public static String getUsercode(){
-	String usercode="VM"+DateUtil.getCurrentDateStr();
+	String usercode="VM"+DateUtil.getCurrentDateTimeKeyHMStr();
+	return usercode;
+}
+//得到用户订单
+public static String getOrderId(){
+	String usercode="C"+DateUtil.getCurrentDateTimeKeyStr2();
 	return usercode;
 }
 //清除字符串两边的空格

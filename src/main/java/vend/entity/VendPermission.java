@@ -2,6 +2,8 @@ package vend.entity;
 
 import java.util.Date;
 
+import org.hibernate.validator.constraints.Length;
+
 public class VendPermission {
     private Integer id;
 
@@ -44,7 +46,7 @@ public class VendPermission {
     public void setPermissionName(String permissionName) {
         this.permissionName = permissionName == null ? null : permissionName.trim();
     }
-
+    @Length(min=0,max=300,message="长度不能超过300字")
     public String getPermissionDescription() {
         return permissionDescription;
     }

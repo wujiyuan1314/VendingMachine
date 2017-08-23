@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="vend.dao.VendOrderMapper" >
   <resultMap id="BaseResultMap" type="vend.entity.VendOrder" >
-    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <id column="order_id" property="orderId" jdbcType="VARCHAR" />
     <result column="usercode" property="usercode" jdbcType="VARCHAR" />
     <result column="shopusercode" property="shopusercode" jdbcType="VARCHAR" />
     <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
@@ -15,6 +15,20 @@
     <result column="extend2" property="extend2" jdbcType="VARCHAR" />
     <result column="extend3" property="extend3" jdbcType="VARCHAR" />
   </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, usercode, shopusercode, goods_id, num, amount, orderstate, create_time, 
+    pay_time, extend1, extend2, extend3
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_order
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from vend_order
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="vend.entity.VendOrder" >
     insert into vend_order (order_id, usercode, shopusercode, 
       goods_id, num, amount, 
@@ -106,4 +120,101 @@
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="vend.entity.VendOrder" >
+    update vend_order
+    <set >
+      <if test="usercode != null" >
+        usercode = #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="shopusercode != null" >
+        shopusercode = #{shopusercode,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderstate != null" >
+        orderstate = #{orderstate,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="vend.entity.VendOrder" >
+    update vend_order
+    set usercode = #{usercode,jdbcType=VARCHAR},
+      shopusercode = #{shopusercode,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      num = #{num,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=DECIMAL},
+      orderstate = #{orderstate,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      extend1 = #{extend1,jdbcType=VARCHAR},
+      extend2 = #{extend2,jdbcType=VARCHAR},
+      extend3 = #{extend3,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
+    <!-- 一下为自定义方法 -->
+  <select id="listVendOrder" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_order
+	<where>
+		<if test="vendOrder.usercode != null and !&quot;&quot;.equals(vendOrder.usercode.trim())">
+			and usercode = #{vendOrder.usercode}
+		</if>
+		<if test="vendOrder.shopusercode != null and !&quot;&quot;.equals(vendOrder.shopusercode.trim())">
+			and shopusercode = #{vendOrder.shopusercode}
+		</if>
+		<if test="vendOrder.goodsId != null and !&quot;&quot;.equals(vendOrder.goodsId.trim())">
+			and goods_id = #{vendOrder.goodsId}
+		</if>
+	</where>order by order_id limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="countVendOrder" resultType="int" parameterType="vend.entity.VendOrder">
+ 	select count(*) from vend_order
+ 	<where>
+ 		<if test="usercode != null and !&quot;&quot;.equals(usercode.trim())">
+			and usercode = #{usercode}
+		</if>
+		<if test="shopusercode != null and !&quot;&quot;.equals(shopusercode.trim())">
+			and shopusercode = #{shopusercode}
+		</if>
+		<if test="goodsId != null and !&quot;&quot;.equals(goodsId.trim())">
+			and goods_id = #{goodsId}
+		</if>
+ 	</where>
+  </select>
+  
+   <select id="findAll" resultMap="BaseResultMap">
+ 	select * from vend_order
+  </select>
+  <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="int">
+        delete from vend_order where order_id in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

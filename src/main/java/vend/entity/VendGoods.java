@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class VendGoods {
@@ -61,7 +62,7 @@ public class VendGoods {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-
+    @Length(min=0,max=300,message="长度不能超过300字")
     public String getGoodsInfo() {
         return goodsInfo;
     }

@@ -20,7 +20,7 @@ public interface VendPermissionMapper {
     int updateByPrimaryKeySelective(VendPermission record);
 
     int updateByPrimaryKey(VendPermission record);
-    /**ÏÂÎª×Ô¶¨Òå·½·¨ */
+    /**ä¸‹ä¸ºè‡ªå®šä¹‰æ–¹æ³• */
     List<VendPermission> listVendPermission(@Param("vendPermission") VendPermission vendPermission, @Param("page") Page page);
     
     int countVendPermission(VendPermission vendPermission);

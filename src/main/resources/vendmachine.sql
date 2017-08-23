@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-08-22 17:18:59
+Date: 2017-08-23 18:02:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -143,7 +143,7 @@ CREATE TABLE `vend_goods` (
   `extend2` varchar(100) DEFAULT NULL,
   `extend3` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='商品信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='商品信息表';
 
 -- ----------------------------
 -- Records of vend_goods
@@ -151,6 +151,7 @@ CREATE TABLE `vend_goods` (
 INSERT INTO vend_goods VALUES ('23', '雪碧', '/userfiles/pic/201708221429509354.jpg', '5.00', '雪碧美国发展速度领先的主要非酒精饮料产品之一', '2017-08-22 14:29:50', '2017-08-22 14:29:50', null, null, null);
 INSERT INTO vend_goods VALUES ('24', '芬达', '/userfiles/pic/201708221431220330.jpg', '4.00', '芬达汽水（Fanta）是1940年代在欧洲开始风行的饮料', '2017-08-22 14:31:22', '2017-08-22 14:31:22', null, null, null);
 INSERT INTO vend_goods VALUES ('25', '王老吉', '/userfiles/pic/201708221432088297.jpg', '6.00', '王老吉是王老吉凉茶的品牌，创立于清道光年间（1828年），被公认为凉茶始祖', '2017-08-22 14:32:08', '2017-08-22 14:32:08', null, null, null);
+INSERT INTO vend_goods VALUES ('26', '地方', '/userfiles/pic/201708230934338819', '34.00', '44435353543535', '2017-08-23 09:34:33', '2017-08-23 09:34:33', null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_order`
@@ -168,7 +169,8 @@ CREATE TABLE `vend_order` (
   `pay_time` datetime DEFAULT NULL COMMENT '支付时间',
   `extend1` varchar(200) DEFAULT NULL,
   `extend2` varchar(200) DEFAULT NULL,
-  `extend3` varchar(200) DEFAULT NULL
+  `extend3` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品订单表';
 
 -- ----------------------------
@@ -191,11 +193,21 @@ CREATE TABLE `vend_permission` (
   `extend3` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `inx_permission_name` (`permission_name`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理后台权限表\r\n\r\n\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='管理后台权限表\r\n\r\n\r\n';
 
 -- ----------------------------
 -- Records of vend_permission
 -- ----------------------------
+INSERT INTO vend_permission VALUES ('1', '0', 'root', '根目录', null, null, null, null, null);
+INSERT INTO vend_permission VALUES ('2', '1', 'goods', '商品', null, null, null, null, null);
+INSERT INTO vend_permission VALUES ('3', '1', 'order', '订单', null, null, null, null, null);
+INSERT INTO vend_permission VALUES ('4', '1', 'ad', '广告', null, null, null, null, null);
+INSERT INTO vend_permission VALUES ('5', '2', 'goods:add', '商品添加', null, null, null, null, null);
+INSERT INTO vend_permission VALUES ('6', '2', 'goods:edit', '商品修改', null, null, null, null, null);
+INSERT INTO vend_permission VALUES ('7', '3', 'order:add', '订单添加', null, null, null, null, null);
+INSERT INTO vend_permission VALUES ('8', '3', 'order:edit', '订单修改', null, null, null, null, null);
+INSERT INTO vend_permission VALUES ('9', '4', 'ad:add', '广告添加', null, null, null, null, null);
+INSERT INTO vend_permission VALUES ('10', '4', 'ad:edit', '广告修改', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_qrcode_attend`
@@ -231,7 +243,7 @@ CREATE TABLE `vend_role` (
   `state` tinyint(4) DEFAULT '1' COMMENT '表示角色当前的状态，0表示冻结，1表示正常',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_role_name` (`role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='管理后台角色类型';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='管理后台角色类型';
 
 -- ----------------------------
 -- Records of vend_role

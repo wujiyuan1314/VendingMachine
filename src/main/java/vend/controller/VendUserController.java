@@ -124,7 +124,7 @@ public class VendUserController{
      */
     @RequestMapping(value="/dels")
   	public String dels(HttpServletRequest request){
-    	String usercodes=request.getParameter("usercodes");
+    	String usercodes=request.getParameter("ids");
     	String usercodeArray[]=usercodes.split(",");
     	int isOk=vendUserService.delVendUsers(usercodeArray);
   		return "redirect:/user/users";
