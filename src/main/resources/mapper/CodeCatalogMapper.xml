@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="vend.dao.CodeCatalogMapper" >
+  <resultMap id="BaseResultMap" type="vend.entity.CodeCatalog" >
+    <id column="CODENO" property="codeno" jdbcType="VARCHAR" />
+    <result column="CODENAME" property="codename" jdbcType="VARCHAR" />
+    <result column="CODEDESCRIBE" property="codedescribe" jdbcType="VARCHAR" />
+    <result column="ITEMNOLENGTH" property="itemnolength" jdbcType="INTEGER" />
+    <result column="KIND" property="kind" jdbcType="VARCHAR" />
+    <result column="PARENTCODENO" property="parentcodeno" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    CODENO, CODENAME, CODEDESCRIBE, ITEMNOLENGTH, KIND, PARENTCODENO
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from code_catalog
+    where CODENO = #{codeno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from code_catalog
+    where CODENO = #{codeno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="vend.entity.CodeCatalog" >
+    insert into code_catalog (CODENO, CODENAME, CODEDESCRIBE, 
+      ITEMNOLENGTH, KIND, PARENTCODENO
+      )
+    values (#{codeno,jdbcType=VARCHAR}, #{codename,jdbcType=VARCHAR}, #{codedescribe,jdbcType=VARCHAR}, 
+      #{itemnolength,jdbcType=INTEGER}, #{kind,jdbcType=VARCHAR}, #{parentcodeno,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="vend.entity.CodeCatalog" >
+    insert into code_catalog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="codeno != null" >
+        CODENO,
+      </if>
+      <if test="codename != null" >
+        CODENAME,
+      </if>
+      <if test="codedescribe != null" >
+        CODEDESCRIBE,
+      </if>
+      <if test="itemnolength != null" >
+        ITEMNOLENGTH,
+      </if>
+      <if test="kind != null" >
+        KIND,
+      </if>
+      <if test="parentcodeno != null" >
+        PARENTCODENO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="codeno != null" >
+        #{codeno,jdbcType=VARCHAR},
+      </if>
+      <if test="codename != null" >
+        #{codename,jdbcType=VARCHAR},
+      </if>
+      <if test="codedescribe != null" >
+        #{codedescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="itemnolength != null" >
+        #{itemnolength,jdbcType=INTEGER},
+      </if>
+      <if test="kind != null" >
+        #{kind,jdbcType=VARCHAR},
+      </if>
+      <if test="parentcodeno != null" >
+        #{parentcodeno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="vend.entity.CodeCatalog" >
+    update code_catalog
+    <set >
+      <if test="codename != null" >
+        CODENAME = #{codename,jdbcType=VARCHAR},
+      </if>
+      <if test="codedescribe != null" >
+        CODEDESCRIBE = #{codedescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="itemnolength != null" >
+        ITEMNOLENGTH = #{itemnolength,jdbcType=INTEGER},
+      </if>
+      <if test="kind != null" >
+        KIND = #{kind,jdbcType=VARCHAR},
+      </if>
+      <if test="parentcodeno != null" >
+        PARENTCODENO = #{parentcodeno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CODENO = #{codeno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="vend.entity.CodeCatalog" >
+    update code_catalog
+    set CODENAME = #{codename,jdbcType=VARCHAR},
+      CODEDESCRIBE = #{codedescribe,jdbcType=VARCHAR},
+      ITEMNOLENGTH = #{itemnolength,jdbcType=INTEGER},
+      KIND = #{kind,jdbcType=VARCHAR},
+      PARENTCODENO = #{parentcodeno,jdbcType=VARCHAR}
+    where CODENO = #{codeno,jdbcType=VARCHAR}
+  </update>
+    <!-- 一下为自定义方法 -->
+  <select id="listCodeCatalog" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from code_catalog
+  	<where>
+  		<if test="codeCatalog.codeno != null and !&quot;&quot;.equals(codeCatalog.codeno.trim())">
+  			and CODENO = #{codeCatalog.codeno}
+  		</if>
+  		<if test="codeCatalog.codename != null and !&quot;&quot;.equals(codeCatalog.codename.trim())">
+  			and CODENAME = #{codeCatalog.codename}
+  		</if>
+  		<if test="codeCatalog.codedescribe != null and !&quot;&quot;.equals(codeCatalog.codedescribe.trim())">
+  			and CODEDESCRIBE = #{codeCatalog.codedescribe}
+  		</if>
+  	</where>order by CODENO limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="countCodeCatalog" resultType="int" parameterType="vend.entity.CodeCatalog">
+  	select count(*) from code_catalog
+  	<where>
+  		<if test="codeno != null and !&quot;&quot;.equals(codeno.trim())">
+  			and CODENO = #{codeno}
+  		</if>
+  		<if test="codename != null and !&quot;&quot;.equals(codename.trim())">
+  			and CODENAME = #{codename}
+  		</if>
+  		<if test="codedescribe != null and !&quot;&quot;.equals(codedescribe.trim())">
+  			and CODEDESCRIBE = #{codedescribe}
+  		</if>
+  	</where>
+  </select>
+</mapper>

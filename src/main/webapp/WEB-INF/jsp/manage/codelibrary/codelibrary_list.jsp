@@ -7,19 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <%@ include file="../../common/common_css.jsp" %>
 </head>
-  <style>
-	div, p, table, th, td {
-		list-style:none;
-		margin:0; padding:0;
-		color:#333; font-size:12px;
-		font-family:dotum, Verdana, Arial, Helvetica, AppleGothic, sans-serif;
-	}
-	.line{
-	  height:100% !important;
-	}
-	#testIframe {margin-left: 10px;}
-  </style>
 <body>
+
 <!--Header-part-->
 <%@ include file="../../common/common_top.jsp" %>
 <!--Header-part-->
@@ -34,7 +23,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>permission/permissions" class="current">权限列表</a>
+      <a href="<%=basePath1%>codeCatalog/codeCatalogs" class="current">参数类别列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -42,30 +31,39 @@
 <!--Action boxes-->
   <div class="container-fluid">
     <div class="row fluid">
-      <sf:form action="permissions" method="post" id="Paramform" class="form-horizontal">
       <input type="hidden" name="currentPage" id="currentPage" value="1" />
 		<div class="span12">
 		  <div class="widget-box">
-		      <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-                 <h5>权限列表</h5>
-              </div>
-			  <div class="widget-content">
-			     <table class="table table-bordered table-striped with-check">
-					<tr>
-						<td style="width:20%">
-						<div class="zTreeDemoBackground left">
-							<ul id="tree" class="ztree" style="width:260px;height:100%; overflow:auto;"></ul>
-						</div>
-						</td>
-						<td style="width:80%">
-						<iframe id="testIframe" name="testIframe" frameborder=0 scrolling=auto width=100%  height=600px src="<%=basePath1%>/permission/2/edit"></iframe>
-						</td>
-					</tr>
-				</table>
-			  </div>
+	          <div class="widget-title"> <span class="icon"> <i class="icon-file"></i> </span>
+	            <h5>参数${codeno}的类别列表</h5>
+	            <a href="/VendingMachine/codeLibrary/${codeno}/add" class="btn btn-success"/>添加参数类别</a>
+	          </div>
+	          <div class="widget-content nopadding">
+	            <table class="table table-bordered">
+	              <thead>
+	                <tr>
+	                  <th>类别编号</th>
+	                  <th>类别值</th>
+	                  <th>操作</th>
+	                </tr>
+	              </thead>
+	              <tbody>
+		              <c:forEach items="${codeLibrarys}" var="codeLibrary" varStatus="st">
+		                <tr>
+		                  <td>${codeLibrary.itemno}</td>
+		                  <td>${codeLibrary.itemname}</td>
+		                  <td>
+		                      <a href="${codeLibrary.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                  <a href="javascript:void(0);" onclick="delconfirm('${codeLibrary.id}');" class="btn btn-danger  icon-trash"/></a>
+		                  </td>
+		                </tr>
+		              </c:forEach>
+	              </tbody>
+	            </table>
+	          </div>
+	        </div>
 		  </div>
 		</div>
-     </sf:form>
     </div>
   </div>
 </div>
@@ -77,11 +75,10 @@
 
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
-<script src="<%=basePath2 %>resources/js/back/permission_tree.js"></script>
 <script type="text/javascript">
 function delconfirm(id){
 	 if(confirm("确定要删除吗?")){
-		window.location.href=basePath+"permission/"+id+"/del";
+		window.location.href=basePath+"codeLibrary/"+id+"/del";
 	 }
 }
 </script>

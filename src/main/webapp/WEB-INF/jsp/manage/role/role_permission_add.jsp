@@ -34,7 +34,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>permission/permissions" class="current">权限列表</a>
+      <a href="<%=basePath1%>role/roles" class="current">角色列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -42,30 +42,35 @@
 <!--Action boxes-->
   <div class="container-fluid">
     <div class="row fluid">
-      <sf:form action="permissions" method="post" id="Paramform" class="form-horizontal">
       <input type="hidden" name="currentPage" id="currentPage" value="1" />
 		<div class="span12">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-                 <h5>权限列表</h5>
+                 <h5>角色权限添加</h5>
               </div>
 			  <div class="widget-content">
 			     <table class="table table-bordered table-striped with-check">
+			        <input type="hidden" name="id" id="id" value="${vendRole.id }"/>
 					<tr>
 						<td style="width:20%">
 						<div class="zTreeDemoBackground left">
-							<ul id="tree" class="ztree" style="width:260px;height:100%; overflow:auto;"></ul>
+							<ul id="treeDemo" class="ztree"></ul>
 						</div>
+						<div class="zTreeDemoBackground left">
+						 <input type="button" value="添加" onclick="addpermission();" class="btn btn-success"/>
+						 </div>
 						</td>
-						<td style="width:80%">
-						<iframe id="testIframe" name="testIframe" frameborder=0 scrolling=auto width=100%  height=600px src="<%=basePath1%>/permission/2/edit"></iframe>
+						<td style="display:none;">
+						  <input type="checkbox" id="py" class="checkbox first" checked />
+						  <input type="checkbox" id="sy" class="checkbox first" checked />
+					      <input type="checkbox" id="pn" class="checkbox first" checked />
+						  <input type="checkbox" id="sn" class="checkbox first" checked />
 						</td>
 					</tr>
 				</table>
 			  </div>
 		  </div>
 		</div>
-     </sf:form>
     </div>
   </div>
 </div>
@@ -77,13 +82,9 @@
 
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
-<script src="<%=basePath2 %>resources/js/back/permission_tree.js"></script>
 <script type="text/javascript">
-function delconfirm(id){
-	 if(confirm("确定要删除吗?")){
-		window.location.href=basePath+"permission/"+id+"/del";
-	 }
-}
+var roleId=${vendRole.id};
 </script>
+<script src="<%=basePath2 %>resources/js/back/role_permission_add.js"></script>
 </body>
 </html>

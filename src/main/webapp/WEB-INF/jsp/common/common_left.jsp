@@ -36,35 +36,10 @@
 	        <li><a href="<%=basePath3 %>order/orders">订单列表</a></li>
        </ul>
     </li>
-    <li> <a href="charts.html"><i class="icon icon-signal"></i> <span>图表统计</span></a> </li>
-    <li> <a href="widgets.html"><i class="icon icon-inbox"></i> <span>插件</span></a> </li>
-    <li><a href="tables.html"><i class="icon icon-th"></i> <span>数据表格</span></a></li>
-    <li><a href="grid.html"><i class="icon icon-fullscreen"></i> <span>网格布局</span></a></li>
-    <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>表单</span> </a>
-      <ul>
-        <li><a href="form-common.html">基本表单</a></li>
-        <li><a href="form-validation.html">带验证的表单</a></li>
-        <li><a href="form-wizard.html">带提示的表单</a></li>
-      </ul>
-    </li>
-    <li><a href="buttons.html"><i class="icon icon-tint"></i> <span>按钮 &amp; 图标</span></a></li>
-    <li><a href="interface.html"><i class="icon icon-pencil"></i> <span>组件</span></a></li>
-    <li class="submenu"> <a href="#"><i class="icon icon-file"></i> <span>其他</span> </a>
-      <ul>
-        <li><a href="index2.html">首页</a></li>
-        <li><a href="gallery.html">相册</a></li>
-        <li><a href="calendar.html">日历</a></li>
-        <li><a href="invoice.html">清单</a></li>
-        <li><a href="chat.html">聊天</a></li>
-      </ul>
-    </li>
-    <li class="submenu"> <a href="#"><i class="icon icon-info-sign"></i> <span>错误页面</span> </a>
-      <ul>
-        <li><a href="error403.html">403错误页面</a></li>
-        <li><a href="error404.html">404错误页面</a></li>
-        <li><a href="error405.html">05错误页面</a></li>
-        <li><a href="error500.html">500错误页面</a></li>
-      </ul>
+     <li class="submenu"> <a href=""><i class="icon icon-th"></i> <span>分类管理</span></a> 
+       <ul>
+	        <li><a href="<%=basePath3 %>codeCatalog/codeCatalogs">参数列表</a></li>
+       </ul>
     </li>
   </ul>
 </div>

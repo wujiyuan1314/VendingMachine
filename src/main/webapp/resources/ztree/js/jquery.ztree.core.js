@@ -1248,6 +1248,7 @@
             makeDOMNodeIcon: function (html, setting, node) {
                 var nameStr = data.getNodeName(setting, node),
                     name = setting.view.nameIsHTML ? nameStr : nameStr.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                var id=node.id;
                 html.push("<span id='", node.tId, consts.id.ICON,
                     "' title='' treeNode", consts.id.ICON, " class='", view.makeNodeIcoClass(setting, node),
                     "' style='", view.makeNodeIcoStyle(setting, node), "'></span><span id='", node.tId, consts.id.SPAN,

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="vend.dao.CodeLibraryMapper" >
+  <resultMap id="BaseResultMap" type="vend.entity.CodeLibrary" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="codeno" property="codeno" jdbcType="VARCHAR" />
+    <result column="itemno" property="itemno" jdbcType="VARCHAR" />
+    <result column="itemname" property="itemname" jdbcType="VARCHAR" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="extend1" property="extend1" jdbcType="VARCHAR" />
+    <result column="extend2" property="extend2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, codeno, itemno, itemname, addtime, extend1, extend2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from code_library
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from code_library
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="vend.entity.CodeLibrary" >
+    insert into code_library (id, codeno, itemno, 
+      itemname, addtime, extend1, 
+      extend2)
+    values (#{id,jdbcType=VARCHAR}, #{codeno,jdbcType=VARCHAR}, #{itemno,jdbcType=VARCHAR}, 
+      #{itemname,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, 
+      #{extend2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="vend.entity.CodeLibrary" >
+    insert into code_library
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="codeno != null" >
+        codeno,
+      </if>
+      <if test="itemno != null" >
+        itemno,
+      </if>
+      <if test="itemname != null" >
+        itemname,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+      <if test="extend1 != null" >
+        extend1,
+      </if>
+      <if test="extend2 != null" >
+        extend2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="codeno != null" >
+        #{codeno,jdbcType=VARCHAR},
+      </if>
+      <if test="itemno != null" >
+        #{itemno,jdbcType=VARCHAR},
+      </if>
+      <if test="itemname != null" >
+        #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="vend.entity.CodeLibrary" >
+    update code_library
+    <set >
+      <if test="codeno != null" >
+        codeno = #{codeno,jdbcType=VARCHAR},
+      </if>
+      <if test="itemno != null" >
+        itemno = #{itemno,jdbcType=VARCHAR},
+      </if>
+      <if test="itemname != null" >
+        itemname = #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="vend.entity.CodeLibrary" >
+    update code_library
+    set codeno = #{codeno,jdbcType=VARCHAR},
+      itemno = #{itemno,jdbcType=VARCHAR},
+      itemname = #{itemname,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      extend1 = #{extend1,jdbcType=VARCHAR},
+      extend2 = #{extend2,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 一下为自定义方法 -->
+  <select id="selectByCodeNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from code_library
+    where codeno = #{codeno,jdbcType=VARCHAR} order by itemno asc
+  </select>
+</mapper>

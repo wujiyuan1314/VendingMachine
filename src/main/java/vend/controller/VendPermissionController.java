@@ -23,8 +23,10 @@ import base.util.Page;
 import net.sf.json.JSONArray;
 import vend.entity.VendGoods;
 import vend.entity.VendPermission;
+import vend.entity.VendRolePermission;
 import vend.entity.ZNode;
 import vend.service.VendPermissionService;
+import vend.service.VendRolePermissionService;
 
 @Controller
 @RequestMapping("/permission")
@@ -33,6 +35,8 @@ public class VendPermissionController{
 	
 	@Autowired
 	VendPermissionService vendPermissionService;
+	@Autowired
+	VendRolePermissionService vendRolePermissionService;
 	/**
 	 * 根据输入信息条件查询权限列表，并分页显示
 	 * @param model
@@ -76,6 +80,47 @@ public class VendPermissionController{
 				zNode.setOpen(true);
 			}else{
 				zNode.setOpen(false);
+			}
+		    list.add(zNode);
+		}
+		JSONArray json = JSONArray.fromObject(list);
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out=response.getWriter();
+		out.print(json);
+	}
+	/**
+	 * 得到权限Json数据
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/getJson1",method=RequestMethod.POST)
+	public void getJson1(HttpServletRequest request,HttpServletResponse response) throws IOException {
+		String roleId=request.getParameter("roleId");
+		int roleId1=Function.getInt(roleId, 0);
+		List<VendRolePermission> vendRolePermissions=vendRolePermissionService.selectByRoleId(roleId1);
+		int roleIdArray[]=new int[vendRolePermissions.size()];
+		for(int i=0;i<vendRolePermissions.size();i++){
+			roleIdArray[i]=vendRolePermissions.get(i).getPermissionId();
+		}
+		
+		List<VendPermission> vendPermissions = vendPermissionService.findAll();
+		List<ZNode> list=new ArrayList();
+		for(VendPermission vendPermission:vendPermissions){
+			ZNode zNode=new ZNode();
+			zNode.setId(vendPermission.getId());
+			zNode.setpId(vendPermission.getParentId());
+			zNode.setName(vendPermission.getPermissionDescription());
+			if(vendPermission.getId()==1){
+				zNode.setOpen(true);
+			}else{
+				zNode.setOpen(false);
+			}
+			for(int roleId2:roleIdArray){
+				if(roleId2==vendPermission.getId()){
+					zNode.setChecked(true);
+					zNode.setOpen(true);
+					break;
+				}
 			}
 		    list.add(zNode);
 		}

@@ -1,5 +1,8 @@
 package vend.controller;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,9 +17,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
 import vend.entity.VendRole;
+import vend.entity.VendRolePermission;
+import vend.service.VendRolePermissionService;
 import vend.service.VendRoleService;
 
 @Controller
@@ -26,6 +32,8 @@ public class VendRoleController{
 	
 	@Autowired
 	VendRoleService vendRoleService;
+	@Autowired
+	VendRolePermissionService vendRolePermissionService;
 	/**
 	 * 根据输入信息条件查询角色列表，并分页显示
 	 * @param model
@@ -49,6 +57,56 @@ public class VendRoleController{
 		return "manage/role/role_list";
 	}
 	/**
+	 * 跳转角色权限添加界面
+	 * @return
+	 */
+	@RequestMapping(value="/{id}/addpermission",method=RequestMethod.GET)
+	public String addpermission(Model model,@PathVariable int id){
+		VendRole vendRole=new VendRole();
+		vendRole.setId(id);
+		model.addAttribute(vendRole);
+		return "manage/role/role_permission_add";
+	}
+	/**
+	 * 角色权限添加
+	 * @return
+	 */
+	@RequestMapping(value="/addpermission",method=RequestMethod.POST)
+	public String addpermission(HttpServletRequest request){
+		String roleId=request.getParameter("id");
+		int roleId1=Function.getInt(roleId, 0);
+		List<VendRolePermission> vendRolePermissions=vendRolePermissionService.selectByRoleId(roleId1);
+		Map<Integer,Integer> map=new HashMap<Integer,Integer>();//上次设置的权限
+		for(VendRolePermission vendRolePermission:vendRolePermissions){
+			map.put(vendRolePermission.getPermissionId(), vendRolePermission.getId());
+		}
+		
+		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
+		String permissionId=request.getParameter("nodeIds");
+		String permissionIdArray[]=Function.stringSpilit(permissionId, ",");//本次设置的权限
+		for(String id:permissionIdArray){
+	  		int id1=Integer.parseInt(id);
+	  		boolean iscontain=map.containsKey(id1);
+	  		if(iscontain){
+	  			map.remove(id1);
+	  		}else{
+	  			VendRolePermission vendRolePermission1=new VendRolePermission();
+	  			vendRolePermission1.setRoleId(roleId1);
+	  			vendRolePermission1.setPermissionId(id1);
+	  			vendRolePermission1.setCreateTime(createTime);
+	  			vendRolePermission1.setUpdateTime(createTime);
+	  			vendRolePermissionService.insertVendRolePermission(vendRolePermission1);
+	  		}
+	  	}
+		
+		 for (Integer in : map.keySet()) {
+		    	//map.keySet()返回的是所有key的值
+	            int upid = map.get(in);//得到每个key多对用value的值
+	            vendRolePermissionService.deleteVendRolePermission(upid);//上一次选中这一次没选中的删掉
+	     }
+		 return "redirect:"+roleId1+"/addpermission";
+	}
+	/**
 	 * 跳转角色信息添加界面
 	 * @param model
 	 * @return
@@ -68,7 +126,7 @@ public class VendRoleController{
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(Model model,@Validated VendRole vendRole,BindingResult br){
     	VendRole vendRole1= vendRoleService.selectByRoleName(vendRole.getRoleName());
-    	if(vendRole1==null){
+    	if(vendRole1!=null){
     		br.rejectValue("roleName", "NotRepeat", "角色名重复");
     	}
     	if(br.hasErrors()){

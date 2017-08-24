@@ -71,7 +71,7 @@
 			                  <td><fmt:formatDate value="${vendUser.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td class="center">
 			                     <a href="${vendUser.usercode}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
-			                     <a href="javascript:void(0);" onclick="delconfirm(${vendUser.usercode});" class="btn btn-danger  icon-trash"/></a>
+			                     <a href="javascript:void(0);" onclick="delconfirm('${vendUser.usercode}');" class="btn btn-danger  icon-trash"/></a>
 			                  </td>
 			                </tr>
 			           </c:forEach>

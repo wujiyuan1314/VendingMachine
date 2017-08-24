@@ -10,10 +10,67 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-08-23 18:02:16
+Date: 2017-08-24 20:46:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for `code_catalog`
+-- ----------------------------
+DROP TABLE IF EXISTS `code_catalog`;
+CREATE TABLE `code_catalog` (
+  `CODENO` varchar(50) NOT NULL COMMENT '类别编号',
+  `CODENAME` varchar(50) DEFAULT NULL COMMENT '类别名称',
+  `CODEDESCRIBE` varchar(50) DEFAULT NULL COMMENT '类别描述',
+  `ITEMNOLENGTH` int(11) DEFAULT NULL COMMENT '编码长度',
+  `KIND` varchar(50) DEFAULT NULL COMMENT '种类',
+  `PARENTCODENO` varchar(50) DEFAULT NULL COMMENT '上级编码',
+  PRIMARY KEY (`CODENO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of code_catalog
+-- ----------------------------
+INSERT INTO code_catalog VALUES ('BOOKTYPE', '书类型', '书的类型', null, null, null);
+INSERT INTO code_catalog VALUES ('COURSEKIND', '课程类型', '课程类型', null, null, null);
+INSERT INTO code_catalog VALUES ('SEX', '性别', '性别234', null, null, null);
+
+-- ----------------------------
+-- Table structure for `code_library`
+-- ----------------------------
+DROP TABLE IF EXISTS `code_library`;
+CREATE TABLE `code_library` (
+  `id` varchar(32) NOT NULL,
+  `codeno` varchar(32) DEFAULT NULL COMMENT '类别代码',
+  `itemno` varchar(11) DEFAULT NULL COMMENT '序号',
+  `itemname` varchar(120) DEFAULT NULL COMMENT '分类名字',
+  `addtime` datetime DEFAULT NULL,
+  `extend1` varchar(120) DEFAULT NULL,
+  `extend2` varchar(120) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of code_library
+-- ----------------------------
+INSERT INTO code_library VALUES ('0280185ebde147549f72df5747e35110', 'BOOKTYPE', '5', '历史', '2017-07-27 12:00:25', null, null);
+INSERT INTO code_library VALUES ('8066c299fd6e48af96eaee2bd6d0eee8', 'COURSEKIND', '3', '未知性别', null, null, null);
+INSERT INTO code_library VALUES ('b1fa5be68ee94c9288e6caaab93395f3', 'SEX', '3', '中性', '2017-07-27 11:33:47', null, null);
+INSERT INTO code_library VALUES ('CL1', 'BOOKTYPE', '1', '数学', '2017-07-19 16:51:09', null, null);
+INSERT INTO code_library VALUES ('CL10', 'GRADE', '4', '大四', '2017-07-21 09:29:16', null, null);
+INSERT INTO code_library VALUES ('CL11', 'COURSETERM', '1', '第一学期', '2017-07-24 17:58:19', null, null);
+INSERT INTO code_library VALUES ('CL12', 'COURSETERM', '2', '第二学期', '2017-07-24 17:58:52', null, null);
+INSERT INTO code_library VALUES ('CL13', 'COURSEKIND', '1', '选修', '2017-07-24 17:59:27', null, null);
+INSERT INTO code_library VALUES ('CL14', 'COURSEKIND', '2', '必修', '2017-07-24 17:59:44', null, null);
+INSERT INTO code_library VALUES ('CL2', 'BOOKTYPE', '2', '英语', '2017-07-19 16:51:33', null, null);
+INSERT INTO code_library VALUES ('CL3', 'BOOKTYPE', '3', '自然科学', '2017-07-19 16:52:39', null, null);
+INSERT INTO code_library VALUES ('CL4', 'BOOKTYPE', '4', '政治', '2017-07-19 16:53:13', null, null);
+INSERT INTO code_library VALUES ('CL5', 'SEX', '1', '男', '2017-07-21 09:12:46', null, null);
+INSERT INTO code_library VALUES ('CL6', 'SEX', '2', '女', '2017-07-21 09:13:05', null, null);
+INSERT INTO code_library VALUES ('CL7', 'GRADE', '1', '大一', '2017-07-21 09:28:03', null, null);
+INSERT INTO code_library VALUES ('CL8', 'GRADE', '2', '大二', '2017-07-21 09:28:37', null, null);
+INSERT INTO code_library VALUES ('CL9', 'GRADE', '3', '大三', '2017-07-21 09:29:00', null, null);
+
 -- ----------------------------
 -- Table structure for `menuitem`
 -- ----------------------------
@@ -193,7 +250,7 @@ CREATE TABLE `vend_permission` (
   `extend3` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `inx_permission_name` (`permission_name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='管理后台权限表\r\n\r\n\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='管理后台权限表\r\n\r\n\r\n';
 
 -- ----------------------------
 -- Records of vend_permission
@@ -243,12 +300,13 @@ CREATE TABLE `vend_role` (
   `state` tinyint(4) DEFAULT '1' COMMENT '表示角色当前的状态，0表示冻结，1表示正常',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_role_name` (`role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='管理后台角色类型';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='管理后台角色类型';
 
 -- ----------------------------
 -- Records of vend_role
 -- ----------------------------
-INSERT INTO vend_role VALUES ('2', '总后台', '最高权限用户', '2017-08-22 14:33:17', '2017-08-22 14:33:17', null, null, '1');
+INSERT INTO vend_role VALUES ('1', '开发者后台', '最高权限', '2017-08-24 13:33:16', '2017-08-24 13:33:19', null, null, '1');
+INSERT INTO vend_role VALUES ('2', '总后台', '客户总权限用户', '2017-08-22 14:33:17', '2017-08-22 14:33:17', null, null, '1');
 INSERT INTO vend_role VALUES ('3', '代理后台', '代理总后台管理一部分商户', '2017-08-22 14:33:44', '2017-08-22 14:33:44', null, null, '1');
 INSERT INTO vend_role VALUES ('4', '商家', '普通商户', '2017-08-22 14:33:58', '2017-08-22 14:33:58', null, null, '1');
 INSERT INTO vend_role VALUES ('5', '消费用户', '利用客户端购买商品的消费用户', '2017-08-22 14:34:25', '2017-08-22 14:34:25', null, null, '1');
@@ -268,11 +326,21 @@ CREATE TABLE `vend_role_permission` (
   `extend3` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_role_permission` (`role_id`,`permission_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限对照表';
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COMMENT='角色权限对照表';
 
 -- ----------------------------
 -- Records of vend_role_permission
 -- ----------------------------
+INSERT INTO vend_role_permission VALUES ('24', '2', '2', '2017-08-24 18:03:31', '2017-08-24 18:03:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('25', '2', '5', '2017-08-24 18:03:31', '2017-08-24 18:03:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('26', '2', '6', '2017-08-24 18:03:31', '2017-08-24 18:03:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('27', '2', '3', '2017-08-24 18:03:35', '2017-08-24 18:03:35', null, null, null);
+INSERT INTO vend_role_permission VALUES ('28', '2', '7', '2017-08-24 18:03:35', '2017-08-24 18:03:35', null, null, null);
+INSERT INTO vend_role_permission VALUES ('29', '2', '8', '2017-08-24 18:03:35', '2017-08-24 18:03:35', null, null, null);
+INSERT INTO vend_role_permission VALUES ('30', '2', '1', '2017-08-24 18:06:09', '2017-08-24 18:06:09', null, null, null);
+INSERT INTO vend_role_permission VALUES ('31', '2', '4', '2017-08-24 18:06:09', '2017-08-24 18:06:09', null, null, null);
+INSERT INTO vend_role_permission VALUES ('32', '2', '9', '2017-08-24 18:06:09', '2017-08-24 18:06:09', null, null, null);
+INSERT INTO vend_role_permission VALUES ('33', '2', '10', '2017-08-24 18:06:09', '2017-08-24 18:06:09', null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_shop_qrcode`
@@ -341,4 +409,6 @@ CREATE TABLE `vend_user` (
 -- ----------------------------
 -- Records of vend_user
 -- ----------------------------
-INSERT INTO vend_user VALUES ('VM2017-08-22', '总后台用户', '123456', '2', '2017-08-22 16:12:39', '2017-08-22 16:12:39', null, null, null);
+INSERT INTO vend_user VALUES ('VM2017082419502601', '总后台用户', '333', '2', '2017-08-22 16:12:39', '2017-08-22 16:12:39', null, null, null);
+INSERT INTO vend_user VALUES ('VM2017082419502602', '345', '345', '1', '2017-08-24 19:50:26', '2017-08-24 19:50:26', null, null, null);
+INSERT INTO vend_user VALUES ('VM2017082419562383', '546', '564', '2', '2017-08-24 19:56:23', '2017-08-24 19:56:23', null, null, null);

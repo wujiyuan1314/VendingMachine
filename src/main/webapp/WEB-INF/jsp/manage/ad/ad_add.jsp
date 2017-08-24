@@ -23,7 +23,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>goods/goodss" class="current">商品列表</a>
+      <a href="<%=basePath1%>goods/goodss" class="current">广告列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -35,38 +35,66 @@
 		<div class="span12">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-info-sign"></i></span>
-                 <h5>商品添加</h5>
+                 <h5>广告添加</h5>
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="add" enctype="multipart/form-data" commandName="vendGoods" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			    <sf:form class="form-horizontal" method="post" action="add" enctype="multipart/form-data" commandName="vendAd" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <div class="control-group">
-	                <label class="control-label">商品名</label>
+	                <label class="control-label">广告名</label>
 	                <div class="controls">
-	                  <sf:input path="goodsName"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="goodsName" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <sf:input path="adName"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="adName" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">商品图片</label>
+	                <label class="control-label">广告类型</label>
+	                <div class="controls">
+	                  <sf:input path="adName"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="adName" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
+	              <div class="control-group">
+	                <label class="control-label">上传广告</label>
 	                <div class="controls">
 	                  <input type="file" name="file"/>
-	                  <sf:hidden path="pic" class="filepath"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                  <sf:hidden path="extend1" class="filepath"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend1" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">价格</label>
+	                <label class="control-label">广告投放区域</label>
 	                <div class="controls">
-	                  <sf:input path="price"/>
-	                 <span for="required" generated="true" class="help-inline"> <sf:errors path="price" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <sf:input path="adArealist"/>
+	                 <span for="required" generated="true" class="help-inline"> <sf:errors path="adArealist" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">描述</label>
+	                <label class="control-label">广告链接</label>
 	                <div class="controls">
-	                  <sf:textarea path="goodsInfo"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="goodsInfo" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <sf:input path="adUrl"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="adUrl" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
+	              <div class="control-group">
+	                <label class="control-label">广告屏选择</label>
+	                <div class="controls">
+	                  <sf:input path="adScreen"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="adScreen" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
+	              <div class="control-group">
+	                <label class="control-label">广告开始时间</label>
+	                <div class="controls">
+	                  <sf:input path="startTime"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="startTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
+	              <div class="control-group">
+	                <label class="control-label">广告结束时间</label>
+	                <div class="controls">
+	                  <sf:input path="endTime"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="endTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="form-actions">

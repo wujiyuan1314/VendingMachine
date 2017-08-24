@@ -23,7 +23,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>permission/permissions" class="current">权限列表</a>
+      <a href="<%=basePath1%>codeCatalog/codeCatalogs" class="current">参数列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -31,47 +31,50 @@
 <!--Action boxes-->
   <div class="container-fluid">
     <div class="row fluid">
-      <sf:form action="permissions" method="post" id="Paramform" class="form-horizontal">
+      <sf:form action="codeCatalogs" method="post" id="Paramform" class="form-horizontal">
       <input type="hidden" name="currentPage" id="currentPage" value="1" />
 		<div class="span12">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-                 <h5>权限列表</h5>
+                 <h5>参数列表</h5>
               </div>
               
 			  <div class="widget-content">
 			      <table style="margin-bottom:5px;">
 			            <tr>
-			              <th>权限名:</th>
-			              <th><input type="text" name="permissionName" id="permissionName" placeholder="按权限名搜索"/>&nbsp;&nbsp;</th>
+			              <th>参数代码:</th>
+			              <th><input type="text" name="codeno" id="codeno" placeholder="按参数代码搜索"/>&nbsp;&nbsp;</th>
+			              <th>参数名:</th>
+			              <th><input type="text" name="codename" id="codename" placeholder="按参数名搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>
-		                  <td><input type="button" onclick="dels('permission');" value="批量删除" class="btn btn-danger"/></td>
+		                  <td><input type="button" onclick="dels('codeCatalog');" value="批量删除" class="btn btn-danger"/></td>
 		                </tr>
 			      </table>
 			
 			      <table class="table table-bordered table-striped with-check">
 			         <thead>
 			            <tr>
-			              <th><input type="checkbox" onclick="selectAll('id');" id="all" name="title-table-checkbox" /></th>
+			              <th><input type="checkbox" onclick="selectAll('codeno');" id="all" name="title-table-checkbox" /></th>
 		                  <th style="width:25px;">序号</th>
-		                  <th>权限名</th>
-		                  <th>权限描述</th>
-		                  <th>创建时间</th>
+		                  <th>参数代码</th>
+		                  <th>参数名</th>
+		                  <th>参数描述</th>
 		                  <th>操作</th>
 		                </tr>
 			         </thead>
 			         <tbody>
-			           <c:forEach items="${vendPermissions}" var="vendPermission" varStatus="st">
+			           <c:forEach items="${codeCatalogs}" var="codeCatalog" varStatus="st">
 				           <tr class="gradeX">
-					          <th><input type="checkbox" name="Id" id="Id" value="${vendPermission.id}"/></th>
+					          <th><input type="checkbox" name="Id" id="Id" value="${codeCatalog.codeno}"/></th>
 					          <td style="text-align:center;">${st.index+1}</td>
-			                  <td>${vendPermission.permissionName}</td>
-			                  <td>${vendPermission.permissionDescription}</td>
-			                  <td><fmt:formatDate value="${vendPermission.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+			                  <td>${codeCatalog.codeno}</td>
+			                  <td>${codeCatalog.codename}</td>
+			                  <td>${codeCatalog.codedescribe}</td>
 			                  <td class="center">
-			                     <a href="${vendPermission.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
-			                     <a href="javascript:void(0);" onclick="delconfirm(${vendPermission.id});" class="btn btn-danger  icon-trash"/></a>
+			                     <a href="${codeCatalog.codeno}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                     <a href="javascript:void(0);" onclick="delconfirm('${codeCatalog.codeno}');" class="btn btn-danger  icon-trash"/></a>
+			                     &nbsp;&nbsp;<a href="${codeCatalog.codeno}/codelibrarylist" class="btn btn-warning  icon-cog"/></a>
 			                  </td>
 			                </tr>
 			           </c:forEach>
@@ -108,7 +111,7 @@
 <script type="text/javascript">
 function delconfirm(id){
 	 if(confirm("确定要删除吗?")){
-		window.location.href=basePath+"permission/"+id+"/del";
+		window.location.href=basePath+"codeCatalog/"+id+"/del";
 	 }
 }
 </script>

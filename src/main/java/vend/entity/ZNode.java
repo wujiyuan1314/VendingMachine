@@ -1,7 +1,11 @@
 package vend.entity;
-
+/**
+ * 树形结构节点字段
+ * @author ylsoft
+ *
+ */
 public class ZNode {
-    private Integer id;
+	private Integer id;
 
     private Integer pId;
 
@@ -9,6 +13,8 @@ public class ZNode {
 
     private String file;
 
+    private boolean checked;
+    
     private boolean open;
 
 	public Integer getId() {
@@ -50,5 +56,11 @@ public class ZNode {
 	public void setOpen(boolean open) {
 		this.open = open;
 	}
+	public boolean isChecked() {
+		return checked;
+	}
 
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
 }

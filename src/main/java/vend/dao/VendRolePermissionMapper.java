@@ -1,5 +1,7 @@
 package vend.dao;
 
+import java.util.List;
+
 import vend.entity.VendRolePermission;
 
 public interface VendRolePermissionMapper {
@@ -14,4 +16,6 @@ public interface VendRolePermissionMapper {
     int updateByPrimaryKeySelective(VendRolePermission record);
 
     int updateByPrimaryKey(VendRolePermission record);
+    
+    List<VendRolePermission> selectByRoleId(Integer roleId);
 }
