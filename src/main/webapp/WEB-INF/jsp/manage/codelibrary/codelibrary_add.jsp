@@ -23,7 +23,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>codeCatalog/BOOKTYPE/codelibrarylist" class="current">参数类别列表</a>
+      <a href="<%=basePath1%>codeCatalog/${codeno }/codelibrarylist" class="current">参数类别列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -39,8 +39,8 @@
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="add" enctype="multipart/form-data" commandName="codeLibrary" name="basic_validate" id="basic_validate" novalidate="novalidate">
-	              <sf:hidden path="codeno"/>
+			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/codeLibrary/add" enctype="multipart/form-data" commandName="codeLibrary" name="basic_validate" id="basic_validate" novalidate="novalidate">
+	              <sf:hidden path="codeno" value="${codeno }"/>
 	              <div class="control-group">
 	                <label class="control-label">参数类别编码</label>
 	                <div class="controls">

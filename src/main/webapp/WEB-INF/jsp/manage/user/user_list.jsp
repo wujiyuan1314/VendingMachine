@@ -64,7 +64,7 @@
 			         <tbody>
 			           <c:forEach items="${vendUsers}" var="vendUser" varStatus="st">
 				           <tr class="gradeX">
-					          <th><input type="checkbox" name="usercode" id="usercode" value="${vendUser.usercode}"/></th>
+					          <th><input type="checkbox" name="Id" id="Id" value="${vendUser.usercode}"/></th>
 					          <td style="text-align:center;">${st.index+1}</td>
 			                  <td>${vendUser.username}</td>
 			                  <td>${vendUser.roleId}</td>

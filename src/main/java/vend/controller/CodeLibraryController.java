@@ -48,21 +48,25 @@ public class CodeLibraryController {
 	}
    /**
     * 添加参数类别信息
-    * @param CodeLibrary
+    * @param request
+    * @param model
+    * @param codeLibrary
     * @param br
     * @return
     */
     @RequestMapping(value="/add",method=RequestMethod.POST)
-	public String addcodeLibrary(Model model,@Validated CodeLibrary codeLibrary,BindingResult br){
+	public String addcodeLibrary(HttpServletRequest request,Model model,@Validated CodeLibrary codeLibrary,BindingResult br){
     	if(br.hasErrors()){
     		return "manage/codelibrary/codelibrary_add";
     	}
+    	String path = request.getContextPath();
+		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
     	String id=Function.getUUID();
     	codeLibrary.setId(id);
     	Date addtime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
     	codeLibrary.setAddtime(addtime);
     	codeLibraryService.insertCodeLibrary(codeLibrary);
-    	return "redirect:/codeCatalog/"+codeLibrary.getCodeno()+"/codelibrarylist";
+    	return "redirect:"+basePath+"/codeCatalog/"+codeLibrary.getCodeno()+"/codelibrarylist";
 	}
     /**
      * 跳转到批量添加参数类别页面

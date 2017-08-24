@@ -23,7 +23,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>codeCatalog/codeCatalogs" class="current">参数类别列表</a>
+      <a href="<%=basePath1%>codeCatalog/codeCatalogs" class="current">参数列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -53,8 +53,8 @@
 		                  <td>${codeLibrary.itemno}</td>
 		                  <td>${codeLibrary.itemname}</td>
 		                  <td>
-		                      <a href="${codeLibrary.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
-			                  <a href="javascript:void(0);" onclick="delconfirm('${codeLibrary.id}');" class="btn btn-danger  icon-trash"/></a>
+		                      <a href="/VendingMachine/codeLibrary/${codeLibrary.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                  <a href="javascript:void(0);" onclick="delconfirm('${codeLibrary.id}','${codeno}');" class="btn btn-danger  icon-trash"/></a>
 		                  </td>
 		                </tr>
 		              </c:forEach>
@@ -76,9 +76,9 @@
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
 <script type="text/javascript">
-function delconfirm(id){
+function delconfirm(id,codeno){
 	 if(confirm("确定要删除吗?")){
-		window.location.href=basePath+"codeLibrary/"+id+"/del";
+		window.location.href=basePath+"codeLibrary/"+codeno+"/"+id+"/del";
 	 }
 }
 </script>
