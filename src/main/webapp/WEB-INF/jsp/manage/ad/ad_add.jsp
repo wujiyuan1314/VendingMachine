@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<%@page import="base.util.DateUtil" %>
 <head>
 <title>自动售货机管理系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -50,7 +51,7 @@
 	              <div class="control-group">
 	                <label class="control-label">广告类型</label>
 	                <div class="controls">
-	                  <sf:input path="adName"/>
+	                 <sf:select path="adName" items="${adtypes}" itemLabel="itemname" itemValue="itemno"></sf:select>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="adName" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
@@ -86,14 +87,14 @@
 	              <div class="control-group">
 	                <label class="control-label">广告开始时间</label>
 	                <div class="controls">
-	                  <sf:input path="startTime"/>
+	                  <sf:input path="startTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="startTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
 	                <label class="control-label">广告结束时间</label>
 	                <div class="controls">
-	                  <sf:input path="endTime"/>
+	                  <sf:input path="endTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="endTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
@@ -115,5 +116,13 @@
 
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
+<script type="text/javascript">
+$('#startTime').datetimepicker({
+    format: 'yyyy-mm-dd hh:mm:ss'
+});
+$('#endTime').datetimepicker({
+    format: 'yyyy-mm-dd hh:mm:ss'
+});
+</script>
 </body>
 </html>

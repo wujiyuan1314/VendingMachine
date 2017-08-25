@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib
+  PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+ <tlib-version>1.0</tlib-version>
+ <jsp-version>1.2</jsp-version>
+ <short-name>menu</short-name>  
+ <uri>/menu-tags</uri> 
+ <!--OutputTag-->
+ <!-- 得到父ID下的所有子菜单 -->
+ <tag>
+	  <name>children</name>
+	  <tag-class>vend.tags.MenuTag</tag-class>
+	  <body-content>JSP</body-content>
+	  <attribute>
+	  	<name>parentId</name>
+	  	<rtexprvalue>true</rtexprvalue>
+	  	<description>父id</description>
+	  </attribute>
+ </tag>
+ <!-- 得到父ID下的某角色所选的子菜单 -->
+  <tag>
+	  <name>rolemenu</name>
+	  <tag-class>vend.tags.RoleMenuTag</tag-class>
+	  <body-content>JSP</body-content>
+	  <attribute>
+	  	<name>parentId</name>
+	  	<rtexprvalue>true</rtexprvalue>
+	  	<description>父id</description>
+	  </attribute>
+	  <attribute>
+	  	<name>roleid</name>
+	  	<rtexprvalue>true</rtexprvalue>
+	  	<description>角色ID</description>
+	  </attribute>
+ </tag>
+</taglib>
+

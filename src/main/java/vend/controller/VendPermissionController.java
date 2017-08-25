@@ -38,25 +38,11 @@ public class VendPermissionController{
 	@Autowired
 	VendRolePermissionService vendRolePermissionService;
 	/**
-	 * 根据输入信息条件查询权限列表，并分页显示
-	 * @param model
-	 * @param vendPermission
-	 * @param page
-	 * @param request
+	 * 跳转到列表页
 	 * @return
 	 */
 	@RequestMapping(value="/permissions")
-	public String listVendPermission(Model model,@ModelAttribute VendPermission vendPermission, @ModelAttribute Page page,HttpServletRequest request) {
-		String currentPageStr = request.getParameter("currentPage");
-		logger.info(currentPageStr + "===========");
-		if(currentPageStr != null){
-			int currentPage = Integer.parseInt(currentPageStr);
-			page.setCurrentPage(currentPage);
-		}
-		logger.info(page.toString());
-		logger.info(vendPermission.toString());
-		List<VendPermission> vendPermissions = vendPermissionService.listVendPermission(vendPermission, page);
-		model.addAttribute("vendPermissions",vendPermissions);
+	public String listVendPermission() {
 		return "manage/permission/permission_list";
 	}
 	/**
@@ -158,7 +144,7 @@ public class VendPermissionController{
     		return "manage/permission/permission_add";
     	}
     	vendPermissionService.insertVendPermission(vendPermission);
-    	return "redirect:permissions";
+    	return "manage/permission/permission_add";
 	}
     /**
 	 * 跳转权限修改界面

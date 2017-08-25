@@ -113,3 +113,14 @@ function placeholder(nodes,pcolor) {
         }
     }
   } 
+/**
+ * 左侧菜单点击变化
+ */
+$(".sidebar ul li ul li").click(function(){
+	alert("dd");
+	//var current=$(this).attr("class");
+	//if(current!='active'){
+	//	$(".sidebar").find("li").addClss("submenu");
+		//$(this).addClass("active");
+	//}
+})

@@ -23,7 +23,9 @@ var basePath="<%=basePath2%>";
 <script src="<%=basePath2 %>resources/js/matrix.popover.js"></script> 
 <script src="<%=basePath2 %>resources/js/jquery.dataTables.min.js"></script> 
 <script src="<%=basePath2 %>resources/js/matrix.tables.js"></script> 
-<script src="<%=basePath2 %>resources/js/bootstrap-treeview.js"></script> 
+<script src="<%=basePath2 %>resources/js/bootstrap-treeview.js"></script>
+<script src="<%=basePath2 %>resources/js/bootstrap-datetimepicker.js" charset="UTF-8"></script> 
+<script src="<%=basePath2 %>resources/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="<%=basePath2 %>resources/js/back/list.js"></script> 
 <script type="text/javascript" src="<%=basePath2 %>resources/ztree/js/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="<%=basePath2 %>resources/ztree/js/jquery.ztree.excheck.js"></script>

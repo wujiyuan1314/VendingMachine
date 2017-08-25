@@ -106,6 +106,38 @@ public class VendRoleController{
 	     }
 		 return "redirect:"+roleId1+"/addpermission";
 	}
+	  /**
+	    * 跳转到菜单设置界面
+	    * @param model
+	    * @param id
+	    * @return
+	    */
+	  @RequestMapping(value="/{id}/addmenuitem",method=RequestMethod.GET)
+	  public String setmenu(Model model,@PathVariable Integer id){
+		VendRole vendRole=new VendRole();
+		vendRole.setId(id);
+		model.addAttribute(vendRole);
+	 	return "manage/role/role_menuitem_add";
+	  }
+	  /**
+	   * 角色菜单设置
+	   * @param model
+	   * @param id
+	   * @return
+	   */
+	 @RequestMapping(value="/addmenuitem",method=RequestMethod.POST)
+	 public String setmenu(HttpServletRequest request){
+		String id=request.getParameter("id");
+		Integer roleId1=Integer.valueOf(id);
+		String menuList=request.getParameter("nodeIds");
+		
+		VendRole vendRole=vendRoleService.getOne(roleId1);
+		if(vendRole!=null){
+			vendRole.setExtend1(menuList);
+			vendRoleService.editVendRole(vendRole);
+		}
+		return "redirect:/role/roles";
+	 }
 	/**
 	 * 跳转角色信息添加界面
 	 * @param model

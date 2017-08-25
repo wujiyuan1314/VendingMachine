@@ -72,7 +72,8 @@
 			                  <td class="center">
 			                     <a href="${vendRole.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
 			                     <a href="javascript:void(0);" onclick="delconfirm(${vendRole.id});" class="btn btn-danger  icon-trash"/></a>&nbsp;&nbsp;
-			                     <a href="${vendRole.id}/addpermission" class="btn btn-warning  icon-key"/></a>
+			                     <a href="${vendRole.id}/addpermission" class="btn btn-warning  icon-key"/></a>&nbsp;&nbsp;
+			                     <a href="${vendRole.id}/addmenuitem" class="btn btn-primary  icon-indent-left"/></a>
 			                  </td>
 			                </tr>
 			           </c:forEach>

@@ -7,14 +7,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
+<%@ taglib prefix="menu" uri="/menu-tags"%>
 <!--3，页面元信息 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <!--4，公共css文件 -->
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/bootstrap.min.css" />
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="<%=basePath1 %>resources/css/bootstrap-datetimepicker.css" />
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/colorpicker.css" />
-<link rel="stylesheet" href="<%=basePath1 %>resources/css/datepicker.css" />
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/fullcalendar.css" />
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/matrix-style.css" />
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/matrix-media.css" />

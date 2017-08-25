@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import base.util.Function;
 import base.util.Page;
+import vend.entity.CodeLibrary;
 import vend.entity.VendAd;
+import vend.service.CodeLibraryService;
 import vend.service.VendAdService;
 
 @Controller
@@ -26,6 +28,8 @@ public class VendAdController{
 	
 	@Autowired
 	VendAdService vendAdService;
+	@Autowired
+	CodeLibraryService codeLibraryService;
 	/**
 	 * 根据输入信息条件查询广告列表，并分页显示
 	 * @param model
@@ -55,6 +59,8 @@ public class VendAdController{
 	 */
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String add(Model model){
+		List<CodeLibrary> adtypes=codeLibraryService.selectByCodeNo("ADTYPE");//广告类型列表
+		model.addAttribute("adtypes", adtypes);
 		model.addAttribute(new VendAd());
 		return "manage/ad/ad_add";
 	}

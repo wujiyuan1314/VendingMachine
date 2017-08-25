@@ -2,6 +2,8 @@ package vend.entity;
 
 import java.util.Date;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Menuitem {
     private Integer id;
 
@@ -38,15 +40,15 @@ public class Menuitem {
     public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
-
+    @NotEmpty(message="菜单名不能为空")
     public String getMenuName() {
         return menuName;
     }
-
+    
     public void setMenuName(String menuName) {
         this.menuName = menuName == null ? null : menuName.trim();
     }
-
+    @NotEmpty(message="菜单链接不能为空")
     public String getUri() {
         return uri;
     }
@@ -54,7 +56,7 @@ public class Menuitem {
     public void setUri(String uri) {
         this.uri = uri == null ? null : uri.trim();
     }
-
+    @NotEmpty(message="菜单图标不能为空")
     public String getIcon() {
         return icon;
     }

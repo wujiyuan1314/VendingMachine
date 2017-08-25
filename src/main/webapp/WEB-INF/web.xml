@@ -86,5 +86,11 @@
 	<session-config>
 		<session-timeout>900</session-timeout>
 	</session-config>
-
+    <!-- 自定义标签 -->
+	<jsp-config>
+		<taglib>
+			<taglib-uri>/WEB-INF/tld/menu.tld</taglib-uri>
+			<taglib-location>/menu-tags</taglib-location>
+		</taglib>
+    </jsp-config>
 </web-app>

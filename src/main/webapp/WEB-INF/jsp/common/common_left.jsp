@@ -21,17 +21,17 @@
     </li>
     <li class="submenu"> <a href=""><i class="icon icon-align-justify"></i> <span>菜单管理</span></a> 
        <ul>
-	        <li><a href="<%=basePath3 %>goods/goodss">菜单列表</a></li>
+	        <li><a href="<%=basePath3 %>menuitem/menuitems">菜单列表</a></li>
        </ul>
     </li>
     <li class="submenu"> <a href=""><i class="icon icon-user"></i> <span>用户权限管理</span></a> 
        <ul>
 	        <li><a href="<%=basePath3 %>user/users">用户管理</a></li>
 	        <li><a href="<%=basePath3 %>role/roles">角色管理</a></li>
-	        <li><a href="<%=basePath3 %>permission/permissions" onclick="permission();">权限设置</a></li>
+	        <li><a href="<%=basePath3 %>permission/permissions">权限设置</a></li>
        </ul>
     </li>
-    <li class="submenu"> <a href=""><i class="icon icon-user"></i> <span>订单管理</span></a> 
+    <li class="submenu"> <a href=""><i class="icon icon-file-alt"></i> <span>订单管理</span></a> 
        <ul>
 	        <li><a href="<%=basePath3 %>order/orders">订单列表</a></li>
        </ul>

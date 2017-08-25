@@ -22,6 +22,12 @@
     from menuitem
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByParentId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from menuitem
+    where parent_id = #{parentId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from menuitem
     where id = #{id,jdbcType=INTEGER}
@@ -149,4 +155,7 @@
       extend2 = #{extend2,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="findAll" resultMap="BaseResultMap">
+ 	select * from menuitem
+  </select>
 </mapper>
