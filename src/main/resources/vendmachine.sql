@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-08-24 20:46:13
+Date: 2017-08-25 18:03:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,9 +31,7 @@ CREATE TABLE `code_catalog` (
 -- ----------------------------
 -- Records of code_catalog
 -- ----------------------------
-INSERT INTO code_catalog VALUES ('BOOKTYPE', '书类型', '书的类型', null, null, null);
-INSERT INTO code_catalog VALUES ('COURSEKIND', '课程类型', '课程类型', null, null, null);
-INSERT INTO code_catalog VALUES ('SEX', '性别', '性别234', null, null, null);
+INSERT INTO code_catalog VALUES ('ADTYPE', '广告类型', '广告类型', null, null, null);
 
 -- ----------------------------
 -- Table structure for `code_library`
@@ -53,23 +51,9 @@ CREATE TABLE `code_library` (
 -- ----------------------------
 -- Records of code_library
 -- ----------------------------
-INSERT INTO code_library VALUES ('0280185ebde147549f72df5747e35110', 'BOOKTYPE', '5', '历史', '2017-07-27 12:00:25', null, null);
-INSERT INTO code_library VALUES ('8066c299fd6e48af96eaee2bd6d0eee8', 'COURSEKIND', '3', '未知性别', null, null, null);
-INSERT INTO code_library VALUES ('b1fa5be68ee94c9288e6caaab93395f3', 'SEX', '3', '中性', '2017-07-27 11:33:47', null, null);
-INSERT INTO code_library VALUES ('CL1', 'BOOKTYPE', '1', '数学', '2017-07-19 16:51:09', null, null);
-INSERT INTO code_library VALUES ('CL10', 'GRADE', '4', '大四', '2017-07-21 09:29:16', null, null);
-INSERT INTO code_library VALUES ('CL11', 'COURSETERM', '1', '第一学期', '2017-07-24 17:58:19', null, null);
-INSERT INTO code_library VALUES ('CL12', 'COURSETERM', '2', '第二学期', '2017-07-24 17:58:52', null, null);
-INSERT INTO code_library VALUES ('CL13', 'COURSEKIND', '1', '选修', '2017-07-24 17:59:27', null, null);
-INSERT INTO code_library VALUES ('CL14', 'COURSEKIND', '2', '必修', '2017-07-24 17:59:44', null, null);
-INSERT INTO code_library VALUES ('CL2', 'BOOKTYPE', '2', '英语', '2017-07-19 16:51:33', null, null);
-INSERT INTO code_library VALUES ('CL3', 'BOOKTYPE', '3', '自然科学', '2017-07-19 16:52:39', null, null);
-INSERT INTO code_library VALUES ('CL4', 'BOOKTYPE', '4', '政治', '2017-07-19 16:53:13', null, null);
-INSERT INTO code_library VALUES ('CL5', 'SEX', '1', '男', '2017-07-21 09:12:46', null, null);
-INSERT INTO code_library VALUES ('CL6', 'SEX', '2', '女', '2017-07-21 09:13:05', null, null);
-INSERT INTO code_library VALUES ('CL7', 'GRADE', '1', '大一', '2017-07-21 09:28:03', null, null);
-INSERT INTO code_library VALUES ('CL8', 'GRADE', '2', '大二', '2017-07-21 09:28:37', null, null);
-INSERT INTO code_library VALUES ('CL9', 'GRADE', '3', '大三', '2017-07-21 09:29:00', null, null);
+INSERT INTO code_library VALUES ('58883f88c5fc46159e805396a6bbd964', 'ADTYPE', '3', '视频广告', '2017-08-25 11:31:01', null, null);
+INSERT INTO code_library VALUES ('920ee5c12aa24151b6f8573ace909d5d', 'ADTYPE', '1', '文字广告', '2017-08-25 11:30:37', null, null);
+INSERT INTO code_library VALUES ('e33ab7b219de4629b6976ea930917f87', 'ADTYPE', '2', '图片广告', '2017-08-25 11:30:51', null, null);
 
 -- ----------------------------
 -- Table structure for `menuitem`
@@ -87,11 +71,27 @@ CREATE TABLE `menuitem` (
   `extend1` varchar(200) DEFAULT NULL,
   `extend2` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menuitem
 -- ----------------------------
+INSERT INTO menuitem VALUES ('1', '0', '根目录', '-', '-', null, null, null, null, null);
+INSERT INTO menuitem VALUES ('2', '1', '首页', '-', 'icon-home', null, '2017-08-25 15:47:30', '2017-08-25 15:47:33', null, null);
+INSERT INTO menuitem VALUES ('3', '1', '商品管理', '-', 'icon-briefcase', null, '2017-08-25 15:04:08', '2017-08-25 15:04:08', null, null);
+INSERT INTO menuitem VALUES ('4', '3', '商品列表', 'goods/goodss', '-', null, '2017-08-25 15:19:53', '2017-08-25 15:19:53', null, null);
+INSERT INTO menuitem VALUES ('5', '1', '广告管理', '-', 'icon-briefcase', null, '2017-08-25 15:20:53', '2017-08-25 15:20:53', null, null);
+INSERT INTO menuitem VALUES ('6', '5', '广告列表', 'ad/ads', '-', null, '2017-08-25 15:21:23', '2017-08-25 15:21:23', null, null);
+INSERT INTO menuitem VALUES ('7', '1', '菜单管理', '-', 'icon-align-justify', null, '2017-08-25 15:21:49', '2017-08-25 15:21:49', null, null);
+INSERT INTO menuitem VALUES ('8', '7', '菜单列表', 'menuitem/menuitems', '-', null, '2017-08-25 15:22:09', '2017-08-25 15:22:09', null, null);
+INSERT INTO menuitem VALUES ('9', '1', '用户权限管理', '-', 'icon-user', null, '2017-08-25 15:22:42', '2017-08-25 15:22:42', null, null);
+INSERT INTO menuitem VALUES ('10', '9', '用户管理', 'user/users', '-', null, '2017-08-25 15:23:15', '2017-08-25 15:23:15', null, null);
+INSERT INTO menuitem VALUES ('11', '9', '角色管理', 'role/roles', '-', null, '2017-08-25 15:50:38', '2017-08-25 15:50:38', null, null);
+INSERT INTO menuitem VALUES ('12', '9', '权限设置', 'permission/permissions', '-', null, '2017-08-25 15:51:27', '2017-08-25 15:51:27', null, null);
+INSERT INTO menuitem VALUES ('13', '1', '订单管理', '-', 'icon-user', null, '2017-08-25 15:52:01', '2017-08-25 15:52:01', null, null);
+INSERT INTO menuitem VALUES ('14', '13', '订单列表', 'order/orders', '-', null, '2017-08-25 15:52:21', '2017-08-25 15:52:21', null, null);
+INSERT INTO menuitem VALUES ('15', '1', '分类管理', '-', 'icon-th', null, '2017-08-25 15:52:44', '2017-08-25 15:52:44', null, null);
+INSERT INTO menuitem VALUES ('16', '15', '参数列表', 'codeCatalog/codeCatalogs', '-', null, '2017-08-25 15:53:07', '2017-08-25 15:53:07', null, null);
 
 -- ----------------------------
 -- Table structure for `vend_account`
@@ -250,7 +250,7 @@ CREATE TABLE `vend_permission` (
   `extend3` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `inx_permission_name` (`permission_name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='管理后台权限表\r\n\r\n\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='管理后台权限表\r\n\r\n\r\n';
 
 -- ----------------------------
 -- Records of vend_permission
@@ -295,17 +295,17 @@ CREATE TABLE `vend_role` (
   `role_description` varchar(1000) DEFAULT NULL COMMENT '角色描述',
   `create_time` datetime DEFAULT NULL COMMENT '表创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '表最后一次更新时间',
-  `extend1` varchar(200) DEFAULT NULL,
-  `extend2` varchar(200) DEFAULT NULL,
+  `extend1` varchar(600) DEFAULT NULL,
+  `extend2` varchar(600) DEFAULT NULL,
   `state` tinyint(4) DEFAULT '1' COMMENT '表示角色当前的状态，0表示冻结，1表示正常',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_role_name` (`role_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='管理后台角色类型';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='管理后台角色类型';
 
 -- ----------------------------
 -- Records of vend_role
 -- ----------------------------
-INSERT INTO vend_role VALUES ('1', '开发者后台', '最高权限', '2017-08-24 13:33:16', '2017-08-24 13:33:19', null, null, '1');
+INSERT INTO vend_role VALUES ('1', '开发者后台', '最高权限', '2017-08-24 13:33:16', '2017-08-24 13:33:19', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16', null, '1');
 INSERT INTO vend_role VALUES ('2', '总后台', '客户总权限用户', '2017-08-22 14:33:17', '2017-08-22 14:33:17', null, null, '1');
 INSERT INTO vend_role VALUES ('3', '代理后台', '代理总后台管理一部分商户', '2017-08-22 14:33:44', '2017-08-22 14:33:44', null, null, '1');
 INSERT INTO vend_role VALUES ('4', '商家', '普通商户', '2017-08-22 14:33:58', '2017-08-22 14:33:58', null, null, '1');
