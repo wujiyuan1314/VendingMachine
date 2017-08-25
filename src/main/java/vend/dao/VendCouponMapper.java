@@ -1,5 +1,11 @@
 package vend.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import base.util.Page;
+import vend.entity.VendCoupon;
 import vend.entity.VendCoupon;
 
 public interface VendCouponMapper {
@@ -14,4 +20,12 @@ public interface VendCouponMapper {
     int updateByPrimaryKeySelective(VendCoupon record);
 
     int updateByPrimaryKey(VendCoupon record);
+    /**下为自定义方法 */
+    List<VendCoupon> listVendCoupon(@Param("vendCoupon") VendCoupon vendCoupon, @Param("page") Page page);
+    
+    int countVendCoupon(VendCoupon vendCoupon);
+    
+    int deleteBatch(int ids[]);
+    
+    List<VendCoupon> findAll();
 }
