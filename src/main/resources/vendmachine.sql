@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-08-25 18:03:29
+Date: 2017-08-26 17:57:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -71,7 +71,7 @@ CREATE TABLE `menuitem` (
   `extend1` varchar(200) DEFAULT NULL,
   `extend2` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menuitem
@@ -80,7 +80,7 @@ INSERT INTO menuitem VALUES ('1', '0', '根目录', '-', '-', null, null, null, 
 INSERT INTO menuitem VALUES ('2', '1', '首页', '-', 'icon-home', null, '2017-08-25 15:47:30', '2017-08-25 15:47:33', null, null);
 INSERT INTO menuitem VALUES ('3', '1', '商品管理', '-', 'icon-briefcase', null, '2017-08-25 15:04:08', '2017-08-25 15:04:08', null, null);
 INSERT INTO menuitem VALUES ('4', '3', '商品列表', 'goods/goodss', '-', null, '2017-08-25 15:19:53', '2017-08-25 15:19:53', null, null);
-INSERT INTO menuitem VALUES ('5', '1', '广告管理', '-', 'icon-briefcase', null, '2017-08-25 15:20:53', '2017-08-25 15:20:53', null, null);
+INSERT INTO menuitem VALUES ('5', '1', '广告管理', '-', 'icon-volume-up', null, '2017-08-25 15:20:53', '2017-08-25 15:20:53', null, null);
 INSERT INTO menuitem VALUES ('6', '5', '广告列表', 'ad/ads', '-', null, '2017-08-25 15:21:23', '2017-08-25 15:21:23', null, null);
 INSERT INTO menuitem VALUES ('7', '1', '菜单管理', '-', 'icon-align-justify', null, '2017-08-25 15:21:49', '2017-08-25 15:21:49', null, null);
 INSERT INTO menuitem VALUES ('8', '7', '菜单列表', 'menuitem/menuitems', '-', null, '2017-08-25 15:22:09', '2017-08-25 15:22:09', null, null);
@@ -92,6 +92,8 @@ INSERT INTO menuitem VALUES ('13', '1', '订单管理', '-', 'icon-user', null, 
 INSERT INTO menuitem VALUES ('14', '13', '订单列表', 'order/orders', '-', null, '2017-08-25 15:52:21', '2017-08-25 15:52:21', null, null);
 INSERT INTO menuitem VALUES ('15', '1', '分类管理', '-', 'icon-th', null, '2017-08-25 15:52:44', '2017-08-25 15:52:44', null, null);
 INSERT INTO menuitem VALUES ('16', '15', '参数列表', 'codeCatalog/codeCatalogs', '-', null, '2017-08-25 15:53:07', '2017-08-25 15:53:07', null, null);
+INSERT INTO menuitem VALUES ('17', '1', '优惠券管理', '-', 'icon-strikethrough', null, '2017-08-26 17:04:46', '2017-08-26 17:04:46', null, null);
+INSERT INTO menuitem VALUES ('18', '17', '优惠券列表', 'coupon/coupons', '-', null, '2017-08-26 17:05:26', '2017-08-26 17:05:26', null, null);
 
 -- ----------------------------
 -- Table structure for `vend_account`
@@ -141,10 +143,16 @@ DROP TABLE IF EXISTS `vend_ad`;
 CREATE TABLE `vend_ad` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ad_name` varchar(100) DEFAULT NULL COMMENT '广告名字',
-  `ad_type` varchar(100) DEFAULT NULL COMMENT '广告类型（0，文字 。1，图片。 2，视频',
-  `ad_arealist` varchar(255) DEFAULT NULL COMMENT '广告投放几个机器还是整体',
-  `ad_url` varchar(255) DEFAULT NULL COMMENT '广告地址',
-  `ad_screen` int(11) DEFAULT NULL COMMENT '屏幕样式ID',
+  `pic_interval` int(11) DEFAULT NULL COMMENT '图片轮播时间间隔',
+  `pic1` varchar(200) DEFAULT NULL COMMENT '图片1地址',
+  `pic2` varchar(200) DEFAULT NULL COMMENT '图片2地址',
+  `pic3` varchar(200) DEFAULT NULL COMMENT '图片3地址',
+  `pic4` varchar(200) DEFAULT NULL COMMENT '图片4地址',
+  `pic5` varchar(200) DEFAULT NULL COMMENT '图片5地址',
+  `pic6` varchar(200) DEFAULT NULL COMMENT '图片6地址',
+  `video` varchar(255) DEFAULT NULL COMMENT '视频地址',
+  `height` varchar(100) DEFAULT NULL COMMENT '高度设置',
+  `width` varchar(100) DEFAULT NULL COMMENT '宽度设置',
   `start_time` datetime DEFAULT NULL COMMENT '有效期开始时间',
   `end_time` datetime DEFAULT NULL COMMENT '有效期结束时间',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -178,11 +186,13 @@ CREATE TABLE `vend_coupon` (
   `extend2` varchar(100) DEFAULT NULL,
   `extend3` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='优惠券表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='优惠券表';
 
 -- ----------------------------
 -- Records of vend_coupon
 -- ----------------------------
+INSERT INTO vend_coupon VALUES ('4', '324', '234', '234.00', null, null, '2017-08-26 00:00:00', '2017-08-26 00:00:00', '2017-08-26 17:54:21', '2017-08-26 17:54:21', null, null, null);
+INSERT INTO vend_coupon VALUES ('5', '发生的', '434', '2.00', null, null, '2017-08-26 00:00:00', '2017-08-26 00:00:00', '2017-08-26 17:54:43', '2017-08-26 17:54:43', null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_goods`
@@ -209,6 +219,21 @@ INSERT INTO vend_goods VALUES ('23', '雪碧', '/userfiles/pic/20170822142950935
 INSERT INTO vend_goods VALUES ('24', '芬达', '/userfiles/pic/201708221431220330.jpg', '4.00', '芬达汽水（Fanta）是1940年代在欧洲开始风行的饮料', '2017-08-22 14:31:22', '2017-08-22 14:31:22', null, null, null);
 INSERT INTO vend_goods VALUES ('25', '王老吉', '/userfiles/pic/201708221432088297.jpg', '6.00', '王老吉是王老吉凉茶的品牌，创立于清道光年间（1828年），被公认为凉茶始祖', '2017-08-22 14:32:08', '2017-08-22 14:32:08', null, null, null);
 INSERT INTO vend_goods VALUES ('26', '地方', '/userfiles/pic/201708230934338819', '34.00', '44435353543535', '2017-08-23 09:34:33', '2017-08-23 09:34:33', null, null, null);
+
+-- ----------------------------
+-- Table structure for `vend_machine`
+-- ----------------------------
+DROP TABLE IF EXISTS `vend_machine`;
+CREATE TABLE `vend_machine` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `machine_code` varchar(100) DEFAULT NULL COMMENT '机器码',
+  `screen_id` int(11) DEFAULT NULL COMMENT '屏幕样式id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of vend_machine
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `vend_order`
@@ -250,7 +275,7 @@ CREATE TABLE `vend_permission` (
   `extend3` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `inx_permission_name` (`permission_name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='管理后台权限表\r\n\r\n\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='管理后台权限表\r\n\r\n\r\n';
 
 -- ----------------------------
 -- Records of vend_permission
@@ -305,7 +330,7 @@ CREATE TABLE `vend_role` (
 -- ----------------------------
 -- Records of vend_role
 -- ----------------------------
-INSERT INTO vend_role VALUES ('1', '开发者后台', '最高权限', '2017-08-24 13:33:16', '2017-08-24 13:33:19', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16', null, '1');
+INSERT INTO vend_role VALUES ('1', '开发者后台', '最高权限', '2017-08-24 13:33:16', '2017-08-24 13:33:19', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18', null, '1');
 INSERT INTO vend_role VALUES ('2', '总后台', '客户总权限用户', '2017-08-22 14:33:17', '2017-08-22 14:33:17', null, null, '1');
 INSERT INTO vend_role VALUES ('3', '代理后台', '代理总后台管理一部分商户', '2017-08-22 14:33:44', '2017-08-22 14:33:44', null, null, '1');
 INSERT INTO vend_role VALUES ('4', '商家', '普通商户', '2017-08-22 14:33:58', '2017-08-22 14:33:58', null, null, '1');
@@ -397,6 +422,9 @@ CREATE TABLE `vend_user` (
   `username` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
   `role_id` int(12) DEFAULT NULL,
+  `mobile` varchar(22) DEFAULT NULL COMMENT '电话',
+  `address` varchar(400) DEFAULT NULL COMMENT '地址',
+  `linkman` varchar(100) DEFAULT NULL COMMENT '联系人',
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   `extend1` varchar(100) DEFAULT NULL,
@@ -409,6 +437,6 @@ CREATE TABLE `vend_user` (
 -- ----------------------------
 -- Records of vend_user
 -- ----------------------------
-INSERT INTO vend_user VALUES ('VM2017082419502601', '总后台用户', '333', '2', '2017-08-22 16:12:39', '2017-08-22 16:12:39', null, null, null);
-INSERT INTO vend_user VALUES ('VM2017082419502602', '345', '345', '1', '2017-08-24 19:50:26', '2017-08-24 19:50:26', null, null, null);
-INSERT INTO vend_user VALUES ('VM2017082419562383', '546', '564', '2', '2017-08-24 19:56:23', '2017-08-24 19:56:23', null, null, null);
+INSERT INTO vend_user VALUES ('VM2017082419502601', '总后台用户', '333', '2', null, null, null, '2017-08-22 16:12:39', '2017-08-22 16:12:39', null, null, null);
+INSERT INTO vend_user VALUES ('VM2017082419502602', '345', '345', '1', null, null, null, '2017-08-24 19:50:26', '2017-08-24 19:50:26', null, null, null);
+INSERT INTO vend_user VALUES ('VM2017082419562383', '546', '564', '2', null, null, null, '2017-08-24 19:56:23', '2017-08-24 19:56:23', null, null, null);
