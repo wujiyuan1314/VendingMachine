@@ -17,29 +17,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import base.util.Function;
 import base.util.Page;
 import vend.entity.CodeLibrary;
-import vend.entity.VendCoupon;
-import vend.service.CodeLibraryService;
-import vend.service.VendCouponService;
+import vend.entity.VendShopQrcode;
+import vend.service.VendShopQrcodeService;
 
 @Controller
-@RequestMapping("/coupon")
-public class VendCouponController{
-	public static Logger logger = Logger.getLogger(VendCouponController.class);
+@RequestMapping("/qrcode")
+public class VendShopQrcodeController{
+	public static Logger logger = Logger.getLogger(VendShopQrcodeController.class);
 	
 	@Autowired
-	VendCouponService vendCouponService;
-	@Autowired
-	CodeLibraryService codeLibraryService;
+	VendShopQrcodeService vendShopQrcodeService;
 	/**
-	 * 根据输入信息条件查询广告列表，并分页显示
+	 * 根据输入信息条件查询二维码列表，并分页显示
 	 * @param model
-	 * @param VendCoupon
+	 * @param vendShopQrcode
 	 * @param page
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value="/ads")
-	public String listVendCoupon(Model model,@ModelAttribute VendCoupon vendCoupon, @ModelAttribute Page page,HttpServletRequest request) {
+	@RequestMapping(value="/qrcodes")
+	public String listVendShopQrcode(Model model,@ModelAttribute VendShopQrcode vendShopQrcode, @ModelAttribute Page page,HttpServletRequest request) {
 		String currentPageStr = request.getParameter("currentPage");
 		logger.info(currentPageStr + "===========");
 		if(currentPageStr != null){
@@ -47,79 +44,77 @@ public class VendCouponController{
 			page.setCurrentPage(currentPage);
 		}
 		logger.info(page.toString());
-		logger.info(vendCoupon.toString());
-		List<VendCoupon> vendCoupons = vendCouponService.listVendCoupon(vendCoupon, page);
-		model.addAttribute("VendCoupons",vendCoupons);
-		return "manage/ad/ad_list";
+		logger.info(vendShopQrcode.toString());
+		List<VendShopQrcode> vendShopQrcodes = vendShopQrcodeService.listVendShopQrcode(vendShopQrcode, page);
+		model.addAttribute("vendShopQrcodes",vendShopQrcodes);
+		return "manage/qrcode/qrcode_list";
 	}
 	/**
-	 * 跳转广告信息添加界面
+	 * 跳转二维码信息添加界面
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value="/add",method=RequestMethod.GET)
-	public String add(Model model){
-		List<CodeLibrary> adtypes=codeLibraryService.selectByCodeNo("ADTYPE");//广告类型列表
-		model.addAttribute("adtypes", adtypes);
-		model.addAttribute(new VendCoupon());
-		return "manage/ad/ad_add";
+	public String qrcoded(Model model){
+		model.addAttribute(new VendShopQrcode());
+		return "manage/qrcode/qrcode_qrcoded";
 	}
    /**
-    * 添加广告信息
+    * 添加二维码信息
     * @param request
     * @param model
-    * @param VendCoupon
+    * @param vendShopQrcode
     * @param br
     * @return
     */
     @RequestMapping(value="/add",method=RequestMethod.POST)
-	public String add(HttpServletRequest request,Model model,@Validated VendCoupon vendCoupon,BindingResult br){
+	public String qrcoded(HttpServletRequest request,Model model,@Validated VendShopQrcode vendShopQrcode,BindingResult br){
     	if(br.hasErrors()){
-    		return "manage/ad/ad_add";
+    		return "manage/qrcode/qrcode_qrcoded";
     	}
-    	vendCouponService.insertVendCoupon(vendCoupon);
-    	return "redirect:ads";
+    	vendShopQrcodeService.insertVendShopQrcode(vendShopQrcode);
+    	return "redirect:qrcodes";
 	}
     /**
-	 * 跳转广告修改界面
+	 * 跳转二维码修改界面
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable int id){
-		VendCoupon vendCoupon=vendCouponService.getOne(id);
-		model.addAttribute(vendCoupon);
-		return "manage/ad/ad_edit";
+		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(id);
+		model.addAttribute(vendShopQrcode);
+		return "manage/qrcode/qrcode_edit";
 	}
 	/**
-	 * 修改广告信息
+	 * 修改二维码信息
 	 * @param request
 	 * @param model
-	 * @param VendCoupon
+	 * @param vendShopQrcode
 	 * @param br
 	 * @return
 	 */
     @RequestMapping(value="/edit",method=RequestMethod.POST)
-	public String edit(HttpServletRequest request,Model model,@Validated VendCoupon vendCoupon,BindingResult br){
+	public String edit(HttpServletRequest request,Model model,@Validated VendShopQrcode vendShopQrcode,BindingResult br){
     	if(br.hasErrors()){
-    		return "manage/ad/ad_edit";
+    		return "manage/qrcode/qrcode_edit";
     	}
-    	int isOk=vendCouponService.editVendCoupon(vendCoupon);
-		return "redirect:ads";
+    	int isOk=vendShopQrcodeService.editVendShopQrcode(vendShopQrcode);
+		return "redirect:qrcodes";
 	}
     /**
-     * 删除广告信息
+     * 删除二维码信息
      * @param user
      * @param br
      * @return
      */
     @RequestMapping(value="/{id}/del")
  	public String del(@PathVariable Integer id){
-    	vendCouponService.delVendCoupon(id);;
- 		return "redirect:/ad/ads";
+    	vendShopQrcodeService.delVendShopQrcode(id);;
+ 		return "redirect:/qrcode/qrcodes";
  	}
     /**
-     * 批量删除广告信息
+     * 批量删除二维码信息
      * @param ids
      * @return
      */
@@ -131,7 +126,7 @@ public class VendCouponController{
     	for(int i=0;i<idArray.length;i++){
     		idArray1[i]=Function.getInt(idArray[i], 0);
     	}
-    	int isOk=vendCouponService.delVendCoupons(idArray1);
-  		return "redirect:/ad/ads";
+    	int isOk=vendShopQrcodeService.delVendShopQrcodes(idArray1);
+  		return "redirect:/qrcode/qrcodes";
   	}
 }
