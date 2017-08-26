@@ -3,6 +3,11 @@ package vend.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class VendCoupon {
     private Integer id;
 
@@ -15,9 +20,9 @@ public class VendCoupon {
     private Integer goodsId;
 
     private Integer areaId;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startTime;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
 
     private Date createTime;
@@ -37,7 +42,7 @@ public class VendCoupon {
     public void setId(Integer id) {
         this.id = id;
     }
-
+    @NotEmpty(message="优惠券名不能为空")
     public String getCouponName() {
         return couponName;
     }
@@ -53,7 +58,7 @@ public class VendCoupon {
     public void setCouponInfo(String couponInfo) {
         this.couponInfo = couponInfo == null ? null : couponInfo.trim();
     }
-
+    @NotNull(message="优惠金额不能为空")
     public BigDecimal getCouponScale() {
         return couponScale;
     }

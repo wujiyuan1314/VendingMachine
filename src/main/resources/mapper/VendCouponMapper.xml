@@ -191,7 +191,7 @@
 	<include refid="Base_Column_List" />
 	from vend_coupon
 	<where>
-		<if test="VendCoupon.couponName != null and !&quot;&quot;.equals(VendCoupon.couponName.trim())">
+		<if test="vendCoupon.couponName != null and !&quot;&quot;.equals(vendCoupon.couponName.trim())">
 			and coupon_name = #{VendCoupon.couponName}
 		</if>
 	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
@@ -200,8 +200,8 @@
   <select id="countVendCoupon" resultType="int" parameterType="vend.entity.VendCoupon">
  	select count(*) from vend_coupon
  	<where>
- 		<if test="goodsName != null and !&quot;&quot;.equals(goodsName.trim())">
-		and goods_name = #{goodsName}
+ 		<if test="couponName != null and !&quot;&quot;.equals(couponName.trim())">
+		and coupon_name = #{couponName}
 	</if>
  	</where>
   </select>

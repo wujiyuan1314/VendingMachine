@@ -87,6 +87,8 @@ public class VendUserController{
 	 */
 	@RequestMapping(value="/{usercode}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable String usercode){
+		List<VendRole> userroles=vendRoleService.findAll();
+		model.addAttribute("userroles", userroles);
 		VendUser vendUser=vendUserService.getOne(usercode);
 		model.addAttribute(vendUser);
 		return "manage/user/user_edit";
@@ -100,6 +102,8 @@ public class VendUserController{
 	 */
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String edit(Model model,@Validated VendUser vendUser,BindingResult br){
+    	List<VendRole> userroles=vendRoleService.findAll();
+		model.addAttribute("userroles", userroles);
     	if(br.hasErrors()){
     		return "manage/user/user_edit";
     	}

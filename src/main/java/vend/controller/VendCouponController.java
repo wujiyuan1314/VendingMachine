@@ -22,7 +22,7 @@ import vend.service.CodeLibraryService;
 import vend.service.VendCouponService;
 
 @Controller
-@RequestMapping("/ad")
+@RequestMapping("/coupon")
 public class VendCouponController{
 	public static Logger logger = Logger.getLogger(VendCouponController.class);
 	
@@ -31,14 +31,14 @@ public class VendCouponController{
 	@Autowired
 	CodeLibraryService codeLibraryService;
 	/**
-	 * 根据输入信息条件查询广告列表，并分页显示
+	 * 根据输入信息条件查询优惠券列表，并分页显示
 	 * @param model
 	 * @param VendCoupon
 	 * @param page
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value="/ads")
+	@RequestMapping(value="/coupons")
 	public String listVendCoupon(Model model,@ModelAttribute VendCoupon vendCoupon, @ModelAttribute Page page,HttpServletRequest request) {
 		String currentPageStr = request.getParameter("currentPage");
 		logger.info(currentPageStr + "===========");
@@ -49,39 +49,35 @@ public class VendCouponController{
 		logger.info(page.toString());
 		logger.info(vendCoupon.toString());
 		List<VendCoupon> vendCoupons = vendCouponService.listVendCoupon(vendCoupon, page);
-		model.addAttribute("VendCoupons",vendCoupons);
-		return "manage/ad/ad_list";
+		model.addAttribute("vendCoupons",vendCoupons);
+		return "manage/coupon/coupon_list";
 	}
 	/**
-	 * 跳转广告信息添加界面
+	 * 跳转优惠券信息添加界面
 	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value="/add",method=RequestMethod.GET)
-	public String add(Model model){
-		List<CodeLibrary> adtypes=codeLibraryService.selectByCodeNo("ADTYPE");//广告类型列表
-		model.addAttribute("adtypes", adtypes);
+	public String coupond(Model model){
 		model.addAttribute(new VendCoupon());
-		return "manage/ad/ad_add";
+		return "manage/coupon/coupon_add";
 	}
    /**
-    * 添加广告信息
-    * @param request
-    * @param model
-    * @param VendCoupon
+    * 添加优惠券信息
+    * @param vendCoupon
     * @param br
     * @return
     */
     @RequestMapping(value="/add",method=RequestMethod.POST)
-	public String add(HttpServletRequest request,Model model,@Validated VendCoupon vendCoupon,BindingResult br){
+	public String coupond(@Validated VendCoupon vendCoupon,BindingResult br){
     	if(br.hasErrors()){
-    		return "manage/ad/ad_add";
+    		return "manage/coupon/coupon_coupond";
     	}
     	vendCouponService.insertVendCoupon(vendCoupon);
-    	return "redirect:ads";
+    	return "redirect:coupons";
 	}
     /**
-	 * 跳转广告修改界面
+	 * 跳转优惠券修改界面
 	 * @param model
 	 * @return
 	 */
@@ -89,26 +85,24 @@ public class VendCouponController{
 	public String edit(Model model,@PathVariable int id){
 		VendCoupon vendCoupon=vendCouponService.getOne(id);
 		model.addAttribute(vendCoupon);
-		return "manage/ad/ad_edit";
+		return "manage/coupon/coupon_edit";
 	}
 	/**
-	 * 修改广告信息
-	 * @param request
-	 * @param model
-	 * @param VendCoupon
+	 * 修改优惠券信息
+	 * @param vendCoupon
 	 * @param br
 	 * @return
 	 */
     @RequestMapping(value="/edit",method=RequestMethod.POST)
-	public String edit(HttpServletRequest request,Model model,@Validated VendCoupon vendCoupon,BindingResult br){
+	public String edit(@Validated VendCoupon vendCoupon,BindingResult br){
     	if(br.hasErrors()){
-    		return "manage/ad/ad_edit";
+    		return "manage/coupon/coupon_edit";
     	}
     	int isOk=vendCouponService.editVendCoupon(vendCoupon);
-		return "redirect:ads";
+		return "redirect:coupons";
 	}
     /**
-     * 删除广告信息
+     * 删除优惠券信息
      * @param user
      * @param br
      * @return
@@ -116,10 +110,10 @@ public class VendCouponController{
     @RequestMapping(value="/{id}/del")
  	public String del(@PathVariable Integer id){
     	vendCouponService.delVendCoupon(id);;
- 		return "redirect:/ad/ads";
+ 		return "redirect:/coupon/coupons";
  	}
     /**
-     * 批量删除广告信息
+     * 批量删除优惠券信息
      * @param ids
      * @return
      */
@@ -132,6 +126,6 @@ public class VendCouponController{
     		idArray1[i]=Function.getInt(idArray[i], 0);
     	}
     	int isOk=vendCouponService.delVendCoupons(idArray1);
-  		return "redirect:/ad/ads";
+  		return "redirect:/coupon/coupons";
   	}
 }

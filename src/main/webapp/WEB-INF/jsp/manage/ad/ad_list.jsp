@@ -56,10 +56,6 @@
 			              <th><input type="checkbox" onclick="selectAll('Id');" id="all" name="title-table-checkbox" /></th>
 		                  <th style="width:25px;">序号</th>
 		                  <th>广告名</th>
-		                  <th>广告类型</th>
-		                  <th>投放区域</th>
-		                  <th>链接地址</th>
-		                  <th>屏幕选择</th>
 		                  <th>广告开始时间</th>
 		                  <th>广告结束时间</th>
 		                  <th>操作</th>
@@ -70,10 +66,7 @@
 				           <tr class="gradeX">
 					          <th><input type="checkbox" name="Id" id="Id" value="${vendAd.id}"/></th>
 					          <td style="text-align:center;">${st.index+1}</td>
-			                  <td>${vendAd.adType}</td>
-			                  <td>${vendAd.adArealist}</td>
-			                  <td>${vendAd.adUrl}</td>
-			                  <td>${vendAd.adScreen}</td>
+			                  <td>${vendAd.adName}</td>
 			                  <td><fmt:formatDate value="${vendAd.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td><fmt:formatDate value="${vendAd.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td class="center">

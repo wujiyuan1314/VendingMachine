@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
+<%@ taglib prefix="menu" uri="/menu-tags"%>
+<%@ taglib prefix="code" uri="/code-tags"%>
+<%@ taglib prefix="role" uri="/role-tags"%>
 <div id="header">
   <h1><a href="dashboard.html"></a></h1>
 </div>

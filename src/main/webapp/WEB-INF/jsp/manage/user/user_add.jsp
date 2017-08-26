@@ -61,6 +61,27 @@
 	                  </sf:select>
 	                </div>
 	              </div>
+	              <div class="control-group">
+	                <label class="control-label">手机号</label>
+	                <div class="controls">
+	                  <sf:input path="mobile"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="mobile" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
+	              <div class="control-group">
+	                <label class="control-label">地址</label>
+	                <div class="controls">
+	                  <sf:input path="address"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="address" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
+	              <div class="control-group">
+	                <label class="control-label">联系人</label>
+	                <div class="controls">
+	                  <sf:input path="linkman"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="linkman" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
 	              <div class="form-actions">
 	                <input type="submit" value="添加" class="btn btn-success">
 	              </div>

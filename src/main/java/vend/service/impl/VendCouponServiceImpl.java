@@ -22,29 +22,29 @@ public class VendCouponServiceImpl implements VendCouponService {
 	 * @param page
 	 * @return
 	 */
-	public List<VendCoupon> listVendCoupon(VendCoupon VendCoupon,Page page){
-		int totalNumber = vendCouponMapper.countVendCoupon(VendCoupon);
+	public List<VendCoupon> listVendCoupon(VendCoupon vendCoupon,Page page){
+		int totalNumber = vendCouponMapper.countVendCoupon(vendCoupon);
 		page.setTotalNumber(totalNumber);
-		return vendCouponMapper.listVendCoupon(VendCoupon, page);
+		return vendCouponMapper.listVendCoupon(vendCoupon, page);
 	}
 	/**
 	 * 添加优惠券
 	 * @param VendCoupon
 	 * @return
 	 */
-	public int insertVendCoupon(VendCoupon VendCoupon){
+	public int insertVendCoupon(VendCoupon vendCoupon){
 		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
-		VendCoupon.setCreateTime(createTime);
-		VendCoupon.setUpdateTime(createTime);
-		return vendCouponMapper.insertSelective(VendCoupon);
+		vendCoupon.setCreateTime(createTime);
+		vendCoupon.setUpdateTime(createTime);
+		return vendCouponMapper.insertSelective(vendCoupon);
 	}
 	/**
 	 * 修改优惠券
 	 * @param VendCoupon
 	 * @return
 	 */
-	public int editVendCoupon(VendCoupon VendCoupon){
-		return vendCouponMapper.updateByPrimaryKeySelective(VendCoupon);
+	public int editVendCoupon(VendCoupon vendCoupon){
+		return vendCouponMapper.updateByPrimaryKeySelective(vendCoupon);
 	}
 	/**
 	 * 删除�?个商�?

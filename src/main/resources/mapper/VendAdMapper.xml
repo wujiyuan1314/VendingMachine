@@ -4,10 +4,16 @@
   <resultMap id="BaseResultMap" type="vend.entity.VendAd" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="ad_name" property="adName" jdbcType="VARCHAR" />
-    <result column="ad_type" property="adType" jdbcType="VARCHAR" />
-    <result column="ad_arealist" property="adArealist" jdbcType="VARCHAR" />
-    <result column="ad_url" property="adUrl" jdbcType="VARCHAR" />
-    <result column="ad_screen" property="adScreen" jdbcType="INTEGER" />
+    <result column="pic_interval" property="picInterval" jdbcType="INTEGER" />
+    <result column="pic1" property="pic1" jdbcType="VARCHAR" />
+    <result column="pic2" property="pic2" jdbcType="VARCHAR" />
+    <result column="pic3" property="pic3" jdbcType="VARCHAR" />
+    <result column="pic4" property="pic4" jdbcType="VARCHAR" />
+    <result column="pic5" property="pic5" jdbcType="VARCHAR" />
+    <result column="pic6" property="pic6" jdbcType="VARCHAR" />
+    <result column="video" property="video" jdbcType="VARCHAR" />
+    <result column="height" property="height" jdbcType="VARCHAR" />
+    <result column="width" property="width" jdbcType="VARCHAR" />
     <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -17,8 +23,8 @@
     <result column="extend3" property="extend3" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, ad_name, ad_type, ad_arealist, ad_url, ad_screen, start_time, end_time, create_time, 
-    update_time, extend1, extend2, extend3
+    id, ad_name, pic_interval, pic1, pic2, pic3, pic4, pic5, pic6, video, height, width, 
+    start_time, end_time, create_time, update_time, extend1, extend2, extend3
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -31,16 +37,20 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="vend.entity.VendAd" >
-    insert into vend_ad (id, ad_name, ad_type, 
-      ad_arealist, ad_url, ad_screen, 
-      start_time, end_time, create_time, 
-      update_time, extend1, extend2, 
-      extend3)
-    values (#{id,jdbcType=INTEGER}, #{adName,jdbcType=VARCHAR}, #{adType,jdbcType=VARCHAR}, 
-      #{adArealist,jdbcType=VARCHAR}, #{adUrl,jdbcType=VARCHAR}, #{adScreen,jdbcType=INTEGER}, 
-      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
-      #{extend3,jdbcType=VARCHAR})
+    insert into vend_ad (id, ad_name, pic_interval, 
+      pic1, pic2, pic3, pic4, 
+      pic5, pic6, video, 
+      height, width, start_time, 
+      end_time, create_time, update_time, 
+      extend1, extend2, extend3
+      )
+    values (#{id,jdbcType=INTEGER}, #{adName,jdbcType=VARCHAR}, #{picInterval,jdbcType=INTEGER}, 
+      #{pic1,jdbcType=VARCHAR}, #{pic2,jdbcType=VARCHAR}, #{pic3,jdbcType=VARCHAR}, #{pic4,jdbcType=VARCHAR}, 
+      #{pic5,jdbcType=VARCHAR}, #{pic6,jdbcType=VARCHAR}, #{video,jdbcType=VARCHAR}, 
+      #{height,jdbcType=VARCHAR}, #{width,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="vend.entity.VendAd" >
     insert into vend_ad
@@ -51,17 +61,35 @@
       <if test="adName != null" >
         ad_name,
       </if>
-      <if test="adType != null" >
-        ad_type,
+      <if test="picInterval != null" >
+        pic_interval,
       </if>
-      <if test="adArealist != null" >
-        ad_arealist,
+      <if test="pic1 != null" >
+        pic1,
       </if>
-      <if test="adUrl != null" >
-        ad_url,
+      <if test="pic2 != null" >
+        pic2,
       </if>
-      <if test="adScreen != null" >
-        ad_screen,
+      <if test="pic3 != null" >
+        pic3,
+      </if>
+      <if test="pic4 != null" >
+        pic4,
+      </if>
+      <if test="pic5 != null" >
+        pic5,
+      </if>
+      <if test="pic6 != null" >
+        pic6,
+      </if>
+      <if test="video != null" >
+        video,
+      </if>
+      <if test="height != null" >
+        height,
+      </if>
+      <if test="width != null" >
+        width,
       </if>
       <if test="startTime != null" >
         start_time,
@@ -92,17 +120,35 @@
       <if test="adName != null" >
         #{adName,jdbcType=VARCHAR},
       </if>
-      <if test="adType != null" >
-        #{adType,jdbcType=VARCHAR},
+      <if test="picInterval != null" >
+        #{picInterval,jdbcType=INTEGER},
       </if>
-      <if test="adArealist != null" >
-        #{adArealist,jdbcType=VARCHAR},
+      <if test="pic1 != null" >
+        #{pic1,jdbcType=VARCHAR},
       </if>
-      <if test="adUrl != null" >
-        #{adUrl,jdbcType=VARCHAR},
+      <if test="pic2 != null" >
+        #{pic2,jdbcType=VARCHAR},
       </if>
-      <if test="adScreen != null" >
-        #{adScreen,jdbcType=INTEGER},
+      <if test="pic3 != null" >
+        #{pic3,jdbcType=VARCHAR},
+      </if>
+      <if test="pic4 != null" >
+        #{pic4,jdbcType=VARCHAR},
+      </if>
+      <if test="pic5 != null" >
+        #{pic5,jdbcType=VARCHAR},
+      </if>
+      <if test="pic6 != null" >
+        #{pic6,jdbcType=VARCHAR},
+      </if>
+      <if test="video != null" >
+        #{video,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="width != null" >
+        #{width,jdbcType=VARCHAR},
       </if>
       <if test="startTime != null" >
         #{startTime,jdbcType=TIMESTAMP},
@@ -133,17 +179,35 @@
       <if test="adName != null" >
         ad_name = #{adName,jdbcType=VARCHAR},
       </if>
-      <if test="adType != null" >
-        ad_type = #{adType,jdbcType=VARCHAR},
+      <if test="picInterval != null" >
+        pic_interval = #{picInterval,jdbcType=INTEGER},
       </if>
-      <if test="adArealist != null" >
-        ad_arealist = #{adArealist,jdbcType=VARCHAR},
+      <if test="pic1 != null" >
+        pic1 = #{pic1,jdbcType=VARCHAR},
       </if>
-      <if test="adUrl != null" >
-        ad_url = #{adUrl,jdbcType=VARCHAR},
+      <if test="pic2 != null" >
+        pic2 = #{pic2,jdbcType=VARCHAR},
       </if>
-      <if test="adScreen != null" >
-        ad_screen = #{adScreen,jdbcType=INTEGER},
+      <if test="pic3 != null" >
+        pic3 = #{pic3,jdbcType=VARCHAR},
+      </if>
+      <if test="pic4 != null" >
+        pic4 = #{pic4,jdbcType=VARCHAR},
+      </if>
+      <if test="pic5 != null" >
+        pic5 = #{pic5,jdbcType=VARCHAR},
+      </if>
+      <if test="pic6 != null" >
+        pic6 = #{pic6,jdbcType=VARCHAR},
+      </if>
+      <if test="video != null" >
+        video = #{video,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        height = #{height,jdbcType=VARCHAR},
+      </if>
+      <if test="width != null" >
+        width = #{width,jdbcType=VARCHAR},
       </if>
       <if test="startTime != null" >
         start_time = #{startTime,jdbcType=TIMESTAMP},
@@ -172,10 +236,16 @@
   <update id="updateByPrimaryKey" parameterType="vend.entity.VendAd" >
     update vend_ad
     set ad_name = #{adName,jdbcType=VARCHAR},
-      ad_type = #{adType,jdbcType=VARCHAR},
-      ad_arealist = #{adArealist,jdbcType=VARCHAR},
-      ad_url = #{adUrl,jdbcType=VARCHAR},
-      ad_screen = #{adScreen,jdbcType=INTEGER},
+      pic_interval = #{picInterval,jdbcType=INTEGER},
+      pic1 = #{pic1,jdbcType=VARCHAR},
+      pic2 = #{pic2,jdbcType=VARCHAR},
+      pic3 = #{pic3,jdbcType=VARCHAR},
+      pic4 = #{pic4,jdbcType=VARCHAR},
+      pic5 = #{pic5,jdbcType=VARCHAR},
+      pic6 = #{pic6,jdbcType=VARCHAR},
+      video = #{video,jdbcType=VARCHAR},
+      height = #{height,jdbcType=VARCHAR},
+      width = #{width,jdbcType=VARCHAR},
       start_time = #{startTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP},
       create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -185,7 +255,7 @@
       extend3 = #{extend3,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-       <!-- 一下为自定义方法 -->
+  <!-- 一下为自定义方法 -->
   <select id="listVendAd" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List" />

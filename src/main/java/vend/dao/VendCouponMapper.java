@@ -20,7 +20,7 @@ public interface VendCouponMapper {
     int updateByPrimaryKeySelective(VendCoupon record);
 
     int updateByPrimaryKey(VendCoupon record);
-    /**ÏÂÎª×Ô¶¨Òå·½·¨ */
+    /**è‡ªå®šä¹‰æ–¹æ³•*/
     List<VendCoupon> listVendCoupon(@Param("vendCoupon") VendCoupon vendCoupon, @Param("page") Page page);
     
     int countVendCoupon(VendCoupon vendCoupon);

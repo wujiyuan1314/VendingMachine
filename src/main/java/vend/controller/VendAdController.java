@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import base.util.FileUploadUtils;
 import base.util.Function;
 import base.util.Page;
 import vend.entity.CodeLibrary;
@@ -59,8 +60,6 @@ public class VendAdController{
 	 */
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String add(Model model){
-		List<CodeLibrary> adtypes=codeLibraryService.selectByCodeNo("ADTYPE");//广告类型列表
-		model.addAttribute("adtypes", adtypes);
 		model.addAttribute(new VendAd());
 		return "manage/ad/ad_add";
 	}
@@ -77,6 +76,7 @@ public class VendAdController{
     	if(br.hasErrors()){
     		return "manage/ad/ad_add";
     	}
+    	String filepath=FileUploadUtils.tranferFile(request, "/userfiles/adpic");
     	vendAdService.insertVendAd(vendAd);
     	return "redirect:ads";
 	}

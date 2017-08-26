@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import base.util.Page;
 import vend.entity.VendAd;
-import vend.entity.VendAd;
 
 public interface VendAdMapper {
     int deleteByPrimaryKey(Integer id);
@@ -30,5 +29,4 @@ public interface VendAdMapper {
     int deleteBatch(int ids[]);
     
     List<VendAd> findAll();
-    
 }

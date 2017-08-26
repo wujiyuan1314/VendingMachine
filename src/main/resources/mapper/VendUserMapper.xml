@@ -6,6 +6,9 @@
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="linkman" property="linkman" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="extend1" property="extend1" jdbcType="VARCHAR" />
@@ -13,8 +16,8 @@
     <result column="extend3" property="extend3" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    usercode, username, password, role_id, create_time, update_time, extend1, extend2, 
-    extend3
+    usercode, username, password, role_id, mobile, address, linkman, create_time, update_time, 
+    extend1, extend2, extend3
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -28,11 +31,13 @@
   </delete>
   <insert id="insert" parameterType="vend.entity.VendUser" >
     insert into vend_user (usercode, username, password, 
-      role_id, create_time, update_time, 
+      role_id, mobile, address, 
+      linkman, create_time, update_time, 
       extend1, extend2, extend3
       )
     values (#{usercode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{roleId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{roleId,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{linkman,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}
       )
   </insert>
@@ -50,6 +55,15 @@
       </if>
       <if test="roleId != null" >
         role_id,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="linkman != null" >
+        linkman,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -80,6 +94,15 @@
       <if test="roleId != null" >
         #{roleId,jdbcType=INTEGER},
       </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null" >
+        #{linkman,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -109,6 +132,15 @@
       <if test="roleId != null" >
         role_id = #{roleId,jdbcType=INTEGER},
       </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="linkman != null" >
+        linkman = #{linkman,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -132,6 +164,9 @@
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       role_id = #{roleId,jdbcType=INTEGER},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      linkman = #{linkman,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       extend1 = #{extend1,jdbcType=VARCHAR},
@@ -139,7 +174,7 @@
       extend3 = #{extend3,jdbcType=VARCHAR}
     where usercode = #{usercode,jdbcType=VARCHAR}
   </update>
-   <!-- 一下为自定义方法 -->
+    <!-- 一下为自定义方法 -->
   <select id="listVendUser" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List" />
@@ -147,6 +182,9 @@
 	<where>
 		<if test="vendUser.username != null and !&quot;&quot;.equals(vendUser.username.trim())">
 			and username = #{vendUser.username}
+		</if>
+		<if test="vendUser.mobile != null and !&quot;&quot;.equals(vendUser.mobile.trim())">
+			and mobile = #{vendUser.mobile}
 		</if>
 		<if test="vendUser.roleId != null and !&quot;&quot;.equals(vendUser.roleId.trim())">
 			and role_id = #{vendUser.roleId}
@@ -160,6 +198,9 @@
  		<if test="username != null and !&quot;&quot;.equals(username.trim())">
 		  and username = #{username}
 	    </if>
+	    <if test="mobile != null and !&quot;&quot;.equals(mobile.trim())">
+		  and mobile = #{mobile}
+	    </if>
 	    <if test="roleId != null and !&quot;&quot;.equals(roleId.trim())">
 		  and role_id = #{roleId}
 	    </if>
@@ -171,12 +212,15 @@
   </select>
   <!-- 批量添加 -->
   <insert id="insertBatch" parameterType="java.util.List">
-	  insert into vend_user (username,password,role_id,create_time,update_time,extend1,extend2,extend3)
+	  insert into vend_user (username,password,role_id,mobile,address,linkman,create_time,update_time,extend1,extend2,extend3)
 	        values
        <foreach collection="list" item="item" index="index" separator=",">
            (#{item.username,jdbcType=VARCHAR},
             #{item.password,jdbcType=VARCHAR},
             #{item.roleId,jdbcType=INTEGER},
+            #{item.mobile,jdbcType=VARCHAR},
+            #{item.address,jdbcType=VARCHAR},
+            #{item.linkman,jdbcType=VARCHAR},
             #{item.createTime,jdbcType=TIMESTAMP},
             #{item.updateTime,jdbcType=TIMESTAMP},
             #{item.extend1,jdbcType=VARCHAR},

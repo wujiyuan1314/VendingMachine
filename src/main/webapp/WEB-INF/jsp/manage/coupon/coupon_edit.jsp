@@ -39,36 +39,42 @@
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/goods/edit" enctype="multipart/form-data" commandName="vendGoods" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/goods/edit" enctype="multipart/form-data" commandName="vendCoupon" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="id"/>
 	              <div class="control-group">
-	                <label class="control-label">商品名</label>
+	                <label class="control-label">优惠券名</label>
 	                <div class="controls">
-	                  <sf:input path="goodsName"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="goodsName" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <sf:input path="couponName"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponName" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">商品图片</label>
+	                <label class="control-label">优惠券金额</label>
+	                <div class="controls">
+	                <sf:input path="couponScale"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponScale" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
+	              <div class="control-group">
+	                <label class="control-label">优惠券描述</label>
 	                <div class="controls">
 	                  <input type="file" name="file"/>
-	                  <sf:hidden path="pic" class="filepath"/>
-	                  <a href="<%=basePath1%>${vendGoods.pic}" target="_blank" class="icon-picture" style="color:green;">查看</a>
-	                  <span for="required" generated="true" class="help-inline"><sf:errors path="pic" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                  <sf:input path="couponInfo"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponInfo" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">价格</label>
+	                <label class="control-label">优惠券开始日期</label>
 	                <div class="controls">
-	                  <sf:input path="price"/>
-	                 <span for="required" generated="true" class="help-inline"> <sf:errors path="price" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <sf:input path="startTime" value="<%=DateUtil.getCurrentDateStr())%>" readonly="true"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="startTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">描述</label>
+	                <label class="control-label">优惠券结束日期</label>
 	                <div class="controls">
-	                  <sf:textarea path="goodsInfo"/>
-	                    <span for="required" generated="true" class="help-inline"> <sf:errors path="goodsInfo" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <sf:input path="endTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="endTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="form-actions">

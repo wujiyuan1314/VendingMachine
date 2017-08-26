@@ -8,7 +8,6 @@
 <%@ include file="../../common/common_css.jsp" %>
 </head>
 <body>
-
 <!--Header-part-->
 <%@ include file="../../common/common_top.jsp" %>
 <!--Header-part-->
@@ -57,6 +56,9 @@
 		                  <th style="width:25px;">序号</th>
 		                  <th>用户名</th>
 		                  <th>角色</th>
+		                  <th>手机号</th>
+		                  <th>地址</th>
+		                  <th>联系人</th>
 		                  <th>创建时间</th>
 		                  <th>操作</th>
 		                </tr>
@@ -67,7 +69,10 @@
 					          <th><input type="checkbox" name="Id" id="Id" value="${vendUser.usercode}"/></th>
 					          <td style="text-align:center;">${st.index+1}</td>
 			                  <td>${vendUser.username}</td>
-			                  <td>${vendUser.roleId}</td>
+			                  <td><role:rolename roleid="${vendUser.roleId}"></role:rolename></td>
+			                  <td>${vendUser.mobile}</td>
+			                  <td>${vendUser.address}</td>
+			                  <td>${vendUser.linkman}</td>
 			                  <td><fmt:formatDate value="${vendUser.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td class="center">
 			                     <a href="${vendUser.usercode}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;

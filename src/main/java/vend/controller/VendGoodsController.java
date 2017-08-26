@@ -95,7 +95,7 @@ public class VendGoodsController{
     	if(br.hasErrors()){
     		return "manage/goods/goods_add";
     	}
-    	String filepath=FileUploadUtils.tranferFile(request, "/userfiles/pic");
+    	String filepath=FileUploadUtils.tranferFile(request, "/userfiles/goodspic");
     	vendGoods.setPic(filepath);
     	vendGoodsService.insertVendGoods(vendGoods);
     	return "redirect:goodss";

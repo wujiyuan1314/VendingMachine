@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
+<hecoupon>
 <title>自动售货机管理系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <%@ include file="../../common/common_css.jsp" %>
-</head>
+</hecoupon>
 <body>
 
-<!--Header-part-->
+<!--Hecouponer-part-->
 <%@ include file="../../common/common_top.jsp" %>
-<!--Header-part-->
+<!--Hecouponer-part-->
 
 <!--sidebar-menu-->
 <%@ include file="../../common/common_left.jsp" %>
@@ -19,66 +19,63 @@
 
 <!--main-container-part-->
 <div id="content">
-<!--breadcrumbs-->
-  <div id="content-header">
-    <div id="breadcrumb"> 
+<!--brecouponcrumbs-->
+  <div id="content-hecouponer">
+    <div id="brecouponcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>ad/ads" class="current">广告列表</a>
+      <a href="<%=basePath1%>coupon/coupons" class="current">优惠券列表</a>
     </div>
   </div>
-<!--End-breadcrumbs-->
+<!--End-brecouponcrumbs-->
 
 <!--Action boxes-->
   <div class="container-fluid">
     <div class="row fluid">
-      <sf:form action="ads" method="post" id="Paramform" class="form-horizontal">
+      <sf:form action="coupons" method="post" id="Paramform" class="form-horizontal">
       <input type="hidden" name="currentPage" id="currentPage" value="1" />
 		<div class="span12">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-                 <h5>广告列表</h5>
+                 <h5>优惠券列表</h5>
               </div>
               
 			  <div class="widget-content">
 			      <table style="margin-bottom:5px;">
 			            <tr>
-			              <th>广告名:</th>
-			              <th><input type="text" name="adName" id="adName" placeholder="按广告名搜索"/>&nbsp;&nbsp;</th>
+			              <th>优惠券名:</th>
+			              <th><input type="text" name="couponName" id="couponName" placeholder="按优惠券名搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>
-		                  <td><input type="button" onclick="dels('ad');" value="批量删除" class="btn btn-danger"/></td>
+		                  <td><input type="button" onclick="dels('coupon');" value="批量删除" class="btn btn-danger"/></td>
 		                </tr>
 			      </table>
 			
 			      <table class="table table-bordered table-striped with-check">
-			         <thead>
+			         <thecoupon>
 			            <tr>
 			              <th><input type="checkbox" onclick="selectAll('Id');" id="all" name="title-table-checkbox" /></th>
 		                  <th style="width:25px;">序号</th>
-		                  <th>广告名</th>
-		                  <th>广告类型</th>
-		                  <th>投放区域</th>
-		                  <th>链接地址</th>
-		                  <th>屏幕选择</th>
-		                  <th>广告开始时间</th>
-		                  <th>广告结束时间</th>
+		                  <th>优惠券名</th>
+		                  <th>优惠券金额(元)</th>
+		                  <th>优惠券介绍</th>
+		                  <th>优惠券开始日期</th>
+		                  <th>优惠券结束日期</th>
 		                  <th>操作</th>
 		                </tr>
-			         </thead>
+			         </thecoupon>
 			         <tbody>
-			           <c:forEach items="${vendAds}" var="vendAd" varStatus="st">
-				           <tr class="gradeX">
-					          <th><input type="checkbox" name="Id" id="Id" value="${vendAd.id}"/></th>
+			           <c:forEach items="${vendCoupons}" var="vendCoupon" varStatus="st">
+				           <tr class="grcouponeX">
+					          <th><input type="checkbox" name="Id" id="Id" value="${vendCoupon.id}"/></th>
 					          <td style="text-align:center;">${st.index+1}</td>
-			                  <td>${vendAd.adType}</td>
-			                  <td>${vendAd.adArealist}</td>
-			                  <td>${vendAd.adUrl}</td>
-			                  <td>${vendAd.adScreen}</td>
-			                  <td><fmt:formatDate value="${vendAd.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-			                  <td><fmt:formatDate value="${vendAd.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+			                  <td>${vendCoupon.couponName}</td>
+			                  <td>${vendCoupon.couponScale}</td>
+			                  <td>${vendCoupon.couponInfo}</td>
+			                  <td><fmt:formatDate value="${vendCoupon.startTime}" pattern="yyyy-MM-dd"/></td>
+			                  <td><fmt:formatDate value="${vendCoupon.endTime}" pattern="yyyy-MM-dd"/></td>
 			                  <td class="center">
-			                     <a href="${vendAd.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
-			                     <a href="javascript:void(0);" onclick="delconfirm(${vendAd.id});" class="btn btn-danger  icon-trash"/></a>
+			                     <a href="${vendCoupon.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                     <a href="javascript:void(0);" onclick="delconfirm(${vendCoupon.id});" class="btn btn-danger  icon-trash"/></a>
 			                  </td>
 			                </tr>
 			           </c:forEach>
@@ -115,7 +112,7 @@
 <script type="text/javascript">
 function delconfirm(id){
 	 if(confirm("确定要删除吗?")){
-		window.location.href=basePath+"ad/"+id+"/del";
+		window.location.href=basePath+"coupon/"+id+"/del";
 	 }
 }
 </script>
