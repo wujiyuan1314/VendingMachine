@@ -138,4 +138,35 @@
       extend3 = #{extend3,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+       <!-- 一下为自定义方法 -->
+  <select id="listVendShopQrcode" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_shop_qrcode
+	<where>
+		<if test="vendShopQrcode.extend1 != null and !&quot;&quot;.equals(vendShopQrcode.extend1.trim())">
+			and extend1 = #{vendShopQrcode.extend1}
+		</if>
+	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="countVendShopQrcode" resultType="int" parameterType="vend.entity.VendShopQrcode">
+ 	select count(*) from vend_shop_qrcode
+ 	<where>
+ 		<if test="extend1 != null and !&quot;&quot;.equals(extend1.trim())">
+		and extend1 = #{extend1}
+	</if>
+ 	</where>
+  </select>
+  
+   <select id="findAll" resultMap="BaseResultMap">
+ 	select * from vend_shop_qrcode
+  </select>
+  <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="int">
+        delete from vend_shop_qrcode where id in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>
