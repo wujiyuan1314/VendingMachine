@@ -75,19 +75,10 @@ public class VendAdController{
     * @return
     */
     @RequestMapping(value="/add",method=RequestMethod.POST)
-	public String add(HttpServletRequest request,Model model,@RequestParam("file") CommonsMultipartFile files[],@Validated VendAd vendAd,BindingResult br){
+	public String add(HttpServletRequest request,Model model,@Validated VendAd vendAd,BindingResult br){
     	if(br.hasErrors()){
     		return "manage/ad/ad_add";
     	}
-    	 for (int i = 0; i < files.length; i++) {
-    		 try {
-				String filepath=FileUploadUtils.tranferFile2(files[i], request, "/userfiles/adpic");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	 }
-    	String filepath=FileUploadUtils.tranferFile(request, "/userfiles/adpic");
     	vendAdService.insertVendAd(vendAd);
     	return "redirect:ads";
 	}

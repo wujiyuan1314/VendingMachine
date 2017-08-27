@@ -35,7 +35,7 @@ public class UploadController extends LogoutFilter{
     }
 	@RequestMapping(value="/pic1",method=RequestMethod.POST)
     public void uploadpic1(HttpServletRequest request,@RequestParam("file") MultipartFile file,HttpServletResponse response) throws IOException{
-		String storePath="/userfiles/adpic";
+		String storePath="/userfiles/pic";
 		String originalFileName = file.getOriginalFilename();
         
         String path =request.getSession().getServletContext().getRealPath(storePath);
@@ -53,10 +53,11 @@ public class UploadController extends LogoutFilter{
         String src=storePath+"/"+localFileName;
         // 保存
         try {
-            file.transferTo(fileDir);
+            file.transferTo(localFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //return src;
         response.setCharacterEncoding("UTF-8");
 		PrintWriter out=response.getWriter();
 		out.print(src);

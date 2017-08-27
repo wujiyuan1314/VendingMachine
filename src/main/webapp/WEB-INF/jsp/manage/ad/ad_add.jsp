@@ -24,7 +24,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>ad/ads" class="current">广告添加</a>
+      <a href="<%=basePath1%>ad/ads" class="current">广告列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -59,7 +59,7 @@
 	                <label class="control-label">上传广告图片</label>
 	                <div class="controls">
 	                                              图片1： <input type="file" name="file"/>
-	                        <input type="button" value="上传" onclick="doUpload('pic1')" class="btn btn-success">      
+	                        <input type="button" value="上传" onclick="doUpload('pic1')">      
 	                  <sf:hidden path="pic1" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic1" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
                     </div>
@@ -115,6 +115,8 @@
 	                <div class="controls">
 	                                             宽度：<sf:input path="width"/>&nbsp;px
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="width" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  </div>
+	                  <div class="controls">                         
 	                                             高度：<sf:input path="height"/>&nbsp;px
 	                                             
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="height" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
