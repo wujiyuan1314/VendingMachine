@@ -1,4 +1,5 @@
 package vend.controller;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import base.util.FileUploadUtils;
 import base.util.Function;
@@ -72,10 +75,18 @@ public class VendAdController{
     * @return
     */
     @RequestMapping(value="/add",method=RequestMethod.POST)
-	public String add(HttpServletRequest request,Model model,@Validated VendAd vendAd,BindingResult br){
+	public String add(HttpServletRequest request,Model model,@RequestParam("file") CommonsMultipartFile files[],@Validated VendAd vendAd,BindingResult br){
     	if(br.hasErrors()){
     		return "manage/ad/ad_add";
     	}
+    	 for (int i = 0; i < files.length; i++) {
+    		 try {
+				String filepath=FileUploadUtils.tranferFile2(files[i], request, "/userfiles/adpic");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	 }
     	String filepath=FileUploadUtils.tranferFile(request, "/userfiles/adpic");
     	vendAdService.insertVendAd(vendAd);
     	return "redirect:ads";

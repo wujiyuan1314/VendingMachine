@@ -3,12 +3,13 @@ package vend.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import base.util.Page;
 import vend.dao.VendShopQrcodeMapper;
 import vend.entity.VendShopQrcode;
 import vend.service.VendShopQrcodeService;
-
+@Service
 public class VendShopQrcodeServiceImpl implements VendShopQrcodeService {
 	@Autowired
 	VendShopQrcodeMapper vendShopQrcodeMapper;

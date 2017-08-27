@@ -59,31 +59,37 @@
 	                <label class="control-label">上传广告图片</label>
 	                <div class="controls">
 	                                              图片1： <input type="file" name="file"/>
+	                        <input type="button" value="上传" onclick="doUpload('pic1')" class="btn btn-success">      
 	                  <sf:hidden path="pic1" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic1" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
                     </div>
                     <div class="controls">                          
 	                                              图片2： <input type="file" name="file"/>
+	                         <input type="button" value="上传" onclick="doUpload('pic2')" class="btn btn-success">                     
 	                  <sf:hidden path="pic2" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic2" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	                 <div class="controls">
 	                                              图片3：<input type="file" name="file"/>
+	                  <input type="button" value="上传" onclick="doUpload('pic3')" class="btn btn-success">
 	                  <sf:hidden path="pic3" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic3" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
                     <div class="controls">                           
 	                                            图片4：<input type="file" name="file"/>
+	                   <input type="button" value="上传" onclick="doUpload('pic4')" class="btn btn-success">
 	                  <sf:hidden path="pic4" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic4" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	                 <div class="controls">
 	                                            图片5：<input type="file" name="file"/>
+	                  <input type="button" value="上传" onclick="doUpload('pic5')" class="btn btn-success">
 	                  <sf:hidden path="pic5" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic5" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
                     <div class="controls">                           
 	                                            图片6：<input type="file" name="file"/>
+	                 <input type="button" value="上传" onclick="doUpload('pic6')" class="btn btn-success">
 	                  <sf:hidden path="pic6" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic6" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
@@ -99,6 +105,7 @@
 	                <label class="control-label">上传视频</label>
 	                <div class="controls">
 	                  <input type="file" name="file"/>
+	                  <input type="button" value="上传" onclick="doUpload('video')" class="btn btn-success">
 	                  <sf:hidden path="video" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="video" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
