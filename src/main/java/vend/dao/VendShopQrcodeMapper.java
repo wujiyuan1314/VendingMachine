@@ -19,7 +19,7 @@ public interface VendShopQrcodeMapper {
     int updateByPrimaryKeySelective(VendShopQrcode record);
 
     int updateByPrimaryKey(VendShopQrcode record);
-    /**下为自定义方法 */
+    /**涓嬮潰鏄嚜瀹氫箟鏂规硶*/
     List<VendShopQrcode> listVendShopQrcode(@Param("vendShopQrcode") VendShopQrcode vendShopQrcode, @Param("page") Page page);
     
     int countVendShopQrcode(VendShopQrcode vendShopQrcode);

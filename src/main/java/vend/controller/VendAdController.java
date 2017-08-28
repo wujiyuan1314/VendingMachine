@@ -63,6 +63,10 @@ public class VendAdController{
 	 */
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String add(Model model){
+		List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
+		model.addAttribute("uppictypes", uppictypes);
+		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");
+		model.addAttribute("upvideotypes", upvideotypes);
 		model.addAttribute(new VendAd());
 		return "manage/ad/ad_add";
 	}
@@ -76,6 +80,10 @@ public class VendAdController{
     */
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(HttpServletRequest request,Model model,@Validated VendAd vendAd,BindingResult br){
+    	List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
+		model.addAttribute("uppictypes", uppictypes);
+		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");
+		model.addAttribute("upvideotypes", upvideotypes);
     	if(br.hasErrors()){
     		return "manage/ad/ad_add";
     	}
@@ -89,6 +97,10 @@ public class VendAdController{
 	 */
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable int id){
+		List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
+		model.addAttribute("uppictypes", uppictypes);
+		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");
+		model.addAttribute("upvideotypes", upvideotypes);
 		VendAd vendAd=vendAdService.getOne(id);
 		model.addAttribute(vendAd);
 		return "manage/ad/ad_edit";
@@ -103,6 +115,10 @@ public class VendAdController{
 	 */
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String edit(HttpServletRequest request,Model model,@Validated VendAd vendAd,BindingResult br){
+    	List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
+		model.addAttribute("uppictypes", uppictypes);
+		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");
+		model.addAttribute("upvideotypes", upvideotypes);
     	if(br.hasErrors()){
     		return "manage/ad/ad_edit";
     	}

@@ -23,7 +23,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>goods/goodss" class="current">商品列表</a>
+      <a href="<%=basePath1%>qrcode/qrcodes" class="current">商品列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -39,42 +39,36 @@
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/goods/edit" enctype="multipart/form-data" commandName="vendCoupon" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/qrcode/edit" enctype="multipart/form-data" commandName="vendShopQrcode" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="id"/>
+	              <sf:hidden path="usercode"/>
 	              <div class="control-group">
-	                <label class="control-label">优惠券名</label>
+	                <label class="control-label">二维码名</label>
 	                <div class="controls">
-	                  <sf:input path="couponName"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponName" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <sf:input path="extend1"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend1" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">优惠券金额</label>
+	                <label class="control-label">二维码类型</label>
 	                <div class="controls">
-	                <sf:input path="couponScale"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponScale" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                <sf:select path="extend2" items="${qrcodetypes}" itemLabel="itemname" itemValue="itemno">
+								            </sf:select>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend2" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">优惠券描述</label>
+	                <label class="control-label">上传二维码
+	                (可上传类型:<c:forEach items="${uppictypes}" var="uppictype">
+	                  ${uppictype.itemname},
+	                  </c:forEach>)</label>
 	                <div class="controls">
-	                  <input type="file" name="file"/>
-	                  <sf:input path="couponInfo"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponInfo" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
-	                </div>
-	              </div>
-	              <div class="control-group">
-	                <label class="control-label">优惠券开始日期</label>
-	                <div class="controls">
-	                  <sf:input path="startTime" value="<%=DateUtil.getCurrentDateStr())%>" readonly="true"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="startTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
-	                </div>
-	              </div>
-	              <div class="control-group">
-	                <label class="control-label">优惠券结束日期</label>
-	                <div class="controls">
-	                  <sf:input path="endTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="endTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <input type="file" name="file" id="file_qrcode"/>
+	                  <a href="javascript:doUpload('qrcode')" class="btn btn-success">上传</a>  
+	                  <span class="infoqrcode" style="color:#b94a48;"></span> 
+	                  <a href="<%=basePath1%>${vendShopQrcode.qrcode}" target="_blank" class="icon-picture" style="color:green;">查看</a>      
+	                  <sf:hidden path="qrcode" class="filepath"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="qrcode" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="form-actions">

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-08-26 17:57:41
+Date: 2017-08-28 18:03:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,6 +32,10 @@ CREATE TABLE `code_catalog` (
 -- Records of code_catalog
 -- ----------------------------
 INSERT INTO code_catalog VALUES ('ADTYPE', '广告类型', '广告类型', null, null, null);
+INSERT INTO code_catalog VALUES ('QRCODETYPE', '二维码类型', '二维码类型', null, null, null);
+INSERT INTO code_catalog VALUES ('UPFILETYPE', '文件类型', '上传的文件类型', null, null, null);
+INSERT INTO code_catalog VALUES ('UPPICTYPE', '图片类型', '上传的图片类型', null, null, null);
+INSERT INTO code_catalog VALUES ('UPVIDEOTYPE', '视频类型', '上传的视频类型', null, null, null);
 
 -- ----------------------------
 -- Table structure for `code_library`
@@ -51,9 +55,31 @@ CREATE TABLE `code_library` (
 -- ----------------------------
 -- Records of code_library
 -- ----------------------------
+INSERT INTO code_library VALUES ('06d1e53f7ccf4a7297465e8efca02101', 'UPFILETYPE', '5', 'xlsx', '2017-08-28 10:28:31', null, null);
+INSERT INTO code_library VALUES ('16a5f9620529489892f8ac87cf8d94aa', 'UPPICTYPE', '2', 'JPG', '2017-08-28 10:22:21', null, null);
+INSERT INTO code_library VALUES ('1c6920ae56354383b607aad8532f3002', 'QRCODETYPE', '2', '小程序二维码', '2017-08-28 15:19:43', null, null);
+INSERT INTO code_library VALUES ('24fdaea96ed240b2bf2b41931e1d8a18', 'UPFILETYPE', '8', 'docx', '2017-08-28 10:29:11', null, null);
+INSERT INTO code_library VALUES ('25e1d3cf4e514a8c94458b38df3e7a56', 'UPFILETYPE', '1', 'txt', '2017-08-28 10:26:31', null, null);
+INSERT INTO code_library VALUES ('2e612f5a29ca4c0d9e8784bae5cf445d', 'UPPICTYPE', '3', 'BMP', '2017-08-28 10:23:30', null, null);
+INSERT INTO code_library VALUES ('310b77bae3854805913cc71e5eae00da', 'UPVIDEOTYPE', '6', 'RMVB', '2017-08-28 10:31:10', null, null);
+INSERT INTO code_library VALUES ('3e7cddd7636a40b7929634d5d7eecb7b', 'UPFILETYPE', '2', 'pdf', '2017-08-28 10:26:38', null, null);
+INSERT INTO code_library VALUES ('417a14adf8e44b6eb1482a74eda56579', 'UPVIDEOTYPE', '4', 'MKV', '2017-08-28 10:30:40', null, null);
+INSERT INTO code_library VALUES ('496e0906dc894027bd5d504ea548c615', 'UPPICTYPE', '4', 'PNG', '2017-08-28 10:23:38', null, null);
+INSERT INTO code_library VALUES ('4a79f1a48fb54d5b8730e7a5fda16860', 'UPVIDEOTYPE', '5', 'FLV', '2017-08-28 10:30:57', null, null);
+INSERT INTO code_library VALUES ('500e15976e0e429990a612adde08150a', 'UPFILETYPE', '7', 'zip', '2017-08-28 10:29:01', null, null);
 INSERT INTO code_library VALUES ('58883f88c5fc46159e805396a6bbd964', 'ADTYPE', '3', '视频广告', '2017-08-25 11:31:01', null, null);
+INSERT INTO code_library VALUES ('7d2a9fffba54435281931903c3c29f6f', 'UPVIDEOTYPE', '3', '3GP', '2017-08-28 10:30:29', null, null);
+INSERT INTO code_library VALUES ('7ebc0bd02fc44e3fb71a84dd797133f0', 'QRCODETYPE', '1', '商户二维码', '2017-08-28 15:19:34', null, null);
 INSERT INTO code_library VALUES ('920ee5c12aa24151b6f8573ace909d5d', 'ADTYPE', '1', '文字广告', '2017-08-25 11:30:37', null, null);
+INSERT INTO code_library VALUES ('99f6924f5a684541809b58e38181538c', 'UPVIDEOTYPE', '2', 'WMV', '2017-08-28 10:30:20', null, null);
+INSERT INTO code_library VALUES ('a0efb4fdf23545dda7e9466f0f258981', 'UPPICTYPE', '1', 'JPEG', '2017-08-28 10:22:13', null, null);
+INSERT INTO code_library VALUES ('a77ca80193d7479bbad84fba2109e241', 'UPVIDEOTYPE', '7', 'MP4', '2017-08-28 10:31:58', null, null);
+INSERT INTO code_library VALUES ('b5ec7f65025a475a928c34731131af3b', 'UPFILETYPE', '6', 'rar', '2017-08-28 10:28:43', null, null);
+INSERT INTO code_library VALUES ('bb1de1fd6b044c2b8c34a7817b7df215', 'UPPICTYPE', '5', 'GIF', '2017-08-28 10:23:58', null, null);
+INSERT INTO code_library VALUES ('de379d2f392945ad9756dca39b3349d3', 'UPFILETYPE', '3', 'doc', '2017-08-28 10:26:49', null, null);
 INSERT INTO code_library VALUES ('e33ab7b219de4629b6976ea930917f87', 'ADTYPE', '2', '图片广告', '2017-08-25 11:30:51', null, null);
+INSERT INTO code_library VALUES ('e57f1d63a95544e0a1da2b196e38b4bc', 'UPVIDEOTYPE', '1', 'AVI', '2017-08-28 10:29:38', null, null);
+INSERT INTO code_library VALUES ('f4805ab0197b42f291084b969fee27a9', 'UPFILETYPE', '4', 'xls', '2017-08-28 10:28:15', null, null);
 
 -- ----------------------------
 -- Table structure for `menuitem`
@@ -71,7 +97,7 @@ CREATE TABLE `menuitem` (
   `extend1` varchar(200) DEFAULT NULL,
   `extend2` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menuitem
@@ -88,12 +114,15 @@ INSERT INTO menuitem VALUES ('9', '1', '用户权限管理', '-', 'icon-user', n
 INSERT INTO menuitem VALUES ('10', '9', '用户管理', 'user/users', '-', null, '2017-08-25 15:23:15', '2017-08-25 15:23:15', null, null);
 INSERT INTO menuitem VALUES ('11', '9', '角色管理', 'role/roles', '-', null, '2017-08-25 15:50:38', '2017-08-25 15:50:38', null, null);
 INSERT INTO menuitem VALUES ('12', '9', '权限设置', 'permission/permissions', '-', null, '2017-08-25 15:51:27', '2017-08-25 15:51:27', null, null);
-INSERT INTO menuitem VALUES ('13', '1', '订单管理', '-', 'icon-user', null, '2017-08-25 15:52:01', '2017-08-25 15:52:01', null, null);
+INSERT INTO menuitem VALUES ('13', '1', '订单管理', '-', 'icon-file-alt', null, '2017-08-25 15:52:01', '2017-08-25 15:52:01', null, null);
 INSERT INTO menuitem VALUES ('14', '13', '订单列表', 'order/orders', '-', null, '2017-08-25 15:52:21', '2017-08-25 15:52:21', null, null);
 INSERT INTO menuitem VALUES ('15', '1', '分类管理', '-', 'icon-th', null, '2017-08-25 15:52:44', '2017-08-25 15:52:44', null, null);
 INSERT INTO menuitem VALUES ('16', '15', '参数列表', 'codeCatalog/codeCatalogs', '-', null, '2017-08-25 15:53:07', '2017-08-25 15:53:07', null, null);
 INSERT INTO menuitem VALUES ('17', '1', '优惠券管理', '-', 'icon-strikethrough', null, '2017-08-26 17:04:46', '2017-08-26 17:04:46', null, null);
 INSERT INTO menuitem VALUES ('18', '17', '优惠券列表', 'coupon/coupons', '-', null, '2017-08-26 17:05:26', '2017-08-26 17:05:26', null, null);
+INSERT INTO menuitem VALUES ('19', '1', '二维码管理', '-', 'icon-qrcode', null, '2017-08-28 14:25:03', '2017-08-28 14:25:03', null, null);
+INSERT INTO menuitem VALUES ('20', '19', '二维码列表', 'qrcode/qrcodes', '-', null, '2017-08-28 14:25:32', '2017-08-28 14:25:32', null, null);
+INSERT INTO menuitem VALUES ('21', '19', '二维码关注列表', 'qrcodeAtt/qrcodeAtts', '-', null, '2017-08-28 17:04:00', '2017-08-28 17:04:00', null, null);
 
 -- ----------------------------
 -- Table structure for `vend_account`
@@ -161,7 +190,7 @@ CREATE TABLE `vend_ad` (
   `extend2` varchar(100) DEFAULT NULL,
   `extend3` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='广告表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='广告表';
 
 -- ----------------------------
 -- Records of vend_ad
@@ -330,7 +359,7 @@ CREATE TABLE `vend_role` (
 -- ----------------------------
 -- Records of vend_role
 -- ----------------------------
-INSERT INTO vend_role VALUES ('1', '开发者后台', '最高权限', '2017-08-24 13:33:16', '2017-08-24 13:33:19', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18', null, '1');
+INSERT INTO vend_role VALUES ('1', '开发者后台', '最高权限', '2017-08-24 13:33:16', '2017-08-24 13:33:19', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21', null, '1');
 INSERT INTO vend_role VALUES ('2', '总后台', '客户总权限用户', '2017-08-22 14:33:17', '2017-08-22 14:33:17', null, null, '1');
 INSERT INTO vend_role VALUES ('3', '代理后台', '代理总后台管理一部分商户', '2017-08-22 14:33:44', '2017-08-22 14:33:44', null, null, '1');
 INSERT INTO vend_role VALUES ('4', '商家', '普通商户', '2017-08-22 14:33:58', '2017-08-22 14:33:58', null, null, '1');
@@ -382,7 +411,7 @@ CREATE TABLE `vend_shop_qrcode` (
   `extend2` varchar(100) DEFAULT NULL,
   `extend3` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商家二维码信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='商家二维码信息表';
 
 -- ----------------------------
 -- Records of vend_shop_qrcode

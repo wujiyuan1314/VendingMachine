@@ -1,5 +1,10 @@
 package vend.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import base.util.Page;
 import vend.entity.VendQrcodeAttend;
 
 public interface VendQrcodeAttendMapper {
@@ -14,4 +19,14 @@ public interface VendQrcodeAttendMapper {
     int updateByPrimaryKeySelective(VendQrcodeAttend record);
 
     int updateByPrimaryKey(VendQrcodeAttend record);
+    /**下面是自定义方法*/
+    List<VendQrcodeAttend> listVendQrcodeAttend(@Param("vendQrcodeAttend") VendQrcodeAttend vendQrcodeAttend, @Param("page") Page page);
+    
+    int countVendQrcodeAttend(VendQrcodeAttend vendQrcodeAttend);
+    
+    int deleteBatch(int ids[]);
+    
+    List<VendQrcodeAttend> selectByParams(@Param("vendQrcodeAttend") VendQrcodeAttend vendQrcodeAttend);
+    
+    List<VendQrcodeAttend> findAll();
 }

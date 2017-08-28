@@ -2,6 +2,8 @@ package vend.entity;
 
 import java.util.Date;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class VendShopQrcode {
     private Integer id;
 
@@ -36,7 +38,7 @@ public class VendShopQrcode {
     public void setUsercode(String usercode) {
         this.usercode = usercode == null ? null : usercode.trim();
     }
-
+    @NotEmpty(message="二维码不能为空")
     public String getQrcode() {
         return qrcode;
     }
@@ -68,7 +70,7 @@ public class VendShopQrcode {
     public void setPayTime(Date payTime) {
         this.payTime = payTime;
     }
-
+    @NotEmpty(message="二维码名不能为空")
     public String getExtend1() {
         return extend1;
     }

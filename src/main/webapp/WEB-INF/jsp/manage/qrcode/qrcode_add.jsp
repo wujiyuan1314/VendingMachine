@@ -24,7 +24,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>coupon/coupons" class="current">优惠券列表</a>
+      <a href="<%=basePath1%>qrcode/qrcodes" class="current">二维码列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -36,45 +36,40 @@
 		<div class="span12">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-info-sign"></i></span>
-                 <h5>优惠券添加</h5>
+                 <h5>二维码添加</h5>
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="add" enctype="multipart/form-data" commandName="vendCoupon" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			    <sf:form class="form-horizontal" method="post" action="add" enctype="multipart/form-data" commandName="vendShopQrcode" name="basic_validate" id="basic_validate" novalidate="novalidate">
+	              <sf:hidden path="usercode"/>
 	              <div class="control-group">
-	                <label class="control-label">优惠券名</label>
+	                <label class="control-label">二维码名</label>
 	                <div class="controls">
-	                  <sf:input path="couponName"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponName" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <sf:input path="extend1"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend1" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">优惠券金额</label>
+	                <label class="control-label">二维码类型</label>
 	                <div class="controls">
-	                <sf:input path="couponScale"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponScale" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                <sf:select path="extend2" items="${qrcodetypes}" itemLabel="itemname" itemValue="itemno">
+								            </sf:select>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend2" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">优惠券描述</label>
+	                <label class="control-label">上传二维码
+	                (可上传类型:<c:forEach items="${uppictypes}" var="uppictype">
+	                  ${uppictype.itemname},
+	                  </c:forEach>)</label>
 	                <div class="controls">
-	                  <sf:input path="couponInfo"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponInfo" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                                             图片1： <input type="file" name="file" id="file_qrcode"/>
+	                  <a href="javascript:doUpload('qrcode')" class="btn btn-success">上传</a>  
+	                  <span class="infoqrcode" style="color:#b94a48;"></span>    
+	                  <sf:hidden path="qrcode" class="filepath"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="qrcode" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
-	              <div class="control-group">
-	                <label class="control-label">优惠券开始日期</label>
-	                <div class="controls">
-	                  <sf:input path="startTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="startTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
-	                </div>
-	              </div>
-	              <div class="control-group">
-	                <label class="control-label">优惠券结束日期</label>
-	                <div class="controls">
-	                  <sf:input path="endTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="endTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
-	                </div>
 	              </div>
 	              <div class="form-actions">
 	                <input type="submit" value="添加" class="btn btn-success">

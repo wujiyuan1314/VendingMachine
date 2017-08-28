@@ -425,9 +425,6 @@ Enjoy!
           filename = filename.split(/[\/\\]+/);
           filename = filename[(filename.length-1)];
         }
-        if(filename!='未选择'){
-        	$(".filepath").val(filename);
-        }
         filenameTag.text(filename);
       };
 

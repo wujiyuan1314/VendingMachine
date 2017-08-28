@@ -147,6 +147,9 @@
 		<if test="vendShopQrcode.extend1 != null and !&quot;&quot;.equals(vendShopQrcode.extend1.trim())">
 			and extend1 = #{vendShopQrcode.extend1}
 		</if>
+		<if test="vendShopQrcode.extend2 != null and !&quot;&quot;.equals(vendShopQrcode.extend2.trim())">
+			and extend2 = #{vendShopQrcode.extend2}
+		</if>
 	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
   </select>
   
@@ -155,7 +158,10 @@
  	<where>
  		<if test="extend1 != null and !&quot;&quot;.equals(extend1.trim())">
 		and extend1 = #{extend1}
-	</if>
+	    </if>
+	    <if test="extend2 != null and !&quot;&quot;.equals(extend2.trim())">
+		and extend2 = #{extend2}
+	    </if>
  	</where>
   </select>
   

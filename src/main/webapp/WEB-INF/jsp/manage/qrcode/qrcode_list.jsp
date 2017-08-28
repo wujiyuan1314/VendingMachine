@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<heqrcode>
+<head>
 <title>自动售货机管理系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <%@ include file="../../common/common_css.jsp" %>
-</heqrcode>
+</head>
 <body>
 
-<!--Heqrcodeer-part-->
+<!--Header-part-->
 <%@ include file="../../common/common_top.jsp" %>
-<!--Heqrcodeer-part-->
+<!--Header-part-->
 
 <!--sidebar-menu-->
 <%@ include file="../../common/common_left.jsp" %>
@@ -19,14 +19,14 @@
 
 <!--main-container-part-->
 <div id="content">
-<!--breqrcodecrumbs-->
-  <div id="content-heqrcodeer">
-    <div id="breqrcodecrumb"> 
+<!--breadcrumbs-->
+  <div id="content-header">
+    <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>qrcode/qrcodes" class="current">优惠券列表</a>
+      <a href="<%=basePath1%>qrcode/qrcodes" class="current">二维码列表</a>
     </div>
   </div>
-<!--End-breqrcodecrumbs-->
+<!--End-breadcrumbs-->
 
 <!--Action boxes-->
   <div class="container-fluid">
@@ -36,14 +36,23 @@
 		<div class="span12">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-                 <h5>优惠券列表</h5>
+                 <h5>二维码列表</h5>
               </div>
               
 			  <div class="widget-content">
 			      <table style="margin-bottom:5px;">
 			            <tr>
 			              <th>二维码名:</th>
-			              <th><input type="text" name="extend1" id="extend1" placeholder="按优惠券名搜索"/>&nbsp;&nbsp;</th>
+			              <th><input type="text" name="extend1" id="extend1" placeholder="按二维码名搜索"/>&nbsp;&nbsp;</th>
+		                  <th>二维码类型:</th>
+		                  <th>
+		                    <select name="extend2" id="extend2">
+						       <option value=" ">全部</option>
+							     <c:forEach items="${qrcodetypes}" var="qrcodetype" varStatus="status">
+							       <option value="${qrcodetype.itemno}">${qrcodetype.itemname}</option>
+							     </c:forEach>
+						     </select>&nbsp;&nbsp;
+                          </th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>
 		                  <td><input type="button" onclick="dels('qrcode');" value="批量删除" class="btn btn-danger"/></td>
@@ -51,24 +60,24 @@
 			      </table>
 			
 			      <table class="table table-bordered table-striped with-check">
-			         <theqrcode>
+			         <thead>
 			            <tr>
 			              <th><input type="checkbox" onclick="selectAll('Id');" id="all" name="title-table-checkbox" /></th>
 		                  <th style="width:25px;">序号</th>
 		                  <th>二维码名</th>
+		                  <th>二维码</th>
 		                  <th>关注人数</th>
-		                  <th>二维码介绍</th>
 		                  <th>操作</th>
 		                </tr>
-			         </theqrcode>
+			         </thead>
 			         <tbody>
 			           <c:forEach items="${vendShopQrcodes}" var="vendShopQrcode" varStatus="st">
-				           <tr class="grqrcodeeX">
+				           <tr class="gradeX">
 					          <th><input type="checkbox" name="Id" id="Id" value="${vendShopQrcode.id}"/></th>
 					          <td style="text-align:center;">${st.index+1}</td>
 			                  <td>${vendShopQrcode.extend1}</td>
+			                  <td><a href="<%=basePath1%>${vendShopQrcode.qrcode}" target="_blank" class="icon-picture" style="color:green;">查看</a></td>
 			                  <td>${vendShopQrcode.attenNum}</td>
-			                  <td>${vendShopQrcode.extend2}</td>
 			                  <td class="center">
 			                     <a href="${vendShopQrcode.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
 			                     <a href="javascript:void(0);" onclick="delconfirm(${vendShopQrcode.id});" class="btn btn-danger  icon-trash"/></a>
@@ -113,4 +122,4 @@ function delconfirm(id){
 }
 </script>
 </body>
-</html>
+</html>					     

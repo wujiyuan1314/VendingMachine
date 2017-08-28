@@ -125,4 +125,35 @@
       extend3 = #{extend3,jdbcType=VARCHAR}
     where usercode = #{usercode,jdbcType=VARCHAR}
   </update>
+  <!-- 一下为自定义方法 -->
+  <select id="listVendAccount" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_account
+	<where>
+		<if test="vendAccount.usercode != null and !&quot;&quot;.equals(vendAccount.usercode.trim())">
+			and usercode = #{vendAccount.usercode}
+		</if>
+	</where>order by usercode limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="countVendAccount" resultType="int" parameterType="vend.entity.VendAccount">
+ 	select count(*) from vend_account
+ 	<where>
+ 		<if test="usercode != null and !&quot;&quot;.equals(usercode.trim())">
+			and usercode = #{usercode}
+		</if>
+ 	</where>
+  </select>
+  
+   <select id="findAll" resultMap="BaseResultMap">
+ 	select * from vend_account
+  </select>
+  <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="int">
+        delete from vend_account where usercode in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

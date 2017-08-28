@@ -114,4 +114,45 @@
       extend3 = #{extend3,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+     <!-- 一下为自定义方法 -->
+  <select id="listVendQrcodeAttend" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_qrcode_attend
+	<where>
+		<if test="vendQrcodeAttend.qrcodeId != null and !&quot;&quot;.equals(vendQrcodeAttend.qrcodeId.trim())">
+			and qrcode_id = #{vendQrcodeAttend.qrcodeId}
+		</if>
+	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="selectByParams" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_qrcode_attend
+	<where>
+		<if test="vendQrcodeAttend.qrcodeId != null and !&quot;&quot;.equals(vendQrcodeAttend.qrcodeId.trim())">
+			and qrcode_id = #{vendQrcodeAttend.qrcodeId}
+		</if>
+		<if test="vendQrcodeAttend.usercode != null and !&quot;&quot;.equals(vendQrcodeAttend.usercode.trim())">
+			and usercode = #{vendQrcodeAttend.usercode}
+		</if>
+	</where>
+  </select>
+  
+  <select id="countVendQrcodeAttend" resultType="int" parameterType="vend.entity.VendQrcodeAttend">
+ 	select count(*) from vend_qrcode_attend
+ 	<where>
+ 		<if test="qrcodeId != null and !&quot;&quot;.equals(qrcodeId.trim())">
+		and qrcode_id = #{qrcodeId}
+	    </if>
+ 	</where>
+  </select>
+  <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="int">
+        delete from vend_qrcode_attend where id in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

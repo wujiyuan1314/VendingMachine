@@ -18,6 +18,7 @@ import base.util.Function;
 import base.util.Page;
 import vend.entity.CodeLibrary;
 import vend.entity.VendShopQrcode;
+import vend.service.CodeLibraryService;
 import vend.service.VendShopQrcodeService;
 
 @Controller
@@ -27,6 +28,8 @@ public class VendShopQrcodeController{
 	
 	@Autowired
 	VendShopQrcodeService vendShopQrcodeService;
+	@Autowired
+	CodeLibraryService codeLibraryService;
 	/**
 	 * 根据输入信息条件查询二维码列表，并分页显示
 	 * @param model
@@ -45,6 +48,8 @@ public class VendShopQrcodeController{
 		}
 		logger.info(page.toString());
 		logger.info(vendShopQrcode.toString());
+		List<CodeLibrary> qrcodetypes=codeLibraryService.selectByCodeNo("QRCODETYPE");
+		model.addAttribute("qrcodetypes", qrcodetypes);
 		List<VendShopQrcode> vendShopQrcodes = vendShopQrcodeService.listVendShopQrcode(vendShopQrcode, page);
 		model.addAttribute("vendShopQrcodes",vendShopQrcodes);
 		return "manage/qrcode/qrcode_list";
@@ -56,8 +61,12 @@ public class VendShopQrcodeController{
 	 */
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String qrcoded(Model model){
+		List<CodeLibrary> qrcodetypes=codeLibraryService.selectByCodeNo("QRCODETYPE");
+		model.addAttribute("qrcodetypes", qrcodetypes);
+		List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
+		model.addAttribute("uppictypes", uppictypes);
 		model.addAttribute(new VendShopQrcode());
-		return "manage/qrcode/qrcode_qrcoded";
+		return "manage/qrcode/qrcode_add";
 	}
    /**
     * 添加二维码信息
@@ -69,8 +78,12 @@ public class VendShopQrcodeController{
     */
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String qrcoded(HttpServletRequest request,Model model,@Validated VendShopQrcode vendShopQrcode,BindingResult br){
+    	List<CodeLibrary> qrcodetypes=codeLibraryService.selectByCodeNo("QRCODETYPE");
+		model.addAttribute("qrcodetypes", qrcodetypes);
+    	List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
+		model.addAttribute("uppictypes", uppictypes);
     	if(br.hasErrors()){
-    		return "manage/qrcode/qrcode_qrcoded";
+    		return "manage/qrcode/qrcode_add";
     	}
     	vendShopQrcodeService.insertVendShopQrcode(vendShopQrcode);
     	return "redirect:qrcodes";
@@ -82,6 +95,10 @@ public class VendShopQrcodeController{
 	 */
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable int id){
+		List<CodeLibrary> qrcodetypes=codeLibraryService.selectByCodeNo("QRCODETYPE");
+		model.addAttribute("qrcodetypes", qrcodetypes);
+		List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
+		model.addAttribute("uppictypes", uppictypes);
 		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(id);
 		model.addAttribute(vendShopQrcode);
 		return "manage/qrcode/qrcode_edit";
@@ -96,6 +113,10 @@ public class VendShopQrcodeController{
 	 */
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String edit(HttpServletRequest request,Model model,@Validated VendShopQrcode vendShopQrcode,BindingResult br){
+    	List<CodeLibrary> qrcodetypes=codeLibraryService.selectByCodeNo("QRCODETYPE");
+		model.addAttribute("qrcodetypes", qrcodetypes);
+    	List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
+		model.addAttribute("uppictypes", uppictypes);
     	if(br.hasErrors()){
     		return "manage/qrcode/qrcode_edit";
     	}

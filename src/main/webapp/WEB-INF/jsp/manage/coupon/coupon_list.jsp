@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<hecoupon>
+<head>
 <title>自动售货机管理系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <%@ include file="../../common/common_css.jsp" %>
-</hecoupon>
+</head>
 <body>
 
-<!--Hecouponer-part-->
+<!--Header-part-->
 <%@ include file="../../common/common_top.jsp" %>
-<!--Hecouponer-part-->
+<!--Header-part-->
 
 <!--sidebar-menu-->
 <%@ include file="../../common/common_left.jsp" %>
@@ -19,9 +19,9 @@
 
 <!--main-container-part-->
 <div id="content">
-<!--brecouponcrumbs-->
-  <div id="content-hecouponer">
-    <div id="brecouponcrumb"> 
+<!--breadcrumbs-->
+  <div id="content-header">
+    <div id="breadcrumb">  
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
       <a href="<%=basePath1%>coupon/coupons" class="current">优惠券列表</a>
     </div>
