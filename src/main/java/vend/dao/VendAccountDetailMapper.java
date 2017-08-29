@@ -1,5 +1,10 @@
 package vend.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import base.util.Page;
 import vend.entity.VendAccountDetail;
 
 public interface VendAccountDetailMapper {
@@ -14,4 +19,12 @@ public interface VendAccountDetailMapper {
     int updateByPrimaryKeySelective(VendAccountDetail record);
 
     int updateByPrimaryKey(VendAccountDetail record);
+    /**下为自定义方法 */
+    List<VendAccountDetail> listVendAccountDetail(@Param("vendAccountDetail") VendAccountDetail vendAccountDetail, @Param("page") Page page);
+    
+    int countVendAccountDetail(VendAccountDetail vendAccountDetail);
+    
+    int deleteBatch(int ids[]);
+    
+    List<VendAccountDetail> findAll();
 }

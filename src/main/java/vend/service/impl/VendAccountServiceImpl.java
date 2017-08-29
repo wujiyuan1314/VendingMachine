@@ -71,6 +71,9 @@ public class VendAccountServiceImpl implements VendAccountService {
 	public VendAccount getOne(String usercode){
 		return vendAccountMapper.selectByPrimaryKey(usercode);
 	}
+	/**
+	 * 查找全部
+	 */
 	public List<VendAccount> findAll() {
 		// TODO Auto-generated method stub
 		return vendAccountMapper.findAll();

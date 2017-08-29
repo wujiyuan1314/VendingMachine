@@ -125,4 +125,41 @@
       extend3 = #{extend3,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!-- 一下为自定义方法 -->
+  <select id="listVendAccountDetail" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_accountdetail
+	<where>
+		<if test="vendAccountDetail.usercode != null and !&quot;&quot;.equals(vendAccountDetail.usercode.trim())">
+			and usercode = #{vendAccountDetail.usercode}
+		</if>
+		<if test="vendAccountDetail.type != null and !&quot;&quot;.equals(vendAccountDetail.type.trim())">
+			and type = #{vendAccountDetail.type}
+		</if>
+	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="countVendAccountDetail" resultType="int" parameterType="vend.entity.VendAccountDetail">
+ 	select count(*) from vend_accountdetail
+ 	<where>
+ 		<if test="usercode != null and !&quot;&quot;.equals(usercode.trim())">
+		  and usercode = #{usercode}
+	    </if>
+	    <if test="type != null and !&quot;&quot;.equals(type.trim())">
+		  and type = #{type}
+	    </if>
+ 	</where>
+  </select>
+  
+   <select id="findAll" resultMap="BaseResultMap">
+ 	select * from vend_accountdetail
+  </select>
+  <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="int">
+        delete from vend_accountdetail where id in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

@@ -1,5 +1,6 @@
 package vend.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Service;
 import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
+import vend.dao.VendAccountMapper;
 import vend.dao.VendUserMapper;
+import vend.entity.VendAccount;
 import vend.entity.VendUser;
 import vend.service.VendUserService;
 
@@ -17,6 +20,8 @@ import vend.service.VendUserService;
 public class VendUserServiceImpl implements VendUserService {
 	@Autowired
 	VendUserMapper vendUserMapper;
+	@Autowired
+	VendAccountMapper vendAccountMapper;
 	/**
 	 * 根据输入信息条件查询用户列表，并分页显示
 	 * @param vendUser
@@ -39,6 +44,17 @@ public class VendUserServiceImpl implements VendUserService {
 		vendUser.setUsercode(usercode);
 		vendUser.setCreateTime(createTime);
 		vendUser.setUpdateTime(createTime);
+		
+		//添加该用户账户信息
+		VendAccount vendAccount=new VendAccount();
+		vendAccount.setUsercode(usercode);
+		vendAccount.setOwnAmount(BigDecimal.valueOf(0.00));
+		String moneyencrypt=Function.getEncrypt(BigDecimal.valueOf(0.00).toString());
+		vendAccount.setMoneyencrypt(moneyencrypt);
+		vendAccount.setCreateTime(createTime);
+		vendAccount.setUpdateTime(createTime);
+		vendAccountMapper.insert(vendAccount);
+		
 		return vendUserMapper.insertSelective(vendUser);
 	}
 	/**
