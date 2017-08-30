@@ -9,6 +9,7 @@ import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class LoginController extends LogoutFilter{
@@ -39,5 +40,14 @@ public class LoginController extends LogoutFilter{
             subject.logout(); // session 会销毁，在SessionListener监听session销毁，清理权限缓存  
         }  
         return "redirect:login";
-    }  
+    }
+    /**
+     * 微信小程序用户登录
+     * @return
+     */
+    @RequestMapping(value="/wxlogin",method=RequestMethod.GET)
+    public @ResponseBody String wxlogin(String nickName){
+    	String json="";
+    	return json;
+    }
 }
