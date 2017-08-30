@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +29,7 @@ public class CodeLibraryController {
 	
 	@Autowired
 	CodeLibraryService codeLibraryService;
-	
+	@RequiresPermissions({"codeLibrary:list"})
 	@RequestMapping(value="/codeLibrarys")
 	public String listCodeLibrary(Model model, @ModelAttribute CodeLibrary CodeLibrary,HttpServletRequest request) {
 		List<CodeLibrary> codeLibrarys = codeLibraryService.listCodeLibrary(CodeLibrary);
@@ -40,6 +41,7 @@ public class CodeLibraryController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"codeLibrary:add"})
 	@RequestMapping(value="/{codeno}/add",method=RequestMethod.GET)
 	public String addcodeLibrary(Model model,@PathVariable String codeno){
 		model.addAttribute(new CodeLibrary());
@@ -54,6 +56,7 @@ public class CodeLibraryController {
     * @param br
     * @return
     */
+	@RequiresPermissions({"codeLibrary:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addcodeLibrary(HttpServletRequest request,Model model,@Validated CodeLibrary codeLibrary,BindingResult br){
     	if(br.hasErrors()){
@@ -81,6 +84,7 @@ public class CodeLibraryController {
 	 * @param model
 	 * @return
 	 */
+    @RequiresPermissions({"codeLibrary:edit"})
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String editCodeLibrary(Model model,@PathVariable String id){
 		CodeLibrary codeLibrary=codeLibraryService.getCodeLibraryByID(id);
@@ -94,6 +98,7 @@ public class CodeLibraryController {
     * @param br
     * @return
     */
+    @RequiresPermissions({"codeLibrary:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String editCodeLibrary(Model model,@Validated CodeLibrary codeLibrary,BindingResult br){
     	if(br.hasErrors()){
@@ -108,6 +113,7 @@ public class CodeLibraryController {
      * @param br
      * @return
      */
+    @RequiresPermissions({"codeLibrary:del"})
     @RequestMapping(value="/{codeno}/{id}/del")
  	public String delcodeLibrary(@PathVariable String id,@PathVariable String codeno){
     	 codeLibraryService.deleteCodeLibrary(id);
@@ -118,6 +124,7 @@ public class CodeLibraryController {
       * @param ids
       * @return
       */
+    @RequiresPermissions({"codeLibrary:dels"})
     @RequestMapping(value="/dels")
   	public String delcodeLibrarys(String ids[]){
     	  codeLibraryService.deleteCodeLibrarys(ids);

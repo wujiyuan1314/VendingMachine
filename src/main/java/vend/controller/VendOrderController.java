@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,7 @@ public class VendOrderController{
 	 * @param request
 	 * @return
 	 */
+	@RequiresPermissions({"order:orders"})
 	@RequestMapping(value="/orders")
 	public String listVendOrder(Model model,@ModelAttribute VendOrder vendOrder, @ModelAttribute Page page,HttpServletRequest request) {
 		String currentPageStr = request.getParameter("currentPage");
@@ -52,6 +54,7 @@ public class VendOrderController{
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"order:add"})
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String add(Model model){
 		model.addAttribute(new VendOrder());
@@ -64,6 +67,7 @@ public class VendOrderController{
     * @param br
     * @return
     */
+	@RequiresPermissions({"order:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(Model model,@Validated VendOrder vendOrder,BindingResult br){
     	if(br.hasErrors()){
@@ -77,6 +81,7 @@ public class VendOrderController{
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"order:edit"})
 	@RequestMapping(value="/{ordercode}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable String ordercode){
 		VendOrder vendOrder=vendOrderService.getOne(ordercode);
@@ -90,6 +95,7 @@ public class VendOrderController{
 	 * @param br
 	 * @return
 	 */
+	@RequiresPermissions({"order:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String edit(Model model,@Validated VendOrder vendOrder,BindingResult br){
     	if(br.hasErrors()){
@@ -104,6 +110,7 @@ public class VendOrderController{
      * @param br
      * @return
      */
+	@RequiresPermissions({"order:del"})
     @RequestMapping(value="/{orderId}/del")
  	public String del(@PathVariable String orderId){
     	vendOrderService.delVendOrder(orderId);
@@ -114,6 +121,7 @@ public class VendOrderController{
      * @param ids
      * @return
      */
+	@RequiresPermissions({"order:dels"})
     @RequestMapping(value="/dels")
   	public String dels(HttpServletRequest request){
     	String ordercodes=request.getParameter("ids");

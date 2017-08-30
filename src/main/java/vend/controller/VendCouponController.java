@@ -4,6 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +39,7 @@ public class VendCouponController{
 	 * @param request
 	 * @return
 	 */
+	@RequiresPermissions({"coupon:coupons"})
 	@RequestMapping(value="/coupons")
 	public String listVendCoupon(Model model,@ModelAttribute VendCoupon vendCoupon, @ModelAttribute Page page,HttpServletRequest request) {
 		String currentPageStr = request.getParameter("currentPage");
@@ -57,6 +59,7 @@ public class VendCouponController{
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"coupon:add"})
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String coupond(Model model){
 		model.addAttribute(new VendCoupon());
@@ -68,6 +71,7 @@ public class VendCouponController{
     * @param br
     * @return
     */
+	@RequiresPermissions({"coupon:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String coupond(@Validated VendCoupon vendCoupon,BindingResult br){
     	if(br.hasErrors()){
@@ -81,6 +85,7 @@ public class VendCouponController{
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"coupon:edit"})
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable int id){
 		VendCoupon vendCoupon=vendCouponService.getOne(id);
@@ -93,6 +98,7 @@ public class VendCouponController{
 	 * @param br
 	 * @return
 	 */
+	@RequiresPermissions({"coupon:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String edit(@Validated VendCoupon vendCoupon,BindingResult br){
     	if(br.hasErrors()){
@@ -107,6 +113,7 @@ public class VendCouponController{
      * @param br
      * @return
      */
+	@RequiresPermissions({"coupon:del"})
     @RequestMapping(value="/{id}/del")
  	public String del(@PathVariable Integer id){
     	vendCouponService.delVendCoupon(id);;
@@ -117,6 +124,7 @@ public class VendCouponController{
      * @param ids
      * @return
      */
+	@RequiresPermissions({"coupon:dels"})
     @RequestMapping(value="/dels")
   	public String dels(HttpServletRequest request){
     	String ids=request.getParameter("ids");

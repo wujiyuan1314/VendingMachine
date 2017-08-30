@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +43,7 @@ public class VendAdController{
 	 * @param request
 	 * @return
 	 */
+	@RequiresPermissions({"ad:ads"})
 	@RequestMapping(value="/ads")
 	public String listVendAd(Model model,@ModelAttribute VendAd vendAd, @ModelAttribute Page page,HttpServletRequest request) {
 		String currentPageStr = request.getParameter("currentPage");
@@ -61,6 +63,7 @@ public class VendAdController{
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"ad:add"})
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String add(Model model){
 		List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
@@ -78,6 +81,7 @@ public class VendAdController{
     * @param br
     * @return
     */
+	@RequiresPermissions({"ad:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(HttpServletRequest request,Model model,@Validated VendAd vendAd,BindingResult br){
     	List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
@@ -95,6 +99,7 @@ public class VendAdController{
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"ad:edit"})
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable int id){
 		List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
@@ -113,6 +118,7 @@ public class VendAdController{
 	 * @param br
 	 * @return
 	 */
+	@RequiresPermissions({"ad:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String edit(HttpServletRequest request,Model model,@Validated VendAd vendAd,BindingResult br){
     	List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
@@ -131,6 +137,7 @@ public class VendAdController{
      * @param br
      * @return
      */
+	@RequiresPermissions({"ad:del"})
     @RequestMapping(value="/{id}/del")
  	public String del(@PathVariable Integer id){
     	vendAdService.delVendAd(id);;
@@ -141,6 +148,7 @@ public class VendAdController{
      * @param ids
      * @return
      */
+	@RequiresPermissions({"ad:dels"})
     @RequestMapping(value="/dels")
   	public String dels(HttpServletRequest request){
     	String ids=request.getParameter("ids");

@@ -20,7 +20,9 @@
 
 	<!--1.开启springmvc注解模式 a.自动注册DefaultAnnotationHandlerMapping,AnnotationMethodHandlerAdapter 
 		b.默认提供一系列的功能:数据绑定，数字和日期的format@NumberFormat,@DateTimeFormat c:xml,json的默认读写支持 -->
-	<mvc:annotation-driven />
+		<context:component-scan base-package="vend.controller.VendGoodsController" />  
+        <context:annotation-config /> 
+	    <mvc:annotation-driven />
 
 	<!-- 2.访问静态资源 <mvc:resources location="/resources/" mapping="/resources//**"/> -->
 	

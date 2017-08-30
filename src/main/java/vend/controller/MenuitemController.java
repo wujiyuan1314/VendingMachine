@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,6 +44,7 @@ public class MenuitemController {
 	 * 跳转到列表页
 	 * @return
 	 */
+	@RequiresPermissions({"menuitem:dels"})
 	@RequestMapping(value="/menuitems")
 	public String listMenuitem() {
 		return "manage/menuitem/menuitem_list";
@@ -110,6 +112,7 @@ public class MenuitemController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"menuitem:add"})
 	@RequestMapping(value="/{pid}/add",method=RequestMethod.GET)
 	public String addmenuitem(Model model,@PathVariable int pid){
     	model.addAttribute("pid", pid);
@@ -122,6 +125,7 @@ public class MenuitemController {
     * @param br
     * @return
     */
+	@RequiresPermissions({"menuitem:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addmenuitem(@Validated Menuitem menuitem,BindingResult br){
     	if(br.hasErrors()){
@@ -139,6 +143,7 @@ public class MenuitemController {
      * @param id
      * @return
      */
+	@RequiresPermissions({"menuitem:edit"})
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String editMenuitem(Model model,@PathVariable int id){
 		Menuitem menuitem=menuitemService.getMenuitemByID(id);
@@ -151,6 +156,7 @@ public class MenuitemController {
     * @param br
     * @return
     */
+	@RequiresPermissions({"menuitem:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String editMenuitem(@Validated Menuitem menuitem,BindingResult br){
     	if(br.hasErrors()){
@@ -165,6 +171,7 @@ public class MenuitemController {
      * @param br
      * @return
      */
+	@RequiresPermissions({"menuitem:del"})
      @RequestMapping(value="/{id}/del")
  	public String delmenuitem(@PathVariable int id){
     	 menuitemService.deleteMenuitem(id);
@@ -175,6 +182,7 @@ public class MenuitemController {
       * @param ids
       * @return
       */
+	@RequiresPermissions({"menuitem:dels"})
       @RequestMapping(value="/dels")
   	public String menuitem(int ids[]){
     	  menuitemService.deleteMenuitems(ids);

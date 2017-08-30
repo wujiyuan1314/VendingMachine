@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +42,7 @@ public class VendPermissionController{
 	 * 跳转到列表页
 	 * @return
 	 */
+	@RequiresPermissions({"permission:permissions"})
 	@RequestMapping(value="/permissions")
 	public String listVendPermission() {
 		return "manage/permission/permission_list";
@@ -120,6 +122,7 @@ public class VendPermissionController{
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"permission:add"})
 	@RequestMapping(value="/{pid}/add",method=RequestMethod.GET)
 	public String add(Model model,@PathVariable int pid){
 		VendPermission vendPermission=new VendPermission();
@@ -134,6 +137,7 @@ public class VendPermissionController{
     * @param br
     * @return
     */
+	@RequiresPermissions({"permission:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(Model model,@Validated VendPermission vendPermission,BindingResult br){
     	VendPermission vendPermission1= vendPermissionService.selectByPermissionName(vendPermission.getPermissionName());
@@ -151,6 +155,7 @@ public class VendPermissionController{
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"permission:edit"})
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable int id){
 		VendPermission vendPermission=vendPermissionService.getOne(id);
@@ -164,6 +169,7 @@ public class VendPermissionController{
 	 * @param br
 	 * @return
 	 */
+	@RequiresPermissions({"permission:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String edit(Model model,@Validated VendPermission vendPermission,BindingResult br){
     	if(br.hasErrors()){
@@ -178,6 +184,7 @@ public class VendPermissionController{
      * @param br
      * @return
      */
+	@RequiresPermissions({"permission:del"})
     @RequestMapping(value="/{id}/del")
  	public String del(@PathVariable Integer id){
     	vendPermissionService.delVendPermission(id);;
@@ -188,6 +195,7 @@ public class VendPermissionController{
      * @param ids
      * @return
      */
+	@RequiresPermissions({"permission:dels"})
     @RequestMapping(value="/dels")
   	public String dels(HttpServletRequest request){
     	String ids=request.getParameter("ids");

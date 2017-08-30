@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +16,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import base.util.FileUploadUtils;
 import base.util.Function;
@@ -40,6 +43,7 @@ public class VendGoodsController{
 	 * @param request
 	 * @return
 	 */
+	@RequiresPermissions({"goods:goodss"})
 	@RequestMapping(value="/goodss")
 	public String listVendGoods(Model model,@ModelAttribute VendGoods vendGoods, @ModelAttribute Page page,HttpServletRequest request) {
 		String currentPageStr = request.getParameter("currentPage");
@@ -59,24 +63,27 @@ public class VendGoodsController{
 	 * @param response
 	 * @throws IOException
 	 */
-	@RequestMapping(value="/jgoodss",method=RequestMethod.GET)
-	public void getJson(HttpServletRequest request,HttpServletResponse response) throws IOException {
+	@RequestMapping(value="/jgoodss",method=RequestMethod.GET,produces = "application/json;charset=UTF-8")
+	//@RequestMapping(value="/jgoodss",method=RequestMethod.GET)
+	public @ResponseBody List<VendGoods> getJson(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		List<VendGoods> vendGoodss = vendGoodsService.findAll();
 		String path = request.getContextPath();
 		String basePath1 = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
 		for(VendGoods vendGoods:vendGoodss){
 			vendGoods.setPic(path+vendGoods.getPic());
 		}
-		JSONArray json = JSONArray.fromObject(vendGoodss);
-		response.setCharacterEncoding("UTF-8");
-		PrintWriter out=response.getWriter();
-		out.print(json);
+		return vendGoodss;
+		//JSONArray json = JSONArray.fromObject(vendGoodss);
+		//response.setCharacterEncoding("UTF-8");
+		//PrintWriter out=response.getWriter();
+		//out.print(json);
 	}
 	/**
 	 * 跳转商品信息添加界面
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"goods:add"})
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String add(Model model){
 		model.addAttribute(new VendGoods());
@@ -90,6 +97,7 @@ public class VendGoodsController{
     * @param br
     * @return
     */
+	@RequiresPermissions({"goods:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(HttpServletRequest request,Model model,@Validated VendGoods vendGoods,BindingResult br){
     	if(br.hasErrors()){
@@ -105,6 +113,7 @@ public class VendGoodsController{
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"goods:edit"})
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable int id){
 		VendGoods vendGoods=vendGoodsService.getOne(id);
@@ -119,6 +128,7 @@ public class VendGoodsController{
 	 * @param br
 	 * @return
 	 */
+	@RequiresPermissions({"goods:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String edit(HttpServletRequest request,Model model,@Validated VendGoods vendGoods,BindingResult br){
     	if(br.hasErrors()){
@@ -139,6 +149,7 @@ public class VendGoodsController{
      * @param br
      * @return
      */
+	@RequiresPermissions({"goods:del"})
     @RequestMapping(value="/{id}/del")
  	public String del(@PathVariable Integer id){
     	vendGoodsService.delVendGoods(id);;
@@ -149,6 +160,7 @@ public class VendGoodsController{
      * @param ids
      * @return
      */
+	@RequiresPermissions({"goods:dels"})
     @RequestMapping(value="/dels")
   	public String dels(HttpServletRequest request){
     	String ids=request.getParameter("ids");

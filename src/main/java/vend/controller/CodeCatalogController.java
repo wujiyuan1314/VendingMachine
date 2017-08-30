@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +31,7 @@ public class CodeCatalogController {
 	CodeCatalogService codeCatalogService;
 	@Autowired
 	CodeLibraryService codeLibraryService;
-	
+	@RequiresPermissions({"codeCatalog:list"})
 	@RequestMapping(value="/codeCatalogs")
 	public String listCodeCatalog(Model model, @ModelAttribute CodeCatalog CodeCatalog, @ModelAttribute Page page, HttpServletRequest request) {
 		
@@ -51,6 +52,7 @@ public class CodeCatalogController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"codeCatalog:add"})
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String addcodeCatalog(Model model){
 		model.addAttribute(new CodeCatalog());
@@ -62,6 +64,7 @@ public class CodeCatalogController {
     * @param br
     * @return
     */
+	@RequiresPermissions({"codeCatalog:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addcodeCatalog(Model model,@Validated CodeCatalog CodeCatalog,BindingResult br){
     	String codeno=CodeCatalog.getCodeno();
@@ -88,6 +91,7 @@ public class CodeCatalogController {
 	 * @param model
 	 * @return
 	 */
+    @RequiresPermissions({"codeCatalog:edit"})
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String editCodeCatalog(Model model,@PathVariable String id){
 		CodeCatalog codeCatalog=codeCatalogService.getCodeCatalogByID(id);
@@ -101,6 +105,7 @@ public class CodeCatalogController {
     * @param br
     * @return
     */
+    @RequiresPermissions({"codeCatalog:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String editCodeCatalog(Model model,@Validated CodeCatalog codeCatalog,BindingResult br){
     	if(br.hasErrors()){
@@ -115,6 +120,7 @@ public class CodeCatalogController {
      * @param br
      * @return
      */
+    @RequiresPermissions({"codeCatalog:del"})
     @RequestMapping(value="/{id}/del")
  	public String delcodeCatalog(@PathVariable String id){
     	 codeCatalogService.deleteCodeCatalog(id);
@@ -125,12 +131,14 @@ public class CodeCatalogController {
       * @param ids
       * @return
       */
-      @RequestMapping(value="/dels")
+    @RequiresPermissions({"codeCatalog:dels"})
+    @RequestMapping(value="/dels")
   	public String delcodeCatalogs(String ids[]){
     	  codeCatalogService.deleteCodeCatalogs(ids);
   		return "manage/codecatalog/codecatalog_list";
   	}
-      @RequestMapping(value="/{codeno}/codelibrarylist")
+    @RequiresPermissions({"codeCatalogs:codelibrarylist"})
+    @RequestMapping(value="/{codeno}/codelibrarylist")
     public String selectCodeLibraryByCodeno(@PathVariable String codeno,Model model){
     	List<CodeLibrary> list=codeLibraryService.selectByCodeNo(codeno);
     	model.addAttribute("codeno", codeno);
