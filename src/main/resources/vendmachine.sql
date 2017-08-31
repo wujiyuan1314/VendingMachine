@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-08-28 18:03:39
+Date: 2017-08-31 17:59:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,6 +31,7 @@ CREATE TABLE `code_catalog` (
 -- ----------------------------
 -- Records of code_catalog
 -- ----------------------------
+INSERT INTO code_catalog VALUES ('ACCOUNTTYPE', '账户操作类型', '农户的账户操作类型', null, null, null);
 INSERT INTO code_catalog VALUES ('ADTYPE', '广告类型', '广告类型', null, null, null);
 INSERT INTO code_catalog VALUES ('QRCODETYPE', '二维码类型', '二维码类型', null, null, null);
 INSERT INTO code_catalog VALUES ('UPFILETYPE', '文件类型', '上传的文件类型', null, null, null);
@@ -58,6 +59,7 @@ CREATE TABLE `code_library` (
 INSERT INTO code_library VALUES ('06d1e53f7ccf4a7297465e8efca02101', 'UPFILETYPE', '5', 'xlsx', '2017-08-28 10:28:31', null, null);
 INSERT INTO code_library VALUES ('16a5f9620529489892f8ac87cf8d94aa', 'UPPICTYPE', '2', 'JPG', '2017-08-28 10:22:21', null, null);
 INSERT INTO code_library VALUES ('1c6920ae56354383b607aad8532f3002', 'QRCODETYPE', '2', '小程序二维码', '2017-08-28 15:19:43', null, null);
+INSERT INTO code_library VALUES ('20b702be56834dc2a8861b166ac2a884', 'ACCOUNTTYPE', '3', '购买', '2017-08-29 14:01:20', null, null);
 INSERT INTO code_library VALUES ('24fdaea96ed240b2bf2b41931e1d8a18', 'UPFILETYPE', '8', 'docx', '2017-08-28 10:29:11', null, null);
 INSERT INTO code_library VALUES ('25e1d3cf4e514a8c94458b38df3e7a56', 'UPFILETYPE', '1', 'txt', '2017-08-28 10:26:31', null, null);
 INSERT INTO code_library VALUES ('2e612f5a29ca4c0d9e8784bae5cf445d', 'UPPICTYPE', '3', 'BMP', '2017-08-28 10:23:30', null, null);
@@ -71,11 +73,13 @@ INSERT INTO code_library VALUES ('58883f88c5fc46159e805396a6bbd964', 'ADTYPE', '
 INSERT INTO code_library VALUES ('7d2a9fffba54435281931903c3c29f6f', 'UPVIDEOTYPE', '3', '3GP', '2017-08-28 10:30:29', null, null);
 INSERT INTO code_library VALUES ('7ebc0bd02fc44e3fb71a84dd797133f0', 'QRCODETYPE', '1', '商户二维码', '2017-08-28 15:19:34', null, null);
 INSERT INTO code_library VALUES ('920ee5c12aa24151b6f8573ace909d5d', 'ADTYPE', '1', '文字广告', '2017-08-25 11:30:37', null, null);
+INSERT INTO code_library VALUES ('971be2d525484f6cb12a54fd232dbce8', 'ACCOUNTTYPE', '1', '充值', '2017-08-29 14:00:54', null, null);
 INSERT INTO code_library VALUES ('99f6924f5a684541809b58e38181538c', 'UPVIDEOTYPE', '2', 'WMV', '2017-08-28 10:30:20', null, null);
 INSERT INTO code_library VALUES ('a0efb4fdf23545dda7e9466f0f258981', 'UPPICTYPE', '1', 'JPEG', '2017-08-28 10:22:13', null, null);
 INSERT INTO code_library VALUES ('a77ca80193d7479bbad84fba2109e241', 'UPVIDEOTYPE', '7', 'MP4', '2017-08-28 10:31:58', null, null);
 INSERT INTO code_library VALUES ('b5ec7f65025a475a928c34731131af3b', 'UPFILETYPE', '6', 'rar', '2017-08-28 10:28:43', null, null);
 INSERT INTO code_library VALUES ('bb1de1fd6b044c2b8c34a7817b7df215', 'UPPICTYPE', '5', 'GIF', '2017-08-28 10:23:58', null, null);
+INSERT INTO code_library VALUES ('cfd726aa3f944dddaf2e7ac16916ae4b', 'ACCOUNTTYPE', '2', '提现', '2017-08-29 14:01:04', null, null);
 INSERT INTO code_library VALUES ('de379d2f392945ad9756dca39b3349d3', 'UPFILETYPE', '3', 'doc', '2017-08-28 10:26:49', null, null);
 INSERT INTO code_library VALUES ('e33ab7b219de4629b6976ea930917f87', 'ADTYPE', '2', '图片广告', '2017-08-25 11:30:51', null, null);
 INSERT INTO code_library VALUES ('e57f1d63a95544e0a1da2b196e38b4bc', 'UPVIDEOTYPE', '1', 'AVI', '2017-08-28 10:29:38', null, null);
@@ -97,7 +101,7 @@ CREATE TABLE `menuitem` (
   `extend1` varchar(200) DEFAULT NULL,
   `extend2` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menuitem
@@ -123,6 +127,9 @@ INSERT INTO menuitem VALUES ('18', '17', '优惠券列表', 'coupon/coupons', '-
 INSERT INTO menuitem VALUES ('19', '1', '二维码管理', '-', 'icon-qrcode', null, '2017-08-28 14:25:03', '2017-08-28 14:25:03', null, null);
 INSERT INTO menuitem VALUES ('20', '19', '二维码列表', 'qrcode/qrcodes', '-', null, '2017-08-28 14:25:32', '2017-08-28 14:25:32', null, null);
 INSERT INTO menuitem VALUES ('21', '19', '二维码关注列表', 'qrcodeAtt/qrcodeAtts', '-', null, '2017-08-28 17:04:00', '2017-08-28 17:04:00', null, null);
+INSERT INTO menuitem VALUES ('22', '1', '用户账户管理', '-', 'icon-credit-card', null, '2017-08-29 10:44:19', '2017-08-29 10:44:19', null, null);
+INSERT INTO menuitem VALUES ('23', '22', '账户列表', 'account/accounts', '-', null, '2017-08-29 10:44:44', '2017-08-29 10:44:44', null, null);
+INSERT INTO menuitem VALUES ('24', '22', '账户操作纪录', 'accountdetail/accountdetails', '-', null, '2017-08-29 14:00:05', '2017-08-29 14:00:05', null, null);
 
 -- ----------------------------
 -- Table structure for `vend_account`
@@ -144,6 +151,16 @@ CREATE TABLE `vend_account` (
 -- ----------------------------
 -- Records of vend_account
 -- ----------------------------
+INSERT INTO vend_account VALUES ('VM2017083016442563', '0.00', '51fe78b0a1d09990', '2017-08-30 16:44:25', '2017-08-30 16:44:25', null, null, null);
+INSERT INTO vend_account VALUES ('VM2017083017395351', '0.00', '51fe78b0a1d09990', '2017-08-30 17:39:53', '2017-08-30 17:39:53', null, null, null);
+INSERT INTO vend_account VALUES ('VM2017083017401488', '0.00', '51fe78b0a1d09990', '2017-08-30 17:40:14', '2017-08-30 17:40:14', null, null, null);
+INSERT INTO vend_account VALUES ('VM2017083017402876', '0.00', '51fe78b0a1d09990', '2017-08-30 17:40:28', '2017-08-30 17:40:28', null, null, null);
+INSERT INTO vend_account VALUES ('VM2017083114593107', '0.00', '51fe78b0a1d09990', '2017-08-31 14:59:31', '2017-08-31 14:59:31', null, null, null);
+INSERT INTO vend_account VALUES ('VM2017083115191427', '0.00', '51fe78b0a1d09990', '2017-08-31 15:19:14', '2017-08-31 15:19:14', null, null, null);
+INSERT INTO vend_account VALUES ('VM2017083115230747', '0.00', '51fe78b0a1d09990', '2017-08-31 15:23:07', '2017-08-31 15:23:07', null, null, null);
+INSERT INTO vend_account VALUES ('VM2017083115295071', '0.00', '51fe78b0a1d09990', '2017-08-31 15:29:50', '2017-08-31 15:29:50', null, null, null);
+INSERT INTO vend_account VALUES ('VM2017083115300222', '0.00', '51fe78b0a1d09990', '2017-08-31 15:30:02', '2017-08-31 15:30:02', null, null, null);
+INSERT INTO vend_account VALUES ('VM2017083115300625', '0.00', '51fe78b0a1d09990', '2017-08-31 15:30:06', '2017-08-31 15:30:06', null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_accountdetail`
@@ -190,7 +207,7 @@ CREATE TABLE `vend_ad` (
   `extend2` varchar(100) DEFAULT NULL,
   `extend3` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='广告表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='广告表';
 
 -- ----------------------------
 -- Records of vend_ad
@@ -239,7 +256,7 @@ CREATE TABLE `vend_goods` (
   `extend2` varchar(100) DEFAULT NULL,
   `extend3` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='商品信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='商品信息表';
 
 -- ----------------------------
 -- Records of vend_goods
@@ -247,7 +264,6 @@ CREATE TABLE `vend_goods` (
 INSERT INTO vend_goods VALUES ('23', '雪碧', '/userfiles/pic/201708221429509354.jpg', '5.00', '雪碧美国发展速度领先的主要非酒精饮料产品之一', '2017-08-22 14:29:50', '2017-08-22 14:29:50', null, null, null);
 INSERT INTO vend_goods VALUES ('24', '芬达', '/userfiles/pic/201708221431220330.jpg', '4.00', '芬达汽水（Fanta）是1940年代在欧洲开始风行的饮料', '2017-08-22 14:31:22', '2017-08-22 14:31:22', null, null, null);
 INSERT INTO vend_goods VALUES ('25', '王老吉', '/userfiles/pic/201708221432088297.jpg', '6.00', '王老吉是王老吉凉茶的品牌，创立于清道光年间（1828年），被公认为凉茶始祖', '2017-08-22 14:32:08', '2017-08-22 14:32:08', null, null, null);
-INSERT INTO vend_goods VALUES ('26', '地方', '/userfiles/pic/201708230934338819', '34.00', '44435353543535', '2017-08-23 09:34:33', '2017-08-23 09:34:33', null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_machine`
@@ -345,6 +361,7 @@ CREATE TABLE `vend_qrcode_attend` (
 DROP TABLE IF EXISTS `vend_role`;
 CREATE TABLE `vend_role` (
   `id` int(20) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(20) DEFAULT NULL,
   `role_name` varchar(20) DEFAULT NULL COMMENT '角色名称',
   `role_description` varchar(1000) DEFAULT NULL COMMENT '角色描述',
   `create_time` datetime DEFAULT NULL COMMENT '表创建时间',
@@ -359,11 +376,11 @@ CREATE TABLE `vend_role` (
 -- ----------------------------
 -- Records of vend_role
 -- ----------------------------
-INSERT INTO vend_role VALUES ('1', '开发者后台', '最高权限', '2017-08-24 13:33:16', '2017-08-24 13:33:19', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21', null, '1');
-INSERT INTO vend_role VALUES ('2', '总后台', '客户总权限用户', '2017-08-22 14:33:17', '2017-08-22 14:33:17', null, null, '1');
-INSERT INTO vend_role VALUES ('3', '代理后台', '代理总后台管理一部分商户', '2017-08-22 14:33:44', '2017-08-22 14:33:44', null, null, '1');
-INSERT INTO vend_role VALUES ('4', '商家', '普通商户', '2017-08-22 14:33:58', '2017-08-22 14:33:58', null, null, '1');
-INSERT INTO vend_role VALUES ('5', '消费用户', '利用客户端购买商品的消费用户', '2017-08-22 14:34:25', '2017-08-22 14:34:25', null, null, '1');
+INSERT INTO vend_role VALUES ('1', null, '开发者后台', '最高权限', '2017-08-24 13:33:16', '2017-08-24 13:33:19', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24', null, '1');
+INSERT INTO vend_role VALUES ('2', null, '总后台', '客户总权限用户', '2017-08-22 14:33:17', '2017-08-22 14:33:17', null, null, '1');
+INSERT INTO vend_role VALUES ('3', null, '代理后台', '代理总后台管理一部分商户', '2017-08-22 14:33:44', '2017-08-22 14:33:44', null, null, '1');
+INSERT INTO vend_role VALUES ('4', null, '商家', '普通商户', '2017-08-22 14:33:58', '2017-08-22 14:33:58', null, null, '1');
+INSERT INTO vend_role VALUES ('5', null, '消费用户', '利用客户端购买商品的消费用户', '2017-08-22 14:34:25', '2017-08-22 14:34:25', null, null, '1');
 
 -- ----------------------------
 -- Table structure for `vend_role_permission`
@@ -380,7 +397,7 @@ CREATE TABLE `vend_role_permission` (
   `extend3` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_role_permission` (`role_id`,`permission_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COMMENT='角色权限对照表';
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COMMENT='角色权限对照表';
 
 -- ----------------------------
 -- Records of vend_role_permission
@@ -395,6 +412,16 @@ INSERT INTO vend_role_permission VALUES ('30', '2', '1', '2017-08-24 18:06:09', 
 INSERT INTO vend_role_permission VALUES ('31', '2', '4', '2017-08-24 18:06:09', '2017-08-24 18:06:09', null, null, null);
 INSERT INTO vend_role_permission VALUES ('32', '2', '9', '2017-08-24 18:06:09', '2017-08-24 18:06:09', null, null, null);
 INSERT INTO vend_role_permission VALUES ('33', '2', '10', '2017-08-24 18:06:09', '2017-08-24 18:06:09', null, null, null);
+INSERT INTO vend_role_permission VALUES ('34', '1', '1', '2017-08-31 17:55:56', '2017-08-31 17:55:56', null, null, null);
+INSERT INTO vend_role_permission VALUES ('35', '1', '2', '2017-08-31 17:55:56', '2017-08-31 17:55:56', null, null, null);
+INSERT INTO vend_role_permission VALUES ('36', '1', '3', '2017-08-31 17:55:56', '2017-08-31 17:55:56', null, null, null);
+INSERT INTO vend_role_permission VALUES ('37', '1', '4', '2017-08-31 17:55:56', '2017-08-31 17:55:56', null, null, null);
+INSERT INTO vend_role_permission VALUES ('38', '1', '9', '2017-08-31 17:55:56', '2017-08-31 17:55:56', null, null, null);
+INSERT INTO vend_role_permission VALUES ('39', '1', '10', '2017-08-31 17:55:56', '2017-08-31 17:55:56', null, null, null);
+INSERT INTO vend_role_permission VALUES ('40', '1', '5', '2017-08-31 17:56:05', '2017-08-31 17:56:05', null, null, null);
+INSERT INTO vend_role_permission VALUES ('41', '1', '6', '2017-08-31 17:56:05', '2017-08-31 17:56:05', null, null, null);
+INSERT INTO vend_role_permission VALUES ('42', '1', '7', '2017-08-31 17:56:05', '2017-08-31 17:56:05', null, null, null);
+INSERT INTO vend_role_permission VALUES ('43', '1', '8', '2017-08-31 17:56:05', '2017-08-31 17:56:05', null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_shop_qrcode`
@@ -411,7 +438,7 @@ CREATE TABLE `vend_shop_qrcode` (
   `extend2` varchar(100) DEFAULT NULL,
   `extend3` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='商家二维码信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商家二维码信息表';
 
 -- ----------------------------
 -- Records of vend_shop_qrcode
@@ -456,7 +483,7 @@ CREATE TABLE `vend_user` (
   `linkman` varchar(100) DEFAULT NULL COMMENT '联系人',
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
-  `extend1` varchar(100) DEFAULT NULL,
+  `extend1` varchar(150) DEFAULT NULL,
   `extend2` varchar(100) DEFAULT NULL,
   `extend3` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`usercode`),
@@ -466,6 +493,7 @@ CREATE TABLE `vend_user` (
 -- ----------------------------
 -- Records of vend_user
 -- ----------------------------
-INSERT INTO vend_user VALUES ('VM2017082419502601', '总后台用户', '333', '2', null, null, null, '2017-08-22 16:12:39', '2017-08-22 16:12:39', null, null, null);
+INSERT INTO vend_user VALUES ('VM2017082419502601', 'admin', '123456', '2', null, null, null, '2017-08-22 16:12:39', '2017-08-22 16:12:39', null, null, null);
 INSERT INTO vend_user VALUES ('VM2017082419502602', '345', '345', '1', null, null, null, '2017-08-24 19:50:26', '2017-08-24 19:50:26', null, null, null);
 INSERT INTO vend_user VALUES ('VM2017082419562383', '546', '564', '2', null, null, null, '2017-08-24 19:56:23', '2017-08-24 19:56:23', null, null, null);
+INSERT INTO vend_user VALUES ('VM2017083115230747', 'wujiyuan', '123456', '5', '18640214798', 'Zhengzhou', null, '2017-08-31 15:23:07', '2017-08-31 15:23:07', null, null, null);

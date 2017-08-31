@@ -13,7 +13,6 @@
 <%
 	String path5 = request.getContextPath();
 	String basePath5 = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path5 + "/";
-    VendUser venduser=(VendUser)session.getAttribute("vendUser");
 %>
 <!--close-Header-part-->
 <!--top-Header-menu-->

@@ -3,6 +3,7 @@
 <mapper namespace="vend.dao.VendRoleMapper" >
   <resultMap id="BaseResultMap" type="vend.entity.VendRole" >
     <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
     <result column="role_name" property="roleName" jdbcType="VARCHAR" />
     <result column="role_description" property="roleDescription" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
