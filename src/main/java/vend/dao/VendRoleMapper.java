@@ -19,7 +19,7 @@ public interface VendRoleMapper {
     int updateByPrimaryKeySelective(VendRole record);
 
     int updateByPrimaryKey(VendRole record);
-    /**ä¸‹ä¸ºè‡ªå®šä¹‰æ–¹æ³• */
+    /**ÏÂÎª×Ô¶¨Òå·½·¨ */
     List<VendRole> listVendRole(@Param("vendRole") VendRole vendRole, @Param("page") Page page);
     
     int countVendRole(VendRole vendRole);

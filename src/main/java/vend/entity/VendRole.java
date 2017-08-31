@@ -5,6 +5,8 @@ import java.util.Date;
 public class VendRole {
     private Integer id;
 
+    private Integer parentId;
+
     private String roleName;
 
     private String roleDescription;
@@ -25,6 +27,14 @@ public class VendRole {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
     public String getRoleName() {

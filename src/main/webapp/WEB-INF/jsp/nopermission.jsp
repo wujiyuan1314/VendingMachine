@@ -40,7 +40,7 @@
             <div class="error_ex">
               <h1>无权限</h1>
               <p>对不起，您没有权限!!!</p>
-              <a class="btn btn-warning btn-big"  href="index.html">回到首页</a> </div>
+              <a class="btn btn-warning btn-big"  href="../welcome">回到首页</a> </div>
           </div>
         </div>
       </div>

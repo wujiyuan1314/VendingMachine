@@ -3,7 +3,7 @@
 <mapper namespace="vend.dao.VendRoleMapper" >
   <resultMap id="BaseResultMap" type="vend.entity.VendRole" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
     <result column="role_name" property="roleName" jdbcType="VARCHAR" />
     <result column="role_description" property="roleDescription" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -13,7 +13,8 @@
     <result column="state" property="state" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, role_name, role_description, create_time, update_time, extend1, extend2, state
+    id, parent_id, role_name, role_description, create_time, update_time, extend1, extend2, 
+    state
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -32,18 +33,23 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="vend.entity.VendRole" >
-    insert into vend_role (id, role_name, role_description, 
-      create_time, update_time, extend1, 
-      extend2, state)
-    values (#{id,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{roleDescription,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, 
-      #{extend2,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT})
+    insert into vend_role (id, parent_id, role_name, 
+      role_description, create_time, update_time, 
+      extend1, extend2, state
+      )
+    values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, 
+      #{roleDescription,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="vend.entity.VendRole" >
     insert into vend_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
       </if>
       <if test="roleName != null" >
         role_name,
@@ -71,6 +77,9 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=INTEGER},
+      </if>
       <if test="roleName != null" >
         #{roleName,jdbcType=VARCHAR},
       </if>
@@ -97,6 +106,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="vend.entity.VendRole" >
     update vend_role
     <set >
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
       <if test="roleName != null" >
         role_name = #{roleName,jdbcType=VARCHAR},
       </if>
@@ -123,7 +135,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="vend.entity.VendRole" >
     update vend_role
-    set role_name = #{roleName,jdbcType=VARCHAR},
+    set parent_id = #{parentId,jdbcType=INTEGER},
+      role_name = #{roleName,jdbcType=VARCHAR},
       role_description = #{roleDescription,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
