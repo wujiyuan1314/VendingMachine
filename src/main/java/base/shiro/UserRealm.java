@@ -9,6 +9,9 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import vend.entity.VendUser;
+import vend.service.VendUserService;
+
 /**
  * <p>User: wangming
  * <p>Date: 14-1-28
@@ -16,8 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class UserRealm extends AuthorizingRealm {
 
-   // @Autowired
-  //  private TmmsUserService tmmsUserService;
+    @Autowired
+    private VendUserService vendUserService;
     
     Logger logger = Logger.getLogger(UserRealm.class);
     /*** 
@@ -25,14 +28,13 @@ public class UserRealm extends AuthorizingRealm {
      */  
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals){
-       /* String username = (String)principals.getPrimaryPrincipal();
+        String username = (String)principals.getPrimaryPrincipal();
         logger.info("日志信息：" + username);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        authorizationInfo.setRoles(tmmsUserService.getRoles(username));
-        authorizationInfo.setStringPermissions(tmmsUserService.getPermissions(username));*/
+        authorizationInfo.setRoles(vendUserService.getRoles(username));
+        authorizationInfo.setStringPermissions(vendUserService.getPermissions(username));
 
-       // return authorizationInfo;
-    	return null;
+        return authorizationInfo;
     }
     /*** 
      * 获取认证信息 
@@ -40,15 +42,14 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
-       /**String userName=(String)token.getPrincipal();
-        TmmsUser user=tmmsUserService.getByUserName(userName);
+        String userName=(String)token.getPrincipal();
+        VendUser user=vendUserService.selectByUsername(userName);
         if(user!=null){
             AuthenticationInfo authcInfo=new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(),"xx");
             return authcInfo;
         }else{
             return null;                
-        }*/
-    	return null; 
+        }
        /* String username = (String)token.getPrincipal();
         logger.info("日志信息1：" + username);
         User user = userService.getByUserName(username);

@@ -1,6 +1,7 @@
 package vend.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -11,6 +12,10 @@ public interface VendUserMapper {
     int deleteByPrimaryKey(String usercode);
 
     int insert(VendUser record);
+    
+    public Set<String> getRoles(String userName);
+	
+	public Set<String> getPermissions(String userName);
 
     int insertSelective(VendUser record);
 
@@ -29,4 +34,6 @@ public interface VendUserMapper {
     int deleteBatch(String usercodes[]);
     
     List<VendUser> findAll();
+    
+    VendUser selectByUsername(String username);
 }

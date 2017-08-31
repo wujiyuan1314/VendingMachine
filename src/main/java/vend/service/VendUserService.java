@@ -1,6 +1,7 @@
 package vend.service;
 
 import java.util.List;
+import java.util.Set;
 
 import base.util.Page;
 import vend.entity.VendUser;
@@ -46,5 +47,23 @@ public interface VendUserService {
 	 * @return
 	 */
 	List<VendUser> findAll();
+	/**
+	 * 按照username查找用户
+	 * @param username
+	 * @return
+	 */
+	VendUser selectByUsername(String username);
+	/**
+     * 按照用户名得到角色信息
+     * @param userName
+     * @return
+     */
+	public Set<String> getRoles(String username);
+	/**
+	 * 按到用户名得到权限信息
+	 * @param userName
+	 * @return
+	 */
+	public Set<String> getPermissions(String username);
 	
 }

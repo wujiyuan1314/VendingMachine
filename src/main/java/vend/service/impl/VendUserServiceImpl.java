@@ -2,17 +2,22 @@ package vend.service.impl;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
 import vend.dao.VendAccountMapper;
+import vend.dao.VendPermissionMapper;
 import vend.dao.VendUserMapper;
 import vend.entity.VendAccount;
+import vend.entity.VendPermission;
 import vend.entity.VendUser;
 import vend.service.VendUserService;
 
@@ -20,6 +25,8 @@ import vend.service.VendUserService;
 public class VendUserServiceImpl implements VendUserService {
 	@Autowired
 	VendUserMapper vendUserMapper;
+	@Autowired
+	VendPermissionMapper vendPermissionMapper;
 	@Autowired
 	VendAccountMapper vendAccountMapper;
 	/**
@@ -90,5 +97,38 @@ public class VendUserServiceImpl implements VendUserService {
 	public List<VendUser> findAll() {
 		// TODO Auto-generated method stub
 		return vendUserMapper.findAll();
+	}
+	/**
+	 * 按照username查找用户
+	 * @param username
+	 * @return
+	 */
+	public VendUser selectByUsername(String username){
+		return vendUserMapper.selectByUsername(username);
+	}
+	 /**
+     * 按照用户名得到角色信息
+     * @param userName
+     * @return
+     */
+    @Override
+	public Set<String> getRoles(String username){
+    	return vendUserMapper.getRoles(username);
+    }
+	/**
+	 * 按到用户名得到权限信息
+	 * @param userName
+	 * @return
+	 */
+ 	@CachePut(value="userCache")
+	@Override
+	public Set<String> getPermissions(String username){
+		Set<String> set1=vendUserMapper.getPermissions(username);
+		Set<String> set2=new HashSet<String>();
+		for(String permissionid:set1){
+			VendPermission vendPermission=vendPermissionMapper.selectByPrimaryKey(Integer.parseInt(permissionid));
+			set2.add(vendPermission.getPermissionName());
+		}
+		return set2;
 	}
 }

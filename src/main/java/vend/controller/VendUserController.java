@@ -144,19 +144,4 @@ public class VendUserController{
     	int isOk=vendUserService.delVendUsers(usercodeArray);
   		return "redirect:/user/users";
   	}
-    /**
-     * 从微信小程序接收消费用户信息
-     * @param usercode
-     * @return
-     */
-    @RequestMapping(value="/wxuser",method=RequestMethod.GET,produces = "application/json;charset=UTF-8")
-    public @ResponseBody VendUser getUserInfo(@PathVariable String nickName){
-    	VendUser user=vendUserService.getOne(nickName);
-    	if(user==null){
-    		//user=new VendUser();
-    		//user.setUsercode(nickName);
-    		vendUserService.insertVendUser(user);
-    	}
-    	return user;
-    }
 }

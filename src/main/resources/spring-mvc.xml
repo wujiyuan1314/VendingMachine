@@ -106,7 +106,7 @@
 	    <property name="exceptionMappings">  
 	        <props>  
 	            <prop key="org.apache.shiro.authz.UnauthorizedException"> 
-	                /error
+	                /nopermission
 	            </prop>  
 	            <prop key="org.apache.shiro.authz.UnauthenticatedException">
 	                /login

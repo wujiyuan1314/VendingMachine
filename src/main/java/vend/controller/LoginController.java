@@ -1,20 +1,33 @@
 package vend.controller;
+import java.util.Date;
+import java.util.Map;
+
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.LogoutFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import base.util.DateUtil;
+import vend.entity.VendUser;
+import vend.service.VendUserService;
+
 @Controller
 public class LoginController extends LogoutFilter{
 	public static Logger logger = Logger.getLogger(LoginController.class);
-	
+	@Autowired
+	VendUserService vendUserService;
 	@RequestMapping(value="/login",method=RequestMethod.GET)
     public String login(){
 		Subject subject=SecurityUtils.getSubject();
@@ -29,6 +42,38 @@ public class LoginController extends LogoutFilter{
     public String welcome(){
         return "welcome";
     }
+	@RequestMapping(value="/login",method=RequestMethod.POST)
+	public String login(Model model, HttpServletRequest request) throws Exception{
+		Subject subject=SecurityUtils.getSubject();
+		String username = request.getParameter("userName");
+		String password = request.getParameter("password");
+		
+		if("".equals(username)){
+			 model.addAttribute("erroruserName", "请填写用户名");
+			 return "login";
+		}
+		if("".equals(password)){
+			 model.addAttribute("errorpassword", "请填写密码");
+			 return "login";
+		}
+		if (subject.isAuthenticated()) {  
+            return "welcome";  
+        }  
+		//logger.info(userService.getByUserName(username).getUserName() + "+" + password);
+		
+		UsernamePasswordToken token=new UsernamePasswordToken(username, password);
+		
+		subject.login(token);
+		//try{
+			//subject.login(token);
+		//}catch(Exception e){
+		 //   model.addAttribute("errorMsg", "用户名或密码错误");
+		 //   return "login";
+		//}
+		VendUser vendUser = vendUserService.selectByUsername(username);
+		subject.getSession().setAttribute("vendUser", vendUser);
+		return "welcome";
+	}
     /**
      * 退出登录
      * @throws Exception 
@@ -42,12 +87,57 @@ public class LoginController extends LogoutFilter{
         return "redirect:login";
     }
     /**
+     * 从微信小程序注册用户信息
+     * @param usercode
+     * @return
+     */
+    @RequestMapping(value="/wxreg",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    public @ResponseBody Map<String, String> wxreg(@RequestBody Map<String, String> map){
+    	String username=map.get("nickname");
+    	VendUser user=vendUserService.selectByUsername(username);
+    	Date createtime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
+    	if(user==null){
+    		user=new VendUser();
+    		user.setUsername(username);;
+    		user.setPassword("123456");
+    		user.setAddress(map.get("address"));
+    		user.setMobile(map.get("mobile"));
+    		user.setRoleId(5);
+    		user.setCreateTime(createtime);
+    		user.setUpdateTime(createtime);
+    		int isOk=vendUserService.insertVendUser(user);
+    		if(isOk==1){
+    			map.put("success", "1");
+    			map.put("msg", "注册成功");
+    		}else{
+    			map.put("success", "0");
+    			map.put("msg", "注册失败");
+    		}
+    	}else{
+    		map.put("success", "1");
+			map.put("msg", "已经注册过");
+    	}
+    	return map;
+    }
+    /**
      * 微信小程序用户登录
      * @return
      */
-    @RequestMapping(value="/wxlogin",method=RequestMethod.GET)
-    public @ResponseBody String wxlogin(String nickName){
-    	String json="";
-    	return json;
+    @RequestMapping(value="/wxlogin",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
+    public @ResponseBody Map<String, String> wxlogin(@RequestBody Map<String, String> map){
+    	//存储状态信息
+    	map.put("success", "0");
+    	map.put("msg", "登录错误");
+    	
+    	String username=map.get("nickName");
+    	VendUser venduser=vendUserService.selectByUsername(username);
+    	if(venduser==null){
+    		map.put("success", "0");
+        	map.put("msg", "您还没注册,请先进行注册");
+    	}else{
+    		map.put("success", "0");
+        	map.put("msg", "登录成功");
+    	}
+    	return map;
     }
 }
