@@ -50,7 +50,7 @@ public class MenuitemController {
 		return "manage/menuitem/menuitem_list";
 	}
 	/**
-	 * 得到权限Json数据
+	 * 得到菜单Json数据
 	 * @param response
 	 * @throws IOException
 	 */
@@ -75,7 +75,7 @@ public class MenuitemController {
 		out.print(json);
 	}
 	/**
-	 * 得到权限Json数据
+	 * 得到菜单Json数据
 	 * @param response
 	 * @throws IOException
 	 */

@@ -3,6 +3,7 @@ encoding//src/main/java/base/util/FileUploadUtils.java=UTF-8
 encoding//src/main/java/vend/controller/CodeCatalogController.java=UTF-8
 encoding//src/main/java/vend/controller/CodeLibraryController.java=UTF-8
 encoding//src/main/java/vend/controller/LoginController.java=UTF-8
+encoding//src/main/java/vend/controller/MenuitemController.java=UTF-8
 encoding//src/main/java/vend/controller/UploadController.java=UTF-8
 encoding//src/main/java/vend/controller/VendAccountController.java=UTF-8
 encoding//src/main/java/vend/controller/VendAccountDetailController.java=UTF-8

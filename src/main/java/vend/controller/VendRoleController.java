@@ -1,10 +1,14 @@
 package vend.controller;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +24,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
+import net.sf.json.JSONArray;
+import vend.entity.Menuitem;
 import vend.entity.VendRole;
 import vend.entity.VendRolePermission;
+import vend.entity.ZNode;
 import vend.service.VendRolePermissionService;
 import vend.service.VendRoleService;
 
@@ -55,6 +62,31 @@ public class VendRoleController{
 		List<VendRole> vendRoles = vendRoleService.listVendRole(vendRole, page);
 		model.addAttribute("vendRoles",vendRoles);
 		return "manage/role/role_list";
+	}
+	/**
+	 * 得到菜单Json数据
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/getJson",method=RequestMethod.POST)
+	public void getJson(HttpServletRequest request,HttpServletResponse response) throws IOException {
+		List<VendRole> vendRoles = vendRoleService.findAll();
+		List<ZNode> list=new ArrayList();
+		String path = request.getContextPath();
+		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
+		for(VendRole vendRole:vendRoles){
+			ZNode zNode=new ZNode();
+			zNode.setId(vendRole.getId());
+			zNode.setpId(vendRole.getParentId());
+			zNode.setName(vendRole.getRoleName());
+			zNode.setFile(basePath+"/menuitem/"+vendRole.getId()+"/edit");
+		    zNode.setOpen(true);
+		    list.add(zNode);
+		}
+		JSONArray json = JSONArray.fromObject(list);
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out=response.getWriter();
+		out.print(json);
 	}
 	/**
 	 * 跳转角色权限添加界面
