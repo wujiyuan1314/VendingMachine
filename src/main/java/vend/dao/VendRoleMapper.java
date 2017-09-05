@@ -19,7 +19,7 @@ public interface VendRoleMapper {
     int updateByPrimaryKeySelective(VendRole record);
 
     int updateByPrimaryKey(VendRole record);
-    /**下为自定义方法 */
+    /**涓嬮潰鏄嚜瀹氫箟鏂规硶*/
     List<VendRole> listVendRole(@Param("vendRole") VendRole vendRole, @Param("page") Page page);
     
     int countVendRole(VendRole vendRole);
@@ -29,6 +29,8 @@ public interface VendRoleMapper {
     int deleteBatch(int ids[]);
     
     List<VendRole> findAll();
+    
+    List<VendRole> findNext(Integer roleId);
     
     VendRole selectByRoleName(String roleName);
 }

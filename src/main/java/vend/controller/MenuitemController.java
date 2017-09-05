@@ -89,18 +89,41 @@ public class MenuitemController {
 			menulist="";
 		}
 		
-		List<Menuitem> menuitems = menuitemService.findAll();
 		List<ZNode> list=new ArrayList();
-		for(Menuitem menuitem:menuitems){
-			ZNode zNode=new ZNode();
-			zNode.setId(menuitem.getId());
-			zNode.setpId(menuitem.getParentId());
-			zNode.setName(menuitem.getMenuName());
-			zNode.setOpen(true);
-			if(menulist.indexOf(menuitem.getId().toString())!=-1){
-				zNode.setChecked(true);
+		String parentId=request.getParameter("parentId");
+		int parentId1=Function.getInt(parentId, 0);
+		List<Menuitem> menuitems = menuitemService.findAll();
+		if(parentId1==0){
+			for(Menuitem menuitem:menuitems){
+				ZNode zNode=new ZNode();
+				zNode.setId(menuitem.getId());
+				zNode.setpId(menuitem.getParentId());
+				zNode.setName(menuitem.getMenuName());
+				zNode.setOpen(true);
+				if(menulist.indexOf(menuitem.getId().toString())!=-1){
+					zNode.setChecked(true);
+				}
+			    list.add(zNode);
 			}
-		    list.add(zNode);
+		}else{
+			VendRole vendRoleP=vendRoleService.getOne(parentId1);
+			String menulistP=vendRoleP.getExtend1();
+			if(menulistP==null){
+				menulistP="";
+			}
+			for(Menuitem menuitem:menuitems){
+				if(menulistP.indexOf(menuitem.getId().toString())!=-1){
+					ZNode zNode=new ZNode();
+					zNode.setId(menuitem.getId());
+					zNode.setpId(menuitem.getParentId());
+					zNode.setName(menuitem.getMenuName());
+					zNode.setOpen(true);
+					if(menulist.indexOf(menuitem.getId().toString())!=-1){
+						zNode.setChecked(true);
+					}
+				    list.add(zNode);
+				}
+			}
 		}
 		JSONArray json = JSONArray.fromObject(list);
 		response.setCharacterEncoding("UTF-8");

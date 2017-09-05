@@ -47,6 +47,12 @@ public interface VendRoleService {
 	 */
 	List<VendRole> findAll();
 	/**
+	 * 查找下一级
+	 * @param parentId
+	 * @return
+	 */
+	List<VendRole> findNext(Integer parentId);
+	/**
 	 * 按角色名字查询
 	 * @param roleName
 	 * @return

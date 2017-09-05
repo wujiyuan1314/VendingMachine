@@ -37,6 +37,20 @@ public class CodeLibraryController {
 		return "manage/codelibrary/codelibrary_list";
 	}
 	/**
+	 *广告屏样式
+	 * @param model
+	 * @param CodeLibrary
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/adscreen")
+	public String listAdscreen(Model model, @ModelAttribute CodeLibrary CodeLibrary,HttpServletRequest request) {
+		List<CodeLibrary> codeLibrarys = codeLibraryService.selectByCodeNo("ADSCREEN");
+		model.addAttribute("codeno", "ADSCREEN");
+		model.addAttribute("codeLibrarys",codeLibrarys);
+		return "manage/codelibrary/codelibrary_adscreen";
+	}
+	/**
 	 * 跳转参数类别信息添加界面
 	 * @param model
 	 * @return

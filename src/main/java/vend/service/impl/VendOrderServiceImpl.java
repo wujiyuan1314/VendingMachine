@@ -23,10 +23,20 @@ public class VendOrderServiceImpl implements VendOrderService {
 	 * @param page
 	 * @return
 	 */
-	public List<VendOrder> listVendOrder(VendOrder vendOrder,Page page){
-		int totalNumber = vendOrderMapper.countVendOrder(vendOrder);
+	public List<VendOrder> listVendOrder(VendOrder vendOrder,String beginTime,String endTime,Page page){
+		int totalNumber = vendOrderMapper.countVendOrder(vendOrder,beginTime,endTime);
 		page.setTotalNumber(totalNumber);
-		return vendOrderMapper.listVendOrder(vendOrder, page);
+		return vendOrderMapper.listVendOrder(vendOrder,beginTime,endTime,page);
+	}
+	/**
+	 * 按照参数查找订单信息
+	 * @param vendOrder
+	 * @param beginTime
+	 * @param endTime
+	 * @return
+	 */
+	public List<VendOrder> selectByParams(VendOrder vendOrder,String beginTime,String endTime){
+		return vendOrderMapper.selectByParams(vendOrder, beginTime, endTime);
 	}
 	/**
 	 * 添加订单

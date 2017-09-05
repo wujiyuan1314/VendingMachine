@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import net.sf.json.JSONArray;
 import vend.entity.Menuitem;
 import vend.entity.VendRole;
 import vend.entity.VendRolePermission;
+import vend.entity.VendUser;
 import vend.entity.ZNode;
 import vend.service.VendRolePermissionService;
 import vend.service.VendRoleService;
@@ -59,18 +61,29 @@ public class VendRoleController{
 		}
 		logger.info(page.toString());
 		logger.info(vendRole.toString());
+		HttpSession session=request.getSession();
+    	VendUser user=(VendUser)session.getAttribute("vendUser");
+    	if(user!=null){
+    		model.addAttribute("roleId", user.getRoleId());
+    	}else{
+    		model.addAttribute("roleId", 1);
+    	}
 		List<VendRole> vendRoles = vendRoleService.listVendRole(vendRole, page);
 		model.addAttribute("vendRoles",vendRoles);
 		return "manage/role/role_list";
 	}
 	/**
 	 * 得到菜单Json数据
+	 * @param model
+	 * @param request
 	 * @param response
 	 * @throws IOException
 	 */
 	@RequestMapping(value="/getJson",method=RequestMethod.POST)
-	public void getJson(HttpServletRequest request,HttpServletResponse response) throws IOException {
-		List<VendRole> vendRoles = vendRoleService.findAll();
+	public void getJson(Model model,HttpServletRequest request,HttpServletResponse response) throws IOException {
+		HttpSession session=request.getSession();
+    	VendUser user=(VendUser)session.getAttribute("vendUser");
+		List<VendRole> vendRoles = vendRoleService.findNext(user.getRoleId());
 		List<ZNode> list=new ArrayList();
 		String path = request.getContextPath();
 		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
@@ -79,7 +92,7 @@ public class VendRoleController{
 			zNode.setId(vendRole.getId());
 			zNode.setpId(vendRole.getParentId());
 			zNode.setName(vendRole.getRoleName());
-			zNode.setFile(basePath+"/menuitem/"+vendRole.getId()+"/edit");
+			zNode.setFile(basePath+"/role/"+vendRole.getId()+"/edit");
 		    zNode.setOpen(true);
 		    list.add(zNode);
 		}
@@ -92,10 +105,11 @@ public class VendRoleController{
 	 * 跳转角色权限添加界面
 	 * @return
 	 */
-	@RequestMapping(value="/{id}/addpermission",method=RequestMethod.GET)
-	public String addpermission(Model model,@PathVariable int id){
+	@RequestMapping(value="/{id}/{pid}/addpermission",method=RequestMethod.GET)
+	public String addpermission(Model model,@PathVariable int id,@PathVariable int pid){
 		VendRole vendRole=new VendRole();
 		vendRole.setId(id);
+		vendRole.setParentId(pid);
 		model.addAttribute(vendRole);
 		return "manage/role/role_permission_add";
 	}
@@ -107,6 +121,8 @@ public class VendRoleController{
 	public String addpermission(HttpServletRequest request){
 		String roleId=request.getParameter("id");
 		int roleId1=Function.getInt(roleId, 0);
+		String pid=request.getParameter("pid");
+		int pid1=Function.getInt(pid, 0);
 		List<VendRolePermission> vendRolePermissions=vendRolePermissionService.selectByRoleId(roleId1);
 		Map<Integer,Integer> map=new HashMap<Integer,Integer>();//上次设置的权限
 		for(VendRolePermission vendRolePermission:vendRolePermissions){
@@ -136,7 +152,7 @@ public class VendRoleController{
 	            int upid = map.get(in);//得到每个key多对用value的值
 	            vendRolePermissionService.deleteVendRolePermission(upid);//上一次选中这一次没选中的删掉
 	     }
-		 return "redirect:"+roleId1+"/addpermission";
+		 return "redirect:"+roleId1+"/"+pid1+"/addpermission";
 	}
 	  /**
 	    * 跳转到菜单设置界面
@@ -144,10 +160,11 @@ public class VendRoleController{
 	    * @param id
 	    * @return
 	    */
-	  @RequestMapping(value="/{id}/addmenuitem",method=RequestMethod.GET)
-	  public String setmenu(Model model,@PathVariable Integer id){
+	  @RequestMapping(value="/{id}/{pid}/addmenuitem",method=RequestMethod.GET)
+	  public String setmenu(Model model,@PathVariable Integer id,@PathVariable int pid){
 		VendRole vendRole=new VendRole();
 		vendRole.setId(id);
+		vendRole.setParentId(pid);
 		model.addAttribute(vendRole);
 	 	return "manage/role/role_menuitem_add";
 	  }
@@ -173,10 +190,12 @@ public class VendRoleController{
 	/**
 	 * 跳转角色信息添加界面
 	 * @param model
+	 * @param pid
 	 * @return
 	 */
-	@RequestMapping(value="/add",method=RequestMethod.GET)
-	public String add(Model model){
+	@RequestMapping(value="/{pid}/add",method=RequestMethod.GET)
+	public String add(Model model,@PathVariable int pid){
+		model.addAttribute("pid", pid);
 		model.addAttribute(new VendRole());
 		return "manage/role/role_add";
 	}

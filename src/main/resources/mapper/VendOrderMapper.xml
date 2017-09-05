@@ -3,11 +3,14 @@
 <mapper namespace="vend.dao.VendOrderMapper" >
   <resultMap id="BaseResultMap" type="vend.entity.VendOrder" >
     <id column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="machine_code" property="machineCode" jdbcType="VARCHAR" />
     <result column="usercode" property="usercode" jdbcType="VARCHAR" />
     <result column="shopusercode" property="shopusercode" jdbcType="VARCHAR" />
     <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="pay_type" property="payType" jdbcType="VARCHAR" />
     <result column="num" property="num" jdbcType="INTEGER" />
     <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="free_status" property="freeStatus" jdbcType="VARCHAR" />
     <result column="orderstate" property="orderstate" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
@@ -16,8 +19,8 @@
     <result column="extend3" property="extend3" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    order_id, usercode, shopusercode, goods_id, num, amount, orderstate, create_time, 
-    pay_time, extend1, extend2, extend3
+    order_id, machine_code, usercode, shopusercode, goods_id, pay_type, num, amount, 
+    free_status, orderstate, create_time, pay_time, extend1, extend2, extend3
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -30,13 +33,15 @@
     where order_id = #{orderId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="vend.entity.VendOrder" >
-    insert into vend_order (order_id, usercode, shopusercode, 
-      goods_id, num, amount, 
+    insert into vend_order (order_id, machine_code, usercode, 
+      shopusercode, goods_id, pay_type, 
+      num, amount, free_status, 
       orderstate, create_time, pay_time, 
       extend1, extend2, extend3
       )
-    values (#{orderId,jdbcType=VARCHAR}, #{usercode,jdbcType=VARCHAR}, #{shopusercode,jdbcType=VARCHAR}, 
-      #{goodsId,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, 
+    values (#{orderId,jdbcType=VARCHAR}, #{machineCode,jdbcType=VARCHAR}, #{usercode,jdbcType=VARCHAR}, 
+      #{shopusercode,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, #{payType,jdbcType=VARCHAR}, 
+      #{num,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, #{freeStatus,jdbcType=VARCHAR}, 
       #{orderstate,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, 
       #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}
       )
@@ -47,6 +52,9 @@
       <if test="orderId != null" >
         order_id,
       </if>
+      <if test="machineCode != null" >
+        machine_code,
+      </if>
       <if test="usercode != null" >
         usercode,
       </if>
@@ -56,11 +64,17 @@
       <if test="goodsId != null" >
         goods_id,
       </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
       <if test="num != null" >
         num,
       </if>
       <if test="amount != null" >
         amount,
+      </if>
+      <if test="freeStatus != null" >
+        free_status,
       </if>
       <if test="orderstate != null" >
         orderstate,
@@ -85,6 +99,9 @@
       <if test="orderId != null" >
         #{orderId,jdbcType=VARCHAR},
       </if>
+      <if test="machineCode != null" >
+        #{machineCode,jdbcType=VARCHAR},
+      </if>
       <if test="usercode != null" >
         #{usercode,jdbcType=VARCHAR},
       </if>
@@ -94,11 +111,17 @@
       <if test="goodsId != null" >
         #{goodsId,jdbcType=INTEGER},
       </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
       <if test="num != null" >
         #{num,jdbcType=INTEGER},
       </if>
       <if test="amount != null" >
         #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="freeStatus != null" >
+        #{freeStatus,jdbcType=VARCHAR},
       </if>
       <if test="orderstate != null" >
         #{orderstate,jdbcType=VARCHAR},
@@ -123,6 +146,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="vend.entity.VendOrder" >
     update vend_order
     <set >
+      <if test="machineCode != null" >
+        machine_code = #{machineCode,jdbcType=VARCHAR},
+      </if>
       <if test="usercode != null" >
         usercode = #{usercode,jdbcType=VARCHAR},
       </if>
@@ -132,11 +158,17 @@
       <if test="goodsId != null" >
         goods_id = #{goodsId,jdbcType=INTEGER},
       </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=VARCHAR},
+      </if>
       <if test="num != null" >
         num = #{num,jdbcType=INTEGER},
       </if>
       <if test="amount != null" >
         amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="freeStatus != null" >
+        free_status = #{freeStatus,jdbcType=VARCHAR},
       </if>
       <if test="orderstate != null" >
         orderstate = #{orderstate,jdbcType=VARCHAR},
@@ -161,11 +193,14 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="vend.entity.VendOrder" >
     update vend_order
-    set usercode = #{usercode,jdbcType=VARCHAR},
+    set machine_code = #{machineCode,jdbcType=VARCHAR},
+      usercode = #{usercode,jdbcType=VARCHAR},
       shopusercode = #{shopusercode,jdbcType=VARCHAR},
       goods_id = #{goodsId,jdbcType=INTEGER},
+      pay_type = #{payType,jdbcType=VARCHAR},
       num = #{num,jdbcType=INTEGER},
       amount = #{amount,jdbcType=DECIMAL},
+      free_status = #{freeStatus,jdbcType=VARCHAR},
       orderstate = #{orderstate,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       pay_time = #{payTime,jdbcType=TIMESTAMP},
@@ -174,7 +209,7 @@
       extend3 = #{extend3,jdbcType=VARCHAR}
     where order_id = #{orderId,jdbcType=VARCHAR}
   </update>
-    <!-- 一下为自定义方法 -->
+   <!-- 一下为自定义方法 -->
   <select id="listVendOrder" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List" />
@@ -189,7 +224,42 @@
 		<if test="vendOrder.goodsId != null and !&quot;&quot;.equals(vendOrder.goodsId.trim())">
 			and goods_id = #{vendOrder.goodsId}
 		</if>
+		<if test="vendOrder.machineCode != null and !&quot;&quot;.equals(vendOrder.machineCode.trim())">
+			and machine_code = #{vendOrder.machineCode}
+		</if>
+		<if test="beginTime!=null and !&quot;&quot;.equals(beginTime.trim())">
+          <![CDATA[   and DATE_FORMAT(vendOrder.create_time, '%Y-%m-%d %H:%i:%S')>=  DATE_FORMAT(#{beginTime}, '%Y-%m-%d %H:%i:%S')   ]]>
+        </if>
+        <if test="endTime!=null and !&quot;&quot;.equals(endTime.trim())">
+          <![CDATA[   and DATE_FORMAT(vendOrder.create_time, '%Y-%m-%d %H:%i:%S')<=  DATE_FORMAT(#{endTime}, '%Y-%m-%d %H:%i:%S')   ]]>
+        </if>
 	</where>order by order_id limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+   <select id="selectByParams" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_order
+	<where>
+		<if test="vendOrder.usercode != null and !&quot;&quot;.equals(vendOrder.usercode.trim())">
+			and usercode = #{vendOrder.usercode}
+		</if>
+		<if test="vendOrder.shopusercode != null and !&quot;&quot;.equals(vendOrder.shopusercode.trim())">
+			and shopusercode = #{vendOrder.shopusercode}
+		</if>
+		<if test="vendOrder.goodsId != null and !&quot;&quot;.equals(vendOrder.goodsId.trim())">
+			and goods_id = #{vendOrder.goodsId}
+		</if>
+		<if test="vendOrder.machineCode != null and !&quot;&quot;.equals(vendOrder.machineCode.trim())">
+			and machine_code = #{vendOrder.machineCode}
+		</if>
+		<if test="beginTime!=null and !&quot;&quot;.equals(beginTime.trim())">
+          <![CDATA[   and DATE_FORMAT(vendOrder.create_time, '%Y-%m-%d %H:%i:%S')>=  DATE_FORMAT(#{beginTime}, '%Y-%m-%d %H:%i:%S')   ]]>
+        </if>
+        <if test="endTime!=null and !&quot;&quot;.equals(endTime.trim())">
+          <![CDATA[   and DATE_FORMAT(vendOrder.create_time, '%Y-%m-%d %H:%i:%S')<=  DATE_FORMAT(#{endTime}, '%Y-%m-%d %H:%i:%S')   ]]>
+        </if>
+	</where>
   </select>
   
   <select id="countVendOrder" resultType="int" parameterType="vend.entity.VendOrder">
@@ -204,6 +274,15 @@
 		<if test="goodsId != null and !&quot;&quot;.equals(goodsId.trim())">
 			and goods_id = #{goodsId}
 		</if>
+		<if test="vendOrder.machineCode != null and !&quot;&quot;.equals(vendOrder.machineCode.trim())">
+			and machine_code = #{vendOrder.machineCode}
+		</if>
+		<if test="beginTime!=null and !&quot;&quot;.equals(beginTime.trim())">
+          <![CDATA[   and DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%S')>=  DATE_FORMAT(#{beginTime}, '%Y-%m-%d %H:%i:%S')   ]]>
+        </if>
+        <if test="endTime!=null and !&quot;&quot;.equals(endTime.trim())">
+          <![CDATA[   and DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%S')<=  DATE_FORMAT(#{endTime}, '%Y-%m-%d %H:%i:%S')   ]]>
+        </if>
  	</where>
   </select>
   

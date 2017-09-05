@@ -201,6 +201,9 @@
 		<if test="vendUser.mobile != null and !&quot;&quot;.equals(vendUser.mobile.trim())">
 			and mobile = #{vendUser.mobile}
 		</if>
+		<if test="vendUser.extend1 != null and !&quot;&quot;.equals(vendUser.extend1.trim())">
+			and extend1 = #{vendUser.extend1}
+		</if>
 		<if test="vendUser.roleId != null and !&quot;&quot;.equals(vendUser.roleId.trim())">
 			and role_id = #{vendUser.roleId}
 		</if>  
@@ -216,6 +219,9 @@
 	    <if test="mobile != null and !&quot;&quot;.equals(mobile.trim())">
 		  and mobile = #{mobile}
 	    </if>
+	    <if test="extend1 != null and !&quot;&quot;.equals(extend1.trim())">
+			and extend1 = #{extend1}
+		</if>
 	    <if test="roleId != null and !&quot;&quot;.equals(roleId.trim())">
 		  and role_id = #{roleId}
 	    </if>

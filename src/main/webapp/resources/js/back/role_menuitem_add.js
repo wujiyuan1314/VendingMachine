@@ -44,7 +44,10 @@ function showCode(str) {
 
 $(document).ready(function(){
 	var url=basePath+"menuitem/getJson1";
-	var params={roleId:roleId};
+	var params={
+			roleId:roleId,
+			parentId:parentId
+			};
 	$.post(url,params,function(res){
 		var data=eval("("+res+")");
 		zNodes=data;

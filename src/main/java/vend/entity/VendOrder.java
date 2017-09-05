@@ -6,15 +6,21 @@ import java.util.Date;
 public class VendOrder {
     private String orderId;
 
+    private String machineCode;
+
     private String usercode;
 
     private String shopusercode;
 
     private Integer goodsId;
 
+    private String payType;
+
     private Integer num;
 
     private BigDecimal amount;
+
+    private String freeStatus;
 
     private String orderstate;
 
@@ -34,6 +40,14 @@ public class VendOrder {
 
     public void setOrderId(String orderId) {
         this.orderId = orderId == null ? null : orderId.trim();
+    }
+
+    public String getMachineCode() {
+        return machineCode;
+    }
+
+    public void setMachineCode(String machineCode) {
+        this.machineCode = machineCode == null ? null : machineCode.trim();
     }
 
     public String getUsercode() {
@@ -60,6 +74,14 @@ public class VendOrder {
         this.goodsId = goodsId;
     }
 
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType == null ? null : payType.trim();
+    }
+
     public Integer getNum() {
         return num;
     }
@@ -74,6 +96,14 @@ public class VendOrder {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public String getFreeStatus() {
+        return freeStatus;
+    }
+
+    public void setFreeStatus(String freeStatus) {
+        this.freeStatus = freeStatus == null ? null : freeStatus.trim();
     }
 
     public String getOrderstate() {

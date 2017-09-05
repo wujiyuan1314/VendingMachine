@@ -44,6 +44,7 @@
 	                <tr>
 	                  <th>类别编号</th>
 	                  <th>类别值</th>
+	                  <th>详细描述</th>
 	                  <th>操作</th>
 	                </tr>
 	              </thead>
@@ -52,6 +53,7 @@
 		                <tr>
 		                  <td>${codeLibrary.itemno}</td>
 		                  <td>${codeLibrary.itemname}</td>
+		                  <td>${codeLibrary.extend1}</td>
 		                  <td>
 		                      <a href="/VendingMachine/codeLibrary/${codeLibrary.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
 			                  <a href="javascript:void(0);" onclick="delconfirm('${codeLibrary.id}','${codeno}');" class="btn btn-danger  icon-trash"/></a>

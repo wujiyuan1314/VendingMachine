@@ -3,6 +3,7 @@ package vend.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -41,7 +42,7 @@ public class VendUserController{
 	 * @param request
 	 * @return
 	 */
-	@RequiresPermissions({"user:list"})
+	@RequiresPermissions({"user:users"})
 	@RequestMapping(value="/users")
 	public String listVendUser(Model model,@ModelAttribute VendUser vendUser, @ModelAttribute Page page,HttpServletRequest request) {
 		String currentPageStr = request.getParameter("currentPage");
@@ -52,6 +53,11 @@ public class VendUserController{
 		}
 		logger.info(page.toString());
 		logger.info(vendUser.toString());
+		HttpSession session=request.getSession();
+    	VendUser user=(VendUser)session.getAttribute("vendUser");
+		if(user!=null){//上级账号
+			vendUser.setExtend1(user.getUsercode());
+		}
 		List<VendUser> vendUsers = vendUserService.listVendUser(vendUser, page);
 		model.addAttribute("vendUsers",vendUsers);
 		return "manage/user/user_list";
@@ -71,6 +77,7 @@ public class VendUserController{
 	}
    /**
     * 添加用户信息
+    * @param request
     * @param model
     * @param vendUser
     * @param br
@@ -78,12 +85,17 @@ public class VendUserController{
     */
 	@RequiresPermissions({"user:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
-	public String add(Model model,@Validated VendUser vendUser,BindingResult br){
+	public String add(HttpServletRequest request,Model model,@Validated VendUser vendUser,BindingResult br){
     	List<VendRole> roles=vendRoleService.findAll();//角色列表
 		model.addAttribute("roles",roles);
     	if(br.hasErrors()){
     		return "manage/user/user_add";
     	}
+    	HttpSession session=request.getSession();
+    	VendUser user=(VendUser)session.getAttribute("vendUser");
+		if(user!=null){//上级账号
+			vendUser.setExtend1(user.getUsercode());
+		}
     	vendUserService.insertVendUser(vendUser);
     	return "redirect:users";
 	}

@@ -44,7 +44,10 @@ function showCode(str) {
 
 $(document).ready(function(){
 	var url=basePath+"permission/getJson1";
-	var params={roleId:roleId};
+	var params={
+			roleId:roleId,
+			parentId:parentId
+			};
 	$.post(url,params,function(res){
 		var data=eval("("+res+")");
 		zNodes=data;
@@ -60,6 +63,7 @@ $(document).ready(function(){
 
 function addpermission(){
 	var id=$("#id").val();
+	var pid=$("#pid").val();
 	var nodeIds="";
 	$(".checkbox_true_full").each(function() {
 		var node=$(this).attr('node');
@@ -72,6 +76,7 @@ function addpermission(){
 	var url=basePath+"role/addpermission";
 	var params={
 			id:id,
+			pid:pid,
 			nodeIds:nodeIds
 			};
 	$.post(url,params,function(res){

@@ -30,13 +30,15 @@ public class VendOrderController{
 	 * 根据输入信息条件查询订单列表，并分页显示
 	 * @param model
 	 * @param vendOrder
+	 * @param beginTime
+	 * @param endTime
 	 * @param page
 	 * @param request
 	 * @return
 	 */
 	@RequiresPermissions({"order:orders"})
 	@RequestMapping(value="/orders")
-	public String listVendOrder(Model model,@ModelAttribute VendOrder vendOrder, @ModelAttribute Page page,HttpServletRequest request) {
+	public String listVendOrder(Model model,@ModelAttribute VendOrder vendOrder,String beginTime,String endTime, @ModelAttribute Page page,HttpServletRequest request) {
 		String currentPageStr = request.getParameter("currentPage");
 		logger.info(currentPageStr + "===========");
 		if(currentPageStr != null){
@@ -45,7 +47,7 @@ public class VendOrderController{
 		}
 		logger.info(page.toString());
 		logger.info(vendOrder.toString());
-		List<VendOrder> vendOrders = vendOrderService.listVendOrder(vendOrder, page);
+		List<VendOrder> vendOrders = vendOrderService.listVendOrder(vendOrder,beginTime,endTime, page);
 		model.addAttribute("vendOrders",vendOrders);
 		return "manage/order/order_list";
 	}

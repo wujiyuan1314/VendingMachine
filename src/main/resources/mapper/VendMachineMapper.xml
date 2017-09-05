@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="vend.dao.VendMachineMapper" >
+  <resultMap id="BaseResultMap" type="vend.entity.VendMachine" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="machine_name" property="machineName" jdbcType="VARCHAR" />
+    <result column="machine_code" property="machineCode" jdbcType="VARCHAR" />
+    <result column="usercode" property="usercode" jdbcType="VARCHAR" />
+    <result column="machine_type" property="machineType" jdbcType="VARCHAR" />
+    <result column="use_status" property="useStatus" jdbcType="VARCHAR" />
+    <result column="water_status" property="waterStatus" jdbcType="VARCHAR" />
+    <result column="cup_status" property="cupStatus" jdbcType="VARCHAR" />
+    <result column="heat_status" property="heatStatus" jdbcType="VARCHAR" />
+    <result column="clean_status" property="cleanStatus" jdbcType="VARCHAR" />
+    <result column="client_qrcode" property="clientQrcode" jdbcType="INTEGER" />
+    <result column="shop_qrcode" property="shopQrcode" jdbcType="INTEGER" />
+    <result column="ad_id" property="adId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="extend1" property="extend1" jdbcType="VARCHAR" />
+    <result column="extend2" property="extend2" jdbcType="VARCHAR" />
+    <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+    <result column="extend4" property="extend4" jdbcType="VARCHAR" />
+    <result column="extend5" property="extend5" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, machine_name, machine_code, usercode, machine_type, use_status, water_status, 
+    cup_status, heat_status, clean_status, client_qrcode, shop_qrcode, ad_id, create_time, 
+    update_time, extend1, extend2, extend3, extend4, extend5
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_machine
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from vend_machine
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="vend.entity.VendMachine" >
+    insert into vend_machine (id, machine_name, machine_code, 
+      usercode, machine_type, use_status, 
+      water_status, cup_status, heat_status, 
+      clean_status, client_qrcode, shop_qrcode, 
+      ad_id, create_time, update_time, 
+      extend1, extend2, extend3, 
+      extend4, extend5)
+    values (#{id,jdbcType=INTEGER}, #{machineName,jdbcType=VARCHAR}, #{machineCode,jdbcType=VARCHAR}, 
+      #{usercode,jdbcType=VARCHAR}, #{machineType,jdbcType=VARCHAR}, #{useStatus,jdbcType=VARCHAR}, 
+      #{waterStatus,jdbcType=VARCHAR}, #{cupStatus,jdbcType=VARCHAR}, #{heatStatus,jdbcType=VARCHAR}, 
+      #{cleanStatus,jdbcType=VARCHAR}, #{clientQrcode,jdbcType=INTEGER}, #{shopQrcode,jdbcType=INTEGER}, 
+      #{adId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, 
+      #{extend4,jdbcType=VARCHAR}, #{extend5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="vend.entity.VendMachine" >
+    insert into vend_machine
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="machineName != null" >
+        machine_name,
+      </if>
+      <if test="machineCode != null" >
+        machine_code,
+      </if>
+      <if test="usercode != null" >
+        usercode,
+      </if>
+      <if test="machineType != null" >
+        machine_type,
+      </if>
+      <if test="useStatus != null" >
+        use_status,
+      </if>
+      <if test="waterStatus != null" >
+        water_status,
+      </if>
+      <if test="cupStatus != null" >
+        cup_status,
+      </if>
+      <if test="heatStatus != null" >
+        heat_status,
+      </if>
+      <if test="cleanStatus != null" >
+        clean_status,
+      </if>
+      <if test="clientQrcode != null" >
+        client_qrcode,
+      </if>
+      <if test="shopQrcode != null" >
+        shop_qrcode,
+      </if>
+      <if test="adId != null" >
+        ad_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="extend1 != null" >
+        extend1,
+      </if>
+      <if test="extend2 != null" >
+        extend2,
+      </if>
+      <if test="extend3 != null" >
+        extend3,
+      </if>
+      <if test="extend4 != null" >
+        extend4,
+      </if>
+      <if test="extend5 != null" >
+        extend5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="machineName != null" >
+        #{machineName,jdbcType=VARCHAR},
+      </if>
+      <if test="machineCode != null" >
+        #{machineCode,jdbcType=VARCHAR},
+      </if>
+      <if test="usercode != null" >
+        #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="machineType != null" >
+        #{machineType,jdbcType=VARCHAR},
+      </if>
+      <if test="useStatus != null" >
+        #{useStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="waterStatus != null" >
+        #{waterStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="cupStatus != null" >
+        #{cupStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="heatStatus != null" >
+        #{heatStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="cleanStatus != null" >
+        #{cleanStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="clientQrcode != null" >
+        #{clientQrcode,jdbcType=INTEGER},
+      </if>
+      <if test="shopQrcode != null" >
+        #{shopQrcode,jdbcType=INTEGER},
+      </if>
+      <if test="adId != null" >
+        #{adId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        #{extend5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="vend.entity.VendMachine" >
+    update vend_machine
+    <set >
+      <if test="machineName != null" >
+        machine_name = #{machineName,jdbcType=VARCHAR},
+      </if>
+      <if test="machineCode != null" >
+        machine_code = #{machineCode,jdbcType=VARCHAR},
+      </if>
+      <if test="usercode != null" >
+        usercode = #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="machineType != null" >
+        machine_type = #{machineType,jdbcType=VARCHAR},
+      </if>
+      <if test="useStatus != null" >
+        use_status = #{useStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="waterStatus != null" >
+        water_status = #{waterStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="cupStatus != null" >
+        cup_status = #{cupStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="heatStatus != null" >
+        heat_status = #{heatStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="cleanStatus != null" >
+        clean_status = #{cleanStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="clientQrcode != null" >
+        client_qrcode = #{clientQrcode,jdbcType=INTEGER},
+      </if>
+      <if test="shopQrcode != null" >
+        shop_qrcode = #{shopQrcode,jdbcType=INTEGER},
+      </if>
+      <if test="adId != null" >
+        ad_id = #{adId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        extend4 = #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        extend5 = #{extend5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="vend.entity.VendMachine" >
+    update vend_machine
+    set machine_name = #{machineName,jdbcType=VARCHAR},
+      machine_code = #{machineCode,jdbcType=VARCHAR},
+      usercode = #{usercode,jdbcType=VARCHAR},
+      machine_type = #{machineType,jdbcType=VARCHAR},
+      use_status = #{useStatus,jdbcType=VARCHAR},
+      water_status = #{waterStatus,jdbcType=VARCHAR},
+      cup_status = #{cupStatus,jdbcType=VARCHAR},
+      heat_status = #{heatStatus,jdbcType=VARCHAR},
+      clean_status = #{cleanStatus,jdbcType=VARCHAR},
+      client_qrcode = #{clientQrcode,jdbcType=INTEGER},
+      shop_qrcode = #{shopQrcode,jdbcType=INTEGER},
+      ad_id = #{adId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      extend1 = #{extend1,jdbcType=VARCHAR},
+      extend2 = #{extend2,jdbcType=VARCHAR},
+      extend3 = #{extend3,jdbcType=VARCHAR},
+      extend4 = #{extend4,jdbcType=VARCHAR},
+      extend5 = #{extend5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+   <!-- 一下为自定义方法 -->
+  <select id="listVendMachine" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_machine
+	<where>
+		<if test="vendMachine.machineName != null and !&quot;&quot;.equals(vendMachine.machineName.trim())">
+			and machine_name = #{vendMachine.machineName}
+		</if>
+		<if test="vendMachine.machineCode != null and !&quot;&quot;.equals(vendMachine.machineCode.trim())">
+			and machine_code = #{vendMachine.machineCode}
+		</if>
+		<if test="vendMachine.machineType != null and !&quot;&quot;.equals(vendMachine.machineType.trim())">
+			and machine_type = #{vendMachine.machineType}
+		</if>
+		<if test="vendMachine.usercode != null and !&quot;&quot;.equals(vendMachine.usercode.trim())">
+			and usercode = #{vendMachine.usercode}
+		</if>
+		<if test="vendMachine.useStatus != null and !&quot;&quot;.equals(vendMachine.useStatus.trim())">
+			and use_status = #{vendMachine.useStatus}
+		</if>
+	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="countVendMachine" resultType="int" parameterType="vend.entity.VendMachine">
+ 	select count(*) from vend_machine
+ 	<where>
+ 		<if test="machineName != null and !&quot;&quot;.equals(machineName.trim())">
+			and machine_name = #{machineName}
+		</if>
+		<if test="machineCode != null and !&quot;&quot;.equals(machineCode.trim())">
+			and machine_code = #{machineCode}
+		</if>
+		<if test="machineType != null and !&quot;&quot;.equals(machineType.trim())">
+			and machine_type = #{machineType}
+		</if>
+		<if test="usercode != null and !&quot;&quot;.equals(usercode.trim())">
+			and usercode = #{usercode}
+		</if>
+		<if test="useStatus != null and !&quot;&quot;.equals(useStatus.trim())">
+			and use_status = #{useStatus}
+		</if>
+ 	</where>
+  </select>
+  
+   <select id="findAll" resultMap="BaseResultMap">
+ 	select * from vend_machine
+  </select>
+  <!-- 批量删除 -->
+    <delete id="deleteBatch" parameterType="int">
+        delete from vend_machine where id in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

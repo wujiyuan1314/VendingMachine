@@ -169,6 +169,10 @@
    <select id="findAll" resultMap="BaseResultMap">
  	select * from vend_role
   </select>
+  
+  <select id="findNext" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+ 	select * from vend_role where id &gt;= #{roleId,jdbcType=INTEGER}
+  </select>
   <!-- 批量添加 -->
   <insert id="insertBatch" parameterType="java.util.List">
 	  insert into vend_role (role_name,role_description,create_time,update_time,extend1,extend2,extend3,state)

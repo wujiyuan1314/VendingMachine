@@ -1,5 +1,4 @@
 package vend.controller;
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import base.util.FileUploadUtils;
 import base.util.Function;
 import base.util.Page;
 import vend.entity.CodeLibrary;
@@ -54,6 +50,8 @@ public class VendAdController{
 		}
 		logger.info(page.toString());
 		logger.info(vendAd.toString());
+		List<CodeLibrary> adscreens=codeLibraryService.selectByCodeNo("ADSCREEN");
+		model.addAttribute("adscreens", adscreens);
 		List<VendAd> vendAds = vendAdService.listVendAd(vendAd, page);
 		model.addAttribute("vendAds",vendAds);
 		return "manage/ad/ad_list";
@@ -66,6 +64,8 @@ public class VendAdController{
 	@RequiresPermissions({"ad:add"})
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String add(Model model){
+		List<CodeLibrary> adscreens=codeLibraryService.selectByCodeNo("ADSCREEN");
+		model.addAttribute("adscreens", adscreens);
 		List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
 		model.addAttribute("uppictypes", uppictypes);
 		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");
@@ -84,6 +84,8 @@ public class VendAdController{
 	@RequiresPermissions({"ad:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(HttpServletRequest request,Model model,@Validated VendAd vendAd,BindingResult br){
+		List<CodeLibrary> adscreens=codeLibraryService.selectByCodeNo("ADSCREEN");
+		model.addAttribute("adscreens", adscreens);
     	List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
 		model.addAttribute("uppictypes", uppictypes);
 		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");
@@ -102,6 +104,8 @@ public class VendAdController{
 	@RequiresPermissions({"ad:edit"})
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable int id){
+		List<CodeLibrary> adscreens=codeLibraryService.selectByCodeNo("ADSCREEN");
+		model.addAttribute("adscreens", adscreens);
 		List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
 		model.addAttribute("uppictypes", uppictypes);
 		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");
@@ -121,6 +125,8 @@ public class VendAdController{
 	@RequiresPermissions({"ad:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String edit(HttpServletRequest request,Model model,@Validated VendAd vendAd,BindingResult br){
+		List<CodeLibrary> adscreens=codeLibraryService.selectByCodeNo("ADSCREEN");
+		model.addAttribute("adscreens", adscreens);
     	List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
 		model.addAttribute("uppictypes", uppictypes);
 		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");

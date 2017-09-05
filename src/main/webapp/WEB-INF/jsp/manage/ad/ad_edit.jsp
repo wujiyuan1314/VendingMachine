@@ -145,6 +145,14 @@
 	                </div>
 	              </div>
 	              <div class="control-group">
+	                <label class="control-label">广告屏样式选择</label>
+	                <div class="controls">
+	                   <sf:select path="extend2" items="${adscreens}" itemLabel="itemname" itemValue="itemno">
+								            </sf:select>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend1" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
+	              <div class="control-group">
 	                <label class="control-label">广告开始时间</label>
 	                <div class="controls">
 	                  <sf:input path="startTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true"/>

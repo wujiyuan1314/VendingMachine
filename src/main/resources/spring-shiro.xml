@@ -61,7 +61,7 @@
                 <!-- 退出登录过滤器-->
                 /logout = logout
                 <!-- 登录拦截-->
-                /** = authc
+                /** = anon
             </value>	
         </property>
     </bean>

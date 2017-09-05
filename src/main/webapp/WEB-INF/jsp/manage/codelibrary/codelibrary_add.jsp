@@ -55,6 +55,13 @@
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="itemname" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
+	              <div class="control-group">
+	                <label class="control-label">详细描述</label>
+	                <div class="controls">
+	                  <sf:textarea path="extend1"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend1" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
 	              <div class="form-actions">
 	                <input type="submit" value="添加" class="btn btn-success">
 	              </div>

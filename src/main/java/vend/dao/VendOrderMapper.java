@@ -20,9 +20,11 @@ public interface VendOrderMapper {
 
     int updateByPrimaryKey(VendOrder record);
     /**下为自定义方法 */
-    List<VendOrder> listVendOrder(@Param("vendOrder") VendOrder vendOrder, @Param("page") Page page);
+    List<VendOrder> listVendOrder(@Param("vendOrder") VendOrder vendOrder,@Param("beginTime") String beginTime,@Param("endTime") String endTime, @Param("page") Page page);
     
-    int countVendOrder(VendOrder vendOrder);
+    List<VendOrder> selectByParams(@Param("vendOrder") VendOrder vendOrder,@Param("beginTime") String beginTime,@Param("endTime") String endTime);
+    
+    int countVendOrder(VendOrder vendOrder,@Param("beginTime") String beginTime,@Param("endTime") String endTime);
     
     void insertBatch(List<VendOrder> list);
     

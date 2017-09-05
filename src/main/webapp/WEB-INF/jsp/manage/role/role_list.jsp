@@ -58,7 +58,7 @@
 						</div>
 						</td>
 						<td style="width:80%">
-						<iframe id="testIframe" name="testIframe" frameborder=0 scrolling=auto width=100%  height=600px src="<%=basePath1%>menuitem/1/edit"></iframe>
+						<iframe id="testIframe" name="testIframe" frameborder=0 scrolling=auto width=100%  height=600px src="<%=basePath1%>role/${roleId}/edit"></iframe>
 						</td>
 					</tr>
 				</table>

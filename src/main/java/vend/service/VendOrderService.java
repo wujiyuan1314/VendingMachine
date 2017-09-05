@@ -2,6 +2,8 @@ package vend.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import base.util.Page;
 import vend.entity.VendOrder;
 
@@ -12,7 +14,15 @@ public interface VendOrderService {
 	 * @param page
 	 * @return
 	 */
-	List<VendOrder> listVendOrder(VendOrder vendOrder,Page page);
+	List<VendOrder> listVendOrder(VendOrder vendOrder,String beginTime,String endTime,Page page);
+	/**
+	 * 按照参数查找订单信息
+	 * @param vendOrder
+	 * @param beginTime
+	 * @param endTime
+	 * @return
+	 */
+	List<VendOrder> selectByParams(VendOrder vendOrder,String beginTime,String endTime);
 	/**
 	 * 添加订单
 	 * @param vendOrder

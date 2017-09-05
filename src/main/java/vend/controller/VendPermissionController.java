@@ -91,26 +91,52 @@ public class VendPermissionController{
 			roleIdArray[i]=vendRolePermissions.get(i).getPermissionId();
 		}
 		
-		List<VendPermission> vendPermissions = vendPermissionService.findAll();
 		List<ZNode> list=new ArrayList();
-		for(VendPermission vendPermission:vendPermissions){
-			ZNode zNode=new ZNode();
-			zNode.setId(vendPermission.getId());
-			zNode.setpId(vendPermission.getParentId());
-			zNode.setName(vendPermission.getPermissionDescription());
-			if(vendPermission.getId()==1){
-				zNode.setOpen(true);
-			}else{
-				zNode.setOpen(false);
-			}
-			for(int roleId2:roleIdArray){
-				if(roleId2==vendPermission.getId()){
-					zNode.setChecked(true);
+		String parentId=request.getParameter("parentId");
+		int parentId1=Function.getInt(parentId, 0);
+		if(parentId1==0){
+			List<VendPermission> vendPermissions = vendPermissionService.findAll();
+			for(VendPermission vendPermission:vendPermissions){
+				ZNode zNode=new ZNode();
+				zNode.setId(vendPermission.getId());
+				zNode.setpId(vendPermission.getParentId());
+				zNode.setName(vendPermission.getPermissionDescription());
+				if(vendPermission.getId()==1){
 					zNode.setOpen(true);
-					break;
+				}else{
+					zNode.setOpen(false);
 				}
+				for(int roleId2:roleIdArray){
+					if(roleId2==vendPermission.getId()){
+						zNode.setChecked(true);
+						zNode.setOpen(true);
+						break;
+					}
+				}
+			    list.add(zNode);
 			}
-		    list.add(zNode);
+		}else{
+			List<VendRolePermission> vendPermissions = vendRolePermissionService.selectByRoleId(parentId1);	
+			for(VendRolePermission vendRolePermission:vendPermissions){
+				VendPermission vendPermission=vendPermissionService.getOne(vendRolePermission.getPermissionId());
+				ZNode zNode=new ZNode();
+				zNode.setId(vendPermission.getId());
+				zNode.setpId(vendPermission.getParentId());
+				zNode.setName(vendPermission.getPermissionDescription());
+				if(vendPermission.getId()==1){
+					zNode.setOpen(true);
+				}else{
+					zNode.setOpen(false);
+				}
+				for(int roleId2:roleIdArray){
+					if(roleId2==vendPermission.getId()){
+						zNode.setChecked(true);
+						zNode.setOpen(true);
+						break;
+					}
+				}
+			    list.add(zNode);
+			}
 		}
 		JSONArray json = JSONArray.fromObject(list);
 		response.setCharacterEncoding("UTF-8");
