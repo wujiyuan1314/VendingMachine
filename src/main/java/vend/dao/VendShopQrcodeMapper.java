@@ -27,4 +27,6 @@ public interface VendShopQrcodeMapper {
     int deleteBatch(int ids[]);
     
     List<VendShopQrcode> findAll();
+    
+    List<VendShopQrcode> selectByType(String extend2);
 }

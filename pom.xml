@@ -235,12 +235,30 @@
 		    <artifactId>jsoup</artifactId>
 		    <version>1.7.3</version>
 		</dependency>
-	<!-- 引入定时器quartz依赖包 -->
+	    <!-- 引入定时器quartz依赖包 -->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
             <version>1.8.5</version>
         </dependency>
+        <!-- 引入http服务依赖包 -->
+        <dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		    <version>4.5.3</version>
+		</dependency>
+		<!-- 引入微信支付服务依赖包 -->
+		<dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+        <dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.9</version>
+		</dependency>
+    
 	</dependencies>
   <build>
     <finalName>vend</finalName>

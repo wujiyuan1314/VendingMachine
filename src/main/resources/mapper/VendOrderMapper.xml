@@ -209,7 +209,7 @@
       extend3 = #{extend3,jdbcType=VARCHAR}
     where order_id = #{orderId,jdbcType=VARCHAR}
   </update>
-   <!-- 一下为自定义方法 -->
+  <!-- 一下为自定义方法 -->
   <select id="listVendOrder" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List" />

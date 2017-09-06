@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-09-05 18:01:50
+Date: 2017-09-06 17:52:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -361,6 +361,31 @@ CREATE TABLE `vend_order` (
 -- ----------------------------
 -- Records of vend_order
 -- ----------------------------
+INSERT INTO vend_order VALUES ('C1709061708163180', '', 'C1709061708193274', null, '24', null, '1', '4.00', null, '0', '2017-09-06 17:08:19', null, null, null, null);
+INSERT INTO vend_order VALUES ('C1709061712205905', '', 'C1709061712223504', null, '23', null, '1', '5.00', null, '0', '2017-09-06 17:12:22', null, null, null, null);
+
+-- ----------------------------
+-- Table structure for `vend_para`
+-- ----------------------------
+DROP TABLE IF EXISTS `vend_para`;
+CREATE TABLE `vend_para` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `para_code` varchar(50) DEFAULT NULL,
+  `para_content` varchar(150) DEFAULT NULL,
+  `extend1` varchar(150) DEFAULT NULL,
+  `extend2` varchar(150) DEFAULT NULL,
+  `extend3` varchar(150) DEFAULT NULL,
+  `desprision` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of vend_para
+-- ----------------------------
+INSERT INTO vend_para VALUES ('1', 'appid', 'wx61085e86760cb2ca', '', '', '', '微信公众号APPID');
+INSERT INTO vend_para VALUES ('2', 'key', '34fr87fh823fh823hf8h23fh8923fh28', '', '', '', '微信支付公众号设置的key');
+INSERT INTO vend_para VALUES ('3', 'mch_id', '1488575892', '', '', '', '微信支付商户号');
+INSERT INTO vend_para VALUES ('4', 'appsecret', '0afc728dca13ffb5a840e667c38146f5', '', '', '', '微信小程序appSecret');
 
 -- ----------------------------
 -- Table structure for `vend_permission`

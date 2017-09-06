@@ -23,7 +23,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>user/users" class="current">用户列表</a>
+      <a href="<%=basePath1%>user/users" class="current">机器列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -35,53 +35,33 @@
 		<div class="span12">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-info-sign"></i></span>
-                 <h5>用户修改</h5>
+                 <h5>机器修改</h5>
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/user/edit" enctype="multipart/form-data" commandName="vendUser" name="basic_validate" id="basic_validate" novalidate="novalidate">
-	              <sf:hidden path="usercode"/>
-	               <div class="control-group">
-	                <label class="control-label">用户名</label>
+			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/machine/edit" enctype="multipart/form-data" commandName="vendMachine" name="basic_validate" id="basic_validate" novalidate="novalidate">
+	              <sf:hidden path="id"/>
+	              <div class="control-group">
+	                <label class="control-label">机器名</label>
 	                <div class="controls">
-	                  <sf:input path="username"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="username" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <sf:input path="machineName"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="machineName" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">密码</label>
+	                <label class="control-label">选择广告</label>
 	                <div class="controls">
-	                  <sf:password path="password"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="password" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
-	                </div>
-	              </div>
-	              <div class="control-group">
-	                <label class="control-label">角色</label>
-	                <div class="controls">
-	                  <sf:select path="roleId" items="${userroles}" itemLabel="roleName" itemValue="id">
+	                  <sf:select path="adId" items="${ads}" itemLabel="adName" itemValue="id">
 	                  </sf:select>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="roleId" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="adId" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">手机号</label>
+	                <label class="control-label">选择商户二维码</label>
 	                <div class="controls">
-	                  <sf:input path="mobile"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="mobile" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
-	                </div>
-	              </div>
-	              <div class="control-group">
-	                <label class="control-label">地址</label>
-	                <div class="controls">
-	                  <sf:input path="address"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="address" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
-	                </div>
-	              </div>
-	              <div class="control-group">
-	                <label class="control-label">联系人</label>
-	                <div class="controls">
-	                  <sf:input path="linkman"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="linkman" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <sf:select path="shopQrcode" items="${vendShopQrcodes}" itemLabel="extend1" itemValue="id">
+	                  </sf:select>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="shopQrcode" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="form-actions">

@@ -7,11 +7,13 @@
     <result column="itemno" property="itemno" jdbcType="VARCHAR" />
     <result column="itemname" property="itemname" jdbcType="VARCHAR" />
     <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
-    <result column="extend1" property="extend1" jdbcType="VARCHAR" />
     <result column="extend2" property="extend2" jdbcType="VARCHAR" />
+    <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+    <result column="extend4" property="extend4" jdbcType="VARCHAR" />
+    <result column="extend1" property="extend1" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, codeno, itemno, itemname, addtime, extend1, extend2
+    id, codeno, itemno, itemname, addtime, extend2, extend3, extend4, extend1
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -25,11 +27,13 @@
   </delete>
   <insert id="insert" parameterType="vend.entity.CodeLibrary" >
     insert into code_library (id, codeno, itemno, 
-      itemname, addtime, extend1, 
-      extend2)
+      itemname, addtime, extend2, 
+      extend3, extend4, extend1
+      )
     values (#{id,jdbcType=VARCHAR}, #{codeno,jdbcType=VARCHAR}, #{itemno,jdbcType=VARCHAR}, 
-      #{itemname,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, 
-      #{extend2,jdbcType=VARCHAR})
+      #{itemname,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="vend.entity.CodeLibrary" >
     insert into code_library
@@ -49,11 +53,17 @@
       <if test="addtime != null" >
         addtime,
       </if>
-      <if test="extend1 != null" >
-        extend1,
-      </if>
       <if test="extend2 != null" >
         extend2,
+      </if>
+      <if test="extend3 != null" >
+        extend3,
+      </if>
+      <if test="extend4 != null" >
+        extend4,
+      </if>
+      <if test="extend1 != null" >
+        extend1,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -72,11 +82,17 @@
       <if test="addtime != null" >
         #{addtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="extend1 != null" >
-        #{extend1,jdbcType=VARCHAR},
-      </if>
       <if test="extend2 != null" >
         #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -95,11 +111,17 @@
       <if test="addtime != null" >
         addtime = #{addtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="extend1 != null" >
-        extend1 = #{extend1,jdbcType=VARCHAR},
-      </if>
       <if test="extend2 != null" >
         extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        extend4 = #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend1 != null" >
+        extend1 = #{extend1,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -110,11 +132,13 @@
       itemno = #{itemno,jdbcType=VARCHAR},
       itemname = #{itemname,jdbcType=VARCHAR},
       addtime = #{addtime,jdbcType=TIMESTAMP},
-      extend1 = #{extend1,jdbcType=VARCHAR},
-      extend2 = #{extend2,jdbcType=VARCHAR}
+      extend2 = #{extend2,jdbcType=VARCHAR},
+      extend3 = #{extend3,jdbcType=VARCHAR},
+      extend4 = #{extend4,jdbcType=VARCHAR},
+      extend1 = #{extend1,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <!-- 一下为自定义方法 -->
+   <!-- 一下为自定义方法 -->
   <select id="selectByCodeNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

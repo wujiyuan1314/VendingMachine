@@ -10,6 +10,7 @@ import base.util.DateUtil;
 import base.util.Page;
 import vend.dao.VendMachineMapper;
 import vend.entity.VendMachine;
+import vend.entity.VendShopQrcode;
 import vend.service.VendMachineService;
 
 @Service

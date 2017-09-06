@@ -19,10 +19,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import base.util.Function;
 import base.util.Page;
 import vend.entity.CodeLibrary;
+import vend.entity.VendAd;
 import vend.entity.VendMachine;
+import vend.entity.VendShopQrcode;
 import vend.entity.VendUser;
 import vend.service.CodeLibraryService;
+import vend.service.VendAdService;
 import vend.service.VendMachineService;
+import vend.service.VendShopQrcodeService;
 
 @Controller
 @RequestMapping("/machine")
@@ -31,6 +35,10 @@ public class VendMachineController{
 	
 	@Autowired
 	VendMachineService vendMachineService;
+	@Autowired
+	VendAdService vendAdService;
+	@Autowired
+	VendShopQrcodeService vendShopQrcodeService;
 	@Autowired
 	CodeLibraryService codeLibraryService;
 	/**
@@ -109,6 +117,8 @@ public class VendMachineController{
 	 */
 	@RequestMapping(value="/{id}/detail")
 	public String detail(Model model,@PathVariable int id){
+		List<VendShopQrcode> clientQrcodes=vendShopQrcodeService.selectByType("2");
+		model.addAttribute("clientQrcodes", clientQrcodes);
 		VendMachine vendMachine=vendMachineService.getOne(id);
 		model.addAttribute("vendMachine", vendMachine);
 		return "manage/machine/machine_detail"; 
@@ -153,8 +163,10 @@ public class VendMachineController{
 	@RequiresPermissions({"machine:edit"})
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable int id){
-		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");
-		model.addAttribute("upvideotypes", upvideotypes);
+		List<VendAd> ads=vendAdService.findAll();
+		model.addAttribute("ads", ads);
+		List<VendShopQrcode> vendShopQrcodes=vendShopQrcodeService.selectByType("1");
+		model.addAttribute("vendShopQrcodes", vendShopQrcodes);
 		VendMachine vendMachine=vendMachineService.getOne(id);
 		model.addAttribute(vendMachine);
 		return "manage/machine/machine_edit";
@@ -170,8 +182,6 @@ public class VendMachineController{
 	@RequiresPermissions({"machine:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String edit(HttpServletRequest request,Model model,@Validated VendMachine vendMachine,BindingResult br){
-		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");
-		model.addAttribute("upvideotypes", upvideotypes);
     	if(br.hasErrors()){
     		return "manage/machine/machine_edit";
     	}

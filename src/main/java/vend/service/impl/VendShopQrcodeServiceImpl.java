@@ -56,5 +56,13 @@ public class VendShopQrcodeServiceImpl implements VendShopQrcodeService {
 		// TODO Auto-generated method stub
 		return vendShopQrcodeMapper.findAll();
 	}
+	/**
+	 * 按照类型查找
+	 * @param extend2
+	 * @return
+	 */
+	public List<VendShopQrcode> selectByType(String extend2){
+		return vendShopQrcodeMapper.selectByType(extend2);
+	}
 
 }

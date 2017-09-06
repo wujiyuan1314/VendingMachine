@@ -46,4 +46,10 @@ public interface VendShopQrcodeService {
 	 * @return
 	 */
 	List<VendShopQrcode> findAll();
+	/**
+	 * 按照类型查找
+	 * @param extend2
+	 * @return
+	 */
+	List<VendShopQrcode> selectByType(String extend2);
 }
