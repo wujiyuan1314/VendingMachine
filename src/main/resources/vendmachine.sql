@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-09-06 17:52:28
+Date: 2017-09-07 20:43:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,6 +37,7 @@ INSERT INTO code_catalog VALUES ('ADTYPE', '广告类型', '广告类型', null,
 INSERT INTO code_catalog VALUES ('CLEANSTATUS', '是否自动清洗', '是否自动清洗', null, null, null);
 INSERT INTO code_catalog VALUES ('CUPSTATUS', '储杯情况', '储杯情况', null, null, null);
 INSERT INTO code_catalog VALUES ('HEATSTATUS', '加热状态', '加热状态', null, null, null);
+INSERT INTO code_catalog VALUES ('ORDERTYPE', '订单的类型', '订单的类型', null, null, null);
 INSERT INTO code_catalog VALUES ('QRCODETYPE', '二维码类型', '二维码类型', null, null, null);
 INSERT INTO code_catalog VALUES ('UPFILETYPE', '文件类型', '上传的文件类型', null, null, null);
 INSERT INTO code_catalog VALUES ('UPPICTYPE', '图片类型', '上传的图片类型', null, null, null);
@@ -112,6 +113,8 @@ INSERT INTO code_library VALUES ('d506876ed6584ac5ae86ff48c37b4aab', 'USESTATUS'
 INSERT INTO code_library VALUES ('de379d2f392945ad9756dca39b3349d3', 'UPFILETYPE', '3', 'doc', '2017-08-28 10:26:49', null, null, null, null);
 INSERT INTO code_library VALUES ('e33ab7b219de4629b6976ea930917f87', 'ADTYPE', '2', '图片广告', '2017-08-25 11:30:51', null, null, null, null);
 INSERT INTO code_library VALUES ('e57f1d63a95544e0a1da2b196e38b4bc', 'UPVIDEOTYPE', '1', 'AVI', '2017-08-28 10:29:38', null, null, null, null);
+INSERT INTO code_library VALUES ('f4805ab0197b42f291084b969fee27a2', 'ORDERTYPE', '1', '购买', '2017-09-07 16:29:52', null, null, null, null);
+INSERT INTO code_library VALUES ('f4805ab0197b42f291084b969fee27a4', 'ORDERTYPE', '2', '充值', '2017-09-07 16:30:54', null, null, null, null);
 INSERT INTO code_library VALUES ('f4805ab0197b42f291084b969fee27a9', 'UPFILETYPE', '4', 'xls', '2017-08-28 10:28:15', null, null, null, null);
 INSERT INTO code_library VALUES ('f68cb7a8039146e482360bd72570e8d1', 'CLEANSTATUS', '2', '不自动清洗', '2017-09-05 15:52:44', null, null, null, '');
 
@@ -184,6 +187,7 @@ CREATE TABLE `vend_account` (
 -- ----------------------------
 -- Records of vend_account
 -- ----------------------------
+INSERT INTO vend_account VALUES ('VM001', '0.00', '51fe78b0a1d09990', '2017-09-07 20:18:06', '2017-09-07 20:18:09', null, null, null);
 INSERT INTO vend_account VALUES ('VM2017083016442563', '0.00', '51fe78b0a1d09990', '2017-08-30 16:44:25', '2017-08-30 16:44:25', null, null, null);
 INSERT INTO vend_account VALUES ('VM2017083017395351', '0.00', '51fe78b0a1d09990', '2017-08-30 17:39:53', '2017-08-30 17:39:53', null, null, null);
 INSERT INTO vend_account VALUES ('VM2017083017401488', '0.00', '51fe78b0a1d09990', '2017-08-30 17:40:14', '2017-08-30 17:40:14', null, null, null);
@@ -297,7 +301,7 @@ CREATE TABLE `vend_goods` (
 -- Records of vend_goods
 -- ----------------------------
 INSERT INTO vend_goods VALUES ('23', '雪碧', '/userfiles/pic/201708221429509354.jpg', '5.00', '雪碧美国发展速度领先的主要非酒精饮料产品之一', '2017-08-22 14:29:50', '2017-08-22 14:29:50', null, null, null);
-INSERT INTO vend_goods VALUES ('24', '芬达', '/userfiles/pic/201708221431220330.jpg', '4.00', '芬达汽水（Fanta）是1940年代在欧洲开始风行的饮料', '2017-08-22 14:31:22', '2017-08-22 14:31:22', null, null, null);
+INSERT INTO vend_goods VALUES ('24', '芬达', '/userfiles/pic/201708221431220330.jpg', '1.00', '芬达汽水（Fanta）是1940年代在欧洲开始风行的饮料', '2017-08-22 14:31:22', '2017-08-22 14:31:22', null, null, null);
 INSERT INTO vend_goods VALUES ('25', '王老吉', '/userfiles/pic/201708221432088297.jpg', '6.00', '王老吉是王老吉凉茶的品牌，创立于清道光年间（1828年），被公认为凉茶始祖', '2017-08-22 14:32:08', '2017-08-22 14:32:08', null, null, null);
 
 -- ----------------------------
@@ -352,7 +356,7 @@ CREATE TABLE `vend_order` (
   `orderstate` varchar(50) DEFAULT NULL COMMENT '订单状态（1，已支付。2，未支付）',
   `create_time` datetime DEFAULT NULL COMMENT '订单创建时间',
   `pay_time` datetime DEFAULT NULL COMMENT '支付时间',
-  `extend1` varchar(200) DEFAULT NULL,
+  `extend1` varchar(200) DEFAULT NULL COMMENT '订单类型',
   `extend2` varchar(200) DEFAULT NULL,
   `extend3` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`order_id`)
@@ -361,8 +365,26 @@ CREATE TABLE `vend_order` (
 -- ----------------------------
 -- Records of vend_order
 -- ----------------------------
-INSERT INTO vend_order VALUES ('C1709061708163180', '', 'C1709061708193274', null, '24', null, '1', '4.00', null, '0', '2017-09-06 17:08:19', null, null, null, null);
-INSERT INTO vend_order VALUES ('C1709061712205905', '', 'C1709061712223504', null, '23', null, '1', '5.00', null, '0', '2017-09-06 17:12:22', null, null, null, null);
+INSERT INTO vend_order VALUES ('C1709061708163180', '', 'VM2017083115230747', null, '24', null, '1', '4.00', null, '0', '2017-09-06 17:08:19', null, null, null, null);
+INSERT INTO vend_order VALUES ('C1709061712205905', '', 'VM2017083115230747', null, '23', null, '1', '5.00', null, '0', '2017-09-06 17:12:22', null, null, null, null);
+INSERT INTO vend_order VALUES ('C1709070855488529', '', 'VM2017083115230747', null, '24', null, '1', '4.00', null, '0', '2017-09-07 08:55:48', null, null, null, null);
+INSERT INTO vend_order VALUES ('C1709070859340794', '', 'VM2017083115230747', null, '24', null, '1', '4.00', null, '0', '2017-09-07 08:59:34', null, null, null, null);
+INSERT INTO vend_order VALUES ('C1709070900027863', '', 'VM2017083115230747', null, '24', null, '1', '4.00', null, '0', '2017-09-07 09:00:02', null, null, null, null);
+INSERT INTO vend_order VALUES ('C1709070910449174', '', 'VM2017083115230747', null, '24', null, '1', '4.00', null, '0', '2017-09-07 09:10:44', null, null, null, null);
+INSERT INTO vend_order VALUES ('C1709070911529503', '', 'VM2017083115230747', null, '24', null, '1', '4.00', null, '0', '2017-09-07 09:11:52', null, null, null, null);
+INSERT INTO vend_order VALUES ('C1709070912554354', '', 'VM2017083115230747', null, '24', null, '1', '4.00', null, '0', '2017-09-07 09:13:07', null, null, null, null);
+INSERT INTO vend_order VALUES ('C1709070918040991', '', 'VM2017083115230747', null, '24', null, '1', '4.00', null, '0', '2017-09-07 09:18:04', null, null, null, null);
+INSERT INTO vend_order VALUES ('C1709070920532777', '', 'VM2017083115230747', null, '24', null, '1', '4.00', null, '0', '2017-09-07 09:20:53', null, null, null, null);
+INSERT INTO vend_order VALUES ('C1709070922174969', '', 'VM2017083115230747', null, '24', null, '1', '4.00', null, '0', '2017-09-07 09:22:17', null, null, null, null);
+INSERT INTO vend_order VALUES ('C1709070926440802', '', 'VM2017083115230747', null, '24', null, '1', '4.00', null, '0', '2017-09-07 09:26:44', null, null, null, null);
+INSERT INTO vend_order VALUES ('C1709071641412674', '', 'C1709071641435100', '', '23', '微信支付', '1', '5.00', null, '0', '2017-09-07 16:41:43', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709071946115877', '', 'C1709071946118626', '', '24', '微信支付', '1', '4.00', null, '0', '2017-09-07 19:46:11', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709071948072832', '', 'C1709071948072995', '', '24', '微信支付', '1', '0.01', null, '0', '2017-09-07 19:48:07', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709071948555009', '', 'C1709071948554486', '', '24', '微信支付', '1', '0.01', null, '0', '2017-09-07 19:48:55', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709071949376207', '', 'C1709071949379844', '', '24', '微信支付', '1', '0.10', null, '0', '2017-09-07 19:49:37', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709071950086204', '', 'C1709071950086471', '', '24', '微信支付', '1', '0.10', null, '0', '2017-09-07 19:50:08', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709071950146207', '', 'C1709071950141518', '', '24', '微信支付', '1', '1.00', null, '0', '2017-09-07 19:50:14', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709071952033137', '', 'C1709071952034382', '', '24', '微信支付', '1', '1.00', null, '0', '2017-09-07 19:52:03', null, '1', null, null);
 
 -- ----------------------------
 -- Table structure for `vend_para`
@@ -377,13 +399,13 @@ CREATE TABLE `vend_para` (
   `extend3` varchar(150) DEFAULT NULL,
   `desprision` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of vend_para
 -- ----------------------------
 INSERT INTO vend_para VALUES ('1', 'appid', 'wx61085e86760cb2ca', '', '', '', '微信公众号APPID');
-INSERT INTO vend_para VALUES ('2', 'key', '34fr87fh823fh823hf8h23fh8923fh28', '', '', '', '微信支付公众号设置的key');
+INSERT INTO vend_para VALUES ('2', 'key', 'HNBBNdwl65990055zzy8891695585565', '', '', '', '微信支付公众号设置的key');
 INSERT INTO vend_para VALUES ('3', 'mch_id', '1488575892', '', '', '', '微信支付商户号');
 INSERT INTO vend_para VALUES ('4', 'appsecret', '0afc728dca13ffb5a840e667c38146f5', '', '', '', '微信小程序appSecret');
 
@@ -515,9 +537,7 @@ CREATE TABLE `vend_role` (
   `extend1` varchar(600) DEFAULT NULL,
   `extend2` varchar(600) DEFAULT NULL,
   `state` tinyint(4) DEFAULT '1' COMMENT '表示角色当前的状态，0表示冻结，1表示正常',
-  `proportion
-proportion
-proportion` decimal(2,2) DEFAULT NULL,
+  `proportion` decimal(2,2) DEFAULT NULL COMMENT '付款比例',
   `extend3` varchar(600) DEFAULT NULL,
   `extend4` varchar(600) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -672,6 +692,7 @@ CREATE TABLE `vend_syslog` (
 DROP TABLE IF EXISTS `vend_user`;
 CREATE TABLE `vend_user` (
   `usercode` varchar(50) NOT NULL,
+  `parent_usercode` varchar(50) DEFAULT NULL COMMENT '建立该账号的上级账号',
   `username` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
   `role_id` int(12) DEFAULT NULL,
@@ -690,7 +711,5 @@ CREATE TABLE `vend_user` (
 -- ----------------------------
 -- Records of vend_user
 -- ----------------------------
-INSERT INTO vend_user VALUES ('VM2017082419502601', 'admin', '123456', '1', null, null, null, '2017-08-22 16:12:39', '2017-08-22 16:12:39', null, null, null);
-INSERT INTO vend_user VALUES ('VM2017082419502602', '345', '345', '3', null, null, null, '2017-08-24 19:50:26', '2017-08-24 19:50:26', null, null, null);
-INSERT INTO vend_user VALUES ('VM2017082419562383', '546', '564', '2', null, null, null, '2017-08-24 19:56:23', '2017-08-24 19:56:23', null, null, null);
-INSERT INTO vend_user VALUES ('VM2017083115230747', 'wujiyuan', '123456', '5', '18640214798', 'Zhengzhou', null, '2017-08-31 15:23:07', '2017-08-31 15:23:07', null, null, null);
+INSERT INTO vend_user VALUES ('VM2017082419502601', null, 'admin', '123456', '1', null, null, null, '2017-08-22 16:12:39', '2017-08-22 16:12:39', '1', null, null);
+INSERT INTO vend_user VALUES ('VM2017083115230747', null, 'wujiyuan', '123456', '5', '18640214798', 'Zhengzhou', null, '2017-08-31 15:23:07', '2017-08-31 15:23:07', '1', null, null);
