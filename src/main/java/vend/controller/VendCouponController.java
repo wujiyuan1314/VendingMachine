@@ -1,5 +1,8 @@
 package vend.controller;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,13 +15,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import base.util.Function;
 import base.util.Page;
 import vend.entity.CodeLibrary;
 import vend.entity.VendCoupon;
+import vend.entity.VendOrder;
 import vend.service.CodeLibraryService;
 import vend.service.VendCouponService;
 
@@ -53,6 +59,18 @@ public class VendCouponController{
 		List<VendCoupon> vendCoupons = vendCouponService.listVendCoupon(vendCoupon, page);
 		model.addAttribute("vendCoupons",vendCoupons);
 		return "manage/coupon/coupon_list";
+	}
+	/**
+	 * 得到消费用户订单数据
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/jcoupons",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
+	public @ResponseBody Map<String,Object> getJson() throws IOException {
+		Map<String,Object> resultmap=new HashMap<String,Object>();
+		List<VendCoupon> vendCoupons = vendCouponService.findAll();
+		resultmap.put("vendCoupons", vendCoupons);
+		return resultmap;
 	}
 	/**
 	 * 跳转优惠券信息添加界面
