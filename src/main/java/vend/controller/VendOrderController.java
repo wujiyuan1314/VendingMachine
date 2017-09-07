@@ -1,8 +1,12 @@
 package vend.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -13,10 +17,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import base.util.Page;
+import vend.entity.CodeLibrary;
 import vend.entity.VendOrder;
+import vend.service.CodeLibraryService;
 import vend.service.VendOrderService;
 
 @Controller
@@ -26,6 +35,8 @@ public class VendOrderController{
 	
 	@Autowired
 	VendOrderService vendOrderService;
+	@Autowired
+	CodeLibraryService codeLibraryService;
 	/**
 	 * 根据输入信息条件查询订单列表，并分页显示
 	 * @param model
@@ -50,6 +61,31 @@ public class VendOrderController{
 		List<VendOrder> vendOrders = vendOrderService.listVendOrder(vendOrder,beginTime,endTime, page);
 		model.addAttribute("vendOrders",vendOrders);
 		return "manage/order/order_list";
+	}
+	/**
+	 * 得到消费用户订单数据
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/jorders",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
+	public @ResponseBody Map<String,Object> getJson(@RequestBody Map<String, String> map,@ModelAttribute Page page) throws IOException {
+		Map<String,Object> resultmap=new HashMap<String,Object>();
+		String currentPageStr = map.get("page");
+		String pageNumberStr = map.get("page_size");
+		logger.info(currentPageStr + "===========");
+		if(currentPageStr != null){
+			int currentPage = Integer.parseInt(currentPageStr);
+			int pageNumber = Integer.parseInt(pageNumberStr);
+			page.setCurrentPage(currentPage);
+			page.setPageNumber(pageNumber);
+		}
+		VendOrder vendOrder=new VendOrder();
+		vendOrder.setUsercode(map.get("usercode"));
+		List<VendOrder> vendOrders = vendOrderService.listVendOrder(vendOrder, "", "", page);
+		List<CodeLibrary> ordertypes =codeLibraryService.selectByCodeNo("ORDERTYPE");
+		resultmap.put("vendOrders", vendOrders);
+		resultmap.put("ordertypes", ordertypes);
+		return resultmap;
 	}
 	/**
 	 * 跳转订单信息添加界面

@@ -11,10 +11,13 @@
     <result column="extend1" property="extend1" jdbcType="VARCHAR" />
     <result column="extend2" property="extend2" jdbcType="VARCHAR" />
     <result column="state" property="state" jdbcType="TINYINT" />
+    <result column="proportion" property="proportion" jdbcType="DECIMAL" />
+    <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+    <result column="extend4" property="extend4" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, parent_id, role_name, role_description, create_time, update_time, extend1, extend2, 
-    state
+    state, proportion, extend3, extend4
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -35,11 +38,13 @@
   <insert id="insert" parameterType="vend.entity.VendRole" >
     insert into vend_role (id, parent_id, role_name, 
       role_description, create_time, update_time, 
-      extend1, extend2, state
+      extend1, extend2, state, 
+      proportion, extend3, extend4
       )
     values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, 
       #{roleDescription,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}, 
+      #{proportion,jdbcType=DECIMAL}, #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="vend.entity.VendRole" >
@@ -72,6 +77,15 @@
       <if test="state != null" >
         state,
       </if>
+      <if test="proportion != null" >
+        proportion,
+      </if>
+      <if test="extend3 != null" >
+        extend3,
+      </if>
+      <if test="extend4 != null" >
+        extend4,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -100,6 +114,15 @@
       </if>
       <if test="state != null" >
         #{state,jdbcType=TINYINT},
+      </if>
+      <if test="proportion != null" >
+        #{proportion,jdbcType=DECIMAL},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -130,6 +153,15 @@
       <if test="state != null" >
         state = #{state,jdbcType=TINYINT},
       </if>
+      <if test="proportion != null" >
+        proportion = #{proportion,jdbcType=DECIMAL},
+      </if>
+      <if test="extend3 != null" >
+        extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        extend4 = #{extend4,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -142,10 +174,13 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       extend1 = #{extend1,jdbcType=VARCHAR},
       extend2 = #{extend2,jdbcType=VARCHAR},
-      state = #{state,jdbcType=TINYINT}
+      state = #{state,jdbcType=TINYINT},
+      proportion = #{proportion,jdbcType=DECIMAL},
+      extend3 = #{extend3,jdbcType=VARCHAR},
+      extend4 = #{extend4,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-     <!-- 一下为自定义方法 -->
+    <!-- 一下为自定义方法 -->
   <select id="listVendRole" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List" />
@@ -175,15 +210,17 @@
   </select>
   <!-- 批量添加 -->
   <insert id="insertBatch" parameterType="java.util.List">
-	  insert into vend_role (role_name,role_description,create_time,update_time,extend1,extend2,extend3,state)
+	  insert into vend_role (role_name,role_description,proportion,create_time,update_time,extend1,extend2,extend3,extend4,state)
 	        values
        <foreach collection="list" item="item" index="index" separator=",">
            (#{item.roleName,jdbcType=VARCHAR},
             #{item.roleDescription,jdbcType=VARCHAR},
+            #{item.proportion,jdbcType=DECIMAL},
             #{item.createTime,jdbcType=TIMESTAMP},
             #{item.updateTime,jdbcType=TIMESTAMP},
             #{item.extend1,jdbcType=VARCHAR},
             #{item.extend2,jdbcType=VARCHAR},
+            #{item.extend3,jdbcType=VARCHAR},
             #{item.extend3,jdbcType=VARCHAR},
             #{item.state,jdbcType=VARCHAR}
             )

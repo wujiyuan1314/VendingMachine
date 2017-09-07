@@ -22,8 +22,12 @@ import base.weixinpay.common.StreamUtil;
 import base.weixinpay.model.OrderInfo;
 import base.weixinpay.model.OrderReturnInfo;
 import base.weixinpay.model.SignInfo;
+import vend.entity.VendAccount;
+import vend.entity.VendMachine;
 import vend.entity.VendOrder;
 import vend.entity.VendUser;
+import vend.service.VendAccountService;
+import vend.service.VendMachineService;
 import vend.service.VendOrderService;
 import vend.service.VendParaService;
 import vend.service.VendUserService;
@@ -49,6 +53,10 @@ public class WeiXinController {
 	VendOrderService vendOrderService;
 	@Autowired
 	VendUserService vendUserService;
+	@Autowired
+	VendMachineService vendMachineService;
+	@Autowired
+	VendAccountService vendAccountService;
 	/**
 	 * 得到本次支付的openid
 	 * @param map
@@ -56,8 +64,12 @@ public class WeiXinController {
 	 */
 	@RequestMapping(value="/getsessionkey",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
 	public @ResponseBody Map<String, String> getSessionKey(@RequestBody Map<String, String> map){
+		Configure.setAppID(vendParaService.selectByParaCode("appid"));
+		Configure.setMch_id(vendParaService.selectByParaCode("mch_id"));
+		Configure.setKey(vendParaService.selectByParaCode("key"));
+		Configure.setSecret(vendParaService.selectByParaCode("appsecret"));
 		String uri="https://api.weixin.qq.com/sns/jscode2session?"
-				+ "appid=wxbfa16a6dc69209c9&secret=76107b13373003e995b6b89bf9291d39"
+				+ "appid="+Configure.getAppID()+"&secret="+Configure.getSecret()+""
 				+ "&js_code="+map.get("code")+""
 				+ "&grant_type=authorization_code";
 		String json=HttpClientUtil.httpPostRequest(uri);
@@ -76,11 +88,15 @@ public class WeiXinController {
 	@RequestMapping(value="/getorder",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
 	public @ResponseBody void getOrder(HttpServletRequest request,HttpServletResponse response){
 		String openid=request.getParameter("openid");
-		String name=request.getParameter("goodsname");
+		String name=request.getParameter("name");
 		int id=Function.getInt(request.getParameter("id"),0);
 		String machinecode=request.getParameter("machinecode");
-		String username=request.getParameter("username");
-		VendUser user=vendUserService.selectByUsername(username);
+		VendMachine vendMachine=vendMachineService.selectByMachineCode(machinecode);
+		String shopusercode="";
+		if(vendMachine!=null){
+			shopusercode=vendMachine.getUsercode();
+		}
+		String usercode=request.getParameter("usercode");
 		double price=Function.getDouble(request.getParameter("price"), 0.00);
 		
 		VendOrder vendOrder=new VendOrder();
@@ -88,12 +104,15 @@ public class WeiXinController {
 		vendOrder.setAmount(BigDecimal.valueOf(price));
 		String orderId=Function.getOrderId();
 		vendOrder.setOrderId(orderId);
-		vendOrder.setUsercode(user.getUsercode());
+		vendOrder.setUsercode(usercode);
+		vendOrder.setShopusercode(shopusercode);
 		vendOrder.setGoodsId(id);
 		vendOrder.setMachineCode(machinecode);
 		vendOrder.setNum(1);
 		vendOrder.setCreateTime(createTime);
 		vendOrder.setOrderstate("0");
+		vendOrder.setExtend1("1");//购买
+		vendOrder.setPayType("微信支付");
 		vendOrderService.insertVendOrder(vendOrder);
 		
 		int fee=(int)price*100;
@@ -108,8 +127,8 @@ public class WeiXinController {
 			order.setAppid(Configure.getAppID());
 			order.setMch_id(Configure.getMch_id());
 			order.setNonce_str(RandomStringGenerator.getRandomStringByLength(32));
-			order.setBody("dsfs");
-			order.setOut_trade_no(RandomStringGenerator.getRandomStringByLength(32));
+			order.setBody(name);
+			order.setOut_trade_no(orderId);
 			order.setTotal_fee(fee);
 			order.setSpbill_create_ip("1.192.121.236");
 			order.setNotify_url("http://www.vm.com/VendingMachine/wx/payresult");
@@ -130,6 +149,7 @@ public class WeiXinController {
 			OrderReturnInfo returnInfo = (OrderReturnInfo)xStream.fromXML(result);
 			JSONObject json = new JSONObject();
 			json.put("prepay_id", returnInfo.getPrepay_id());
+			json.put("orderId", orderId);
 			response.getWriter().append(json.toJSONString());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -181,5 +201,63 @@ public class WeiXinController {
 		logger.info("-------支付结果:"+reqParams);
 		StringBuffer sb = new StringBuffer("<xml><return_code>SUCCESS</return_code><return_msg>OK</return_msg></xml>");
 		response.getWriter().append(sb.toString());
+	}
+	/**
+	 * 支付成功处理
+	 * @param map
+	 * @return
+	 * @throws IOException 
+	 */
+	@RequestMapping(value="/paysuccess",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
+	public @ResponseBody void PaySuccess(HttpServletRequest request){
+		String requestPayment = request.getParameter("requestPayment");
+		String orderId = request.getParameter("orderId");
+		logger.info("-------支付结果:"+requestPayment);
+		if(requestPayment.equals("ok")){
+			//1,修改订单
+			VendOrder vendOrder=vendOrderService.getOne(orderId);
+			String shopusercode=vendOrder.getShopusercode();//商家账号
+			if(vendOrder!=null){
+				vendOrder.setOrderstate("1");
+				vendOrderService.editVendOrder(vendOrder);
+			}
+			//2,修改账户
+			Date updateTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
+			VendAccount vendAccount=vendAccountService.getOne(shopusercode);//商户账户
+			VendUser vendUser=vendUserService.getOne(shopusercode);
+			double amountnow1=vendOrder.getAmount().doubleValue()*0.4;
+			double amountpre1=vendAccount.getOwnAmount().doubleValue();
+			BigDecimal totalamount=BigDecimal.valueOf(amountnow1+amountpre1);
+			vendAccount.setOwnAmount(totalamount);
+			String moneyencrypt=Function.getEncrypt(BigDecimal.valueOf(amountnow1+amountpre1).toString());
+			vendAccount.setMoneyencrypt(Function.getEncrypt(moneyencrypt));
+			vendAccount.setUpdateTime(updateTime);
+			vendAccountService.editVendAccount(vendAccount);
+			
+			if(vendUser!=null){
+				VendAccount pendAccount=vendAccountService.getOne(vendUser.getParentUsercode());//代理用户账户
+				VendUser pvendUser=vendUserService.getOne(pendAccount.getUsercode());
+				double amountnow2=vendOrder.getAmount().doubleValue()*0.2;
+				double amountpre2=pendAccount.getOwnAmount().doubleValue();
+				BigDecimal totalamount2=BigDecimal.valueOf(amountnow1+amountpre1);
+				pendAccount.setOwnAmount(totalamount2);
+				String moneyencrypt2=Function.getEncrypt(BigDecimal.valueOf(amountnow2+amountpre2).toString());
+				pendAccount.setMoneyencrypt(Function.getEncrypt(moneyencrypt2));
+				pendAccount.setUpdateTime(updateTime);
+				vendAccountService.editVendAccount(pendAccount);
+			}
+			
+			VendAccount zendAccount=vendAccountService.getOne("VM001");//总账户
+			double amountnow3=vendOrder.getAmount().doubleValue()*0.2;
+			double amountpre3=zendAccount.getOwnAmount().doubleValue();
+			BigDecimal totalamount3=BigDecimal.valueOf(amountnow1+amountpre1);
+			zendAccount.setOwnAmount(totalamount3);
+			String moneyencrypt2=Function.getEncrypt(BigDecimal.valueOf(amountnow3+amountpre3).toString());
+			zendAccount.setMoneyencrypt(Function.getEncrypt(moneyencrypt2));
+			zendAccount.setUpdateTime(updateTime);
+			vendAccountService.editVendAccount(zendAccount);
+			
+			
+		}
 	}
 }

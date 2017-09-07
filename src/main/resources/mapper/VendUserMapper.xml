@@ -3,6 +3,7 @@
 <mapper namespace="vend.dao.VendUserMapper" >
   <resultMap id="BaseResultMap" type="vend.entity.VendUser" >
     <id column="usercode" property="usercode" jdbcType="VARCHAR" />
+    <result column="parent_usercode" property="parentUsercode" jdbcType="VARCHAR" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="role_id" property="roleId" jdbcType="INTEGER" />
@@ -16,8 +17,8 @@
     <result column="extend3" property="extend3" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    usercode, username, password, role_id, mobile, address, linkman, create_time, update_time, 
-    extend1, extend2, extend3
+    usercode, parent_usercode, username, password, role_id, mobile, address, linkman, 
+    create_time, update_time, extend1, extend2, extend3
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -25,7 +26,8 @@
     from vend_user
     where usercode = #{usercode,jdbcType=VARCHAR}
   </select>
-   <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  
+  <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from vend_user
@@ -39,28 +41,31 @@
   <select id="getPermissions" parameterType="String" resultType="String">
 	select p.permission_id from vend_user u,vend_role r,vend_role_permission p where u.role_id=r.id and p.role_id=r.id and u.username=#{username}
   </select>
-	
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from vend_user
     where usercode = #{usercode,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="vend.entity.VendUser" >
-    insert into vend_user (usercode, username, password, 
-      role_id, mobile, address, 
-      linkman, create_time, update_time, 
-      extend1, extend2, extend3
-      )
-    values (#{usercode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{roleId,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{linkman,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}
-      )
+    insert into vend_user (usercode, parent_usercode, username, 
+      password, role_id, mobile, 
+      address, linkman, create_time, 
+      update_time, extend1, extend2, 
+      extend3)
+    values (#{usercode,jdbcType=VARCHAR}, #{parentUsercode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="vend.entity.VendUser" >
     insert into vend_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="usercode != null" >
         usercode,
+      </if>
+      <if test="parentUsercode != null" >
+        parent_usercode,
       </if>
       <if test="username != null" >
         username,
@@ -100,6 +105,9 @@
       <if test="usercode != null" >
         #{usercode,jdbcType=VARCHAR},
       </if>
+      <if test="parentUsercode != null" >
+        #{parentUsercode,jdbcType=VARCHAR},
+      </if>
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
       </if>
@@ -138,6 +146,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="vend.entity.VendUser" >
     update vend_user
     <set >
+      <if test="parentUsercode != null" >
+        parent_usercode = #{parentUsercode,jdbcType=VARCHAR},
+      </if>
       <if test="username != null" >
         username = #{username,jdbcType=VARCHAR},
       </if>
@@ -176,7 +187,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="vend.entity.VendUser" >
     update vend_user
-    set username = #{username,jdbcType=VARCHAR},
+    set parent_usercode = #{parentUsercode,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       role_id = #{roleId,jdbcType=INTEGER},
       mobile = #{mobile,jdbcType=VARCHAR},
@@ -201,8 +213,8 @@
 		<if test="vendUser.mobile != null and !&quot;&quot;.equals(vendUser.mobile.trim())">
 			and mobile = #{vendUser.mobile}
 		</if>
-		<if test="vendUser.extend1 != null and !&quot;&quot;.equals(vendUser.extend1.trim())">
-			and extend1 = #{vendUser.extend1}
+		<if test="vendUser.parentUsercode != null and !&quot;&quot;.equals(vendUser.parentUsercode.trim())">
+			and parent_usercode = #{vendUser.parentUsercode}
 		</if>
 		<if test="vendUser.roleId != null and !&quot;&quot;.equals(vendUser.roleId.trim())">
 			and role_id = #{vendUser.roleId}
@@ -219,8 +231,8 @@
 	    <if test="mobile != null and !&quot;&quot;.equals(mobile.trim())">
 		  and mobile = #{mobile}
 	    </if>
-	    <if test="extend1 != null and !&quot;&quot;.equals(extend1.trim())">
-			and extend1 = #{extend1}
+	    <if test="parentUsercode != null and !&quot;&quot;.equals(parentUsercode.trim())">
+			and parent_usercode = #{parentUsercode}
 		</if>
 	    <if test="roleId != null and !&quot;&quot;.equals(roleId.trim())">
 		  and role_id = #{roleId}
@@ -233,10 +245,11 @@
   </select>
   <!-- 批量添加 -->
   <insert id="insertBatch" parameterType="java.util.List">
-	  insert into vend_user (username,password,role_id,mobile,address,linkman,create_time,update_time,extend1,extend2,extend3)
+	  insert into vend_user (parent_usercode,username,password,role_id,mobile,address,linkman,create_time,update_time,extend1,extend2,extend3)
 	        values
        <foreach collection="list" item="item" index="index" separator=",">
-           (#{item.username,jdbcType=VARCHAR},
+           (#{item.parentUsercode,jdbcType=VARCHAR},
+            #{item.username,jdbcType=VARCHAR},
             #{item.password,jdbcType=VARCHAR},
             #{item.roleId,jdbcType=INTEGER},
             #{item.mobile,jdbcType=VARCHAR},

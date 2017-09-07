@@ -1,7 +1,6 @@
 package vend.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import base.util.FileUploadUtils;
 import base.util.Function;
 import base.util.Page;
-import net.sf.json.JSONArray;
 import vend.entity.VendGoods;
 import vend.service.VendGoodsService;
 

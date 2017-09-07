@@ -24,7 +24,7 @@ public interface VendOrderMapper {
     
     List<VendOrder> selectByParams(@Param("vendOrder") VendOrder vendOrder,@Param("beginTime") String beginTime,@Param("endTime") String endTime);
     
-    int countVendOrder(VendOrder vendOrder,@Param("beginTime") String beginTime,@Param("endTime") String endTime);
+    int countVendOrder(@Param("vendOrder") VendOrder vendOrder,@Param("beginTime") String beginTime,@Param("endTime") String endTime);
     
     void insertBatch(List<VendOrder> list);
     

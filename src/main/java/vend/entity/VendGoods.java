@@ -4,10 +4,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 
 public class VendGoods {
     private Integer id;
@@ -54,7 +56,8 @@ public class VendGoods {
         this.pic = pic == null ? null : pic.trim();
     }
     @NotNull(message="价格不能为空")
-    @DecimalMin("0")
+    @Range(min=0,max=100,message="价格必须在0到100之间")
+    @Digits(integer=2,fraction=2)
     public BigDecimal getPrice() {
         return price;
     }

@@ -56,7 +56,7 @@ public class VendUserController{
 		HttpSession session=request.getSession();
     	VendUser user=(VendUser)session.getAttribute("vendUser");
 		if(user!=null){//上级账号
-			vendUser.setExtend1(user.getUsercode());
+			vendUser.setParentUsercode(user.getUsercode());;
 		}
 		List<VendUser> vendUsers = vendUserService.listVendUser(vendUser, page);
 		model.addAttribute("vendUsers",vendUsers);
@@ -64,13 +64,16 @@ public class VendUserController{
 	}
 	/**
 	 * 跳转用户信息添加界面
+	 * @param request
 	 * @param model
 	 * @return
 	 */
 	@RequiresPermissions({"user:add"})
 	@RequestMapping(value="/add",method=RequestMethod.GET)
-	public String add(Model model){
-		List<VendRole> roles=vendRoleService.findAll();//角色列表
+	public String add(HttpServletRequest request,Model model){
+		HttpSession session=request.getSession();
+    	VendUser user=(VendUser)session.getAttribute("vendUser");
+		List<VendRole> roles=vendRoleService.findNext(user.getRoleId());//下级角色列表
 		model.addAttribute("roles",roles);
 		model.addAttribute(new VendUser());
 		return "manage/user/user_add";
@@ -94,7 +97,7 @@ public class VendUserController{
     	HttpSession session=request.getSession();
     	VendUser user=(VendUser)session.getAttribute("vendUser");
 		if(user!=null){//上级账号
-			vendUser.setExtend1(user.getUsercode());
+			vendUser.setParentUsercode(user.getUsercode());
 		}
     	vendUserService.insertVendUser(vendUser);
     	return "redirect:users";

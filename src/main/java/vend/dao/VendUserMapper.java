@@ -15,7 +15,7 @@ public interface VendUserMapper {
     
     public Set<String> getRoles(String userName);
 	
-	public Set<String> getPermissions(String userName);
+   	public Set<String> getPermissions(String userName);
 
     int insertSelective(VendUser record);
 

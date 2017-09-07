@@ -27,4 +27,6 @@ public interface VendMachineMapper {
     int deleteBatch(int ids[]);
     
     List<VendMachine> findAll();
+    
+    VendMachine selectByMachineCode(String machineCode);
 }

@@ -46,5 +46,11 @@ public interface VendMachineService {
 	 * @return
 	 */
 	List<VendMachine> findAll();
+	/**
+	 * 按照machineCode查找
+	 * @param machineCode
+	 * @return
+	 */
+	VendMachine selectByMachineCode(String machineCode);
 	
 }

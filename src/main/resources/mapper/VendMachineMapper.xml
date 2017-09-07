@@ -314,6 +314,13 @@
   
    <select id="findAll" resultMap="BaseResultMap">
  	select * from vend_machine
+   </select>
+   
+   <select id="selectByMachineCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_machine
+    where machine_code = #{machineCode,jdbcType=VARCHAR}
   </select>
   <!-- 批量删除 -->
     <delete id="deleteBatch" parameterType="int">

@@ -9,6 +9,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class VendUser {
     private String usercode;
 
+    private String parentUsercode;
+
     private String username;
 
     private String password;
@@ -38,6 +40,14 @@ public class VendUser {
     public void setUsercode(String usercode) {
         this.usercode = usercode == null ? null : usercode.trim();
     }
+
+    public String getParentUsercode() {
+        return parentUsercode;
+    }
+
+    public void setParentUsercode(String parentUsercode) {
+        this.parentUsercode = parentUsercode == null ? null : parentUsercode.trim();
+    }
     @NotEmpty(message="用户名不能为空")
     public String getUsername() {
         return username;
@@ -63,7 +73,7 @@ public class VendUser {
         this.roleId = roleId;
     }
     @NotEmpty(message="手机号不能为空")
-    @Pattern(regexp="^1[3|4|5|7|8][0-9]{9}$",message="手机号格式不正确")
+    @Pattern(regexp="^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$",message="手机号格式错误")
     public String getMobile() {
         return mobile;
     }

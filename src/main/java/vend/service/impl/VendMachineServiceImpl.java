@@ -76,4 +76,12 @@ public class VendMachineServiceImpl implements VendMachineService {
 		// TODO Auto-generated method stub
 		return vendMachineMapper.findAll();
 	}
+	/**
+	 * 按照machineCode查找
+	 * @param machineCode
+	 * @return
+	 */
+	public VendMachine selectByMachineCode(String machineCode){
+		return vendMachineMapper.selectByMachineCode(machineCode);
+	}
 }

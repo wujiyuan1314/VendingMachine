@@ -12,13 +12,20 @@
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="add" enctype="multipart/form-data" commandName="vendRole" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/role/add" enctype="multipart/form-data" commandName="vendRole" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="parentId" value="${pid }"/>
 	              <div class="control-group">
 	                <label class="control-label">角色名</label>
 	                <div class="controls">
 	                  <sf:input path="roleName"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="roleName" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
+	              <div class="control-group">
+	                <label class="control-label">该角色商品金额所占比例</label>
+	                <div class="controls">
+	                  <sf:input path="proportion"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="proportion" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
