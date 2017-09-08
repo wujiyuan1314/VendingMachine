@@ -99,6 +99,11 @@ public class VendUserController{
 		if(user!=null){//上级账号
 			vendUser.setParentUsercode(user.getUsercode());
 		}
+		
+		//利润分配比例
+		VendRole vendRole=vendRoleService.getOne(user.getRoleId());
+		vendUser.setExtend2(vendRole.getProportion().toString());
+		
     	vendUserService.insertVendUser(vendUser);
     	return "redirect:users";
 	}

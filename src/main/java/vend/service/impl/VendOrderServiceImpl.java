@@ -45,9 +45,6 @@ public class VendOrderServiceImpl implements VendOrderService {
 	 */
 	public int insertVendOrder(VendOrder vendOrder){
 		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
-		String orderId=Function.getOrderId();
-		vendOrder.setUsercode(orderId);
-		vendOrder.setCreateTime(createTime);
 		return vendOrderMapper.insertSelective(vendOrder);
 	}
 	/**

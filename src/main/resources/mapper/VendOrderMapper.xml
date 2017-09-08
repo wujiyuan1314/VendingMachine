@@ -221,6 +221,12 @@
 		<if test="vendOrder.shopusercode != null and !&quot;&quot;.equals(vendOrder.shopusercode.trim())">
 			and shopusercode = #{vendOrder.shopusercode}
 		</if>
+		<if test="vendOrder.freeStatus != null and !&quot;&quot;.equals(vendOrder.freeStatus.trim())">
+			and free_status = #{vendOrder.freeStatus}
+		</if>
+		<if test="vendOrder.extend1 != null and !&quot;&quot;.equals(vendOrder.extend1.trim())">
+			and extend1 = #{vendOrder.extend1}
+		</if>
 		<if test="vendOrder.goodsId != null and !&quot;&quot;.equals(vendOrder.goodsId.trim())">
 			and goods_id = #{vendOrder.goodsId}
 		</if>
@@ -247,6 +253,12 @@
 		<if test="vendOrder.shopusercode != null and !&quot;&quot;.equals(vendOrder.shopusercode.trim())">
 			and shopusercode = #{vendOrder.shopusercode}
 		</if>
+		<if test="vendOrder.freeStatus != null and !&quot;&quot;.equals(vendOrder.freeStatus.trim())">
+			and free_status = #{vendOrder.freeStatus}
+		</if>
+		<if test="vendOrder.extend1 != null and !&quot;&quot;.equals(vendOrder.extend1.trim())">
+			and extend1 = #{vendOrder.extend1}
+		</if>
 		<if test="vendOrder.goodsId != null and !&quot;&quot;.equals(vendOrder.goodsId.trim())">
 			and goods_id = #{vendOrder.goodsId}
 		</if>
@@ -270,6 +282,12 @@
 		</if>
 		<if test="vendOrder.shopusercode != null and !&quot;&quot;.equals(vendOrder.shopusercode.trim())">
 			and shopusercode = #{vendOrder.shopusercode}
+		</if>
+		<if test="vendOrder.freeStatus != null and !&quot;&quot;.equals(vendOrder.freeStatus.trim())">
+			and free_status = #{vendOrder.freeStatus}
+		</if>
+		<if test="vendOrder.extend1 != null and !&quot;&quot;.equals(vendOrder.extend1.trim())">
+			and extend1 = #{vendOrder.extend1}
 		</if>
 		<if test="vendOrder.goodsId != null and !&quot;&quot;.equals(vendOrder.goodsId.trim())">
 			and goods_id = #{vendOrder.goodsId}

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
 import vend.entity.CodeLibrary;
@@ -66,11 +67,13 @@ public class VendCouponController{
 	 * @throws IOException
 	 */
 	@RequestMapping(value="/jcoupons",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
-	public @ResponseBody Map<String,Object> getJson() throws IOException {
-		Map<String,Object> resultmap=new HashMap<String,Object>();
+	public @ResponseBody List<VendCoupon> getJson() throws IOException {
 		List<VendCoupon> vendCoupons = vendCouponService.findAll();
-		resultmap.put("vendCoupons", vendCoupons);
-		return resultmap;
+		for(VendCoupon vendCoupon:vendCoupons){
+			vendCoupon.setExtend1(DateUtil.format(vendCoupon.getStartTime()));
+			vendCoupon.setExtend2(DateUtil.format(vendCoupon.getEndTime()));
+		}
+		return vendCoupons;
 	}
 	/**
 	 * 跳转优惠券信息添加界面

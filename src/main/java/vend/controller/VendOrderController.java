@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import base.util.DateUtil;
 import base.util.Page;
 import vend.entity.CodeLibrary;
 import vend.entity.VendOrder;
 import vend.service.CodeLibraryService;
+import vend.service.VendGoodsService;
 import vend.service.VendOrderService;
 
 @Controller
@@ -35,6 +37,8 @@ public class VendOrderController{
 	
 	@Autowired
 	VendOrderService vendOrderService;
+	@Autowired
+	VendGoodsService vendGoodsService;
 	@Autowired
 	CodeLibraryService codeLibraryService;
 	/**
@@ -72,19 +76,35 @@ public class VendOrderController{
 		Map<String,Object> resultmap=new HashMap<String,Object>();
 		String currentPageStr = map.get("page");
 		String pageNumberStr = map.get("page_size");
+		String ordertype = map.get("ordertype");//订单类型
+		String freeStatus = map.get("freeStatus");//是否免费
 		logger.info(currentPageStr + "===========");
 		if(currentPageStr != null){
 			int currentPage = Integer.parseInt(currentPageStr);
 			int pageNumber = Integer.parseInt(pageNumberStr);
 			page.setCurrentPage(currentPage);
-			page.setPageNumber(pageNumber);
+			page.setPageNumber1(pageNumber);
 		}
 		VendOrder vendOrder=new VendOrder();
 		vendOrder.setUsercode(map.get("usercode"));
+		if(!"".equals(ordertype)){
+			vendOrder.setExtend1(ordertype);
+		}
+		if(!"".equals(freeStatus)){
+			vendOrder.setFreeStatus(freeStatus);
+		}
 		List<VendOrder> vendOrders = vendOrderService.listVendOrder(vendOrder, "", "", page);
-		List<CodeLibrary> ordertypes =codeLibraryService.selectByCodeNo("ORDERTYPE");
+		for(VendOrder vendOrder1:vendOrders){
+			if(ordertype.equals("2")){
+				vendOrder1.setExtend2("充值");
+			}else{
+				vendOrder1.setExtend2(vendGoodsService.getOne(vendOrder1.getGoodsId()).getGoodsName());
+			}
+			vendOrder1.setExtend3(DateUtil.formatTime(vendOrder1.getCreateTime()));
+		}
+		//List<CodeLibrary> ordertypes =codeLibraryService.selectByCodeNo("ORDERTYPE");
 		resultmap.put("vendOrders", vendOrders);
-		resultmap.put("ordertypes", ordertypes);
+		resultmap.put("page", page);
 		return resultmap;
 	}
 	/**

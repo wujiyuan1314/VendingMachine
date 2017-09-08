@@ -80,8 +80,8 @@
 			                  <td><fmt:formatDate value="${vendOrder.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td><fmt:formatDate value="${vendOrder.payTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td class="center">
-			                     <!--  <a href="${vendOrder.ordercode}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;-->
-			                     <a href="javascript:void(0);" onclick="delconfirm(${vendOrder.ordercode});" class="btn btn-danger  icon-trash"/></a>
+			                    
+			                     <a href="javascript:void(0);" onclick="delconfirm(${vendOrder.orderId});" class="btn btn-danger  icon-trash"/></a>
 			                  </td>
 			                </tr>
 			           </c:forEach>

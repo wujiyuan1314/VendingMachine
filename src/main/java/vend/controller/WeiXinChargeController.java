@@ -23,9 +23,11 @@ import base.weixinpay.model.OrderInfo;
 import base.weixinpay.model.OrderReturnInfo;
 import base.weixinpay.model.SignInfo;
 import vend.entity.VendAccount;
+import vend.entity.VendAccountDetail;
 import vend.entity.VendMachine;
 import vend.entity.VendOrder;
 import vend.entity.VendUser;
+import vend.service.VendAccountDetailService;
 import vend.service.VendAccountService;
 import vend.service.VendMachineService;
 import vend.service.VendOrderService;
@@ -44,9 +46,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 @Controller
-@RequestMapping("/wx")
-public class WeiXinController {
-	public static Logger logger = Logger.getLogger(WeiXinController.class);
+@RequestMapping("/wxcharge")
+public class WeiXinChargeController {
+	public static Logger logger = Logger.getLogger(WeiXinChargeController.class);
 	@Autowired
 	VendParaService vendParaService;
 	@Autowired
@@ -57,6 +59,8 @@ public class WeiXinController {
 	VendMachineService vendMachineService;
 	@Autowired
 	VendAccountService vendAccountService;
+	@Autowired
+	VendAccountDetailService vendAccountDetailService;
 	/**
 	 * 得到本次支付的openid
 	 * @param map
@@ -88,34 +92,26 @@ public class WeiXinController {
 	@RequestMapping(value="/getorder",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
 	public @ResponseBody void getOrder(HttpServletRequest request,HttpServletResponse response){
 		String openid=request.getParameter("openid");
-		String name=request.getParameter("name");
-		int id=Function.getInt(request.getParameter("id"),0);
-		String machinecode=request.getParameter("machinecode");
-		VendMachine vendMachine=vendMachineService.selectByMachineCode(machinecode);
-		String shopusercode="";
-		if(vendMachine!=null){
-			shopusercode=vendMachine.getUsercode();
-		}
 		String usercode=request.getParameter("usercode");
-		double price=Function.getDouble(request.getParameter("price"), 0.00);
+		double chargeamount=Function.getDouble(request.getParameter("chargeamount"), 0.00);
 		
 		VendOrder vendOrder=new VendOrder();
 		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
-		vendOrder.setAmount(BigDecimal.valueOf(price));
+		vendOrder.setAmount(BigDecimal.valueOf(chargeamount));
 		String orderId=Function.getOrderId();
 		vendOrder.setOrderId(orderId);
 		vendOrder.setUsercode(usercode);
-		vendOrder.setShopusercode(shopusercode);
-		vendOrder.setGoodsId(id);
-		vendOrder.setMachineCode(machinecode);
+		vendOrder.setShopusercode("");
+		vendOrder.setGoodsId(0);
+		vendOrder.setMachineCode("");
 		vendOrder.setNum(1);
 		vendOrder.setCreateTime(createTime);
 		vendOrder.setOrderstate("0");
-		vendOrder.setExtend1("1");//购买
-		vendOrder.setPayType("微信支付");
+		vendOrder.setExtend1("2");//充值
+		vendOrder.setPayType("微信充值");
 		vendOrderService.insertVendOrder(vendOrder);
 		
-		int fee=(int)price*100;
+		int fee=(int)(chargeamount*100);
 		try {
 			OrderInfo order = new OrderInfo();
 			//设置微信支付的参数
@@ -127,11 +123,11 @@ public class WeiXinController {
 			order.setAppid(Configure.getAppID());
 			order.setMch_id(Configure.getMch_id());
 			order.setNonce_str(RandomStringGenerator.getRandomStringByLength(32));
-			order.setBody(name);
+			order.setBody("微信充值");
 			order.setOut_trade_no(orderId);
 			order.setTotal_fee(fee);
 			order.setSpbill_create_ip("1.192.121.236");
-			order.setNotify_url("http://www.vm.com/VendingMachine/wx/payresult");
+			order.setNotify_url("http://www.vm.com/VendingMachine/wxcharge/payresult");
 			order.setTrade_type("JSAPI");
 			order.setOpenid(openid);
 			order.setSign_type("MD5");
@@ -212,52 +208,56 @@ public class WeiXinController {
 	public @ResponseBody void PaySuccess(HttpServletRequest request){
 		String requestPayment = request.getParameter("requestPayment");
 		String orderId = request.getParameter("orderId");
-		logger.info("-------支付结果:"+requestPayment);
-		if(requestPayment.equals("ok")){
+		logger.info("-------充值结果:"+requestPayment);
+		if(requestPayment.equals("requestPayment:ok")){
 			//1,修改订单
 			VendOrder vendOrder=vendOrderService.getOne(orderId);
-			String shopusercode=vendOrder.getShopusercode();//商家账号
 			if(vendOrder!=null){
 				vendOrder.setOrderstate("1");
 				vendOrderService.editVendOrder(vendOrder);
 			}
 			//2,修改账户
+			/**消费用户账户*/
 			Date updateTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
-			VendAccount vendAccount=vendAccountService.getOne(shopusercode);//商户账户
-			VendUser vendUser=vendUserService.getOne(shopusercode);
-			double amountnow1=vendOrder.getAmount().doubleValue()*0.4;
+			VendAccount vendAccount=vendAccountService.getOne(vendOrder.getUsercode());//商户账户
+			double orderamount=vendOrder.getAmount().doubleValue();//订单金额
 			double amountpre1=vendAccount.getOwnAmount().doubleValue();
-			BigDecimal totalamount=BigDecimal.valueOf(amountnow1+amountpre1);
+			BigDecimal totalamount=BigDecimal.valueOf(orderamount+amountpre1);
 			vendAccount.setOwnAmount(totalamount);
-			String moneyencrypt=Function.getEncrypt(BigDecimal.valueOf(amountnow1+amountpre1).toString());
+			String moneyencrypt=Function.getEncrypt(BigDecimal.valueOf(orderamount+amountpre1).toString());
 			vendAccount.setMoneyencrypt(Function.getEncrypt(moneyencrypt));
 			vendAccount.setUpdateTime(updateTime);
 			vendAccountService.editVendAccount(vendAccount);
 			
-			if(vendUser!=null){
-				VendAccount pendAccount=vendAccountService.getOne(vendUser.getParentUsercode());//代理用户账户
-				VendUser pvendUser=vendUserService.getOne(pendAccount.getUsercode());
-				double amountnow2=vendOrder.getAmount().doubleValue()*0.2;
-				double amountpre2=pendAccount.getOwnAmount().doubleValue();
-				BigDecimal totalamount2=BigDecimal.valueOf(amountnow1+amountpre1);
-				pendAccount.setOwnAmount(totalamount2);
-				String moneyencrypt2=Function.getEncrypt(BigDecimal.valueOf(amountnow2+amountpre2).toString());
-				pendAccount.setMoneyencrypt(Function.getEncrypt(moneyencrypt2));
-				pendAccount.setUpdateTime(updateTime);
-				vendAccountService.editVendAccount(pendAccount);
-			}
-			
-			VendAccount zendAccount=vendAccountService.getOne("VM001");//总账户
-			double amountnow3=vendOrder.getAmount().doubleValue()*0.2;
-			double amountpre3=zendAccount.getOwnAmount().doubleValue();
-			BigDecimal totalamount3=BigDecimal.valueOf(amountnow1+amountpre1);
-			zendAccount.setOwnAmount(totalamount3);
-			String moneyencrypt2=Function.getEncrypt(BigDecimal.valueOf(amountnow3+amountpre3).toString());
-			zendAccount.setMoneyencrypt(Function.getEncrypt(moneyencrypt2));
-			zendAccount.setUpdateTime(updateTime);
-			vendAccountService.editVendAccount(zendAccount);
-			
+			VendAccountDetail vendAccountDetail1=new VendAccountDetail();
+			vendAccountDetail1.setUsercode(vendOrder.getUsercode());
+			vendAccountDetail1.setAmount(BigDecimal.valueOf(orderamount));
+			vendAccountDetail1.setType("1");//充值
+			vendAccountDetail1.setCreateTime(updateTime);
+			vendAccountDetailService.insertVendAccountDetail(vendAccountDetail1);
 			
 		}
+	}
+	/**
+	 * 微信小程序提现
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value="/draw",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
+	public @ResponseBody void toDraw(HttpServletRequest request,HttpServletResponse response){
+		String usercode = request.getParameter("usercode");
+	    String drawamount = request.getParameter("drawamount");
+	    VendAccount vendAccount=vendAccountService.getOne(usercode);//商户账户
+	    if(usercode!=null){
+	    	double orderamount=vendAccount.getOwnAmount().doubleValue();//账户余额
+			double drawamount1=Double.valueOf(drawamount);//提现金额
+			if(drawamount1*100>orderamount*100){
+				
+			}else{
+				BigDecimal totalamount=BigDecimal.valueOf(orderamount-drawamount1);
+				vendAccount.setOwnAmount(totalamount);
+				vendAccountService.editVendAccount(vendAccount);
+			}
+	    }
 	}
 }

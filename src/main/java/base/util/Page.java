@@ -90,6 +90,10 @@ public class Page {
 		this.pageNumber = pageNumber;
 		this.count();
 	}
+	
+	public void setPageNumber1(int pageNumber) {
+		this.pageNumber = pageNumber;
+	}
 
 	public int getDbIndex() {
 		return dbIndex;

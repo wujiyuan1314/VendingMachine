@@ -1,6 +1,9 @@
 package vend.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,8 +15,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import base.util.Page;
 import vend.entity.VendAccount;
 import vend.service.VendAccountService;
@@ -46,6 +52,21 @@ public class VendAccountController{
 		List<VendAccount> vendAccounts = vendAccountService.listVendAccount(vendAccount, page);
 		model.addAttribute("vendAccounts",vendAccounts);
 		return "manage/account/account_list";
+	}
+	/**
+	 * 得到消费用户订单数据
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/jaccount",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
+	public @ResponseBody Map<String,Object> getJson(@RequestBody Map<String, String> map,@ModelAttribute Page page) throws IOException {
+		Map<String,Object> resultmap=new HashMap<String,Object>();
+		String usercode = map.get("usercode");//用户名
+		
+		VendAccount vendAccount = vendAccountService.getOne(usercode);
+		//List<CodeLibrary> ordertypes =codeLibraryService.selectByCodeNo("ORDERTYPE");
+		resultmap.put("vendAccount", vendAccount);
+		return resultmap;
 	}
 	/**
 	 * 跳转用户账户添加界面
