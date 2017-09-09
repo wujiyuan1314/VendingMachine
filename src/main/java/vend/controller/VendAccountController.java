@@ -1,13 +1,17 @@
 package vend.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +24,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
+
+import base.util.DateUtil;
 import base.util.Page;
 import vend.entity.VendAccount;
+import vend.entity.VendAccountDetail;
+import vend.service.VendAccountDetailService;
 import vend.service.VendAccountService;
 
 @Controller
@@ -31,6 +40,8 @@ public class VendAccountController{
 	
 	@Autowired
 	VendAccountService vendAccountService;
+	@Autowired
+	VendAccountDetailService vendAccountDetailService;
 	/**
 	 * 根据输入信息条件查询用户列表，并分页显示
 	 * @param model
@@ -98,9 +109,9 @@ public class VendAccountController{
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/{accountcode}/edit",method=RequestMethod.GET)
-	public String edit(Model model,@PathVariable String accountcode){
-		VendAccount vendAccount=vendAccountService.getOne(accountcode);
+	@RequestMapping(value="/{usercode}/edit",method=RequestMethod.GET)
+	public String edit(Model model,@PathVariable String usercode){
+		VendAccount vendAccount=vendAccountService.getOne(usercode);
 		model.addAttribute(vendAccount);
 		return "manage/account/account_edit";
 	}
@@ -137,9 +148,55 @@ public class VendAccountController{
      */
     @RequestMapping(value="/dels")
   	public String dels(HttpServletRequest request){
-    	String accountcodes=request.getParameter("ids");
-    	String accountcodeArray[]=accountcodes.split(",");
-    	int isOk=vendAccountService.delVendAccounts(accountcodeArray);
+    	String usercodes=request.getParameter("ids");
+    	String usercodeArray[]=usercodes.split(",");
+    	int isOk=vendAccountService.delVendAccounts(usercodeArray);
   		return "redirect:/account/accounts";
   	}
+    /**
+     * 跳转到提现界面
+     * @param model
+     * @param usercode
+     * @return
+     */
+    @RequiresPermissions({"account:draw"})
+    @RequestMapping(value="/{usercode}/draw",method=RequestMethod.GET)
+    public String toDraw(Model model,@PathVariable String usercode){
+    	VendAccount vendAccount=vendAccountService.getOne(usercode);
+		model.addAttribute(vendAccount);
+    	return "manage/account/account_draw";
+    }
+    /**
+     * 商户和代理后台用户提现
+     * @param vendAccount
+     * @param br
+     * @return
+     */
+    @RequiresPermissions({"account:draw"})
+    @RequestMapping(value="/{usercode}/draw",method=RequestMethod.POST)
+    public String toDraw(@Validated VendAccount vendAccount,BindingResult br){
+    	Date updateTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
+    	if(vendAccount==null){
+    		br.rejectValue("extend1", "NotVendAccount", "没有该账户");
+    		if(br.hasErrors()){
+	    		return "manage/account/account_draw";
+	    	}
+    	}else{
+    		double orderamount=vendAccount.getOwnAmount().doubleValue();//账户余额
+			double drawamount1=Double.valueOf(vendAccount.getExtend1());//提现金额
+			if(drawamount1*100>orderamount*100){
+				br.rejectValue("extend1", "NotRepeat", "提现金额大于账户余额");
+			}
+			if(br.hasErrors()){
+	    		return "manage/account/account_draw";
+	    	}
+			VendAccountDetail vendAccountDetail1=new VendAccountDetail();
+			vendAccountDetail1.setUsercode(vendAccount.getUsercode());
+			vendAccountDetail1.setAmount(BigDecimal.valueOf(drawamount1));
+			vendAccountDetail1.setType("2");//提现
+			vendAccountDetail1.setCreateTime(updateTime);
+			vendAccountDetailService.insertVendAccountDetail(vendAccountDetail1);
+    	}
+	    return "redirect:/account/accounts";
+    }
 }

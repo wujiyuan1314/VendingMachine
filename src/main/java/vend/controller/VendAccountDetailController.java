@@ -1,5 +1,7 @@
 package vend.controller;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,12 +20,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
 import vend.entity.CodeLibrary;
+import vend.entity.VendAccount;
 import vend.entity.VendAccountDetail;
 import vend.service.CodeLibraryService;
 import vend.service.VendAccountDetailService;
+import vend.service.VendAccountService;
 
 @Controller
 @RequestMapping("/accountdetail")
@@ -33,9 +38,11 @@ public class VendAccountDetailController{
 	@Autowired
 	VendAccountDetailService vendAccountDetailService;
 	@Autowired
+	VendAccountService vendAccountService;
+	@Autowired
 	CodeLibraryService codeLibraryService;
 	/**
-	 * 根据输入信息条件查询角色列表，并分页显示
+	 * 根据输入信息条件查询角色账户记录列表，并分页显示
 	 * @param model
 	 * @param vendAccountDetail
 	 * @param page
@@ -59,7 +66,38 @@ public class VendAccountDetailController{
 		return "manage/account/account_detail";
 	}
 	/**
-	 * 跳转角色信息添加界面
+	 * 提现记录
+	 * @param model
+	 * @param vendAccountDetail
+	 * @param page
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/draw")
+	public String listDraw(Model model,@ModelAttribute VendAccountDetail vendAccountDetail, @ModelAttribute Page page,HttpServletRequest request) {
+		String currentPageStr = request.getParameter("currentPage");
+		logger.info(currentPageStr + "===========");
+		if(currentPageStr != null){
+			int currentPage = Integer.parseInt(currentPageStr);
+			page.setCurrentPage(currentPage);
+		}
+		logger.info(page.toString());
+		logger.info(vendAccountDetail.toString());
+		List<CodeLibrary> accounttypes=codeLibraryService.selectByCodeNo("ACCOUNTTYPE");
+		model.addAttribute("accounttypes", accounttypes);
+		vendAccountDetail.setType("2");
+		List<VendAccountDetail> vendAccountDetails = vendAccountDetailService.listVendAccountDetail(vendAccountDetail, page);
+		List<VendAccountDetail> list=new ArrayList();
+		for(VendAccountDetail vendAccountDetail1:vendAccountDetails){
+			if(vendAccountDetail1.getExtend1()==null||"".equals(vendAccountDetail1.getExtend1())){
+				list.add(vendAccountDetail1);
+			}
+		}
+		model.addAttribute("vendAccountDetails",list);
+		return "manage/account/account_draw";
+	}
+	/**
+	 * 跳转角色账户记录信息添加界面
 	 * @param model
 	 * @return
 	 */
@@ -69,7 +107,7 @@ public class VendAccountDetailController{
 		return "manage/account/account_add";
 	}
    /**
-    * 添加角色信息
+    * 添加角色账户记录信息
     * @param model
     * @param vendAccountDetail
     * @param br
@@ -84,7 +122,7 @@ public class VendAccountDetailController{
     	return "redirect:accounts";
 	}
     /**
-	 * 跳转角色修改界面
+	 * 跳转角色账户记录修改界面
 	 * @param model
 	 * @return
 	 */
@@ -95,7 +133,7 @@ public class VendAccountDetailController{
 		return "manage/account/account_edit";
 	}
 	/**
-	 * 修改角色信息
+	 * 修改角色账户记录信息
 	 * @param model
 	 * @param vendAccountDetail
 	 * @param br
@@ -110,18 +148,18 @@ public class VendAccountDetailController{
 		return "redirect:accountdetails";
 	}
     /**
-     * 删除角色信息
+     * 删除角色账户记录信息
      * @param user
      * @param br
      * @return
      */
     @RequestMapping(value="/{id}/del")
  	public String del(@PathVariable Integer id){
-    	vendAccountDetailService.delVendAccountDetail(id);;
+    	vendAccountDetailService.delVendAccountDetail(id);
  		return "redirect:/accountdetail/accountdetails";
  	}
     /**
-     * 批量删除角色信息
+     * 批量删除角色账户记录信息
      * @param ids
      * @return
      */
@@ -136,4 +174,44 @@ public class VendAccountDetailController{
     	int isOk=vendAccountDetailService.delVendAccountDetails(idArray1);
   		return "redirect:/accountdetail/accountdetails";
   	}
+    /**
+     * 同意提现
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="/{id}/agree")
+ 	public String agree(@PathVariable Integer id){
+    	VendAccountDetail vendAccountDetail=vendAccountDetailService.getOne(id);
+    	if(vendAccountDetail!=null){
+    		vendAccountDetail.setExtend1("已同意提现");
+        	vendAccountDetailService.editVendAccountDetail(vendAccountDetail);
+        	
+        	VendAccount vendAccount=vendAccountService.getOne(vendAccountDetail.getUsercode());
+        	double orderamount=vendAccount.getOwnAmount().doubleValue();//账户余额
+			double drawamount1=vendAccountDetail.getAmount().doubleValue();//提现金额
+			if(drawamount1<=orderamount){
+				vendAccount.setOwnAmount(BigDecimal.valueOf(orderamount-drawamount1));
+				Date updateTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//更新时间
+				vendAccount.setUpdateTime(updateTime);
+				String moneyencrypt=Function.getEncrypt(BigDecimal.valueOf(orderamount-drawamount1).toString());
+				vendAccount.setMoneyencrypt(Function.getEncrypt(moneyencrypt));
+				vendAccountService.editVendAccount(vendAccount);
+			}
+    	}
+ 		return "redirect:/accountdetail/draw";
+ 	}
+    /**
+     * 拒绝提现
+     * @param id
+     * @return
+     */
+    @RequestMapping(value="/{id}/reject")
+ 	public String reject(@PathVariable Integer id){
+    	VendAccountDetail vendAccountDetail=vendAccountDetailService.getOne(id);
+    	if(vendAccountDetail!=null){
+    		vendAccountDetail.setExtend1("已拒绝提现");
+        	vendAccountDetailService.editVendAccountDetail(vendAccountDetail);
+    	}
+ 		return "redirect:/accountdetail/draw";
+ 	}
 }

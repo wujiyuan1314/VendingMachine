@@ -67,7 +67,7 @@ public class VendGoodsController{
 		String path = request.getContextPath();
 		String basePath1 = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
 		for(VendGoods vendGoods:vendGoodss){
-			vendGoods.setPic(path+vendGoods.getPic());
+			vendGoods.setPic(basePath1+vendGoods.getPic());
 		}
 		return vendGoodss;
 		//JSONArray json = JSONArray.fromObject(vendGoodss);
@@ -100,7 +100,7 @@ public class VendGoodsController{
     	if(br.hasErrors()){
     		return "manage/goods/goods_add";
     	}
-    	String filepath=FileUploadUtils.tranferFile(request, "/userfiles/goodspic");
+    	String filepath=FileUploadUtils.tranferFile(request, "/userfiles/pic");
     	vendGoods.setPic(filepath);
     	vendGoodsService.insertVendGoods(vendGoods);
     	return "redirect:goodss";

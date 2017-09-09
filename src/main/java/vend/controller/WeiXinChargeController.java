@@ -245,19 +245,43 @@ public class WeiXinChargeController {
 	 */
 	@RequestMapping(value="/draw",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
 	public @ResponseBody void toDraw(HttpServletRequest request,HttpServletResponse response){
+		Date updateTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
+		JSONObject json = new JSONObject();
+		json.put("success", "0");
+		json.put("msg", "提现失败");
 		String usercode = request.getParameter("usercode");
 	    String drawamount = request.getParameter("drawamount");
 	    VendAccount vendAccount=vendAccountService.getOne(usercode);//商户账户
-	    if(usercode!=null){
+	    if(vendAccount!=null){
 	    	double orderamount=vendAccount.getOwnAmount().doubleValue();//账户余额
 			double drawamount1=Double.valueOf(drawamount);//提现金额
 			if(drawamount1*100>orderamount*100){
-				
+				json.put("success", "0");
+				json.put("msg", "提现金额不能大于账户余额");
 			}else{
-				BigDecimal totalamount=BigDecimal.valueOf(orderamount-drawamount1);
-				vendAccount.setOwnAmount(totalamount);
-				vendAccountService.editVendAccount(vendAccount);
+				//BigDecimal totalamount=BigDecimal.valueOf(orderamount-drawamount1);
+				//vendAccount.setOwnAmount(totalamount);
+				//vendAccount.setUpdateTime(updateTime);
+				//int isOk=vendAccountService.editVendAccount(vendAccount);
+				
+				VendAccountDetail vendAccountDetail1=new VendAccountDetail();
+				vendAccountDetail1.setUsercode(usercode);
+				vendAccountDetail1.setAmount(BigDecimal.valueOf(drawamount1));
+				vendAccountDetail1.setType("2");//提现
+				vendAccountDetail1.setCreateTime(updateTime);
+				vendAccountDetailService.insertVendAccountDetail(vendAccountDetail1);
+				//if(isOk==1){
+					json.put("success", "1");
+					json.put("msg", "操作成功");
+				//}
 			}
 	    }
+	    try {
+	    	response.setCharacterEncoding("UTF-8");
+			response.getWriter().append(json.toJSONString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

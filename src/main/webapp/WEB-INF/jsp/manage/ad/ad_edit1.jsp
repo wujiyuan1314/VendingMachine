@@ -24,7 +24,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>ad/ads" class="current">广告列表</a>
+      <a href="<%=basePath1%>ad/ads" class="current">商品列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -42,7 +42,7 @@
 			  <div class="widget-content nopadding">
 			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/ad/edit" enctype="multipart/form-data" commandName="vendAd" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="id"/>
-	              <div class="control-group">
+	             <div class="control-group">
 	                <label class="control-label">广告名</label>
 	                <div class="controls">
 	                  <sf:input path="adName"/>
@@ -63,50 +63,50 @@
 	                  </c:forEach>)
 	                </label>
 	                <div class="controls">
-	                                              图片1： <input type="file" name="file" id="file_pic1"/>
+	                                              图片1： <input type="file" name="file"/>
 	                  <a href="javascript:doUpload('pic1')" class="btn btn-success">上传</a>  
 	                  <span class="infopic1" style="color:#b94a48;"></span>
-	                  <a href="<%=basePath1%>${vendAd.pic1}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
+	                  <a href="<%=basePath1%>${vendAd.pic1}" target="_blank" class="icon-picture" style="color:green;">查看</a>   
 	                  <sf:hidden path="pic1" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic1" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
                     </div>
                     <div class="controls">                          
-	                                              图片2： <input type="file" name="file" id="file_pic2"/>
+	                                              图片2： <input type="file" name="file"/>
 	                  <a href="javascript:doUpload('pic2')" class="btn btn-success">上传</a>            
 	                  <span class="infopic2" style="color:#b94a48;"></span>
-	                  <a href="<%=basePath1%>${vendAd.pic2}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
+	                  <a href="<%=basePath1%>${vendAd.pic2}" target="_blank" class="icon-picture" style="color:green;">查看</a>
 	                  <sf:hidden path="pic2" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic2" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	                 <div class="controls">
-	                                              图片3：<input type="file" name="file" id="file_pic3"/>
+	                                              图片3：<input type="file" name="file"/>
 	                  <a href="javascript:doUpload('pic3')" class="btn btn-success">上传</a>  
 	                  <span class="infopic3" style="color:#b94a48;"></span>
-	                  <a href="<%=basePath1%>${vendAd.pic3}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
+	                  <a href="<%=basePath1%>${vendAd.pic3}" target="_blank" class="icon-picture" style="color:green;">查看</a>
 	                  <sf:hidden path="pic3" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic3" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
                     <div class="controls">                           
-	                                            图片4：<input type="file" name="file" id="file_pic4"/>
+	                                            图片4：<input type="file" name="file"/>
 	                  <a href="javascript:doUpload('pic4')" class="btn btn-success">上传</a>  
 	                  <span class="infopic4" style="color:#b94a48;"></span>
-	                  <a href="<%=basePath1%>${vendAd.pic4}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
+	                  <a href="<%=basePath1%>${vendAd.pic4}" target="_blank" class="icon-picture" style="color:green;">查看</a>
 	                  <sf:hidden path="pic4" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic4" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	                 <div class="controls">
-	                                            图片5：<input type="file" name="file" id="file_pic5"/>
+	                                            图片5：<input type="file" name="file"/>
 	                  <a href="javascript:doUpload('pic5')" class="btn btn-success">上传</a>  
 	                  <span class="infopic5" style="color:#b94a48;"></span>
-	                  <a href="<%=basePath1%>${vendAd.pic5}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
+	                  <a href="<%=basePath1%>${vendAd.pic5}" target="_blank" class="icon-picture" style="color:green;">查看</a>
 	                  <sf:hidden path="pic5" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic5" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
                     <div class="controls">                           
-	                                            图片6：<input type="file" name="file" id="file_pic6"/>
+	                                            图片6：<input type="file" name="file"/>
 	                  <a href="javascript:doUpload('pic6')" class="btn btn-success">上传</a>  
 	                  <span class="infopic6" style="color:#b94a48;"></span>
-	                  <a href="<%=basePath1%>${vendAd.pic6}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
+	                  <a href="<%=basePath1%>${vendAd.pic6}" target="_blank" class="icon-picture" style="color:green;">查看</a>
 	                  <sf:hidden path="pic6" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic6" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
@@ -125,9 +125,10 @@
 	                  </c:forEach>)
 	                  </label>
 	                <div class="controls">
-	                  <input type="file" name="file" id="file_video"/>
+	                  <input type="file" name="file"/>
 	                  <a href="javascript:doUploadVideo('video')" class="btn btn-success">上传</a>  
 	                  <span class="infovideo" style="color:#b94a48;"></span>
+	                  <a href="<%=basePath1%>${vendAd.video}" target="_blank" class="icon-picture" style="color:green;">查看</a>
 	                  <sf:hidden path="video" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="video" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
@@ -140,7 +141,6 @@
 	                  </div>
 	                  <div class="controls">                         
 	                                             高度：<sf:input path="height"/>&nbsp;px
-	                                             
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="height" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
@@ -184,13 +184,5 @@
 
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
-<script type="text/javascript">
-$('#startTime').datetimepicker({
-    format: 'yyyy-mm-dd hh:mm:ss'
-});
-$('#endTime').datetimepicker({
-    format: 'yyyy-mm-dd hh:mm:ss'
-});
-</script>
 </body>
 </html>

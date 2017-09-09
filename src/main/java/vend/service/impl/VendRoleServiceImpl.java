@@ -85,6 +85,14 @@ public class VendRoleServiceImpl implements VendRoleService {
 		return vendRoleMapper.findNext(roleId);
 	}
 	/**
+	 * 查找全部下一级
+	 * @param roleId
+	 * @return
+	 */
+	public List<VendRole> findNextAll(Integer roleId){
+		return vendRoleMapper.findNextAll(roleId);
+	}
+	/**
 	 * 按角色名字查询
 	 * @param roleName
 	 * @return

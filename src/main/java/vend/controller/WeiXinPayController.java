@@ -161,6 +161,140 @@ public class WeiXinPayController {
 		}
 	}
 	/**
+	 * 使用余额支付
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value="/banacePay",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
+	public @ResponseBody void banacePay(HttpServletRequest request,HttpServletResponse response){
+		int id=Function.getInt(request.getParameter("id"),0);
+		String machinecode=request.getParameter("machinecode");
+		VendMachine vendMachine=vendMachineService.selectByMachineCode(machinecode);
+		String shopusercode="";
+		if(vendMachine!=null){
+			shopusercode=vendMachine.getUsercode();
+		}
+		String usercode=request.getParameter("usercode");
+		double price=Function.getDouble(request.getParameter("price"), 0.00);
+		//1,订单操作
+		VendOrder vendOrder=new VendOrder();
+		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+		vendOrder.setAmount(BigDecimal.valueOf(price));
+		String orderId=Function.getOrderId();
+		vendOrder.setOrderId(orderId);
+		vendOrder.setUsercode(usercode);
+		vendOrder.setShopusercode(shopusercode);
+		vendOrder.setGoodsId(id);
+		vendOrder.setMachineCode(machinecode);
+		vendOrder.setNum(1);
+		vendOrder.setCreateTime(createTime);
+		vendOrder.setOrderstate("1");
+		vendOrder.setExtend1("1");//购买
+		vendOrder.setPayType("余额支付");
+		vendOrderService.insertVendOrder(vendOrder);
+		
+		//2,修改账户
+		Date updateTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
+		/**消费用户账户*/
+		VendAccount xvendAccount=vendAccountService.getOne(usercode);//消费用户账户
+		double xamountpre=xvendAccount.getOwnAmount().doubleValue();
+		BigDecimal xtotalamount=BigDecimal.valueOf(xamountpre-price);
+		xvendAccount.setOwnAmount(xtotalamount);
+		String xmoneyencrypt=Function.getEncrypt(BigDecimal.valueOf(xamountpre-price).toString());
+		xvendAccount.setMoneyencrypt(Function.getEncrypt(xmoneyencrypt));
+		xvendAccount.setUpdateTime(updateTime);
+		vendAccountService.editVendAccount(xvendAccount);
+		
+		VendAccountDetail xvendAccountDetail=new VendAccountDetail();
+		xvendAccountDetail.setUsercode(usercode);
+		xvendAccountDetail.setAmount(BigDecimal.valueOf(price));
+		xvendAccountDetail.setType("3");//购买
+		xvendAccountDetail.setCreateTime(updateTime);
+		vendAccountDetailService.insertVendAccountDetail(xvendAccountDetail);
+		
+		response.setCharacterEncoding("UTF-8");
+		JSONObject json = new JSONObject();
+		/**商家账户*/
+		VendAccount vendAccount=vendAccountService.getOne(shopusercode);//商户账户
+		if(vendAccount!=null){
+			VendUser vendUser=vendUserService.getOne(shopusercode);
+			double orderamount=price;//订单金额
+			double zamount=0.00;//总后台分配金额
+			double lrbl1=0.00;
+			if(vendUser.getExtend2()!=null){
+				lrbl1=Double.valueOf(vendUser.getExtend2())/100;
+			}
+			double amountnow1=orderamount*lrbl1;
+			double amountpre1=vendAccount.getOwnAmount().doubleValue();
+			BigDecimal totalamount=BigDecimal.valueOf(amountnow1+amountpre1);
+			vendAccount.setOwnAmount(totalamount);
+			String moneyencrypt=Function.getEncrypt(BigDecimal.valueOf(amountnow1+amountpre1).toString());
+			vendAccount.setMoneyencrypt(Function.getEncrypt(moneyencrypt));
+			vendAccount.setUpdateTime(updateTime);
+			vendAccountService.editVendAccount(vendAccount);
+			
+			VendAccountDetail vendAccountDetail1=new VendAccountDetail();
+			vendAccountDetail1.setUsercode(shopusercode);
+			vendAccountDetail1.setAmount(BigDecimal.valueOf(amountnow1));
+			vendAccountDetail1.setType("3");//购买
+			vendAccountDetail1.setCreateTime(updateTime);
+			vendAccountDetailService.insertVendAccountDetail(vendAccountDetail1);
+			
+			/**代理用户账户*/
+			if(vendUser!=null){
+				VendAccount pendAccount=vendAccountService.getOne(vendUser.getParentUsercode());//代理用户账户
+				VendUser pvendUser=vendUserService.getOne(pendAccount.getUsercode());
+				double lrbl2=0.00;
+				if(pvendUser.getExtend2()!=null){
+					lrbl2=Double.valueOf(pvendUser.getExtend2())/100;
+				}
+				double amountnow2=orderamount*lrbl2;
+				zamount=orderamount-amountnow1-amountnow2;
+				double amountpre2=vendAccount.getOwnAmount().doubleValue();
+				BigDecimal totalamount2=BigDecimal.valueOf(amountnow2+amountpre2);
+				pendAccount.setOwnAmount(totalamount2);
+				String moneyencrypt2=Function.getEncrypt(BigDecimal.valueOf(amountnow2+amountpre2).toString());
+				pendAccount.setMoneyencrypt(Function.getEncrypt(moneyencrypt2));
+				pendAccount.setUpdateTime(updateTime);
+				vendAccountService.editVendAccount(pendAccount);
+				
+				VendAccountDetail vendAccountDetail2=new VendAccountDetail();
+				vendAccountDetail2.setUsercode(vendUser.getParentUsercode());
+				vendAccountDetail2.setAmount(BigDecimal.valueOf(amountnow2));
+				vendAccountDetail2.setType("3");//购买
+				vendAccountDetail2.setCreateTime(updateTime);
+				vendAccountDetailService.insertVendAccountDetail(vendAccountDetail2);
+			}
+			
+			/**总后台用户账户*/
+			VendAccount zendAccount=vendAccountService.getOne("VM001");//总账户
+			double amountnow3=zamount;
+			double amountpre3=zendAccount.getOwnAmount().doubleValue();
+			BigDecimal totalamount3=BigDecimal.valueOf(amountnow3+amountpre3);
+			zendAccount.setOwnAmount(totalamount3);
+			String moneyencrypt2=Function.getEncrypt(BigDecimal.valueOf(amountnow3+amountpre3).toString());
+			zendAccount.setMoneyencrypt(Function.getEncrypt(moneyencrypt2));
+			zendAccount.setUpdateTime(updateTime);
+			vendAccountService.editVendAccount(zendAccount);
+			
+			VendAccountDetail vendAccountDetail3=new VendAccountDetail();
+			vendAccountDetail3.setUsercode("VM001");
+			vendAccountDetail3.setAmount(BigDecimal.valueOf(amountnow3));
+			vendAccountDetail3.setType("3");//购买
+			vendAccountDetail3.setCreateTime(updateTime);
+			vendAccountDetailService.insertVendAccountDetail(vendAccountDetail3);
+			json.put("success", "1");
+		}else{
+			json.put("success", "0");
+		}	
+		try {
+			response.getWriter().append(json.toJSONString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
 	 * 微信小程序支付获取签名
 	 * @param map
 	 * @return

@@ -54,14 +54,23 @@
         <property name="filterChainDefinitions">
          <!-- 拦截顺序是按照写的顺序从上到下,拦截后就不再往下执行 -->
             <value>
-                <!-- 某个角色的访问权限-->
-                /stu/** = roles[admin]
+                <!-- 某个方法的访问权限-->
+                /goods/jgoodss = anon
+                /coupon/jcoupons = anon
+                /order/jorders = anon
+                /account/jaccount= anon
+                /accountdetail/draw = anon
+                /login/wxreg = anon
+                /login/wxlogin = anon
+                /wxcharge/* = anon
+                /wxpay/* = anon
                 <!-- 静态资源访问权限 -->
                 /resources/** =anon
+                /userfiles/** =anon
                 <!-- 退出登录过滤器-->
                 /logout = logout
                 <!-- 登录拦截-->
-                /** = anon
+                /** = authc
             </value>	
         </property>
     </bean>

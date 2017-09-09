@@ -51,12 +51,15 @@
 	              <div class="control-group">
 	                <label class="control-label">商品图片</label>
 	                <div class="controls">
-	                  <input type="file" name="file"/>
+	                  <input type="file" name="file" id="file_pic"/>
+	                   <a href="javascript:doUpload('pic')" class="btn btn-success">上传</a>
+	                   <span class="infopic" style="color:#b94a48;"></span>
 	                  <sf:hidden path="pic" class="filepath"/>
-	                  <a href="<%=basePath1%>${vendGoods.pic}" target="_blank" class="icon-picture" style="color:green;">查看</a>
-	                  <span for="required" generated="true" class="help-inline"><sf:errors path="pic" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                    <a href="<%=basePath1%>${vendGoods.pic}" target="_blank" class="icon-picture" style="color:green;">查看</a>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
+	             
 	              <div class="control-group">
 	                <label class="control-label">价格</label>
 	                <div class="controls">

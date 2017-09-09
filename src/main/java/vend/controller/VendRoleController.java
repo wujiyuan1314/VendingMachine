@@ -83,7 +83,7 @@ public class VendRoleController{
 	public void getJson(Model model,HttpServletRequest request,HttpServletResponse response) throws IOException {
 		HttpSession session=request.getSession();
     	VendUser user=(VendUser)session.getAttribute("vendUser");
-		List<VendRole> vendRoles = vendRoleService.findNext(user.getRoleId());
+		List<VendRole> vendRoles = vendRoleService.findNextAll(user.getRoleId());
 		List<ZNode> list=new ArrayList();
 		String path = request.getContextPath();
 		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;

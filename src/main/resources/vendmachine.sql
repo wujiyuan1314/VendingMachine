@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-09-08 20:46:36
+Date: 2017-09-09 18:02:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -134,7 +134,7 @@ CREATE TABLE `menuitem` (
   `extend1` varchar(200) DEFAULT NULL,
   `extend2` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menuitem
@@ -166,6 +166,7 @@ INSERT INTO menuitem VALUES ('24', '22', '账户操作纪录', 'accountdetail/ac
 INSERT INTO menuitem VALUES ('25', '5', '广告屏样式', 'codeLibrary/adscreen', '-', null, '2017-09-04 11:44:28', '2017-09-04 11:44:28', null, null);
 INSERT INTO menuitem VALUES ('26', '1', '机器管理', '-', 'icon-coffee', null, '2017-09-04 19:29:50', '2017-09-04 19:29:50', null, null);
 INSERT INTO menuitem VALUES ('27', '26', '机器列表', 'machine/machines', '-', null, '2017-09-04 19:30:18', '2017-09-04 19:30:18', null, null);
+INSERT INTO menuitem VALUES ('28', '22', '用户提现记录', 'accountdetail/draw', '-', null, '2017-09-09 09:15:42', '2017-09-09 09:15:42', null, null);
 
 -- ----------------------------
 -- Table structure for `vend_account`
@@ -174,7 +175,7 @@ DROP TABLE IF EXISTS `vend_account`;
 CREATE TABLE `vend_account` (
   `usercode` varchar(50) NOT NULL COMMENT '用户code',
   `own_amount` decimal(11,2) DEFAULT NULL COMMENT '账户余额',
-  `moneyencrypt` varchar(50) DEFAULT NULL COMMENT '资金加密串',
+  `moneyencrypt` varchar(100) DEFAULT NULL COMMENT '资金加密串',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `extend1` varchar(100) DEFAULT NULL,
@@ -194,7 +195,7 @@ INSERT INTO vend_account VALUES ('VM2017083017401488', '0.00', '51fe78b0a1d09990
 INSERT INTO vend_account VALUES ('VM2017083017402876', '0.00', '51fe78b0a1d09990', '2017-08-30 17:40:28', '2017-08-30 17:40:28', null, null, null);
 INSERT INTO vend_account VALUES ('VM2017083114593107', '0.00', '51fe78b0a1d09990', '2017-08-31 14:59:31', '2017-08-31 14:59:31', null, null, null);
 INSERT INTO vend_account VALUES ('VM2017083115191427', '0.00', '51fe78b0a1d09990', '2017-08-31 15:19:14', '2017-08-31 15:19:14', null, null, null);
-INSERT INTO vend_account VALUES ('VM2017083115230747', '0.03', 'e05ff9467385f08ea43d4adea729bb8c42b22428ee2c805a', '2017-08-31 15:23:07', '2017-09-08 18:45:45', null, null, null);
+INSERT INTO vend_account VALUES ('VM2017083115230747', '38.00', '0f3900828bab941961f7cf21515a4e4242b22428ee2c805a', '2017-08-31 15:23:07', '2017-09-09 11:42:48', null, null, null);
 INSERT INTO vend_account VALUES ('VM2017083115295071', '0.00', '51fe78b0a1d09990', '2017-08-31 15:29:50', '2017-08-31 15:29:50', null, null, null);
 INSERT INTO vend_account VALUES ('VM2017083115300222', '0.00', '51fe78b0a1d09990', '2017-08-31 15:30:02', '2017-08-31 15:30:02', null, null, null);
 INSERT INTO vend_account VALUES ('VM2017083115300625', '0.00', '51fe78b0a1d09990', '2017-08-31 15:30:06', '2017-08-31 15:30:06', null, null, null);
@@ -206,14 +207,14 @@ DROP TABLE IF EXISTS `vend_accountdetail`;
 CREATE TABLE `vend_accountdetail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `usercode` varchar(50) DEFAULT NULL COMMENT '用户code',
-  `type` varchar(10) DEFAULT NULL COMMENT '1,充值。2，提现',
+  `type` varchar(10) DEFAULT NULL COMMENT '1,充值。2，提现。3,购买',
   `amount` decimal(11,2) DEFAULT NULL COMMENT '充值或提现金额',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `extend1` varchar(100) DEFAULT NULL,
   `extend2` varchar(100) DEFAULT NULL,
   `extend3` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='消费用户的充值提现记录表';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='消费用户的充值提现记录表';
 
 -- ----------------------------
 -- Records of vend_accountdetail
@@ -221,6 +222,11 @@ CREATE TABLE `vend_accountdetail` (
 INSERT INTO vend_accountdetail VALUES ('1', 'VM2017083115230747', '1', '0.01', '2017-09-08 18:44:49', null, null, null);
 INSERT INTO vend_accountdetail VALUES ('2', 'VM2017083115230747', '1', '0.01', '2017-09-08 18:44:53', null, null, null);
 INSERT INTO vend_accountdetail VALUES ('3', 'VM2017083115230747', '1', '0.01', '2017-09-08 18:45:48', null, null, null);
+INSERT INTO vend_accountdetail VALUES ('4', 'VM2017083115230747', '2', '0.01', '2017-09-09 09:02:03', '已同意提现', null, null);
+INSERT INTO vend_accountdetail VALUES ('5', 'VM2017083115230747', '3', '5.00', '2017-09-09 11:34:18', null, null, null);
+INSERT INTO vend_accountdetail VALUES ('6', 'VM2017083115230747', '3', '5.00', '2017-09-09 11:37:39', null, null, null);
+INSERT INTO vend_accountdetail VALUES ('7', 'VM2017083115230747', '3', '1.00', '2017-09-09 11:41:34', null, null, null);
+INSERT INTO vend_accountdetail VALUES ('8', 'VM2017083115230747', '3', '1.00', '2017-09-09 11:42:57', null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_ad`
@@ -252,7 +258,7 @@ CREATE TABLE `vend_ad` (
 -- ----------------------------
 -- Records of vend_ad
 -- ----------------------------
-INSERT INTO vend_ad VALUES ('1', '广告2', '3', '/userfiles/pic/201709041457232286.jpg', '/userfiles/pic/201709041457278635.jpg', '', '', '', '', '/userfiles/video/201709041457476423.mp4', '45', '45', '2017-09-04 15:04:16', '2017-09-04 15:04:16', '2017-09-04 14:57:56', '2017-09-04 14:57:56', '水电费', '4', null);
+INSERT INTO vend_ad VALUES ('1', '广告2', '3', '/userfiles/pic/201709091700288860.jpg', '/userfiles/pic/201709041457278635.jpg', '', '', '', '', '/userfiles/video/201709041457476423.mp4', '45', '45', '2017-09-09 17:00:20', '2017-09-09 17:00:20', '2017-09-04 14:57:56', '2017-09-04 14:57:56', '水电费', '4', null);
 INSERT INTO vend_ad VALUES ('2', '广告1', '6', '/userfiles/pic/201709041522151457.jpg', '/userfiles/pic/201709041522182234.jpg', '', '', '', '', '/userfiles/video/201709041522380132.mp4', '67', '67', '2017-09-04 15:22:03', '2017-09-04 15:22:03', '2017-09-04 15:23:17', '2017-09-04 15:23:17', '电饭锅', '5', null);
 
 -- ----------------------------
@@ -303,9 +309,9 @@ CREATE TABLE `vend_goods` (
 -- ----------------------------
 -- Records of vend_goods
 -- ----------------------------
-INSERT INTO vend_goods VALUES ('23', '雪碧', '/userfiles/pic/201708221429509354.jpg', '5.00', '雪碧美国发展速度领先的主要非酒精饮料产品之一', '2017-08-22 14:29:50', '2017-08-22 14:29:50', null, null, null);
-INSERT INTO vend_goods VALUES ('24', '芬达', '/userfiles/pic/201708221431220330.jpg', '1.00', '芬达汽水（Fanta）是1940年代在欧洲开始风行的饮料', '2017-08-22 14:31:22', '2017-08-22 14:31:22', null, null, null);
-INSERT INTO vend_goods VALUES ('25', '王老吉', '/userfiles/pic/201708221432088297.jpg', '6.00', '王老吉是王老吉凉茶的品牌，创立于清道光年间（1828年），被公认为凉茶始祖', '2017-08-22 14:32:08', '2017-08-22 14:32:08', null, null, null);
+INSERT INTO vend_goods VALUES ('23', '雪碧', '/userfiles/pic/201709091718486772.jpg', '5.00', '雪碧美国发展速度领先的主要非酒精饮料产品之一', '2017-08-22 14:29:50', '2017-08-22 14:29:50', null, null, null);
+INSERT INTO vend_goods VALUES ('24', '芬达', '/userfiles/pic/201709091726393245.jpg', '1.00', '芬达汽水（Fanta）是1940年代在欧洲开始风行的饮料', '2017-08-22 14:31:22', '2017-08-22 14:31:22', null, null, null);
+INSERT INTO vend_goods VALUES ('25', '王老吉', '/userfiles/pic/201709091719219345.jpg', '6.00', '王老吉是王老吉凉茶的品牌，创立于清道光年间（1828年），被公认为凉茶始祖', '2017-08-22 14:32:08', '2017-08-22 14:32:08', null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_machine`
@@ -352,7 +358,7 @@ CREATE TABLE `vend_order` (
   `usercode` varchar(50) DEFAULT NULL COMMENT '购买用户',
   `shopusercode` varchar(50) DEFAULT NULL COMMENT '商家代码',
   `goods_id` int(11) DEFAULT NULL COMMENT '商品ID',
-  `pay_type` varchar(11) DEFAULT NULL COMMENT '支付方式',
+  `pay_type` varchar(50) DEFAULT NULL COMMENT '支付方式',
   `num` int(11) DEFAULT NULL COMMENT '购买数量',
   `amount` decimal(11,2) DEFAULT NULL COMMENT '订单金额',
   `free_status` varchar(11) DEFAULT NULL COMMENT '免费状态 0表示免费，1表示是不免费',
@@ -403,6 +409,12 @@ INSERT INTO vend_order VALUES ('C1709081842570155', '', 'VM2017083115230747', ''
 INSERT INTO vend_order VALUES ('C1709081844143775', '', 'VM2017083115230747', '', '0', '微信充值', '1', '0.01', null, '1', '2017-09-08 18:44:14', null, '2', null, null);
 INSERT INTO vend_order VALUES ('C1709081845146512', '', 'VM2017083115230747', '', '0', '微信充值', '1', '0.01', null, '1', '2017-09-08 18:45:14', null, '2', null, null);
 INSERT INTO vend_order VALUES ('C1709081952080076', '123', 'VM2017083115230747', '', '24', '微信支付', '1', '1.00', null, '0', '2017-09-08 19:52:08', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709091134174865', '34345', 'VM2017083115230747', '', '23', '余额支付', '1', '5.00', null, '1', '2017-09-09 11:34:17', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709091137195158', '34543', 'VM2017083115230747', '', '23', '微信支付', '1', '5.00', null, '0', '2017-09-09 11:37:19', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709091137341418', '34543', 'VM2017083115230747', '', '23', '余额支付', '1', '5.00', null, '1', '2017-09-09 11:37:34', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709091141349137', '4', 'VM2017083115230747', '', '24', '余额支付', '1', '1.00', null, '1', '2017-09-09 11:41:34', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709091142429537', '3424', 'VM2017083115230747', '', '24', '余额支付', '1', '1.00', null, '1', '2017-09-09 11:42:42', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709091522470055', '', 'VM2017083115230747', '', '0', '微信充值', '1', '1.00', null, '0', '2017-09-09 15:22:47', null, '2', null, null);
 
 -- ----------------------------
 -- Table structure for `vend_para`
@@ -565,12 +577,11 @@ CREATE TABLE `vend_role` (
 -- ----------------------------
 -- Records of vend_role
 -- ----------------------------
-INSERT INTO vend_role VALUES ('1', '0', '开发者后台', '最高权限', '2017-08-24 13:33:16', '2017-08-24 13:33:19', '1,2,3,4,5,6,25,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,26,27', null, '1', null, null, null);
+INSERT INTO vend_role VALUES ('1', '0', '开发者后台', '最高权限', '2017-08-24 13:33:16', '2017-08-24 13:33:19', '1,2,3,4,5,6,25,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,28,26,27', null, '1', null, null, null);
 INSERT INTO vend_role VALUES ('2', '1', '总后台', '客户总权限用户', '2017-08-22 14:33:17', '2017-08-22 14:33:17', '2,3,4,5,6,25,7,8,13,14,15,16,17,18,19,20,21', null, '1', null, null, null);
 INSERT INTO vend_role VALUES ('3', '2', '代理后台', '代理总后台管理一部分商户', '2017-08-22 14:33:44', '2017-08-22 14:33:44', '3,4,5,6,25', null, '1', null, null, null);
 INSERT INTO vend_role VALUES ('4', '3', '商家', '普通商户', '2017-08-22 14:33:58', '2017-08-22 14:33:58', null, null, '1', null, null, null);
 INSERT INTO vend_role VALUES ('5', '4', '消费用户', '利用客户端购买商品的消费用户', '2017-08-22 14:34:25', '2017-08-22 14:34:25', null, null, '1', null, null, null);
-INSERT INTO vend_role VALUES ('6', '1', '代理后台1', '', '2017-09-08 16:45:24', '2017-09-08 16:45:24', null, null, '1', '20.00', null, null);
 
 -- ----------------------------
 -- Table structure for `vend_role_permission`
