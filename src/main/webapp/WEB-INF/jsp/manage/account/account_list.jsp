@@ -69,6 +69,7 @@
 				           <tr class="gradeX">
 					          <th><input type="checkbox" name="Id" id="Id" value="${vendAccount.usercode}"/></th>
 					          <td style="text-align:center;">${st.index+1}</td>
+					          <td>${vendAccount.usercode}</td>
 			                  <td>${vendAccount.ownAmount}</td>
 			                  <td><fmt:formatDate value="${vendAccount.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td class="center">
@@ -76,7 +77,10 @@
 			                     <a href="${vendAccount.usercode}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
 			                     </shiro:hasPermission>
 			                     <shiro:hasPermission name="account:del">
-			                     <a href="javascript:void(0);" onclick="delconfirm('${vendAccount.usercode}');" class="btn btn-danger  icon-trash"/></a>
+			                     <a href="javascript:void(0);" onclick="delconfirm('${vendAccount.usercode}');" class="btn btn-danger  icon-trash"/></a>&nbsp;&nbsp;
+			                     </shiro:hasPermission>
+			                     <shiro:hasPermission name="account:draw">
+			                     <a href="${vendAccount.usercode}/draw" class="btn btn-success"/>提现</a>
 			                     </shiro:hasPermission>
 			                  </td>
 			                </tr>

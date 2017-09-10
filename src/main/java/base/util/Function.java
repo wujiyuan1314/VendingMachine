@@ -210,7 +210,7 @@ public static String CheckReplace(String s)
 
 public static String  getEncrypt(String value){//加密
 	 String result="";
-	 String key="ylsoft_"+DateUtil.getCurrentDateStr();
+	 String key="vm_"+DateUtil.getCurrentDateStr();
 	 try {
 		 DESPlus des = new DESPlus(key);// 自定义密钥
 		 result=des.encrypt(value);
@@ -221,7 +221,7 @@ public static String  getEncrypt(String value){//加密
 }
 public static String  getDecrypt(String value){//解密
 	 String result="";
-	 String key="ylsoft_"+DateUtil.getCurrentDateStr();
+	 String key="vm_"+DateUtil.getCurrentDateStr();
 	 try {
 		 DESPlus des = new DESPlus(key);// 自定义密钥
 		 result= des.decrypt(value);

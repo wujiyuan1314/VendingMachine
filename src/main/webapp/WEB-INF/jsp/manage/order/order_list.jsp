@@ -48,7 +48,9 @@
 			              <th><input type="text" name="shopusercode" id="shopusercode" placeholder="按商家名搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                  <!--<td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>  -->
+		                  <shiro:hasPermission name="order:add">
 		                  <td><input type="button" onclick="dels('order');" value="批量删除" class="btn btn-danger"/></td>
+		                  </shiro:hasPermission>
 		                </tr>
 			      </table>
 			
@@ -80,8 +82,9 @@
 			                  <td><fmt:formatDate value="${vendOrder.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td><fmt:formatDate value="${vendOrder.payTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td class="center">
-			                    
+			                     <shiro:hasPermission name="order:del">
 			                     <a href="javascript:void(0);" onclick="delconfirm(${vendOrder.orderId});" class="btn btn-danger  icon-trash"/></a>
+			                     </shiro:hasPermission>
 			                  </td>
 			                </tr>
 			           </c:forEach>

@@ -29,9 +29,15 @@
 	                </div>
 	              </div>
 	              <div class="form-actions">
+	                <shiro:hasPermission name="permission:edit">
 	                <input type="submit" value="修改" class="btn btn-success">&nbsp;&nbsp;
+	                </shiro:hasPermission>
+	                <shiro:hasPermission name="permission:add">
 	                <a href="add" target="testIframe" class="btn btn-info"/>添加该节点的子节点</a>&nbsp;&nbsp;
+	                </shiro:hasPermission>
+	                 <shiro:hasPermission name="permission:del">
 	                <a href="del" class="btn btn-danger"/>删除该节点</a>&nbsp;&nbsp;
+	                </shiro:hasPermission>
 	              </div>
 	            </sf:form>
 			  </div>

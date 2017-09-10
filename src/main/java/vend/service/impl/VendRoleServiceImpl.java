@@ -93,6 +93,14 @@ public class VendRoleServiceImpl implements VendRoleService {
 		return vendRoleMapper.findNextAll(roleId);
 	}
 	/**
+	 * 查找全部下一级不包括自己和消费用户
+	 * @param roleId
+	 * @return
+	 */
+	public List<VendRole> findNextAllNOTSELF(Integer roleId){
+		return vendRoleMapper.findNextAllNOTSELF(roleId);
+	}
+	/**
 	 * 按角色名字查询
 	 * @param roleName
 	 * @return

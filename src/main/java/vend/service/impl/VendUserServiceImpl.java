@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
+import vend.dao.UserCouponMapper;
 import vend.dao.VendAccountMapper;
 import vend.dao.VendPermissionMapper;
 import vend.dao.VendUserMapper;
+import vend.entity.UserCoupon;
 import vend.entity.VendAccount;
 import vend.entity.VendPermission;
 import vend.entity.VendUser;
@@ -29,6 +31,8 @@ public class VendUserServiceImpl implements VendUserService {
 	VendPermissionMapper vendPermissionMapper;
 	@Autowired
 	VendAccountMapper vendAccountMapper;
+	@Autowired
+	UserCouponMapper userCouponMapper;
 	/**
 	 * 根据输入信息条件查询用户列表，并分页显示
 	 * @param vendUser
@@ -61,6 +65,13 @@ public class VendUserServiceImpl implements VendUserService {
 		vendAccount.setCreateTime(createTime);
 		vendAccount.setUpdateTime(createTime);
 		vendAccountMapper.insert(vendAccount);
+		
+		//注册的新用户会获得一个优惠券
+		UserCoupon userCoupon=new UserCoupon();
+		userCoupon.setUsercode(usercode);
+		userCoupon.setCouponId(1);
+		userCoupon.setCreateTime(createTime);
+		userCouponMapper.insert(userCoupon);
 		
 		return vendUserMapper.insertSelective(vendUser);
 	}

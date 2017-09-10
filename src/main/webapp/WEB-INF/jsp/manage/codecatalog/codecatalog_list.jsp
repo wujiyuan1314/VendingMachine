@@ -76,9 +76,14 @@
 			                  <td>${codeCatalog.codename}</td>
 			                  <td>${codeCatalog.codedescribe}</td>
 			                  <td class="center">
+			                     <shiro:hasPermission name="codecatalog:edit">
 			                     <a href="${codeCatalog.codeno}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                     </shiro:hasPermission>
+			                     <shiro:hasPermission name="codecatalog:del">
 			                     <a href="javascript:void(0);" onclick="delconfirm('${codeCatalog.codeno}');" class="btn btn-danger  icon-trash"/></a>
-			                     &nbsp;&nbsp;<a href="${codeCatalog.codeno}/codelibrarylist" class="btn btn-warning  icon-cog"/></a>
+			                     </shiro:hasPermission>
+			                     &nbsp;&nbsp;
+			                     <a href="${codeCatalog.codeno}/codelibrarylist" class="btn btn-warning  icon-cog"/></a>
 			                  </td>
 			                </tr>
 			           </c:forEach>

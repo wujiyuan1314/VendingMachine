@@ -116,6 +116,7 @@ public class VendAccountController{
 	 * @param model
 	 * @return
 	 */
+    @RequiresPermissions({"acount:edit"})
 	@RequestMapping(value="/{usercode}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable String usercode){
 		VendAccount vendAccount=vendAccountService.getOne(usercode);
@@ -129,6 +130,7 @@ public class VendAccountController{
 	 * @param br
 	 * @return
 	 */
+    @RequiresPermissions({"acount:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String edit(Model model,@Validated VendAccount vendAccount,BindingResult br){
     	if(br.hasErrors()){
@@ -143,6 +145,7 @@ public class VendAccountController{
      * @param br
      * @return
      */
+    @RequiresPermissions({"acount:del"})
     @RequestMapping(value="/{accountcode}/del")
  	public String del(@PathVariable String accountcode){
     	vendAccountService.delVendAccount(accountcode);
@@ -153,6 +156,7 @@ public class VendAccountController{
      * @param ids
      * @return
      */
+    @RequiresPermissions({"acount:dels"})
     @RequestMapping(value="/dels")
   	public String dels(HttpServletRequest request){
     	String usercodes=request.getParameter("ids");
@@ -166,7 +170,7 @@ public class VendAccountController{
      * @param usercode
      * @return
      */
-    //@RequiresPermissions({"account:draw"})
+    @RequiresPermissions({"account:draw"})
     @RequestMapping(value="/{usercode}/draw",method=RequestMethod.GET)
     public String toDraw(Model model,@PathVariable String usercode){
     	VendAccount vendAccount=vendAccountService.getOne(usercode);
@@ -179,7 +183,7 @@ public class VendAccountController{
      * @param br
      * @return
      */
-    //@RequiresPermissions({"account:draw"})
+    @RequiresPermissions({"account:draw"})
     @RequestMapping(value="/draw",method=RequestMethod.POST)
     public String toDraw(@Validated VendAccount vendAccount,BindingResult br){
     	Date updateTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间

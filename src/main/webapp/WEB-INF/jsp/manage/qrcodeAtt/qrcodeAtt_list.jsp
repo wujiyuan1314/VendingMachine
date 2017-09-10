@@ -53,7 +53,9 @@
                           </th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                  <!--  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>-->
+		                  <shiro:hasPermission name="qrcodeattend:dels">
 		                  <td><input type="button" onclick="dels('qrcodeAtt');" value="批量删除" class="btn btn-danger"/></td>
+		                  </shiro:hasPermission>
 		                </tr>
 			      </table>
 			
@@ -77,8 +79,12 @@
 			                  <td>${vendQrcodeAttend.usercode}</td>
 			                  <td><fmt:formatDate value="${vendQrcodeAttend.attendTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td class="center">
+			                     <shiro:hasPermission name="qrcodeattend:edit">
 			                     <a href="${vendShopQrcode.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                     </shiro:hasPermission>
+			                     <shiro:hasPermission name="qrcodeattend:del">
 			                     <a href="javascript:void(0);" onclick="delconfirm(${vendShopQrcode.id});" class="btn btn-danger  icon-trash"/></a>
+			                     </shiro:hasPermission>
 			                  </td>
 			                </tr>
 			           </c:forEach>

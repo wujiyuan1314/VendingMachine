@@ -40,9 +40,9 @@
                     <div class="controls">
                         <div class="main_input_box">
                             <span class="add-on bg_ly"><i class="icon-lock"></i></span>
-                            <input name="verificode" type="verificode" placeholder="验证码" />
-                            <img id="captcha" alt="验证码" src="<%=basePath4 %>/code" data-src="${path }/code?t=" style="vertical-align:middle;border-radius:4px;width:94.5px;height:35px;cursor:pointer;">
-                            <span style="color:#d66262;width:20px;font-size:15px;"> ${errorpassword}</span>
+                            <input name="verificode" type="verificode" placeholder="验证码" style="width:240px;"/>
+                            <img id="captcha" alt="验证码" src="<%=basePath4%>/code" data-src="${basePath4 }/code?t=" style="vertical-align:middle;border-radius:4px;width:80px;height:32px;margin-bottom:4px;cursor:pointer;">
+                            <span style="color:#d66262;width:20px;font-size:15px;"> ${errorverificode}</span>
                         </div>
                     </div>
                 </div>
@@ -55,5 +55,14 @@
         
         <script src="<%=basePath4 %>resources/js/jquery.min.js"></script>  
         <script src="<%=basePath4 %>resources/js/matrix.login.js"></script> 
+        <script type="text/javascript">
+        var basePath4="<%=basePath4%>";
+        // 验证码
+        $("#captcha").click(function() {
+            var $this = $(this);
+            var url = basePath4+$this.data("src") + new Date().getTime();
+            $(this).attr("src", url);
+        });
+        </script>
     </body>
 </html>

@@ -36,7 +36,9 @@
 		  <div class="widget-box">
 	          <div class="widget-title"> <span class="icon"> <i class="icon-file"></i> </span>
 	            <h5>参数${codeno}的类别列表</h5>
+	            <shiro:hasPermission name="codelibrary:add">
 	            <a href="/VendingMachine/codeLibrary/${codeno}/add" class="btn btn-success"/>添加参数类别</a>
+	            </shiro:hasPermission>
 	          </div>
 	          <div class="widget-content nopadding">
 	            <table class="table table-bordered">
@@ -55,8 +57,12 @@
 		                  <td>${codeLibrary.itemname}</td>
 		                  <td>${codeLibrary.extend1}</td>
 		                  <td>
+		                      <shiro:hasPermission name="codelibrary:edit">
 		                      <a href="/VendingMachine/codeLibrary/${codeLibrary.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                  </shiro:hasPermission>
+			                  <shiro:hasPermission name="codelibrary:del">
 			                  <a href="javascript:void(0);" onclick="delconfirm('${codeLibrary.id}','${codeno}');" class="btn btn-danger  icon-trash"/></a>
+		                      </shiro:hasPermission>
 		                  </td>
 		                </tr>
 		              </c:forEach>

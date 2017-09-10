@@ -4,6 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,6 +61,7 @@ public class VendQrcodeAttendController{
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"qrcodeattend:add"})
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String qrcodeAttd(Model model){
 		model.addAttribute(new VendQrcodeAttend());
@@ -73,6 +75,7 @@ public class VendQrcodeAttendController{
     * @param br
     * @return
     */
+	@RequiresPermissions({"qrcodeattend:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String qrcodeAttd(HttpServletRequest request,Model model,@Validated VendQrcodeAttend vendQrcodeAttend,BindingResult br){
     	if(br.hasErrors()){
@@ -86,6 +89,7 @@ public class VendQrcodeAttendController{
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"qrcodeattend:edit"})
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable int id){
 		VendQrcodeAttend vendQrcodeAttend=vendQrcodeAttendService.getOne(id);
@@ -100,6 +104,7 @@ public class VendQrcodeAttendController{
 	 * @param br
 	 * @return
 	 */
+	@RequiresPermissions({"qrcodeattend:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String edit(HttpServletRequest request,Model model,@Validated VendQrcodeAttend vendQrcodeAttend,BindingResult br){
     	if(br.hasErrors()){
@@ -114,6 +119,7 @@ public class VendQrcodeAttendController{
      * @param br
      * @return
      */
+	@RequiresPermissions({"qrcodeattend:del"})
     @RequestMapping(value="/{id}/del")
  	public String del(@PathVariable Integer id){
     	vendQrcodeAttendService.delVendQrcodeAttend(id);;
@@ -124,6 +130,7 @@ public class VendQrcodeAttendController{
      * @param ids
      * @return
      */
+	@RequiresPermissions({"qrcodeattend:dels"})
     @RequestMapping(value="/dels")
   	public String dels(HttpServletRequest request){
     	String ids=request.getParameter("ids");

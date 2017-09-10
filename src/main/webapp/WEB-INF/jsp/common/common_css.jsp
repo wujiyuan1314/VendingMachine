@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!--3，页面元信息 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />

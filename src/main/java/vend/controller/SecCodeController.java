@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import base.util.Const;
 
@@ -33,8 +34,23 @@ import base.util.Const;
 @Controller
 public class SecCodeController {
 
-	@RequestMapping("/code")
+	@RequestMapping(value="/code",method=RequestMethod.GET)
 	public void generate(HttpServletRequest request,HttpServletResponse response){
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		String code = drawImg(output);
+		
+		HttpSession session = request.getSession();
+		session.setAttribute(Const.SESSION_SECURITY_CODE, code);
+		
+		try {
+			ServletOutputStream out = response.getOutputStream();
+			output.writeTo(out);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping(value="/clickcode",method=RequestMethod.POST)
+	public void clickgenerate(HttpServletRequest request,HttpServletResponse response){
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String code = drawImg(output);
 		

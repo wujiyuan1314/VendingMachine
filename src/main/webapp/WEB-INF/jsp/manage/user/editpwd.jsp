@@ -33,42 +33,33 @@
 		<div class="span6">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-eye-open"></i></span>
-                 <h5>个人信息</h5>
+                 <h5>修改密码</h5>
               </div>
               
 			  <div class="widget-content nopadding">
-			  <sf:form class="form-horizontal" method="post" action="/VendingMachine/user/editself" enctype="multipart/form-data" commandName="vendUser" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			  <sf:form class="form-horizontal" method="post" action="/VendingMachine/user/editpwd" enctype="multipart/form-data" commandName="vendUser" name="basic_validate" id="basic_validate" novalidate="novalidate">
 			     <sf:hidden path="usercode" value="${sessionScope.vendUser.usercode}"/>
 			     <sf:hidden path="roleId" value="${sessionScope.vendUser.roleId}"/>
-			     <sf:hidden path="password" value="${sessionScope.vendUser.password}"/>
+			     <sf:hidden path="username" value="${sessionScope.vendUser.username}"/>
+			     <sf:hidden path="mobile" value="${sessionScope.vendUser.mobile}"/>
+			     <sf:hidden path="address" value="${sessionScope.vendUser.address}"/>
+			     <sf:hidden path="linkman" value="${sessionScope.vendUser.linkman}"/>
 			     <sf:hidden path="parentUsercode" value="${sessionScope.vendUser.parentUsercode}"/>
 			     <table class="table table-bordered">
 		         <tbody>
 	                <tr>
-	                  <td>昵称</td>
+	                  <td>原密码</td>
 	                  <td>
-	                  <sf:input path="username" value="${sessionScope.vendUser.username}"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="username" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <sf:password path="extend3"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend3" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                  </td>
 	                </tr>
 	                <tr>
-	                  <td>手机号</td>
+	                  <td>新密码</td>
 	                  <td>
-	                      <sf:input path="mobile" value="${sessionScope.vendUser.mobile}"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="mobile" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <sf:password path="password"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="password" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                  </td>
-	                </tr>
-	                <tr>
-	                  <td>地址</td>
-	                  <td>
-	                    <sf:input path="address" value="${sessionScope.vendUser.address}"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="address" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
-	                </tr>
-	                <tr>
-	                  <td>联系人</td>
-	                  <td>
-	                      <sf:input path="linkman" value="${sessionScope.vendUser.linkman}"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="linkman" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </tr>
 	                <tr>
 	                  <td colspan=2><input type="submit" value="修改" class="btn btn-success"></td>

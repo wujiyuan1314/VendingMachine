@@ -22,7 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import base.util.Const;
 import base.util.DateUtil;
+import base.util.Function;
+import vend.entity.UserCoupon;
 import vend.entity.VendUser;
+import vend.service.UserCouponService;
 import vend.service.VendUserService;
 
 @Controller
@@ -48,7 +51,7 @@ public class LoginController extends LogoutFilter{
 	public String login(Model model, HttpServletRequest request) throws Exception{
 		Subject subject=SecurityUtils.getSubject();
 		String username = request.getParameter("userName");
-		String password = request.getParameter("password");
+		String password =Function.getEncrypt(request.getParameter("password"));
 		String verificode=request.getParameter("verificode");//验证码
 		HttpSession session=request.getSession();
 		String maskcode=(String)session.getAttribute(Const.SESSION_SECURITY_CODE);
@@ -111,8 +114,9 @@ public class LoginController extends LogoutFilter{
     	Date createtime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
     	if(user==null){
     		user=new VendUser();
-    		user.setUsername(username);;
-    		user.setPassword("123456");
+    		user.setUsername(username);
+    		String password=Function.getEncrypt("123456");
+    		user.setPassword(password);
     		user.setAddress(map.get("address"));
     		user.setMobile(map.get("mobile"));
     		user.setRoleId(5);

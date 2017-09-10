@@ -212,6 +212,11 @@
   <select id="findNextAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
  	select * from vend_role where id  &gt;= #{roleId,jdbcType=INTEGER}
   </select>
+  
+  <!-- 去除自己和消费用户 -->
+  <select id="findNextAllNOTSELF" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+ 	select * from vend_role where id  &gt; #{roleId,jdbcType=INTEGER} and id <![CDATA[ <> ]]> 5
+  </select>
   <!-- 批量添加 -->
   <insert id="insertBatch" parameterType="java.util.List">
 	  insert into vend_role (role_name,role_description,proportion,create_time,update_time,extend1,extend2,extend3,extend4,state)

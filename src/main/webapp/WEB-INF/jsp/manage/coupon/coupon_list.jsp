@@ -45,8 +45,12 @@
 			              <th>优惠券名:</th>
 			              <th><input type="text" name="couponName" id="couponName" placeholder="按优惠券名搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
+		                  <shiro:hasPermission name="coupon:add">
 		                  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>
+		                  </shiro:hasPermission>
+		                  <shiro:hasPermission name="coupon:dels">
 		                  <td><input type="button" onclick="dels('coupon');" value="批量删除" class="btn btn-danger"/></td>
+		                  </shiro:hasPermission>
 		                </tr>
 			      </table>
 			
@@ -74,8 +78,12 @@
 			                  <td><fmt:formatDate value="${vendCoupon.startTime}" pattern="yyyy-MM-dd"/></td>
 			                  <td><fmt:formatDate value="${vendCoupon.endTime}" pattern="yyyy-MM-dd"/></td>
 			                  <td class="center">
+			                     <shiro:hasPermission name="coupon:edit">
 			                     <a href="${vendCoupon.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                     </shiro:hasPermission>
+			                     <shiro:hasPermission name="coupon:del">
 			                     <a href="javascript:void(0);" onclick="delconfirm(${vendCoupon.id});" class="btn btn-danger  icon-trash"/></a>
+			                     </shiro:hasPermission>
 			                  </td>
 			                </tr>
 			           </c:forEach>

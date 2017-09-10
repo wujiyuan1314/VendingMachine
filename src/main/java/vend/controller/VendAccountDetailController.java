@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -126,6 +127,7 @@ public class VendAccountDetailController{
 	 * @param model
 	 * @return
 	 */
+    @RequiresPermissions({"accountdetail:edit"})
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable int id){
 		VendAccountDetail vendAccountDetail=vendAccountDetailService.getOne(id);
@@ -139,6 +141,7 @@ public class VendAccountDetailController{
 	 * @param br
 	 * @return
 	 */
+    @RequiresPermissions({"accountdetail:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String edit(Model model,@Validated VendAccountDetail vendAccountDetail,BindingResult br){
     	if(br.hasErrors()){
@@ -153,6 +156,7 @@ public class VendAccountDetailController{
      * @param br
      * @return
      */
+    @RequiresPermissions({"accountdetail:del"})
     @RequestMapping(value="/{id}/del")
  	public String del(@PathVariable Integer id){
     	vendAccountDetailService.delVendAccountDetail(id);
@@ -163,6 +167,7 @@ public class VendAccountDetailController{
      * @param ids
      * @return
      */
+    @RequiresPermissions({"accountdetail:dels"})
     @RequestMapping(value="/dels")
   	public String dels(HttpServletRequest request){
     	String ids=request.getParameter("ids");

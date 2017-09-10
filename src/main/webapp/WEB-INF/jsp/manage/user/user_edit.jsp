@@ -58,7 +58,7 @@
 	              <div class="control-group">
 	                <label class="control-label">角色</label>
 	                <div class="controls">
-	                  <sf:select path="roleId" items="${userroles}" itemLabel="roleName" itemValue="id">
+	                  <sf:select path="roleId" items="${roles}" itemLabel="roleName" itemValue="id">
 	                  </sf:select>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="roleId" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>

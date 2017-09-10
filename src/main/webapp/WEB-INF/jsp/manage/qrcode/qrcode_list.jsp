@@ -54,8 +54,12 @@
 						     </select>&nbsp;&nbsp;
                           </th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
+		                  <shiro:hasPermission name="qrcode:add">
 		                  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>
+		                  </shiro:hasPermission>
+		                  <shiro:hasPermission name="qrcode:dels">
 		                  <td><input type="button" onclick="dels('qrcode');" value="批量删除" class="btn btn-danger"/></td>
+		                  </shiro:hasPermission>
 		                </tr>
 			      </table>
 			
@@ -79,8 +83,12 @@
 			                  <td><a href="<%=basePath1%>${vendShopQrcode.qrcode}" target="_blank" class="icon-picture" style="color:green;">查看</a></td>
 			                  <td>${vendShopQrcode.attenNum}</td>
 			                  <td class="center">
+			                     <shiro:hasPermission name="qrcode:edit">
 			                     <a href="${vendShopQrcode.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                     </shiro:hasPermission>
+			                     <shiro:hasPermission name="qrcode:del">
 			                     <a href="javascript:void(0);" onclick="delconfirm(${vendShopQrcode.id});" class="btn btn-danger  icon-trash"/></a>
+			                     </shiro:hasPermission>
 			                  </td>
 			                </tr>
 			           </c:forEach>

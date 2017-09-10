@@ -34,5 +34,7 @@ public interface VendRoleMapper {
     
     List<VendRole> findNextAll(Integer roleId);
     
+    List<VendRole> findNextAllNOTSELF(Integer roleId);
+    
     VendRole selectByRoleName(String roleName);
 }

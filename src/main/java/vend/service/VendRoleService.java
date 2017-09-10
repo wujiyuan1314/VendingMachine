@@ -59,6 +59,12 @@ public interface VendRoleService {
 	 */
 	List<VendRole> findNextAll(Integer roleId);
 	/**
+	 * 查找全部下一级不包括自己和消费用户
+	 * @param roleId
+	 * @return
+	 */
+	List<VendRole> findNextAllNOTSELF(Integer roleId);
+	/**
 	 * 按角色名字查询
 	 * @param roleName
 	 * @return

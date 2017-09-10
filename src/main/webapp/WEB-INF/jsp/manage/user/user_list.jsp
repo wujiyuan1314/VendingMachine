@@ -44,8 +44,12 @@
 			              <th>用户名:</th>
 			              <th><input type="text" name="username" id="username" placeholder="按用户名搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
+		                  <shiro:hasPermission name="user:add">
 		                  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>
+		                  </shiro:hasPermission>
+		                  <shiro:hasPermission name="user:dels">
 		                  <td><input type="button" onclick="dels('user');" value="批量删除" class="btn btn-danger"/></td>
+		                  </shiro:hasPermission>
 		                </tr>
 			      </table>
 			
@@ -75,8 +79,12 @@
 			                  <td>${vendUser.linkman}</td>
 			                  <td><fmt:formatDate value="${vendUser.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td class="center">
+			                     <shiro:hasPermission name="user:edit">
 			                     <a href="${vendUser.usercode}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                     </shiro:hasPermission>
+			                     <shiro:hasPermission name="user:del">
 			                     <a href="javascript:void(0);" onclick="delconfirm('${vendUser.usercode}');" class="btn btn-danger  icon-trash"/></a>
+			                     </shiro:hasPermission>
 			                  </td>
 			                </tr>
 			           </c:forEach>

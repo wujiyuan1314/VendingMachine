@@ -20,7 +20,8 @@
   <ul class="nav">
     <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">欢迎${sessionScope.vendUser.username}</span><b class="caret"></b></a>
       <ul class="dropdown-menu">
-        <li><a href="#"><i class="icon-user"></i>个人信息</a></li>
+        <li><a href="<%=basePath5%>user/self"><i class="icon-user"></i>个人信息</a></li>
+        <li><a href="<%=basePath5%>user/editpwd"><i class="icon-edit"></i>修改密码</a></li>
         <!--  <li class="divider"></li>
         <li><a href="#"><i class="icon-check"></i> 我的任务</a></li>-->
         <li class="divider"></li>

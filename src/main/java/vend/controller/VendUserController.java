@@ -1,8 +1,12 @@
 package vend.controller;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -19,7 +23,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
+
+import base.util.DateUtil;
+import base.util.Function;
 import base.util.Page;
+import vend.entity.VendAccount;
+import vend.entity.VendAccountDetail;
 import vend.entity.VendRole;
 import vend.entity.VendUser;
 import vend.service.VendRoleService;
@@ -73,7 +83,7 @@ public class VendUserController{
 	public String add(HttpServletRequest request,Model model){
 		HttpSession session=request.getSession();
     	VendUser user=(VendUser)session.getAttribute("vendUser");
-		List<VendRole> roles=vendRoleService.findNext(user.getRoleId());//下级角色列表
+		List<VendRole> roles=vendRoleService.findNextAllNOTSELF(user.getRoleId());//下级角色列表
 		model.addAttribute("roles",roles);
 		model.addAttribute(new VendUser());
 		return "manage/user/user_add";
@@ -89,34 +99,36 @@ public class VendUserController{
 	@RequiresPermissions({"user:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(HttpServletRequest request,Model model,@Validated VendUser vendUser,BindingResult br){
-    	List<VendRole> roles=vendRoleService.findAll();//角色列表
-		model.addAttribute("roles",roles);
+		HttpSession session=request.getSession();
+		VendUser user=(VendUser)session.getAttribute("vendUser");
+		if(user!=null){//上级账号
+			vendUser.setParentUsercode(user.getUsercode());
+			List<VendRole> roles=vendRoleService.findNextAllNOTSELF(user.getRoleId());//角色列表
+			model.addAttribute("roles",roles);
+		}
     	if(br.hasErrors()){
     		return "manage/user/user_add";
     	}
-    	HttpSession session=request.getSession();
-    	VendUser user=(VendUser)session.getAttribute("vendUser");
-		if(user!=null){//上级账号
-			vendUser.setParentUsercode(user.getUsercode());
-		}
-		
-		//利润分配比例
-		VendRole vendRole=vendRoleService.getOne(user.getRoleId());
-		vendUser.setExtend2(vendRole.getProportion().toString());
-		
+    	String password=Function.getEncrypt(vendUser.getPassword());//密码加密
     	vendUserService.insertVendUser(vendUser);
     	return "redirect:users";
 	}
     /**
-	 * 跳转用户修改界面
-	 * @param model
-	 * @return
-	 */
+     * 跳转用户修改界面
+     * @param request
+     * @param model
+     * @param usercode
+     * @return
+     */
 	@RequiresPermissions({"user:edit"})
 	@RequestMapping(value="/{usercode}/edit",method=RequestMethod.GET)
-	public String edit(Model model,@PathVariable String usercode){
-		List<VendRole> userroles=vendRoleService.findAll();
-		model.addAttribute("userroles", userroles);
+	public String edit(HttpServletRequest request,Model model,@PathVariable String usercode){
+		HttpSession session=request.getSession();
+		VendUser user=(VendUser)session.getAttribute("vendUser");
+		if(user!=null){//上级账号
+			List<VendRole> roles=vendRoleService.findNextAllNOTSELF(user.getRoleId());//角色列表
+			model.addAttribute("roles",roles);
+		}
 		VendUser vendUser=vendUserService.getOne(usercode);
 		model.addAttribute(vendUser);
 		return "manage/user/user_edit";
@@ -130,9 +142,13 @@ public class VendUserController{
 	 */
 	@RequiresPermissions({"user:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
-	public String edit(Model model,@Validated VendUser vendUser,BindingResult br){
-    	List<VendRole> userroles=vendRoleService.findAll();
-		model.addAttribute("userroles", userroles);
+	public String edit(HttpServletRequest request,Model model,@Validated VendUser vendUser,BindingResult br){
+		HttpSession session=request.getSession();
+		VendUser user=(VendUser)session.getAttribute("vendUser");
+		if(user!=null){//上级账号
+			List<VendRole> roles=vendRoleService.findNextAllNOTSELF(user.getRoleId());//角色列表
+			model.addAttribute("roles",roles);
+		}
     	if(br.hasErrors()){
     		return "manage/user/user_edit";
     	}
@@ -190,5 +206,78 @@ public class VendUserController{
     	}
     	int isOk=vendUserService.editVendUser(vendUser);
 		return "manage/user/self";
+	}
+    /**
+	  * 跳转到修改密码界面
+	  * @param model
+	  * @return
+	  */
+   @RequestMapping(value="/editpwd",method=RequestMethod.GET)
+ 	public String editPassword(Model model){
+	   model.addAttribute(new VendUser());
+ 		return "manage/user/editpwd";
+ 	}
+   /**
+    * 修改密码
+    * @param usercode
+    * @param model
+    * @return
+    */
+    @RequestMapping(value="/editpwd",method=RequestMethod.POST)
+    public String editPassword(Model model,@Validated VendUser vendUser,BindingResult br){
+    	VendUser pvendUser=vendUserService.getOne(vendUser.getUsercode());
+    	String extend3=Function.getEncrypt(vendUser.getExtend3());
+    	if(!extend3.equals(pvendUser.getPassword())){
+    		br.rejectValue("extend3", "NOTEQUAL", "原密码不匹配");
+    	}
+    	if(extend3.equals(vendUser.getPassword())){
+    		br.rejectValue("extend3", "NOTEQUAL", "新密码与原密码相同");
+    	}
+    	if(br.hasErrors()){
+    		return "manage/user/editpwd";
+    	}
+    	pvendUser.setPassword(extend3);
+    	model.addAttribute(pvendUser);
+    	return "manage/user/editpwd";
+    }
+    /**
+	 * 小程序消费用户修改密码
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value="/editpwd",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
+	public @ResponseBody void editPwd(HttpServletRequest request,HttpServletResponse response){
+		Date updateTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
+		JSONObject json = new JSONObject();
+		json.put("success", "0");
+		json.put("msg", "修改失败");
+		String usercode = request.getParameter("usercode");
+		String oldpassword = request.getParameter("oldpassword");
+	    String newpassword = request.getParameter("newpassword");
+	    VendUser vendUser=vendUserService.getOne(usercode);
+
+	    if(vendUser!=null){
+	    	if(Function.getEncrypt(oldpassword).equals(vendUser.getPassword())){
+	    		json.put("success", "0");
+	    		json.put("msg", "原密码不匹配");
+	    	}else if(oldpassword.equals(newpassword)){
+	    		json.put("success", "0");
+	    		json.put("msg", "新密码与原密码相同");
+	    	}else{
+	    		String password=Function.getEncrypt(newpassword);
+	    		int isOk=vendUserService.editVendUser(vendUser);
+	    		if(isOk==1){
+	    			json.put("success", "1");
+		    		json.put("msg", "修改成功");
+	    		}
+	    	}
+	    }
+	    try {
+	    	response.setCharacterEncoding("UTF-8");
+			response.getWriter().append(json.toJSONString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

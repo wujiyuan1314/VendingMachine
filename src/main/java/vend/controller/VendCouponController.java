@@ -57,6 +57,9 @@ public class VendCouponController{
 		}
 		logger.info(page.toString());
 		logger.info(vendCoupon.toString());
+		List<CodeLibrary> coupons=codeLibraryService.selectByCodeNo("COUPONTYPE");
+		model.addAttribute("coupons", coupons);
+		vendCoupon.setExtend1("1");
 		List<VendCoupon> vendCoupons = vendCouponService.listVendCoupon(vendCoupon, page);
 		model.addAttribute("vendCoupons",vendCoupons);
 		return "manage/coupon/coupon_list";

@@ -45,8 +45,12 @@
 			              <th>商品名:</th>
 			              <th><input type="text" name="goodsName" id="goodsName" placeholder="按商品名搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
+		                  <shiro:hasPermission name="goods:add">
 		                  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>
+		                  </shiro:hasPermission>
+		                  <shiro:hasPermission name="goods:dels">
 		                  <td><input type="button" onclick="dels('goods');" value="批量删除" class="btn btn-danger"/></td>
+		                  </shiro:hasPermission>
 		                </tr>
 			      </table>
 			
@@ -70,8 +74,12 @@
 			                  <td>${vendGoods.price}</td>
 			                  <td>${vendGoods.goodsInfo}</td>
 			                  <td class="center">
+			                     <shiro:hasPermission name="goods:edit">
 			                     <a href="${vendGoods.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                     </shiro:hasPermission>
+			                     <shiro:hasPermission name="goods:del">
 			                     <a href="javascript:void(0);" onclick="delconfirm(${vendGoods.id});" class="btn btn-danger  icon-trash"/></a>
+			                     </shiro:hasPermission>
 			                  </td>
 			                </tr>
 			           </c:forEach>
