@@ -3,6 +3,10 @@ package vend.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class VendAccount {
     private String usercode;
 
@@ -59,7 +63,8 @@ public class VendAccount {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-
+    @NotEmpty(message="提现金额不能为空")
+    @Pattern(regexp="/^[1-9]*[1-9][0-9]*$/",message="只能是正整数")
     public String getExtend1() {
         return extend1;
     }

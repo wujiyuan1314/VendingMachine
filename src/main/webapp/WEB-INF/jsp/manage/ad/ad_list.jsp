@@ -45,8 +45,12 @@
 			              <th>广告名:</th>
 			              <th><input type="text" name="adName" id="adName" placeholder="按广告名搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
+		                  <shiro:hasPermission name="add:ad">
 		                  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>
+		                  </shiro:hasPermission>
+		                  <shiro:hasPermission name="add:dels">
 		                  <td><input type="button" onclick="dels('ad');" value="批量删除" class="btn btn-danger"/></td>
+		                  </shiro:hasPermission>
 		                </tr>
 			      </table>
 			
@@ -70,8 +74,12 @@
 			                  <td><fmt:formatDate value="${vendAd.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td><fmt:formatDate value="${vendAd.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td class="center">
+			                    <shiro:hasPermission name="add:edit">
 			                     <a href="${vendAd.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                    </shiro:hasPermission>
+			                    <shiro:hasPermission name="add:del">
 			                     <a href="javascript:void(0);" onclick="delconfirm(${vendAd.id});" class="btn btn-danger  icon-trash"/></a>
+			                    </shiro:hasPermission>
 			                  </td>
 			                </tr>
 			           </c:forEach>

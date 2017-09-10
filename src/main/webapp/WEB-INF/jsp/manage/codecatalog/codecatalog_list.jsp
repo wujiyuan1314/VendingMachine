@@ -47,8 +47,12 @@
 			              <th>参数名:</th>
 			              <th><input type="text" name="codename" id="codename" placeholder="按参数名搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
+		                  <shiro:hasPermission name="codecatalog:add">
 		                  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>
+		                  </shiro:hasPermission>
+		                  <shiro:hasPermission name="codecatalog:dels">
 		                  <td><input type="button" onclick="dels('codeCatalog');" value="批量删除" class="btn btn-danger"/></td>
+		                  </shiro:hasPermission>
 		                </tr>
 			      </table>
 			

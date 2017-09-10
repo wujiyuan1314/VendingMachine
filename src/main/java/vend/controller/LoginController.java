@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import base.util.Const;
 import base.util.DateUtil;
 import vend.entity.VendUser;
 import vend.service.VendUserService;
@@ -47,7 +49,18 @@ public class LoginController extends LogoutFilter{
 		Subject subject=SecurityUtils.getSubject();
 		String username = request.getParameter("userName");
 		String password = request.getParameter("password");
+		String verificode=request.getParameter("verificode");//验证码
+		HttpSession session=request.getSession();
+		String maskcode=(String)session.getAttribute(Const.SESSION_SECURITY_CODE);
 		
+		if("".equals(verificode)){
+			 model.addAttribute("errorverificode", "请填写验证码");
+			 return "login";
+		}
+		if(!maskcode.equals(verificode)){
+			 model.addAttribute("errorverificode", "验证码不匹配");
+			 return "login";
+		}
 		if("".equals(username)){
 			 model.addAttribute("erroruserName", "请填写用户名");
 			 return "login";

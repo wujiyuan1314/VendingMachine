@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -30,6 +31,7 @@ import base.util.DateUtil;
 import base.util.Page;
 import vend.entity.VendAccount;
 import vend.entity.VendAccountDetail;
+import vend.entity.VendUser;
 import vend.service.VendAccountDetailService;
 import vend.service.VendAccountService;
 
@@ -60,6 +62,11 @@ public class VendAccountController{
 		}
 		logger.info(page.toString());
 		logger.info(vendAccount.toString());
+		HttpSession session=request.getSession();
+		VendUser user=(VendUser)session.getAttribute("vendUser");
+		if(user!=null){
+			vendAccount.setUsercode(user.getUsercode());	
+		}
 		List<VendAccount> vendAccounts = vendAccountService.listVendAccount(vendAccount, page);
 		model.addAttribute("vendAccounts",vendAccounts);
 		return "manage/account/account_list";
@@ -159,7 +166,7 @@ public class VendAccountController{
      * @param usercode
      * @return
      */
-    @RequiresPermissions({"account:draw"})
+    //@RequiresPermissions({"account:draw"})
     @RequestMapping(value="/{usercode}/draw",method=RequestMethod.GET)
     public String toDraw(Model model,@PathVariable String usercode){
     	VendAccount vendAccount=vendAccountService.getOne(usercode);
@@ -172,17 +179,18 @@ public class VendAccountController{
      * @param br
      * @return
      */
-    @RequiresPermissions({"account:draw"})
-    @RequestMapping(value="/{usercode}/draw",method=RequestMethod.POST)
+    //@RequiresPermissions({"account:draw"})
+    @RequestMapping(value="/draw",method=RequestMethod.POST)
     public String toDraw(@Validated VendAccount vendAccount,BindingResult br){
     	Date updateTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
-    	if(vendAccount==null){
+    	VendAccount pvendAccount=vendAccountService.getOne(vendAccount.getUsercode());
+    	if(pvendAccount==null){
     		br.rejectValue("extend1", "NotVendAccount", "没有该账户");
     		if(br.hasErrors()){
 	    		return "manage/account/account_draw";
 	    	}
     	}else{
-    		double orderamount=vendAccount.getOwnAmount().doubleValue();//账户余额
+    		double orderamount=pvendAccount.getOwnAmount().doubleValue();//账户余额
 			double drawamount1=Double.valueOf(vendAccount.getExtend1());//提现金额
 			if(drawamount1*100>orderamount*100){
 				br.rejectValue("extend1", "NotRepeat", "提现金额大于账户余额");

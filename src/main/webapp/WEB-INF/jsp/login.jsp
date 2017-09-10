@@ -36,6 +36,16 @@
                         </div>
                     </div>
                 </div>
+                 <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_ly"><i class="icon-lock"></i></span>
+                            <input name="verificode" type="verificode" placeholder="验证码" />
+                            <img id="captcha" alt="验证码" src="<%=basePath4 %>/code" data-src="${path }/code?t=" style="vertical-align:middle;border-radius:4px;width:94.5px;height:35px;cursor:pointer;">
+                            <span style="color:#d66262;width:20px;font-size:15px;"> ${errorpassword}</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-actions">
                     <span class="pull-left"><a href="#" class="flip-link btn btn-info" id="to-recover">忘记密码?</a></span>
                     <span class="pull-right"><input type="submit"  value="登录" class="btn btn-success" /></span>

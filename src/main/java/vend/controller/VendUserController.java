@@ -164,4 +164,31 @@ public class VendUserController{
     	int isOk=vendUserService.delVendUsers(usercodeArray);
   		return "redirect:/user/users";
   	}
+	 /**
+	  * 个人中心
+	  * @param model
+	  * @return
+	  */
+    @RequestMapping(value="/self")
+  	public String ownself(Model model){
+    	model.addAttribute(new VendUser());
+  		return "manage/user/self";
+  	}
+    /**
+	 * 修改用户信息
+	 * @param model
+	 * @param vendUser
+	 * @param br
+	 * @return
+	 */
+    @RequestMapping(value="/editself",method=RequestMethod.POST)
+	public String self(Model model,@Validated VendUser vendUser,BindingResult br){
+    	List<VendRole> userroles=vendRoleService.findAll();
+		model.addAttribute("userroles", userroles);
+    	if(br.hasErrors()){
+    		return "manage/user/self";
+    	}
+    	int isOk=vendUserService.editVendUser(vendUser);
+		return "manage/user/self";
+	}
 }
