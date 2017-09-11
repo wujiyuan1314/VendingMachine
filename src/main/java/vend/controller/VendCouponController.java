@@ -1,8 +1,7 @@
 package vend.controller;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,9 +22,10 @@ import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
 import vend.entity.CodeLibrary;
+import vend.entity.UserCoupon;
 import vend.entity.VendCoupon;
-import vend.entity.VendOrder;
 import vend.service.CodeLibraryService;
+import vend.service.UserCouponService;
 import vend.service.VendCouponService;
 
 @Controller
@@ -36,6 +35,8 @@ public class VendCouponController{
 	
 	@Autowired
 	VendCouponService vendCouponService;
+	@Autowired
+	UserCouponService userCouponService;
 	@Autowired
 	CodeLibraryService codeLibraryService;
 	/**
@@ -65,7 +66,29 @@ public class VendCouponController{
 		return "manage/coupon/coupon_list";
 	}
 	/**
-	 * 得到消费用户订单数据
+	 * 得到消费用户的优惠券信息
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/jusecoupons",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
+	public @ResponseBody List<VendCoupon> getuseJson(HttpServletRequest request) throws IOException {
+		String usercode=request.getParameter("usercode");
+		List<UserCoupon> userCoupons = userCouponService.findByUsercode(usercode);
+		List<VendCoupon> list=new ArrayList<VendCoupon>();
+		for(UserCoupon userCoupon:userCoupons){
+			VendCoupon vendCoupon=vendCouponService.getOne(userCoupon.getCouponId());
+			if(vendCoupon!=null){
+				list.add(vendCoupon);
+			}
+		}
+		for(VendCoupon vendCoupon:list){
+			vendCoupon.setExtend2(DateUtil.format(vendCoupon.getStartTime()));
+			vendCoupon.setExtend3(DateUtil.format(vendCoupon.getEndTime()));
+		}
+		return list;
+	}
+	/**
+	 * 得到优惠券数据
 	 * @param response
 	 * @throws IOException
 	 */
@@ -73,8 +96,8 @@ public class VendCouponController{
 	public @ResponseBody List<VendCoupon> getJson() throws IOException {
 		List<VendCoupon> vendCoupons = vendCouponService.findAll();
 		for(VendCoupon vendCoupon:vendCoupons){
-			vendCoupon.setExtend1(DateUtil.format(vendCoupon.getStartTime()));
-			vendCoupon.setExtend2(DateUtil.format(vendCoupon.getEndTime()));
+			vendCoupon.setExtend2(DateUtil.format(vendCoupon.getStartTime()));
+			vendCoupon.setExtend3(DateUtil.format(vendCoupon.getEndTime()));
 		}
 		return vendCoupons;
 	}
@@ -86,18 +109,23 @@ public class VendCouponController{
 	@RequiresPermissions({"coupon:add"})
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String coupond(Model model){
+		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
+		model.addAttribute("couponareas", couponareas);
 		model.addAttribute(new VendCoupon());
 		return "manage/coupon/coupon_add";
 	}
    /**
     * 添加优惠券信息
+    * @param model
     * @param vendCoupon
     * @param br
     * @return
     */
 	@RequiresPermissions({"coupon:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
-	public String coupond(@Validated VendCoupon vendCoupon,BindingResult br){
+	public String coupond(Model model,@Validated VendCoupon vendCoupon,BindingResult br){
+		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
+		model.addAttribute("couponareas", couponareas);
     	if(br.hasErrors()){
     		return "manage/coupon/coupon_coupond";
     	}
@@ -105,30 +133,36 @@ public class VendCouponController{
     	return "redirect:coupons";
 	}
     /**
-	 * 跳转优惠券修改界面
-	 * @param model
-	 * @return
-	 */
+     * 跳转优惠券修改界面
+     * @param model
+     * @param id
+     * @return
+     */
 	@RequiresPermissions({"coupon:edit"})
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable int id){
+		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
+		model.addAttribute("couponareas", couponareas);
 		VendCoupon vendCoupon=vendCouponService.getOne(id);
 		model.addAttribute(vendCoupon);
 		return "manage/coupon/coupon_edit";
 	}
 	/**
 	 * 修改优惠券信息
+	 * @param model
 	 * @param vendCoupon
 	 * @param br
 	 * @return
 	 */
 	@RequiresPermissions({"coupon:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
-	public String edit(@Validated VendCoupon vendCoupon,BindingResult br){
+	public String edit(Model model,@Validated VendCoupon vendCoupon,BindingResult br){
+		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
+		model.addAttribute("couponareas", couponareas);
     	if(br.hasErrors()){
     		return "manage/coupon/coupon_edit";
     	}
-    	int isOk=vendCouponService.editVendCoupon(vendCoupon);
+    	vendCouponService.editVendCoupon(vendCoupon);
 		return "redirect:coupons";
 	}
     /**
@@ -157,7 +191,7 @@ public class VendCouponController{
     	for(int i=0;i<idArray.length;i++){
     		idArray1[i]=Function.getInt(idArray[i], 0);
     	}
-    	int isOk=vendCouponService.delVendCoupons(idArray1);
+    	vendCouponService.delVendCoupons(idArray1);
   		return "redirect:/coupon/coupons";
   	}
 }

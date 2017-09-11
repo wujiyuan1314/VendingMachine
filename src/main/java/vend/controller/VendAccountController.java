@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -24,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.alibaba.fastjson.JSONObject;
 
 import base.util.DateUtil;
 import base.util.Page;
@@ -136,7 +133,7 @@ public class VendAccountController{
     	if(br.hasErrors()){
     		return "manage/account/account_edit";
     	}
-    	int isOk=vendAccountService.editVendAccount(vendAccount);
+    	vendAccountService.editVendAccount(vendAccount);
 		return "redirect:accounts";
 	}
     /**
@@ -161,7 +158,7 @@ public class VendAccountController{
   	public String dels(HttpServletRequest request){
     	String usercodes=request.getParameter("ids");
     	String usercodeArray[]=usercodes.split(",");
-    	int isOk=vendAccountService.delVendAccounts(usercodeArray);
+    	vendAccountService.delVendAccounts(usercodeArray);
   		return "redirect:/account/accounts";
   	}
     /**

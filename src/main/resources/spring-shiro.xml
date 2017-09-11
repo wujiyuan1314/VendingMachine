@@ -55,18 +55,19 @@
          <!-- 拦截顺序是按照写的顺序从上到下,拦截后就不再往下执行 -->
             <value>
                 <!-- 某个方法的访问权限-->
+                /wxlogin = anon
+                /wxreg = anon
+                /wxcharge/* = anon
+                /wxpay/* = anon
                 /code = anon
                 /clickcode = anon
                 /goods/jgoodss = anon
                 /coupon/jcoupons = anon
+                /coupon/jusecoupons = anon
                 /order/jorders = anon
                 /account/jaccount= anon
                 /accountdetail/draw = anon
-                /login/wxreg = anon
-                /login/wxlogin = anon
-                /user/editpwd = anon
-                /wxcharge/* = anon
-                /wxpay/* = anon
+                /user/useeditpwd = anon
                 <!-- 静态资源访问权限 -->
                 /resources/** =anon
                 /userfiles/** =anon

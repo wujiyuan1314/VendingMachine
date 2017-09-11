@@ -12,13 +12,18 @@
     <result column="linkman" property="linkman" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="permission_list" property="permissionList" jdbcType="VARCHAR" />
     <result column="extend1" property="extend1" jdbcType="VARCHAR" />
     <result column="extend2" property="extend2" jdbcType="VARCHAR" />
     <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+    <result column="extend4" property="extend4" jdbcType="VARCHAR" />
+    <result column="extend5" property="extend5" jdbcType="VARCHAR" />
+    <result column="extend6" property="extend6" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     usercode, parent_usercode, username, password, role_id, mobile, address, linkman, 
-    create_time, update_time, extend1, extend2, extend3
+    create_time, update_time, permission_list, extend1, extend2, extend3, extend4, extend5, 
+    extend6
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -50,13 +55,15 @@
     insert into vend_user (usercode, parent_usercode, username, 
       password, role_id, mobile, 
       address, linkman, create_time, 
-      update_time, extend1, extend2, 
-      extend3)
+      update_time, permission_list, extend1, 
+      extend2, extend3, extend4, 
+      extend5, extend6)
     values (#{usercode,jdbcType=VARCHAR}, #{parentUsercode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
-      #{extend3,jdbcType=VARCHAR})
+      #{updateTime,jdbcType=TIMESTAMP}, #{permissionList,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, 
+      #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}, 
+      #{extend5,jdbcType=VARCHAR}, #{extend6,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="vend.entity.VendUser" >
     insert into vend_user
@@ -91,6 +98,9 @@
       <if test="updateTime != null" >
         update_time,
       </if>
+      <if test="permissionList != null" >
+        permission_list,
+      </if>
       <if test="extend1 != null" >
         extend1,
       </if>
@@ -99,6 +109,15 @@
       </if>
       <if test="extend3 != null" >
         extend3,
+      </if>
+      <if test="extend4 != null" >
+        extend4,
+      </if>
+      <if test="extend5 != null" >
+        extend5,
+      </if>
+      <if test="extend6 != null" >
+        extend6,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -132,6 +151,9 @@
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="permissionList != null" >
+        #{permissionList,jdbcType=VARCHAR},
+      </if>
       <if test="extend1 != null" >
         #{extend1,jdbcType=VARCHAR},
       </if>
@@ -140,6 +162,15 @@
       </if>
       <if test="extend3 != null" >
         #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        #{extend5,jdbcType=VARCHAR},
+      </if>
+      <if test="extend6 != null" >
+        #{extend6,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -173,6 +204,9 @@
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="permissionList != null" >
+        permission_list = #{permissionList,jdbcType=VARCHAR},
+      </if>
       <if test="extend1 != null" >
         extend1 = #{extend1,jdbcType=VARCHAR},
       </if>
@@ -181,6 +215,15 @@
       </if>
       <if test="extend3 != null" >
         extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        extend4 = #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        extend5 = #{extend5,jdbcType=VARCHAR},
+      </if>
+      <if test="extend6 != null" >
+        extend6 = #{extend6,jdbcType=VARCHAR},
       </if>
     </set>
     where usercode = #{usercode,jdbcType=VARCHAR}
@@ -196,12 +239,16 @@
       linkman = #{linkman,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
+      permission_list = #{permissionList,jdbcType=VARCHAR},
       extend1 = #{extend1,jdbcType=VARCHAR},
       extend2 = #{extend2,jdbcType=VARCHAR},
-      extend3 = #{extend3,jdbcType=VARCHAR}
+      extend3 = #{extend3,jdbcType=VARCHAR},
+      extend4 = #{extend4,jdbcType=VARCHAR},
+      extend5 = #{extend5,jdbcType=VARCHAR},
+      extend6 = #{extend6,jdbcType=VARCHAR}
     where usercode = #{usercode,jdbcType=VARCHAR}
   </update>
-    <!-- 一下为自定义方法 -->
+ <!-- 一下为自定义方法 -->
   <select id="listVendUser" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List" />
@@ -245,7 +292,7 @@
   </select>
   <!-- 批量添加 -->
   <insert id="insertBatch" parameterType="java.util.List">
-	  insert into vend_user (parent_usercode,username,password,role_id,mobile,address,linkman,create_time,update_time,extend1,extend2,extend3)
+	  insert into vend_user (parent_usercode,username,password,role_id,mobile,address,linkman,create_time,update_time,permission_list,extend1,extend2,extend3，extend4,extend5,extend6)
 	        values
        <foreach collection="list" item="item" index="index" separator=",">
            (#{item.parentUsercode,jdbcType=VARCHAR},
@@ -257,9 +304,13 @@
             #{item.linkman,jdbcType=VARCHAR},
             #{item.createTime,jdbcType=TIMESTAMP},
             #{item.updateTime,jdbcType=TIMESTAMP},
-            #{item.extend1,jdbcType=VARCHAR},
-            #{item.extend2,jdbcType=VARCHAR},
-            #{item.extend3,jdbcType=VARCHAR}
+            #{permissionList,jdbcType=VARCHAR},
+	        #{extend1,jdbcType=VARCHAR},
+	        #{extend2,jdbcType=VARCHAR},
+	        #{extend3,jdbcType=VARCHAR},
+	        #{extend4,jdbcType=VARCHAR},
+	        #{extend5,jdbcType=VARCHAR},
+	        #{extend6,jdbcType=VARCHAR}
             )
        </foreach>
   </insert>

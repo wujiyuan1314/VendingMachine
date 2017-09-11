@@ -27,4 +27,6 @@ public interface UserCouponMapper {
     int deleteBatch(int ids[]);
     
     List<UserCoupon> findAll();
+    
+    List<UserCoupon> findByUsercode(String usercode);
 }

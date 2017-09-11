@@ -115,9 +115,11 @@ public class WeiXinPayController {
 		vendOrder.setNum(1);
 		vendOrder.setCreateTime(createTime);
 		vendOrder.setOrderstate("0");
+		vendOrder.setFreeStatus("0");//是否使用免费券,1使用，0不使用
 		vendOrder.setExtend1("1");//购买
 		vendOrder.setPayType("微信支付");
 		vendOrderService.insertVendOrder(vendOrder);
+		
 		
 		int fee=(int)(price*100);
 		try {
@@ -161,6 +163,53 @@ public class WeiXinPayController {
 		}
 	}
 	/**
+	 * 使用免费券支付
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping(value="/couponPay",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
+	public @ResponseBody void couponPay(HttpServletRequest request,HttpServletResponse response){
+		response.setCharacterEncoding("UTF-8");
+		JSONObject json = new JSONObject();
+		json.put("success", "0");
+		
+		int id=Function.getInt(request.getParameter("id"),0);
+		String machinecode=request.getParameter("machinecode");
+		VendMachine vendMachine=vendMachineService.selectByMachineCode(machinecode);
+		String shopusercode="";
+		if(vendMachine!=null){
+			shopusercode=vendMachine.getUsercode();
+		}
+		String usercode=request.getParameter("usercode");
+		double price=0.00;
+		//1,订单操作
+		VendOrder vendOrder=new VendOrder();
+		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+		vendOrder.setAmount(BigDecimal.valueOf(price));
+		String orderId=Function.getOrderId();
+		vendOrder.setOrderId(orderId);
+		vendOrder.setUsercode(usercode);
+		vendOrder.setShopusercode(shopusercode);
+		vendOrder.setGoodsId(id);
+		vendOrder.setMachineCode(machinecode);
+		vendOrder.setNum(1);
+		vendOrder.setCreateTime(createTime);
+		vendOrder.setOrderstate("1");
+		vendOrder.setFreeStatus("1");//是否使用免费券,1使用，0不使用
+		vendOrder.setExtend1("1");//购买
+		vendOrder.setPayType("免费券支付");
+		int isOk=vendOrderService.insertVendOrder(vendOrder);
+		if(isOk==1){
+			json.put("success", 1);
+		}
+		try {
+			response.getWriter().append(json.toJSONString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/**
 	 * 使用余额支付
 	 * @param map
 	 * @return
@@ -189,6 +238,7 @@ public class WeiXinPayController {
 		vendOrder.setNum(1);
 		vendOrder.setCreateTime(createTime);
 		vendOrder.setOrderstate("1");
+		vendOrder.setFreeStatus("0");//是否使用免费券,1使用，0不使用
 		vendOrder.setExtend1("1");//购买
 		vendOrder.setPayType("余额支付");
 		vendOrderService.insertVendOrder(vendOrder);

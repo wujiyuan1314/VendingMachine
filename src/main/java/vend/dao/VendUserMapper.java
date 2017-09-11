@@ -12,10 +12,6 @@ public interface VendUserMapper {
     int deleteByPrimaryKey(String usercode);
 
     int insert(VendUser record);
-    
-    public Set<String> getRoles(String userName);
-	
-   	public Set<String> getPermissions(String userName);
 
     int insertSelective(VendUser record);
 
@@ -36,4 +32,8 @@ public interface VendUserMapper {
     List<VendUser> findAll();
     
     VendUser selectByUsername(String username);
+    
+    public Set<String> getRoles(String userName);
+	
+   	public Set<String> getPermissions(String userName);
 }

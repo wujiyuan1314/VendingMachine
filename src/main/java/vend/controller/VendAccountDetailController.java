@@ -3,9 +3,7 @@ package vend.controller;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -88,7 +86,7 @@ public class VendAccountDetailController{
 		model.addAttribute("accounttypes", accounttypes);
 		vendAccountDetail.setType("2");
 		List<VendAccountDetail> vendAccountDetails = vendAccountDetailService.listVendAccountDetail(vendAccountDetail, page);
-		List<VendAccountDetail> list=new ArrayList();
+		List<VendAccountDetail> list=new ArrayList<VendAccountDetail>();
 		for(VendAccountDetail vendAccountDetail1:vendAccountDetails){
 			if(vendAccountDetail1.getExtend1()==null||"".equals(vendAccountDetail1.getExtend1())){
 				list.add(vendAccountDetail1);
@@ -147,7 +145,7 @@ public class VendAccountDetailController{
     	if(br.hasErrors()){
     		return "manage/account/account_edit";
     	}
-    	int isOk=vendAccountDetailService.editVendAccountDetail(vendAccountDetail);
+    	vendAccountDetailService.editVendAccountDetail(vendAccountDetail);
 		return "redirect:accountdetails";
 	}
     /**
@@ -176,7 +174,7 @@ public class VendAccountDetailController{
     	for(int i=0;i<idArray.length;i++){
     		idArray1[i]=Function.getInt(idArray[i], 0);
     	}
-    	int isOk=vendAccountDetailService.delVendAccountDetails(idArray1);
+    	vendAccountDetailService.delVendAccountDetails(idArray1);
   		return "redirect:/accountdetail/accountdetails";
   	}
     /**

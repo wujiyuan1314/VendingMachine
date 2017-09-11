@@ -63,6 +63,15 @@
 	                </div>
 	              </div>
 	              <div class="control-group">
+	                <label class="control-label">优惠券适用地区</label>
+	                <div class="controls">
+	                  <c:forEach items="${ couponareas}" var="couponarea">
+	                   <input type="checkbox" name="areaId" value="${couponarea.itemname }">${couponarea.extend1 }
+	                  </c:forEach>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponInfo" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
+	              <div class="control-group">
 	                <label class="control-label">优惠券开始日期</label>
 	                <div class="controls">
 	                  <sf:input path="startTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true"/>

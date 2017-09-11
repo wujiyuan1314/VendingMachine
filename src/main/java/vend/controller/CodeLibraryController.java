@@ -118,7 +118,7 @@ public class CodeLibraryController {
     	if(br.hasErrors()){
     		return "manage/codelibrary/codelibrary_edit";
     	}
-    	int isOk=codeLibraryService.editCodeLibrary(codeLibrary);
+    	codeLibraryService.editCodeLibrary(codeLibrary);
 		return "redirect:/codeCatalog/"+codeLibrary.getCodeno()+"/codelibrarylist";
 	}
     /**

@@ -1,8 +1,6 @@
 package vend.controller;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,18 +16,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
-import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
-import vend.entity.VendAccount;
-import vend.entity.VendAccountDetail;
 import vend.entity.VendRole;
 import vend.entity.VendUser;
 import vend.service.VendRoleService;
@@ -110,6 +104,7 @@ public class VendUserController{
     		return "manage/user/user_add";
     	}
     	String password=Function.getEncrypt(vendUser.getPassword());//密码加密
+    	vendUser.setPassword(password);
     	vendUserService.insertVendUser(vendUser);
     	return "redirect:users";
 	}
@@ -152,7 +147,7 @@ public class VendUserController{
     	if(br.hasErrors()){
     		return "manage/user/user_edit";
     	}
-    	int isOk=vendUserService.editVendUser(vendUser);
+    	vendUserService.editVendUser(vendUser);
 		return "redirect:users";
 	}
     /**
@@ -177,7 +172,7 @@ public class VendUserController{
   	public String dels(HttpServletRequest request){
     	String usercodes=request.getParameter("ids");
     	String usercodeArray[]=usercodes.split(",");
-    	int isOk=vendUserService.delVendUsers(usercodeArray);
+    	vendUserService.delVendUsers(usercodeArray);
   		return "redirect:/user/users";
   	}
 	 /**
@@ -204,7 +199,7 @@ public class VendUserController{
     	if(br.hasErrors()){
     		return "manage/user/self";
     	}
-    	int isOk=vendUserService.editVendUser(vendUser);
+    	vendUserService.editVendUser(vendUser);
 		return "manage/user/self";
 	}
     /**
@@ -245,9 +240,8 @@ public class VendUserController{
 	 * @param map
 	 * @return
 	 */
-	@RequestMapping(value="/editpwd",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
+	@RequestMapping(value="/useeditpwd",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
 	public @ResponseBody void editPwd(HttpServletRequest request,HttpServletResponse response){
-		Date updateTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
 		JSONObject json = new JSONObject();
 		json.put("success", "0");
 		json.put("msg", "修改失败");
@@ -257,7 +251,7 @@ public class VendUserController{
 	    VendUser vendUser=vendUserService.getOne(usercode);
 
 	    if(vendUser!=null){
-	    	if(Function.getEncrypt(oldpassword).equals(vendUser.getPassword())){
+	    	if(!Function.getEncrypt(oldpassword).equals(vendUser.getPassword())){
 	    		json.put("success", "0");
 	    		json.put("msg", "原密码不匹配");
 	    	}else if(oldpassword.equals(newpassword)){
@@ -265,6 +259,7 @@ public class VendUserController{
 	    		json.put("msg", "新密码与原密码相同");
 	    	}else{
 	    		String password=Function.getEncrypt(newpassword);
+	    		vendUser.setPassword(password);
 	    		int isOk=vendUserService.editVendUser(vendUser);
 	    		if(isOk==1){
 	    			json.put("success", "1");

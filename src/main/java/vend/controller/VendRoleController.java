@@ -84,7 +84,7 @@ public class VendRoleController{
 		HttpSession session=request.getSession();
     	VendUser user=(VendUser)session.getAttribute("vendUser");
 		List<VendRole> vendRoles = vendRoleService.findNextAll(user.getRoleId());
-		List<ZNode> list=new ArrayList();
+		List<ZNode> list=new ArrayList<ZNode>();
 		String path = request.getContextPath();
 		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
 		for(VendRole vendRole:vendRoles){
@@ -120,7 +120,7 @@ public class VendRoleController{
 	@RequestMapping(value="/addpermission",method=RequestMethod.POST)
 	public String addpermission(HttpServletRequest request){
 		String roleId=request.getParameter("id");
-		int roleId1=Function.getInt(roleId, 0);
+		int roleId1=Function.getInt(roleId, 0);	
 		String pid=request.getParameter("pid");
 		int pid1=Function.getInt(pid, 0);
 		List<VendRolePermission> vendRolePermissions=vendRolePermissionService.selectByRoleId(roleId1);
@@ -241,7 +241,7 @@ public class VendRoleController{
     	if(br.hasErrors()){
     		return "manage/role/role_edit";
     	}
-    	int isOk=vendRoleService.editVendRole(vendRole);
+    	vendRoleService.editVendRole(vendRole);
 		return "redirect:roles";
 	}
     /**
@@ -268,7 +268,7 @@ public class VendRoleController{
     	for(int i=0;i<idArray.length;i++){
     		idArray1[i]=Function.getInt(idArray[i], 0);
     	}
-    	int isOk=vendRoleService.delVendRoles(idArray1);
+    	vendRoleService.delVendRoles(idArray1);
   		return "redirect:/role/roles";
   	}
 }

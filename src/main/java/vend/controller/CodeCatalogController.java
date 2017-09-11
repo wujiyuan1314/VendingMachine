@@ -111,7 +111,7 @@ public class CodeCatalogController {
     	if(br.hasErrors()){
     		return "manage/codecatalog/codecatalog_edit";
     	}
-    	int isOk=codeCatalogService.editCodeCatalog(codeCatalog);
+    	codeCatalogService.editCodeCatalog(codeCatalog);
 		return "redirect:codeCatalogs";
 	}
     /**

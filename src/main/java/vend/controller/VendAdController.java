@@ -134,7 +134,7 @@ public class VendAdController{
     	if(br.hasErrors()){
     		return "manage/ad/ad_edit";
     	}
-    	int isOk=vendAdService.editVendAd(vendAd);
+    	vendAdService.editVendAd(vendAd);
 		return "redirect:ads";
 	}
     /**
@@ -163,7 +163,7 @@ public class VendAdController{
     	for(int i=0;i<idArray.length;i++){
     		idArray1[i]=Function.getInt(idArray[i], 0);
     	}
-    	int isOk=vendAdService.delVendAds(idArray1);
+    	vendAdService.delVendAds(idArray1);
   		return "redirect:/ad/ads";
   	}
 }

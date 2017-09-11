@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -25,6 +26,7 @@ import net.sf.json.JSONArray;
 import vend.entity.VendGoods;
 import vend.entity.VendPermission;
 import vend.entity.VendRolePermission;
+import vend.entity.VendUser;
 import vend.entity.ZNode;
 import vend.service.VendPermissionService;
 import vend.service.VendRolePermissionService;
@@ -55,7 +57,7 @@ public class VendPermissionController{
 	@RequestMapping(value="/getJson",method=RequestMethod.POST)
 	public void getJson(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		List<VendPermission> vendPermissions = vendPermissionService.findAll();
-		List<ZNode> list=new ArrayList();
+		List<ZNode> list=new ArrayList<ZNode>();
 		String path = request.getContextPath();
 		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
 		for(VendPermission vendPermission:vendPermissions){
@@ -83,6 +85,10 @@ public class VendPermissionController{
 	 */
 	@RequestMapping(value="/getJson1",method=RequestMethod.POST)
 	public void getJson1(HttpServletRequest request,HttpServletResponse response) throws IOException {
+		HttpSession session=request.getSession();
+		VendUser user=(VendUser)session.getAttribute("vendUser");
+		int currentRoleId=user.getRoleId();//当前登录用户的roleId
+		
 		String roleId=request.getParameter("roleId");
 		int roleId1=Function.getInt(roleId, 0);
 		List<VendRolePermission> vendRolePermissions=vendRolePermissionService.selectByRoleId(roleId1);
@@ -91,7 +97,7 @@ public class VendPermissionController{
 			roleIdArray[i]=vendRolePermissions.get(i).getPermissionId();
 		}
 		
-		List<ZNode> list=new ArrayList();
+		List<ZNode> list=new ArrayList<ZNode>();
 		String parentId=request.getParameter("parentId");
 		int parentId1=Function.getInt(parentId, 0);
 		if(parentId1==0){
@@ -118,24 +124,42 @@ public class VendPermissionController{
 		}else{
 			List<VendRolePermission> vendPermissions = vendRolePermissionService.selectByRoleId(parentId1);	
 			for(VendRolePermission vendRolePermission:vendPermissions){
-				VendPermission vendPermission=vendPermissionService.getOne(vendRolePermission.getPermissionId());
-				ZNode zNode=new ZNode();
-				zNode.setId(vendPermission.getId());
-				zNode.setpId(vendPermission.getParentId());
-				zNode.setName(vendPermission.getPermissionDescription());
-				if(vendPermission.getId()==1){
-					zNode.setOpen(true);
-				}else{
-					zNode.setOpen(false);
-				}
-				for(int roleId2:roleIdArray){
-					if(roleId2==vendPermission.getId()){
-						zNode.setChecked(true);
+				if(currentRoleId!=roleId1){
+					VendPermission vendPermission=vendPermissionService.getOne(vendRolePermission.getPermissionId());
+					ZNode zNode=new ZNode();
+					zNode.setId(vendPermission.getId());
+					zNode.setpId(vendPermission.getParentId());
+					zNode.setName(vendPermission.getPermissionDescription());
+					if(vendPermission.getId()==1){
 						zNode.setOpen(true);
-						break;
+					}else{
+						zNode.setOpen(false);
+					}
+					zNode.setChecked(false);
+					for(int roleId2:roleIdArray){
+						if(vendPermission.getId()==roleId2){
+							zNode.setChecked(true);
+						}
+					}
+					list.add(zNode);
+				}else{
+					for(int roleId2:roleIdArray){
+						if(roleId2==vendRolePermission.getPermissionId()){
+							VendPermission vendPermission=vendPermissionService.getOne(vendRolePermission.getPermissionId());
+							ZNode zNode=new ZNode();
+							zNode.setId(vendPermission.getId());
+							zNode.setpId(vendPermission.getParentId());
+							zNode.setName(vendPermission.getPermissionDescription());
+							if(vendPermission.getId()==1){
+								zNode.setOpen(true);
+							}else{
+								zNode.setOpen(false);
+							}
+							zNode.setChecked(true);
+							list.add(zNode);
+						}
 					}
 				}
-			    list.add(zNode);
 			}
 		}
 		JSONArray json = JSONArray.fromObject(list);
@@ -201,7 +225,7 @@ public class VendPermissionController{
     	if(br.hasErrors()){
     		return "manage/permission/permission_edit";
     	}
-    	int isOk=vendPermissionService.editVendPermission(vendPermission);
+    	vendPermissionService.editVendPermission(vendPermission);
 		return "manage/permission/permission_edit";
 	}
     /**
@@ -230,7 +254,7 @@ public class VendPermissionController{
     	for(int i=0;i<idArray.length;i++){
     		idArray1[i]=Function.getInt(idArray[i], 0);
     	}
-    	int isOk=vendPermissionService.delVendPermissions(idArray1);
+        vendPermissionService.delVendPermissions(idArray1);
   		return "redirect:/permission/permissions";
   	}
 }

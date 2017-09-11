@@ -65,6 +65,14 @@ function addpermission(){
 	var id=$("#id").val();
 	var pid=$("#pid").val();
 	var nodeIds="";
+	$(".checkbox_true_part").each(function() {
+		var node=$(this).attr('node');
+		if(nodeIds==''){
+			nodeIds+=node;
+		}else{
+			nodeIds+=","+node;
+		}
+    });
 	$(".checkbox_true_full").each(function() {
 		var node=$(this).attr('node');
 		if(nodeIds==''){

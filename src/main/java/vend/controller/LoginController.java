@@ -1,5 +1,6 @@
 package vend.controller;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletRequest;
@@ -33,6 +34,8 @@ public class LoginController extends LogoutFilter{
 	public static Logger logger = Logger.getLogger(LoginController.class);
 	@Autowired
 	VendUserService vendUserService;
+	@Autowired
+	UserCouponService userCouponService;
 	@RequestMapping(value="/login",method=RequestMethod.GET)
     public String login(){
 		Subject subject=SecurityUtils.getSubject();
@@ -154,6 +157,8 @@ public class LoginController extends LogoutFilter{
     		map.put("success", "0");
         	map.put("msg", "您还没注册,请先进行注册");
     	}else{
+    		List<UserCoupon> userCoupons=userCouponService.findByUsercode(venduser.getUsercode());
+    		map.put("couponnum", Integer.toString(userCoupons.size()));
     		map.put("usercode", venduser.getUsercode());
     		map.put("success", "1");
         	map.put("msg", "登录成功");

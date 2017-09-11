@@ -46,5 +46,10 @@ public interface UserCouponService {
 	 * @return
 	 */
 	List<UserCoupon> findAll();
+	/**
+	 * 按照usercode查找
+	 * @return
+	 */
+	List<UserCoupon> findByUsercode(String usercode);
 	
 }

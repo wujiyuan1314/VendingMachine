@@ -24,9 +24,7 @@ import base.util.DateUtil;
 import base.util.Function;
 import net.sf.json.JSONArray;
 import vend.entity.Menuitem;
-import vend.entity.VendPermission;
 import vend.entity.VendRole;
-import vend.entity.VendRolePermission;
 import vend.entity.ZNode;
 import vend.service.MenuitemService;
 import vend.service.VendRoleService;
@@ -57,7 +55,7 @@ public class MenuitemController {
 	@RequestMapping(value="/getJson",method=RequestMethod.POST)
 	public void getJson(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		List<Menuitem> menuitems = menuitemService.findAll();
-		List<ZNode> list=new ArrayList();
+		List<ZNode> list=new ArrayList<ZNode>();
 		String path = request.getContextPath();
 		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
 		for(Menuitem menuitem:menuitems){
@@ -89,7 +87,7 @@ public class MenuitemController {
 			menulist="";
 		}
 		
-		List<ZNode> list=new ArrayList();
+		List<ZNode> list=new ArrayList<ZNode>();
 		String parentId=request.getParameter("parentId");
 		int parentId1=Function.getInt(parentId, 0);
 		List<Menuitem> menuitems = menuitemService.findAll();
@@ -185,7 +183,7 @@ public class MenuitemController {
     	if(br.hasErrors()){
     		return "manage/menuitem/menuitem_edit";
     	}
-    	int isOk=menuitemService.editMenuitem(menuitem);
+    	menuitemService.editMenuitem(menuitem);
 		return "manage/menuitem/menuitem_edit";
 	}
     /**

@@ -67,8 +67,19 @@ public class UserCouponServiceImpl implements UserCouponService {
 	public UserCoupon getOne(int id){
 		return userCouponMapper.selectByPrimaryKey(id);
 	}
+	/**
+	 * 查找全部
+	 * @return
+	 */
 	public List<UserCoupon> findAll() {
 		// TODO Auto-generated method stub
 		return userCouponMapper.findAll();
+	}
+	/**
+	 * 按照usercode查找
+	 * @return
+	 */
+	public List<UserCoupon> findByUsercode(String usercode){
+		return userCouponMapper.findByUsercode(usercode);
 	}
 }
