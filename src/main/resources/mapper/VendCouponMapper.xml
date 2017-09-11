@@ -7,7 +7,7 @@
     <result column="coupon_info" property="couponInfo" jdbcType="VARCHAR" />
     <result column="coupon_scale" property="couponScale" jdbcType="DECIMAL" />
     <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
-    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="VARCHAR" />
     <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -37,7 +37,7 @@
       update_time, extend1, extend2, 
       extend3)
     values (#{id,jdbcType=INTEGER}, #{couponName,jdbcType=VARCHAR}, #{couponInfo,jdbcType=VARCHAR}, 
-      #{couponScale,jdbcType=DECIMAL}, #{goodsId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, 
+      #{couponScale,jdbcType=DECIMAL}, #{goodsId,jdbcType=INTEGER}, #{areaId,jdbcType=VARCHAR}, 
       #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
       #{extend3,jdbcType=VARCHAR})
@@ -102,7 +102,7 @@
         #{goodsId,jdbcType=INTEGER},
       </if>
       <if test="areaId != null" >
-        #{areaId,jdbcType=INTEGER},
+        #{areaId,jdbcType=VARCHAR},
       </if>
       <if test="startTime != null" >
         #{startTime,jdbcType=TIMESTAMP},
@@ -143,7 +143,7 @@
         goods_id = #{goodsId,jdbcType=INTEGER},
       </if>
       <if test="areaId != null" >
-        area_id = #{areaId,jdbcType=INTEGER},
+        area_id = #{areaId,jdbcType=VARCHAR},
       </if>
       <if test="startTime != null" >
         start_time = #{startTime,jdbcType=TIMESTAMP},
@@ -175,7 +175,7 @@
       coupon_info = #{couponInfo,jdbcType=VARCHAR},
       coupon_scale = #{couponScale,jdbcType=DECIMAL},
       goods_id = #{goodsId,jdbcType=INTEGER},
-      area_id = #{areaId,jdbcType=INTEGER},
+      area_id = #{areaId,jdbcType=VARCHAR},
       start_time = #{startTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP},
       create_time = #{createTime,jdbcType=TIMESTAMP},

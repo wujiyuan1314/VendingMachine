@@ -59,7 +59,6 @@
 	              <div class="control-group">
 	                <label class="control-label">优惠券描述</label>
 	                <div class="controls">
-	                  <input type="file" name="file"/>
 	                  <sf:input path="couponInfo"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponInfo" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
@@ -68,15 +67,22 @@
 	                <label class="control-label">优惠券适用地区</label>
 	                <div class="controls">
 	                  <c:forEach items="${ couponareas}" var="couponarea">
-	                   <input type="checkbox" name="areaId" value="${couponarea.itemname }">${couponarea.extend1 }
+	                  <c:choose>
+	                   <c:when test="${couponarea.extend2==1}">
+	                     <input type="checkbox" name="areaId" checked value="${couponarea.itemname }">${couponarea.extend1 }
+	                   </c:when>
+	                   <c:otherwise>
+	                     <input type="checkbox" name="areaId" value="${couponarea.itemname }">${couponarea.extend1 }
+	                   </c:otherwise>
+	                   </c:choose>
 	                  </c:forEach>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponInfo" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="areaId" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
 	                <label class="control-label">优惠券开始日期</label>
 	                <div class="controls">
-	                  <sf:input path="startTime" value="<%=DateUtil.getCurrentDateStr())%>" readonly="true"/>
+	                  <sf:input path="startTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="startTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>

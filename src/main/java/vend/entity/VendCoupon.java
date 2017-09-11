@@ -19,7 +19,7 @@ public class VendCoupon {
 
     private Integer goodsId;
 
-    private Integer areaId;
+    private String areaId;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startTime;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -75,11 +75,11 @@ public class VendCoupon {
         this.goodsId = goodsId;
     }
 
-    public Integer getAreaId() {
+    public String getAreaId() {
         return areaId;
     }
 
-    public void setAreaId(Integer areaId) {
+    public void setAreaId(String areaId) {
         this.areaId = areaId;
     }
 

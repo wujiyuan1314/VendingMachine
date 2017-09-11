@@ -116,6 +116,7 @@ public class VendCouponController{
 	}
    /**
     * 添加优惠券信息
+    * @param request
     * @param model
     * @param vendCoupon
     * @param br
@@ -123,12 +124,22 @@ public class VendCouponController{
     */
 	@RequiresPermissions({"coupon:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
-	public String coupond(Model model,@Validated VendCoupon vendCoupon,BindingResult br){
+	public String coupond(HttpServletRequest request,Model model,@Validated VendCoupon vendCoupon,BindingResult br){
+		String newareaId[]=request.getParameterValues("areaId");
+		if(newareaId.length==0){
+			br.rejectValue("roleId", "NOCHOOSEAREA", "请选择地区");
+		}
+		
 		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
 		model.addAttribute("couponareas", couponareas);
     	if(br.hasErrors()){
     		return "manage/coupon/coupon_coupond";
     	}
+    	String newareaIds="";
+    	for(String str:newareaId){
+    		newareaIds+=str+",";
+    	}
+    	vendCoupon.setAreaId(newareaIds);
     	vendCouponService.insertVendCoupon(vendCoupon);
     	return "redirect:coupons";
 	}
@@ -142,13 +153,28 @@ public class VendCouponController{
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable int id){
 		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
-		model.addAttribute("couponareas", couponareas);
 		VendCoupon vendCoupon=vendCouponService.getOne(id);
+		String areaId="";
+		if(vendCoupon!=null){
+			areaId=vendCoupon.getAreaId();
+		}
+		if(areaId==null){
+			areaId="";
+		}
+		for(CodeLibrary couponarea:couponareas){
+			if(areaId.indexOf(couponarea.getItemname()+",")!=-1){
+				couponarea.setExtend2("1");
+			}else{
+				couponarea.setExtend2("0");
+			}
+		}
+		model.addAttribute("couponareas", couponareas);
 		model.addAttribute(vendCoupon);
 		return "manage/coupon/coupon_edit";
 	}
 	/**
 	 * 修改优惠券信息
+	 * @param request
 	 * @param model
 	 * @param vendCoupon
 	 * @param br
@@ -156,12 +182,30 @@ public class VendCouponController{
 	 */
 	@RequiresPermissions({"coupon:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
-	public String edit(Model model,@Validated VendCoupon vendCoupon,BindingResult br){
+	public String edit(HttpServletRequest request,Model model,@Validated VendCoupon vendCoupon,BindingResult br){
+		String newareaId[]=request.getParameterValues("areaId");
+		if(newareaId.length==0){
+			br.rejectValue("roleId", "NOCHOOSEAREA", "请选择地区");
+		}
 		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
+		String areaId="";
+		if(vendCoupon!=null){
+			areaId=vendCoupon.getAreaId();
+		}
+		for(CodeLibrary couponarea:couponareas){
+			if(areaId.indexOf(couponarea.getItemname()+",")!=-1){
+				couponarea.setExtend2("1");
+			}
+		}
 		model.addAttribute("couponareas", couponareas);
     	if(br.hasErrors()){
     		return "manage/coupon/coupon_edit";
     	}
+    	String newareaIds="";
+    	for(String str:newareaId){
+    		newareaIds+=str+",";
+    	}
+    	vendCoupon.setAreaId(newareaIds);
     	vendCouponService.editVendCoupon(vendCoupon);
 		return "redirect:coupons";
 	}
