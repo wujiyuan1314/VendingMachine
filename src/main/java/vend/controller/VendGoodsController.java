@@ -137,7 +137,7 @@ public class VendGoodsController{
     		filepath=FileUploadUtils.tranferFile(request, "/userfiles/pic");
         	vendGoods.setPic(filepath);
     	}
-    	int isOk=vendGoodsService.editVendGoods(vendGoods);
+    	vendGoodsService.editVendGoods(vendGoods);
 		return "redirect:goodss";
 	}
     /**
@@ -166,7 +166,7 @@ public class VendGoodsController{
     	for(int i=0;i<idArray.length;i++){
     		idArray1[i]=Function.getInt(idArray[i], 0);
     	}
-    	int isOk=vendGoodsService.delVendGoodss(idArray1);
+    	vendGoodsService.delVendGoodss(idArray1);
   		return "redirect:/goods/goodss";
   	}
 }

@@ -341,7 +341,6 @@ public class DateUtil{
     	return seconds;
     }
     public static String getSpecifiedDayBefore() {
-    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd"); 
 	  	  Calendar c = Calendar.getInstance(); 
 	  	  Date date=new Date(); 
 	  	  c.setTime(date); 

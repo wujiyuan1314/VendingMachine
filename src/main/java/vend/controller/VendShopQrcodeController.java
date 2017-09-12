@@ -120,7 +120,7 @@ public class VendShopQrcodeController{
     	if(br.hasErrors()){
     		return "manage/qrcode/qrcode_edit";
     	}
-    	int isOk=vendShopQrcodeService.editVendShopQrcode(vendShopQrcode);
+    	vendShopQrcodeService.editVendShopQrcode(vendShopQrcode);
 		return "redirect:qrcodes";
 	}
     /**
@@ -147,7 +147,7 @@ public class VendShopQrcodeController{
     	for(int i=0;i<idArray.length;i++){
     		idArray1[i]=Function.getInt(idArray[i], 0);
     	}
-    	int isOk=vendShopQrcodeService.delVendShopQrcodes(idArray1);
+    	vendShopQrcodeService.delVendShopQrcodes(idArray1);
   		return "redirect:/qrcode/qrcodes";
   	}
 }

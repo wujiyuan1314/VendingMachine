@@ -2,8 +2,6 @@ package vend.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import base.util.Page;
 import vend.entity.VendOrder;
 

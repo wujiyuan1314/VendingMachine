@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import base.util.Page;
 import vend.entity.VendCoupon;
-import vend.entity.VendCoupon;
 
 public interface VendCouponMapper {
     int deleteByPrimaryKey(Integer id);

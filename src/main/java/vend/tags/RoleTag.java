@@ -1,6 +1,4 @@
 package vend.tags;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
@@ -18,7 +16,6 @@ public class RoleTag extends RequestContextAwareTag{
 	}
 	@Override
 	public int doStartTagInternal() throws JspException {
-		HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
 		try{
 			vendRoleService=this.getRequestContext().getWebApplicationContext().getBean(VendRoleService.class);
 			JspWriter out = pageContext.getOut();

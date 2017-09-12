@@ -15,15 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import base.util.Function;
-import base.util.Page;
 import net.sf.json.JSONArray;
-import vend.entity.VendGoods;
 import vend.entity.VendPermission;
 import vend.entity.VendRolePermission;
 import vend.entity.VendUser;
@@ -107,7 +104,7 @@ public class VendPermissionController{
 				zNode.setId(vendPermission.getId());
 				zNode.setpId(vendPermission.getParentId());
 				zNode.setName(vendPermission.getPermissionDescription());
-				if(vendPermission.getId()==1){
+				if(vendPermission.getParentId()==1){
 					zNode.setOpen(true);
 				}else{
 					zNode.setOpen(false);

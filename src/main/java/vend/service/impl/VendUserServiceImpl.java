@@ -136,9 +136,24 @@ public class VendUserServiceImpl implements VendUserService {
 	public Set<String> getPermissions(String username){
 		Set<String> set1=vendUserMapper.getPermissions(username);
 		Set<String> set2=new HashSet<String>();
-		for(String permissionid:set1){
-			VendPermission vendPermission=vendPermissionMapper.selectByPrimaryKey(Integer.parseInt(permissionid));
-			set2.add(vendPermission.getPermissionName());
+		
+		VendUser pvendUser=vendUserMapper.selectByUsername(username);
+		String permissionlist="";
+		if(pvendUser!=null){
+			permissionlist=pvendUser.getPermissionList();
+		}
+		if(permissionlist==null||"".equals(permissionlist)){
+			for(String permissionid:set1){
+				VendPermission vendPermission=vendPermissionMapper.selectByPrimaryKey(Integer.parseInt(permissionid));
+				set2.add(vendPermission.getPermissionName());
+			}
+		}else{
+			for(String permissionid:set1){
+				if(permissionlist.indexOf(permissionid+",")!=-1){
+					VendPermission vendPermission=vendPermissionMapper.selectByPrimaryKey(Integer.parseInt(permissionid));
+					set2.add(vendPermission.getPermissionName());
+				}
+			}
 		}
 		return set2;
 	}

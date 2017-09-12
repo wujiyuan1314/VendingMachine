@@ -75,6 +75,15 @@ public class LoginController extends LogoutFilter{
 			 model.addAttribute("errorpassword", "请填写密码");
 			 return "login";
 		}
+		VendUser user=vendUserService.selectByUsername(username);
+		if(user==null){
+			model.addAttribute("erroruserName", "用户名不正确");
+			return "login";
+		}
+		if(!user.getPassword().equals(password)){
+			model.addAttribute("errorpassword", "密码不正确");
+			return "login";
+		}
 		if (subject.isAuthenticated()) {  
             return "welcome";  
         }  

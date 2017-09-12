@@ -26,7 +26,6 @@ import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
 import net.sf.json.JSONArray;
-import vend.entity.Menuitem;
 import vend.entity.VendRole;
 import vend.entity.VendRolePermission;
 import vend.entity.VendUser;

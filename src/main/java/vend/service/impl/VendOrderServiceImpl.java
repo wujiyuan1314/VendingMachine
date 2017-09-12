@@ -1,13 +1,10 @@
 package vend.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import base.util.DateUtil;
-import base.util.Function;
 import base.util.Page;
 import vend.dao.VendOrderMapper;
 import vend.entity.VendOrder;
@@ -44,7 +41,6 @@ public class VendOrderServiceImpl implements VendOrderService {
 	 * @return
 	 */
 	public int insertVendOrder(VendOrder vendOrder){
-		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 		return vendOrderMapper.insertSelective(vendOrder);
 	}
 	/**

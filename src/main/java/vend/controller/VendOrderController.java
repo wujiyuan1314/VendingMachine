@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import base.util.DateUtil;
 import base.util.Page;
-import vend.entity.CodeLibrary;
 import vend.entity.VendOrder;
 import vend.service.CodeLibraryService;
 import vend.service.VendGoodsService;
@@ -159,7 +157,7 @@ public class VendOrderController{
     	if(br.hasErrors()){
     		return "manage/order/order_edit";
     	}
-    	int isOk=vendOrderService.editVendOrder(vendOrder);
+    	vendOrderService.editVendOrder(vendOrder);
 		return "redirect:orders";
 	}
     /**
@@ -184,7 +182,7 @@ public class VendOrderController{
   	public String dels(HttpServletRequest request){
     	String ordercodes=request.getParameter("ids");
     	String ordercodeArray[]=ordercodes.split(",");
-    	int isOk=vendOrderService.delVendOrders(ordercodeArray);
+    	vendOrderService.delVendOrders(ordercodeArray);
   		return "redirect:/order/orders";
   	}
 }

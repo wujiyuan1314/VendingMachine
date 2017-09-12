@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import base.util.Function;
 import base.util.Page;
-import vend.entity.CodeLibrary;
 import vend.entity.VendQrcodeAttend;
 import vend.entity.VendShopQrcode;
 import vend.service.VendQrcodeAttendService;
@@ -110,7 +109,7 @@ public class VendQrcodeAttendController{
     	if(br.hasErrors()){
     		return "manage/qrcodeAtt/qrcodeAtt_edit";
     	}
-    	int isOk=vendQrcodeAttendService.editVendQrcodeAttend(vendQrcodeAttend);
+    	vendQrcodeAttendService.editVendQrcodeAttend(vendQrcodeAttend);
 		return "redirect:qrcodeAtts";
 	}
     /**
@@ -139,7 +138,7 @@ public class VendQrcodeAttendController{
     	for(int i=0;i<idArray.length;i++){
     		idArray1[i]=Function.getInt(idArray[i], 0);
     	}
-    	int isOk=vendQrcodeAttendService.delVendQrcodeAttends(idArray1);
+    	vendQrcodeAttendService.delVendQrcodeAttends(idArray1);
   		return "redirect:/qrcodeAtt/qrcodeAtts";
   	}
 }

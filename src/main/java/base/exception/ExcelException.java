@@ -6,6 +6,11 @@ package base.exception;
  */
 public class ExcelException extends Exception {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public ExcelException() {  
         // TODO Auto-generated constructor stub  
     }  

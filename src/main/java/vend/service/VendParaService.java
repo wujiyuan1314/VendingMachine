@@ -1,8 +1,5 @@
 package vend.service;
 
-import java.util.List;
-
-import base.util.Page;
 import vend.entity.VendPara;
 
 public interface VendParaService {

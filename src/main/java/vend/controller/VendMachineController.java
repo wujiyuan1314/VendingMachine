@@ -185,7 +185,7 @@ public class VendMachineController{
     	if(br.hasErrors()){
     		return "manage/machine/machine_edit";
     	}
-    	int isOk=vendMachineService.editVendMachine(vendMachine);
+    	vendMachineService.editVendMachine(vendMachine);
 		return "redirect:machines";
 	}
     /**
@@ -214,7 +214,7 @@ public class VendMachineController{
     	for(int i=0;i<idArray.length;i++){
     		idArray1[i]=Function.getInt(idArray[i], 0);
     	}
-    	int isOk=vendMachineService.delVendMachines(idArray1);
+    	vendMachineService.delVendMachines(idArray1);
   		return "redirect:/machine/machines";
   	}
 }
