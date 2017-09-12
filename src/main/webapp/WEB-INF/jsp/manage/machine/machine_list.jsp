@@ -86,6 +86,8 @@
 			                       <c:when test="${vendMachine.useStatus==1||vendMachine.useStatus==3}">
 			                         <a href="javascript:shutdown('${vendMachine.id}');" class="btn btn-danger btn-mini"/>关机</a>&nbsp;&nbsp;
 			                         <a href="javascript:reboot('${vendMachine.id}');" class="btn btn-primary btn-mini"/>重启</a>&nbsp;&nbsp;
+		                             <a href="javascript:autoClean('${vendMachine.id}');" class="btn btn-primary btn-mini"/>清洗</a>&nbsp;&nbsp;
+			                         <a href="javascript:selfCheck('${vendMachine.id}');" class="btn btn-primary btn-mini"/>自检</a>&nbsp;&nbsp;
 			                       </c:when>
 			                     </c:choose>
 			                     <c:choose>
