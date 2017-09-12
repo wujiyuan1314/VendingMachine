@@ -12,6 +12,15 @@
 		</param-value>
 	</context-param>
 
+	<!-- 配置InitConfigServlet 加載配置參數到內存 -->
+	<servlet>
+		<servlet-name>InitConfigServlet</servlet-name>
+		<servlet-class>
+			base.init.InitConfigServlet
+		</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	
     <!-- 配置Spring MVC DispatcherServlet -->
     <servlet>
         <description>spring mvc servlet</description>
