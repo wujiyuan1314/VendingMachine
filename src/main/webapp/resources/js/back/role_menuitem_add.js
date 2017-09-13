@@ -63,14 +63,14 @@ $(document).ready(function(){
 
 function addpermission(){
 	var id=$("#id").val();
-	var nodeIds="";
+	var nodeIds=",";
+	$(".checkbox_true_part").each(function() {
+		var node=$(this).attr('node');
+		nodeIds+=node+",";
+    });
 	$(".checkbox_true_full").each(function() {
 		var node=$(this).attr('node');
-		if(nodeIds==''){
-			nodeIds+=node;
-		}else{
-			nodeIds+=","+node;
-		}
+		nodeIds+=node+",";
     });
 	var url=basePath+"role/addmenuitem";
 	var params={

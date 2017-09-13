@@ -35,7 +35,7 @@ public class RoleMenuTag extends RequestContextAwareTag{
 				if(menuList!=null){
 					for(Menuitem menu:childrenmenus){
 						String menuid=menu.getId().toString();
-						if(menuList.indexOf(menuid)!=-1){
+						if(menuList.indexOf(","+menuid+",")!=-1){
 							menu.setExtend2("1");
 							rolemenus.add(menu);
 						}

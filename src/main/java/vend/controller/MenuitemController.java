@@ -116,7 +116,7 @@ public class MenuitemController {
 					zNode.setpId(menuitem.getParentId());
 					zNode.setName(menuitem.getMenuName());
 					zNode.setOpen(true);
-					if(menulist.indexOf(menuitem.getId().toString())!=-1){
+					if(menulist.indexOf(","+menuitem.getId().toString()+",")!=-1){
 						zNode.setChecked(true);
 					}
 				    list.add(zNode);

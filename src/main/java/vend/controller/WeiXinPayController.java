@@ -199,8 +199,8 @@ public class WeiXinPayController {
 			return null;
 		}
 		
-		double couponAmount=Function.getDouble(map.get("couponAmount"),0.00);//优惠券金额
-		double price=Function.getDouble(map.get("price"),0.00);//商品金额
+		double couponAmount=Function.getDouble(map.get("couponAmount"),0.0);//优惠券金额
+		double price=Function.getDouble(map.get("price"),0.0);//商品金额
 		
 		if(couponAmount>=price){//优惠券金额大于商品金额
 			String machinecode=map.get("machinecode");
@@ -242,7 +242,7 @@ public class WeiXinPayController {
 				json.put("msg", "剩余的使用余额支付");
 			}else if(isuseye.equals("0")){
 				json.put("success", 3);
-				json.put("lastamount", (price-couponAmount));
+				json.put("lastamount", (price*100-couponAmount*100));
 				json.put("msg", "剩余的使用微信在线支付");
 			}
 		}

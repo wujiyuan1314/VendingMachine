@@ -154,7 +154,7 @@ public class LoginController extends LogoutFilter{
      * @return
      */
     @RequestMapping(value="/wxlogin",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
-    public @ResponseBody Map<String, String> wxlogin(@RequestBody Map<String, String> map){
+    public @ResponseBody Map<String, Object> wxlogin(@RequestBody Map<String, String> map){
     	Map<String, Object> resultMap=new HashMap<String, Object>();
     	//存储状态信息
     	resultMap.put("avatarUrl", map.get("avatarUrl"));
@@ -176,6 +176,6 @@ public class LoginController extends LogoutFilter{
     		resultMap.put("success", "1");
     		resultMap.put("msg", "登录成功");
     	}
-    	return map;
+    	return resultMap;
     }
 }
