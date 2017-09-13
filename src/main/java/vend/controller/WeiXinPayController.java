@@ -22,11 +22,13 @@ import base.weixinpay.common.StreamUtil;
 import base.weixinpay.model.OrderInfo;
 import base.weixinpay.model.OrderReturnInfo;
 import base.weixinpay.model.SignInfo;
+import vend.entity.UserCoupon;
 import vend.entity.VendAccount;
 import vend.entity.VendAccountDetail;
 import vend.entity.VendMachine;
 import vend.entity.VendOrder;
 import vend.entity.VendUser;
+import vend.service.UserCouponService;
 import vend.service.VendAccountDetailService;
 import vend.service.VendAccountService;
 import vend.service.VendMachineService;
@@ -55,6 +57,8 @@ public class WeiXinPayController {
 	VendOrderService vendOrderService;
 	@Autowired
 	VendUserService vendUserService;
+	@Autowired
+	UserCouponService userCouponService;
 	@Autowired
 	VendMachineService vendMachineService;
 	@Autowired
@@ -163,51 +167,93 @@ public class WeiXinPayController {
 		}
 	}
 	/**
-	 * 使用免费券支付
+	 * 使用优惠券支付
+	 * @param response
 	 * @param map
 	 * @return
+	 * @throws IOException
 	 */
-	@RequestMapping(value="/couponPay",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
-	public @ResponseBody void couponPay(HttpServletRequest request,HttpServletResponse response){
+	@RequestMapping(value="/couponPay",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
+	public @ResponseBody String couponPay(HttpServletResponse response,@RequestBody Map<String, String> map) throws IOException{
 		response.setCharacterEncoding("UTF-8");
 		JSONObject json = new JSONObject();
 		json.put("success", "0");
+		json.put("msg", "购买失败");
 		
-		int id=Function.getInt(request.getParameter("id"),0);
-		String machinecode=request.getParameter("machinecode");
-		VendMachine vendMachine=vendMachineService.selectByMachineCode(machinecode);
-		String shopusercode="";
-		if(vendMachine!=null){
-			shopusercode=vendMachine.getUsercode();
+		int usercouponId=Function.getInt(map.get("usercouponId"),0);//该用户所拥有的优惠券ID
+		int id=Function.getInt(map.get("id"),0);//商品ID
+		String startTime=map.get("startTime");//优惠券开始时间
+		String endTime=map.get("endTime");//优惠券结束时间
+		Date nowDate=DateUtil.getCurrentDate();//当前日期
+		if(DateUtil.daysBetweenForDay(DateUtil.parseDate(startTime), nowDate)<0){
+			json.put("success", "0");
+			json.put("msg", "还没到优惠开始日期");
+			response.getWriter().append(json.toJSONString());
+			return null;
 		}
-		String usercode=request.getParameter("usercode");
-		double price=0.00;
-		//1,订单操作
-		VendOrder vendOrder=new VendOrder();
-		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
-		vendOrder.setAmount(BigDecimal.valueOf(price));
-		String orderId=Function.getOrderId();
-		vendOrder.setOrderId(orderId);
-		vendOrder.setUsercode(usercode);
-		vendOrder.setShopusercode(shopusercode);
-		vendOrder.setGoodsId(id);
-		vendOrder.setMachineCode(machinecode);
-		vendOrder.setNum(1);
-		vendOrder.setCreateTime(createTime);
-		vendOrder.setOrderstate("1");
-		vendOrder.setFreeStatus("1");//是否使用免费券,1使用，0不使用
-		vendOrder.setExtend1("1");//购买
-		vendOrder.setPayType("免费券支付");
-		int isOk=vendOrderService.insertVendOrder(vendOrder);
-		if(isOk==1){
-			json.put("success", 1);
+		
+		if(DateUtil.daysBetweenForDay(nowDate,DateUtil.parseDate(endTime))<0){
+			json.put("success", "0");
+			json.put("msg", "优惠已结束");
+			response.getWriter().append(json.toJSONString());
+			return null;
 		}
+		
+		double couponAmount=Function.getDouble(map.get("couponAmount"),0.00);//优惠券金额
+		double price=Function.getDouble(map.get("price"),0.00);//商品金额
+		
+		if(couponAmount>=price){//优惠券金额大于商品金额
+			String machinecode=map.get("machinecode");
+			VendMachine vendMachine=vendMachineService.selectByMachineCode(machinecode);
+			String shopusercode="";
+			if(vendMachine!=null){
+				shopusercode=vendMachine.getUsercode();
+			}
+			String usercode=map.get("usercode");
+			//1,订单操作
+			VendOrder vendOrder=new VendOrder();
+			Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+			vendOrder.setAmount(BigDecimal.valueOf(0.00));
+			String orderId=Function.getOrderId();
+			vendOrder.setOrderId(orderId);
+			vendOrder.setUsercode(usercode);
+			vendOrder.setShopusercode(shopusercode);
+			vendOrder.setGoodsId(id);
+			vendOrder.setMachineCode(machinecode);
+			vendOrder.setNum(1);
+			vendOrder.setCreateTime(createTime);
+			vendOrder.setOrderstate("1");
+			vendOrder.setFreeStatus("1");//是否使用免费券,1使用，0不使用
+			vendOrder.setExtend1("1");//购买
+			vendOrder.setPayType("优惠券支付");
+			int isOk=vendOrderService.insertVendOrder(vendOrder);
+			if(isOk==1){
+				json.put("success", 1);
+				json.put("msg", "购买成功");
+				UserCoupon userCoupon=userCouponService.getOne(usercouponId);
+				userCoupon.setExtend1("0");//优惠券使用后设置为无效
+				userCouponService.editUserCoupon(userCoupon);
+			}
+		}else{
+			String isuseye=map.get("isuseye");//是否使用余额支付
+			if(isuseye.equals("1")){
+				json.put("success", 2);
+				json.put("lastamount", (price-couponAmount));
+				json.put("msg", "剩余的使用余额支付");
+			}else if(isuseye.equals("0")){
+				json.put("success", 3);
+				json.put("lastamount", (price-couponAmount));
+				json.put("msg", "剩余的使用微信在线支付");
+			}
+		}
+		
 		try {
 			response.getWriter().append(json.toJSONString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 	}
 	/**
 	 * 使用余额支付
@@ -217,6 +263,7 @@ public class WeiXinPayController {
 	@RequestMapping(value="/banacePay",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
 	public @ResponseBody void banacePay(HttpServletRequest request,HttpServletResponse response){
 		int id=Function.getInt(request.getParameter("id"),0);
+		String usercouponId=request.getParameter("usercouponId");//用户所拥有的优惠券ID
 		String machinecode=request.getParameter("machinecode");
 		VendMachine vendMachine=vendMachineService.selectByMachineCode(machinecode);
 		String shopusercode="";
@@ -261,6 +308,12 @@ public class WeiXinPayController {
 		xvendAccountDetail.setType("3");//购买
 		xvendAccountDetail.setCreateTime(updateTime);
 		vendAccountDetailService.insertVendAccountDetail(xvendAccountDetail);
+		
+		if(!usercouponId.equals("")){
+			UserCoupon userCoupon=userCouponService.getOne(Function.getInt(usercouponId, 0));
+			userCoupon.setExtend1("0");//优惠券使用后设置为无效
+			userCouponService.editUserCoupon(userCoupon);
+		}
 		
 		response.setCharacterEncoding("UTF-8");
 		JSONObject json = new JSONObject();
@@ -398,6 +451,7 @@ public class WeiXinPayController {
 	 */
 	@RequestMapping(value="/paysuccess",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
 	public @ResponseBody void PaySuccess(HttpServletRequest request){
+		String usercouponId=request.getParameter("usercouponId");//用户所拥有的优惠券ID
 		String requestPayment = request.getParameter("requestPayment");
 		String orderId = request.getParameter("orderId");
 		logger.info("-------支付结果:"+requestPayment);
@@ -408,6 +462,11 @@ public class WeiXinPayController {
 			if(vendOrder!=null){
 				vendOrder.setOrderstate("1");
 				vendOrderService.editVendOrder(vendOrder);
+			}
+			if(!usercouponId.equals("")){
+				UserCoupon userCoupon=userCouponService.getOne(Function.getInt(usercouponId, 0));
+				userCoupon.setExtend1("0");//优惠券使用后设置为无效
+				userCouponService.editUserCoupon(userCoupon);
 			}
 			//2,修改账户
 			/**商家账户*/

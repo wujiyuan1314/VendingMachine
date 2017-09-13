@@ -1,5 +1,6 @@
 package vend.controller;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -154,23 +155,26 @@ public class LoginController extends LogoutFilter{
      */
     @RequestMapping(value="/wxlogin",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
     public @ResponseBody Map<String, String> wxlogin(@RequestBody Map<String, String> map){
+    	Map<String, Object> resultMap=new HashMap<String, Object>();
     	//存储状态信息
-    	map.put("usercode", "");
-    	map.put("success", "0");
-    	map.put("msg", "登录错误");
+    	resultMap.put("avatarUrl", map.get("avatarUrl"));
+    	resultMap.put("nickName", map.get("nickName"));
+    	resultMap.put("usercode", "");
+    	resultMap.put("success", "0");
+    	resultMap.put("msg", "登录错误");
     	
     	String username=map.get("nickName");
     	VendUser venduser=vendUserService.selectByUsername(username);
     	if(venduser==null){
-    		map.put("usercode", "");
-    		map.put("success", "0");
-        	map.put("msg", "您还没注册,请先进行注册");
+    		resultMap.put("usercode", "");
+    		resultMap.put("success", "0");
+    		resultMap.put("msg", "您还没注册,请先进行注册");
     	}else{
     		List<UserCoupon> userCoupons=userCouponService.findByUsercode(venduser.getUsercode());
-    		map.put("couponnum", Integer.toString(userCoupons.size()));
-    		map.put("usercode", venduser.getUsercode());
-    		map.put("success", "1");
-        	map.put("msg", "登录成功");
+    		resultMap.put("userCoupons", userCoupons);
+    		resultMap.put("usercode", venduser.getUsercode());
+    		resultMap.put("success", "1");
+    		resultMap.put("msg", "登录成功");
     	}
     	return map;
     }

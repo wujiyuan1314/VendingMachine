@@ -31,6 +31,8 @@ public interface VendUserMapper {
     
     List<VendUser> findAll();
     
+    List<VendUser> selectByArealist(String arealist[]);
+    
     VendUser selectByUsername(String username);
     
     public Set<String> getRoles(String userName);

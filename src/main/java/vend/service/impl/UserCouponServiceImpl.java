@@ -60,6 +60,13 @@ public class UserCouponServiceImpl implements UserCouponService {
 		return userCouponMapper.deleteBatch(ids);
 	}
 	/**
+	 * 批量添加
+	 * @param list
+	 */
+	public void insertBatch(List<UserCoupon> list){
+		userCouponMapper.insertBatch(list);
+	}
+	/**
 	 * 根据ID查找
 	 * @param id
 	 * @return
@@ -81,5 +88,13 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 */
 	public List<UserCoupon> findByUsercode(String usercode){
 		return userCouponMapper.findByUsercode(usercode);
+	}
+	/**
+	 * 按照usercode和优惠券ID查找
+	 * @param usercode
+	 * @param couponId
+	 */
+	public UserCoupon findByUsercodeLimitCouponId(String usercode,Integer couponId){
+		return userCouponMapper.findByUsercodeLimitCouponId(usercode, couponId);
 	}
 }

@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 import base.util.DateUtil;
@@ -22,6 +25,7 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 	 * @param page
 	 * @return
 	 */
+	@Cacheable(value="goodsCache",key="vendgoodss")                                                                      
 	public List<VendGoods> listVendGoods(VendGoods vendGoods,Page page){
 		int totalNumber = vendGoodsMapper.countVendGoods(vendGoods);
 		page.setTotalNumber(totalNumber);
@@ -68,6 +72,9 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 	public VendGoods getOne(int id){
 		return vendGoodsMapper.selectByPrimaryKey(id);
 	}
+	/**
+	 * 查找全部
+	 */
 	public List<VendGoods> findAll() {
 		// TODO Auto-generated method stub
 		return vendGoodsMapper.findAll();

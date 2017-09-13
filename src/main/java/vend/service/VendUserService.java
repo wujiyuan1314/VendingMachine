@@ -54,6 +54,12 @@ public interface VendUserService {
 	 */
 	VendUser selectByUsername(String username);
 	/**
+	 * 按照地区查找用户
+	 * @param arealist
+	 * @return
+	 */
+	List<VendUser> selectByArealist(String arealist[]);
+	/**
      * 按照用户名得到角色信息
      * @param userName
      * @return

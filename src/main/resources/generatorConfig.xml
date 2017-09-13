@@ -36,7 +36,7 @@
     </javaClientGenerator> 
         
     <!-- 用户表 -->  
-    <table schema="t" tableName="vend_user" domainObjectName="VendUser"  
+    <table schema="t" tableName="vend_coupon" domainObjectName="VendCoupon"  
         enableCountByExample="false"  
         enableUpdateByExample="false"  
         enableDeleteByExample="false"  

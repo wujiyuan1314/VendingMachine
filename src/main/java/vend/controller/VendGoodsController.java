@@ -43,6 +43,8 @@ public class VendGoodsController{
 	@RequiresPermissions({"goods:goodss"})
 	@RequestMapping(value="/goodss")
 	public String listVendGoods(Model model,@ModelAttribute VendGoods vendGoods, @ModelAttribute Page page,HttpServletRequest request) {
+		
+		
 		String currentPageStr = request.getParameter("currentPage");
 		logger.info(currentPageStr + "===========");
 		if(currentPageStr != null){

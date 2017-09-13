@@ -314,6 +314,14 @@
             )
        </foreach>
   </insert>
+    <select id="selectByArealist" resultMap="BaseResultMap" parameterType="java.lang.String">  
+		 select  
+		 <include refid="Base_Column_List" />  
+		 from vend_user where role_id=5 and address in  
+		 <foreach item="item" collection="array" open="(" separator="," close=")">  
+		  #{item}  
+		 </foreach>  
+	</select> 
   <!-- 批量删除 -->
     <delete id="deleteBatch" parameterType="int">
         delete from vend_user where usercode in

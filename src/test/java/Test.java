@@ -15,10 +15,12 @@ public class Test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		HttpServletRequest request = null;
-		String ids="ff";
-		String idArray[]=ids.split(",");
+		String ids="";
+		String idArray[]=ids.split("3");
+		System.out.println(idArray.length);
+		//.out.println(idArray[2]);
 		for(int i=0;i<idArray.length;i++){
-			System.out.println(idArray[i]);
+			System.out.println(idArray[i]+"ff");
 		}
     	int[] idArray1=new int[idArray.length];
 	}

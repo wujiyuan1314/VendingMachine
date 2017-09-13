@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-09-10 18:05:06
+Date: 2017-09-13 17:59:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,6 +35,7 @@ INSERT INTO code_catalog VALUES ('ACCOUNTTYPE', '账户操作类型', '农户的
 INSERT INTO code_catalog VALUES ('ADSCREEN', '广告屏幕样式', '广告的屏幕样式', null, null, null);
 INSERT INTO code_catalog VALUES ('ADTYPE', '广告类型', '广告类型', null, null, null);
 INSERT INTO code_catalog VALUES ('CLEANSTATUS', '是否自动清洗', '是否自动清洗', null, null, null);
+INSERT INTO code_catalog VALUES ('COUPONAREA', '优惠活动地区', '优惠活动的地区设置', null, null, null);
 INSERT INTO code_catalog VALUES ('COUPONTYPE', '优惠活动类型', '优惠活动类型', null, null, null);
 INSERT INTO code_catalog VALUES ('CUPSTATUS', '储杯情况', '储杯情况', null, null, null);
 INSERT INTO code_catalog VALUES ('HEATSTATUS', '加热状态', '加热状态', null, null, null);
@@ -68,7 +69,9 @@ CREATE TABLE `code_library` (
 -- ----------------------------
 INSERT INTO code_library VALUES ('06d1e53f7ccf4a7297465e8efca02101', 'UPFILETYPE', '5', 'xlsx', '2017-08-28 10:28:31', null, null, null, null);
 INSERT INTO code_library VALUES ('0779e016cc324a2b8315427c12c70503', 'ADSCREEN', '9', '风格9', '2017-09-04 14:25:13', null, null, null, '上面二维码和机器码，下面视频');
+INSERT INTO code_library VALUES ('0a2822b21a934ea7816ad097642fbd8e', 'COUPONAREA', '7', 'zhumadian', '2017-09-11 17:20:26', null, null, null, '驻马店');
 INSERT INTO code_library VALUES ('13971e88639248f4a1d00bcd488740ef', 'USESTATUS', '3', '待审核', '2017-09-05 16:15:02', null, null, null, '机器待审核');
+INSERT INTO code_library VALUES ('1544158fd2d1487ab321dd73efa2ccc4', 'COUPONAREA', '2', 'xuchang', '2017-09-11 17:16:18', null, null, null, '许昌');
 INSERT INTO code_library VALUES ('16a5f9620529489892f8ac87cf8d94aa', 'UPPICTYPE', '2', 'JPG', '2017-08-28 10:22:21', null, null, null, null);
 INSERT INTO code_library VALUES ('1c6920ae56354383b607aad8532f3002', 'QRCODETYPE', '2', '小程序二维码', '2017-08-28 15:19:43', null, null, null, null);
 INSERT INTO code_library VALUES ('1e48d87e4c6b4af4abbc454e36ddbfaa', 'HEATSTATUS', '3', '加热完成', '2017-09-05 15:51:48', null, null, null, '');
@@ -105,9 +108,13 @@ INSERT INTO code_library VALUES ('99f6924f5a684541809b58e38181538c', 'UPVIDEOTYP
 INSERT INTO code_library VALUES ('a0efb4fdf23545dda7e9466f0f258981', 'UPPICTYPE', '1', 'JPEG', '2017-08-28 10:22:13', null, null, null, null);
 INSERT INTO code_library VALUES ('a77ca80193d7479bbad84fba2109e241', 'UPVIDEOTYPE', '7', 'MP4', '2017-08-28 10:31:58', null, null, null, null);
 INSERT INTO code_library VALUES ('a93d8afbdd274de3ba3c17d680a71468', 'ADSCREEN', '6', '风格6', '2017-09-04 14:22:08', null, null, null, '上面图片，中间二维码和机器码，下面视频');
+INSERT INTO code_library VALUES ('ad59d3f3739743ceb88cb97e6f44a1f0', 'COUPONAREA', '1', 'zhengzhou', '2017-09-11 17:16:08', null, null, null, '郑州');
+INSERT INTO code_library VALUES ('b2567b141f464cb0a3e0a58b97686b68', 'COUPONAREA', '4', 'luoyang', '2017-09-11 17:19:39', null, null, null, '洛阳');
 INSERT INTO code_library VALUES ('b5ec7f65025a475a928c34731131af3b', 'UPFILETYPE', '6', 'rar', '2017-08-28 10:28:43', null, null, null, null);
 INSERT INTO code_library VALUES ('bb1de1fd6b044c2b8c34a7817b7df215', 'UPPICTYPE', '5', 'GIF', '2017-08-28 10:23:58', null, null, null, null);
 INSERT INTO code_library VALUES ('bd6ee3a9cb7c4710a9f58ab4e087abb0', 'ADSCREEN', '1', '风格1', '2017-09-04 14:08:18', null, null, null, '上面视频，中间二维码和机器码，下面图片');
+INSERT INTO code_library VALUES ('c5a70c591f82445b9ad1954c84ed7e42', 'COUPONAREA', '3', 'kaifeng', '2017-09-11 17:16:43', null, null, null, '开封');
+INSERT INTO code_library VALUES ('c93936ca5c474f64a5315c3e0290dc27', 'COUPONAREA', '6', 'luohe', '2017-09-11 17:20:09', null, null, null, '漯河');
 INSERT INTO code_library VALUES ('caf868e9bac046239cfd8a02dbb84f66', 'HEATSTATUS', '2', '加热中', '2017-09-05 15:51:38', null, null, null, '');
 INSERT INTO code_library VALUES ('cfd726aa3f944dddaf2e7ac16916ae4b', 'ACCOUNTTYPE', '2', '提现', '2017-08-29 14:01:04', null, null, null, null);
 INSERT INTO code_library VALUES ('d2bea9a04ca247ae84e0bafcadccf67b', 'ADSCREEN', '8', '风格8', '2017-09-04 14:23:31', null, null, null, '上面二维码和机器码，下面图片');
@@ -118,6 +125,7 @@ INSERT INTO code_library VALUES ('e57f1d63a95544e0a1da2b196e38b4bc', 'UPVIDEOTYP
 INSERT INTO code_library VALUES ('f4805ab0197b42f291084b969fee27a2', 'ORDERTYPE', '1', '购买', '2017-09-07 16:29:52', null, null, null, null);
 INSERT INTO code_library VALUES ('f4805ab0197b42f291084b969fee27a4', 'ORDERTYPE', '2', '充值', '2017-09-07 16:30:54', null, null, null, null);
 INSERT INTO code_library VALUES ('f4805ab0197b42f291084b969fee27a9', 'UPFILETYPE', '4', 'xls', '2017-08-28 10:28:15', null, null, null, null);
+INSERT INTO code_library VALUES ('f6374a3a452447cfbca0c5eb39580661', 'COUPONAREA', '5', 'jiaozuo', '2017-09-11 17:19:53', null, null, null, '焦作');
 INSERT INTO code_library VALUES ('f68cb7a8039146e482360bd72570e8d1', 'CLEANSTATUS', '2', '不自动清洗', '2017-09-05 15:52:44', null, null, null, '');
 INSERT INTO code_library VALUES ('f9b0655bac654642a2ecadb6040126d6', 'COUPONTYPE', '1', '优惠券', '2017-09-10 16:14:29', null, null, null, '');
 
@@ -185,14 +193,16 @@ CREATE TABLE `user_coupon` (
   `extend2` varchar(100) DEFAULT NULL,
   `extend3` varchar(100) DEFAULT NULL,
   `extend4` varchar(100) DEFAULT NULL,
-  `extend5` varchar(100) DEFAULT NULL,
-  `extend6` varchar(100) DEFAULT NULL,
+  `extend5` varchar(200) DEFAULT NULL,
+  `extend6` varchar(600) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_coupon
 -- ----------------------------
+INSERT INTO user_coupon VALUES ('1', 'VM2017083115230747', '1', '2017-09-13 15:55:07', '1', '2017-09-12', '2017-09-15', '2', '优惠券', '用户首次注册会获得的优惠券');
+INSERT INTO user_coupon VALUES ('2', 'VM2017083115230747', '2', '2017-09-13 15:56:18', '1', '2017-09-10', '2017-09-16', '4.5', '活动优惠券', '活动优惠券,在活动期间该活动适用地区的用户都会自动获得一张该优惠券');
 
 -- ----------------------------
 -- Table structure for `vend_account`
@@ -216,7 +226,9 @@ CREATE TABLE `vend_account` (
 -- ----------------------------
 INSERT INTO vend_account VALUES ('VM000', '0.00', '51fe78b0a1d09990', '2017-09-10 14:08:36', '2017-09-10 14:08:39', null, null, null);
 INSERT INTO vend_account VALUES ('VM001', '0.00', '51fe78b0a1d09990', '2017-09-07 20:18:06', '2017-09-07 20:18:09', null, null, null);
-INSERT INTO vend_account VALUES ('VM2017083115230747', '38.00', '0f3900828bab941961f7cf21515a4e4242b22428ee2c805a', '2017-08-31 15:23:07', '2017-09-09 11:42:48', null, null, null);
+INSERT INTO vend_account VALUES ('VM2017083115230747', '34.00', '99372b283e74495df5e27848373fcad8155a94bc0847dcec', '2017-08-31 15:23:07', '2017-09-13 17:56:21', null, null, null);
+INSERT INTO vend_account VALUES ('VM2017091210521279', '0.00', '4ad237b7c7a066d7', '2017-09-12 10:52:12', '2017-09-12 10:52:12', null, null, null);
+INSERT INTO vend_account VALUES ('VM2017091211292506', '0.00', '4ad237b7c7a066d7', '2017-09-12 11:29:25', '2017-09-12 11:29:25', null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_accountdetail`
@@ -232,7 +244,7 @@ CREATE TABLE `vend_accountdetail` (
   `extend2` varchar(100) DEFAULT NULL,
   `extend3` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='消费用户的充值提现记录表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='消费用户的充值提现记录表';
 
 -- ----------------------------
 -- Records of vend_accountdetail
@@ -245,6 +257,8 @@ INSERT INTO vend_accountdetail VALUES ('5', 'VM2017083115230747', '3', '5.00', '
 INSERT INTO vend_accountdetail VALUES ('6', 'VM2017083115230747', '3', '5.00', '2017-09-09 11:37:39', null, null, null);
 INSERT INTO vend_accountdetail VALUES ('7', 'VM2017083115230747', '3', '1.00', '2017-09-09 11:41:34', null, null, null);
 INSERT INTO vend_accountdetail VALUES ('8', 'VM2017083115230747', '3', '1.00', '2017-09-09 11:42:57', null, null, null);
+INSERT INTO vend_accountdetail VALUES ('9', 'VM2017083115230747', '3', '3.00', '2017-09-13 17:54:56', null, null, null);
+INSERT INTO vend_accountdetail VALUES ('10', 'VM2017083115230747', '3', '1.00', '2017-09-13 17:56:21', null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_ad`
@@ -289,21 +303,26 @@ CREATE TABLE `vend_coupon` (
   `coupon_info` varchar(600) DEFAULT NULL COMMENT '优惠券信息',
   `coupon_scale` decimal(11,2) DEFAULT NULL COMMENT '优惠金额',
   `goods_id` int(11) DEFAULT NULL COMMENT '对应商品id',
-  `area_id` int(11) DEFAULT NULL COMMENT '投放区域',
+  `area_id` varchar(600) DEFAULT NULL COMMENT '投放区域',
   `start_time` datetime DEFAULT NULL COMMENT '有效期开始时间',
   `end_time` datetime DEFAULT NULL COMMENT '有效期结束时间',
+  `valid` varchar(10) DEFAULT NULL COMMENT '是否有效',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `extend1` varchar(100) DEFAULT NULL,
   `extend2` varchar(100) DEFAULT NULL,
   `extend3` varchar(100) DEFAULT NULL,
+  `extend4` varchar(100) DEFAULT NULL,
+  `extend5` varchar(100) DEFAULT NULL,
+  `extend6` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='优惠券表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='优惠券表';
 
 -- ----------------------------
 -- Records of vend_coupon
 -- ----------------------------
-INSERT INTO vend_coupon VALUES ('1', '优惠券', '优惠券', '2.00', null, null, '2017-08-26 00:00:00', '2017-08-26 00:00:00', '2017-08-26 17:54:43', '2017-08-26 17:54:43', '1', null, null);
+INSERT INTO vend_coupon VALUES ('1', '优惠券', '用户首次注册会获得的优惠券', '2.00', null, null, '2017-08-26 00:00:00', '2017-08-26 00:00:00', '1', '2017-08-26 17:54:43', '2017-08-26 17:54:43', '1', '1', null, null, null, null);
+INSERT INTO vend_coupon VALUES ('2', '活动优惠券', '活动优惠券,在活动期间该活动适用地区的用户都会自动获得一张该优惠券', '4.00', null, 'zhengzhou,', '2017-09-13 00:00:00', '2017-09-13 00:00:00', '0', '2017-09-13 10:07:55', '2017-09-13 10:07:55', null, '1', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_goods`
@@ -432,6 +451,14 @@ INSERT INTO vend_order VALUES ('C1709091137341418', '34543', 'VM2017083115230747
 INSERT INTO vend_order VALUES ('C1709091141349137', '4', 'VM2017083115230747', '', '24', '余额支付', '1', '1.00', null, '1', '2017-09-09 11:41:34', null, '1', null, null);
 INSERT INTO vend_order VALUES ('C1709091142429537', '3424', 'VM2017083115230747', '', '24', '余额支付', '1', '1.00', null, '1', '2017-09-09 11:42:42', null, '1', null, null);
 INSERT INTO vend_order VALUES ('C1709091522470055', '', 'VM2017083115230747', '', '0', '微信充值', '1', '1.00', null, '0', '2017-09-09 15:22:47', null, '2', null, null);
+INSERT INTO vend_order VALUES ('C1709111424268971', '4545', 'VM2017083115230747', '', '24', '微信支付', '1', '1.00', '0', '0', '2017-09-11 14:24:26', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709111435251039', '4545', 'VM2017083115230747', '', '24', '微信支付', '1', '1.00', '0', '0', '2017-09-11 14:35:25', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709111438448272', '34324', 'VM2017083115230747', '', '24', '免费券支付', '1', '0.00', '1', '1', '2017-09-11 14:38:44', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709131746308168', '324', 'VM2017083115230747', '', '23', '微信支付', '1', '3.00', '0', '0', '2017-09-13 17:46:30', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709131748359187', '343', 'VM2017083115230747', '', '23', '微信支付', '1', '1.00', '0', '1', '2017-09-13 17:48:35', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709131752310981', '4324', 'VM2017083115230747', '', '23', '微信支付', '1', '1.00', '0', '1', '2017-09-13 17:52:31', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709131754405589', '434', 'VM2017083115230747', '', '23', '余额支付', '1', '3.00', '0', '1', '2017-09-13 17:54:39', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709131756219480', '234', 'VM2017083115230747', '', '24', '余额支付', '1', '1.00', '0', '1', '2017-09-13 17:56:21', null, '1', null, null);
 
 -- ----------------------------
 -- Table structure for `vend_para`
@@ -472,7 +499,7 @@ CREATE TABLE `vend_permission` (
   `extend3` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `inx_permission_name` (`permission_name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8 COMMENT='管理后台权限表\r\n\r\n\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8 COMMENT='管理后台权限表\r\n\r\n\r\n';
 
 -- ----------------------------
 -- Records of vend_permission
@@ -555,6 +582,8 @@ INSERT INTO vend_permission VALUES ('85', '84', 'qrcodeattend:edit', '二维码�
 INSERT INTO vend_permission VALUES ('86', '84', 'qrcodeattend:del', '二维码关注删除', '2017-09-10 11:38:38', '2017-09-10 11:38:38', null, null, null);
 INSERT INTO vend_permission VALUES ('87', '84', 'qrcodeattend:dels', '二维码关注批量删除', '2017-09-10 11:38:46', '2017-09-10 11:38:46', null, null, null);
 INSERT INTO vend_permission VALUES ('88', '20', 'account:draw', '提现', '2017-09-10 11:48:25', '2017-09-10 11:48:25', null, null, null);
+INSERT INTO vend_permission VALUES ('90', '84', 'qrcodeattend:qrcodeattends', '二维码关注列表', '2017-09-11 14:03:07', '2017-09-11 14:03:07', null, null, null);
+INSERT INTO vend_permission VALUES ('91', '73', 'user:addpermission', '用户权限添加', '2017-09-12 14:16:25', '2017-09-12 14:16:25', null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_qrcode_attend`
@@ -600,8 +629,8 @@ CREATE TABLE `vend_role` (
 -- Records of vend_role
 -- ----------------------------
 INSERT INTO vend_role VALUES ('1', '0', '开发者后台', '最高权限', '2017-08-24 13:33:16', '2017-08-24 13:33:19', '1,2,3,4,5,6,25,7,8,9,10,11,12,13,14,15,16,17,18,29,19,20,21,22,23,24,28,26,27', null, '1', null, null, null);
-INSERT INTO vend_role VALUES ('2', '1', '总后台', '客户总权限用户', '2017-08-22 14:33:17', '2017-08-22 14:33:17', '2,3,4,5,6,25,7,8,10,11,13,14,17,18,19,20,21,22,23,24,28,26,27', null, '1', null, null, null);
-INSERT INTO vend_role VALUES ('3', '2', '代理后台', '代理总后台管理一部分商户', '2017-08-22 14:33:44', '2017-08-22 14:33:44', '3,4,5,6,25', null, '1', null, null, null);
+INSERT INTO vend_role VALUES ('2', '1', '总后台', '客户总权限用户', '2017-08-22 14:33:17', '2017-08-22 14:33:17', '2,3,4,5,6,25,10,11,13,14,17,18,29,19,20,21,22,23,24,28,26,27', null, '1', null, null, null);
+INSERT INTO vend_role VALUES ('3', '2', '代理后台', '代理总后台管理一部分商户', '2017-08-22 14:33:44', '2017-08-22 14:33:44', '2,3,4,5,6,25,9,10,11,13,14,17,18,19,20,21,23,24,26,27', null, '1', null, null, null);
 INSERT INTO vend_role VALUES ('4', '3', '商家', '普通商户', '2017-08-22 14:33:58', '2017-08-22 14:33:58', null, null, '1', null, null, null);
 INSERT INTO vend_role VALUES ('5', '4', '消费用户', '利用客户端购买商品的消费用户', '2017-08-22 14:34:25', '2017-08-22 14:34:25', null, null, '1', null, null, null);
 
@@ -620,7 +649,7 @@ CREATE TABLE `vend_role_permission` (
   `extend3` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_role_permission` (`role_id`,`permission_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=387 DEFAULT CHARSET=utf8 COMMENT='角色权限对照表';
+) ENGINE=InnoDB AUTO_INCREMENT=559 DEFAULT CHARSET=utf8 COMMENT='角色权限对照表';
 
 -- ----------------------------
 -- Records of vend_role_permission
@@ -675,11 +704,6 @@ INSERT INTO vend_role_permission VALUES ('168', '1', '81', '2017-09-04 19:32:41'
 INSERT INTO vend_role_permission VALUES ('169', '1', '82', '2017-09-04 19:32:41', '2017-09-04 19:32:41', null, null, null);
 INSERT INTO vend_role_permission VALUES ('170', '1', '83', '2017-09-04 19:32:41', '2017-09-04 19:32:41', null, null, null);
 INSERT INTO vend_role_permission VALUES ('303', '2', '16', '2017-09-05 13:43:01', '2017-09-05 13:43:01', null, null, null);
-INSERT INTO vend_role_permission VALUES ('304', '2', '41', '2017-09-05 13:43:01', '2017-09-05 13:43:01', null, null, null);
-INSERT INTO vend_role_permission VALUES ('305', '2', '42', '2017-09-05 13:43:01', '2017-09-05 13:43:01', null, null, null);
-INSERT INTO vend_role_permission VALUES ('306', '2', '43', '2017-09-05 13:43:01', '2017-09-05 13:43:01', null, null, null);
-INSERT INTO vend_role_permission VALUES ('307', '2', '44', '2017-09-05 13:43:01', '2017-09-05 13:43:01', null, null, null);
-INSERT INTO vend_role_permission VALUES ('308', '2', '45', '2017-09-05 13:43:01', '2017-09-05 13:43:01', null, null, null);
 INSERT INTO vend_role_permission VALUES ('309', '1', '18', '2017-09-08 14:27:02', '2017-09-08 14:27:02', null, null, null);
 INSERT INTO vend_role_permission VALUES ('310', '1', '51', '2017-09-08 14:27:02', '2017-09-08 14:27:02', null, null, null);
 INSERT INTO vend_role_permission VALUES ('312', '1', '15', '2017-09-08 16:09:23', '2017-09-08 16:09:23', null, null, null);
@@ -706,55 +730,124 @@ INSERT INTO vend_role_permission VALUES ('333', '1', '64', '2017-09-10 11:52:00'
 INSERT INTO vend_role_permission VALUES ('334', '1', '65', '2017-09-10 11:52:00', '2017-09-10 11:52:00', null, null, null);
 INSERT INTO vend_role_permission VALUES ('335', '1', '88', '2017-09-10 11:52:00', '2017-09-10 11:52:00', null, null, null);
 INSERT INTO vend_role_permission VALUES ('336', '2', '12', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
-INSERT INTO vend_role_permission VALUES ('337', '2', '21', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
-INSERT INTO vend_role_permission VALUES ('338', '2', '22', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
-INSERT INTO vend_role_permission VALUES ('339', '2', '23', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
-INSERT INTO vend_role_permission VALUES ('340', '2', '24', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
-INSERT INTO vend_role_permission VALUES ('341', '2', '30', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
 INSERT INTO vend_role_permission VALUES ('342', '2', '13', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
-INSERT INTO vend_role_permission VALUES ('343', '2', '25', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
-INSERT INTO vend_role_permission VALUES ('344', '2', '26', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
-INSERT INTO vend_role_permission VALUES ('345', '2', '27', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
-INSERT INTO vend_role_permission VALUES ('346', '2', '28', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
-INSERT INTO vend_role_permission VALUES ('347', '2', '29', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
 INSERT INTO vend_role_permission VALUES ('348', '2', '19', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
 INSERT INTO vend_role_permission VALUES ('349', '2', '73', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
 INSERT INTO vend_role_permission VALUES ('351', '2', '18', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
 INSERT INTO vend_role_permission VALUES ('352', '2', '84', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
 INSERT INTO vend_role_permission VALUES ('353', '2', '20', '2017-09-10 11:52:40', '2017-09-10 11:52:40', null, null, null);
-INSERT INTO vend_role_permission VALUES ('354', '2', '51', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('355', '2', '52', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('356', '2', '53', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('357', '2', '54', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('358', '2', '55', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('359', '2', '56', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('360', '2', '57', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('361', '2', '58', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('362', '2', '59', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('363', '2', '60', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
 INSERT INTO vend_role_permission VALUES ('364', '2', '61', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
 INSERT INTO vend_role_permission VALUES ('365', '2', '62', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
 INSERT INTO vend_role_permission VALUES ('366', '2', '63', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
 INSERT INTO vend_role_permission VALUES ('367', '2', '64', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
 INSERT INTO vend_role_permission VALUES ('368', '2', '65', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('369', '2', '88', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('370', '2', '74', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('371', '2', '75', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('372', '2', '76', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('373', '2', '77', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('374', '2', '78', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('375', '2', '85', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('376', '2', '86', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
-INSERT INTO vend_role_permission VALUES ('377', '2', '87', '2017-09-10 11:53:04', '2017-09-10 11:53:04', null, null, null);
 INSERT INTO vend_role_permission VALUES ('378', '2', '79', '2017-09-10 14:05:09', '2017-09-10 14:05:09', null, null, null);
-INSERT INTO vend_role_permission VALUES ('379', '2', '80', '2017-09-10 14:05:09', '2017-09-10 14:05:09', null, null, null);
-INSERT INTO vend_role_permission VALUES ('380', '2', '81', '2017-09-10 14:05:09', '2017-09-10 14:05:09', null, null, null);
-INSERT INTO vend_role_permission VALUES ('381', '2', '82', '2017-09-10 14:05:09', '2017-09-10 14:05:09', null, null, null);
-INSERT INTO vend_role_permission VALUES ('382', '2', '83', '2017-09-10 14:05:09', '2017-09-10 14:05:09', null, null, null);
 INSERT INTO vend_role_permission VALUES ('383', '1', '1', '2017-09-10 16:05:30', '2017-09-10 16:05:30', null, null, null);
 INSERT INTO vend_role_permission VALUES ('384', '1', '12', '2017-09-10 16:05:30', '2017-09-10 16:05:30', null, null, null);
 INSERT INTO vend_role_permission VALUES ('385', '1', '22', '2017-09-10 16:05:30', '2017-09-10 16:05:30', null, null, null);
 INSERT INTO vend_role_permission VALUES ('386', '1', '23', '2017-09-10 16:05:30', '2017-09-10 16:05:30', null, null, null);
+INSERT INTO vend_role_permission VALUES ('397', '3', '61', '2017-09-11 14:01:20', '2017-09-11 14:01:20', null, null, null);
+INSERT INTO vend_role_permission VALUES ('398', '3', '88', '2017-09-11 14:01:20', '2017-09-11 14:01:20', null, null, null);
+INSERT INTO vend_role_permission VALUES ('399', '3', '73', '2017-09-11 14:01:20', '2017-09-11 14:01:20', null, null, null);
+INSERT INTO vend_role_permission VALUES ('405', '3', '79', '2017-09-11 14:01:20', '2017-09-11 14:01:20', null, null, null);
+INSERT INTO vend_role_permission VALUES ('410', '1', '90', '2017-09-11 15:28:15', '2017-09-11 15:28:15', null, null, null);
+INSERT INTO vend_role_permission VALUES ('411', '3', '12', '2017-09-11 16:03:08', '2017-09-11 16:03:08', null, null, null);
+INSERT INTO vend_role_permission VALUES ('412', '3', '13', '2017-09-11 16:03:08', '2017-09-11 16:03:08', null, null, null);
+INSERT INTO vend_role_permission VALUES ('413', '3', '16', '2017-09-11 16:03:08', '2017-09-11 16:03:08', null, null, null);
+INSERT INTO vend_role_permission VALUES ('414', '3', '18', '2017-09-11 16:03:08', '2017-09-11 16:03:08', null, null, null);
+INSERT INTO vend_role_permission VALUES ('415', '3', '19', '2017-09-11 16:03:08', '2017-09-11 16:03:08', null, null, null);
+INSERT INTO vend_role_permission VALUES ('416', '3', '20', '2017-09-11 16:03:08', '2017-09-11 16:03:08', null, null, null);
+INSERT INTO vend_role_permission VALUES ('417', '4', '12', '2017-09-11 16:06:31', '2017-09-11 16:06:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('418', '4', '21', '2017-09-11 16:06:31', '2017-09-11 16:06:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('419', '4', '13', '2017-09-11 16:06:31', '2017-09-11 16:06:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('420', '4', '16', '2017-09-11 16:06:31', '2017-09-11 16:06:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('421', '4', '18', '2017-09-11 16:06:31', '2017-09-11 16:06:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('422', '4', '19', '2017-09-11 16:06:31', '2017-09-11 16:06:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('423', '4', '20', '2017-09-11 16:06:31', '2017-09-11 16:06:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('424', '4', '61', '2017-09-11 16:06:31', '2017-09-11 16:06:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('425', '4', '88', '2017-09-11 16:06:31', '2017-09-11 16:06:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('426', '4', '73', '2017-09-11 16:06:31', '2017-09-11 16:06:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('432', '4', '79', '2017-09-11 16:06:31', '2017-09-11 16:06:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('433', '4', '80', '2017-09-11 16:06:31', '2017-09-11 16:06:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('434', '4', '81', '2017-09-11 16:06:31', '2017-09-11 16:06:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('435', '4', '82', '2017-09-11 16:06:31', '2017-09-11 16:06:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('436', '4', '83', '2017-09-11 16:06:31', '2017-09-11 16:06:31', null, null, null);
+INSERT INTO vend_role_permission VALUES ('437', '4', '25', '2017-09-11 16:08:00', '2017-09-11 16:08:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('438', '4', '26', '2017-09-11 16:08:00', '2017-09-11 16:08:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('444', '4', '56', '2017-09-11 16:08:00', '2017-09-11 16:08:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('445', '4', '57', '2017-09-11 16:08:00', '2017-09-11 16:08:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('446', '1', '91', '2017-09-12 14:16:40', '2017-09-12 14:16:40', null, null, null);
+INSERT INTO vend_role_permission VALUES ('447', '2', '1', '2017-09-12 14:18:54', '2017-09-12 14:18:54', null, null, null);
+INSERT INTO vend_role_permission VALUES ('489', '2', '21', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('490', '2', '22', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('491', '2', '23', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('492', '2', '24', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('493', '2', '30', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('494', '2', '25', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('495', '2', '26', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('496', '2', '27', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('497', '2', '28', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('498', '2', '29', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('499', '2', '41', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('500', '2', '42', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('501', '2', '43', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('502', '2', '44', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('503', '2', '45', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('504', '2', '51', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('505', '2', '52', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('506', '2', '53', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('507', '2', '54', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('508', '2', '55', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('509', '2', '56', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('510', '2', '57', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('511', '2', '58', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('512', '2', '59', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('513', '2', '60', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('514', '2', '88', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('515', '2', '74', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('516', '2', '75', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('517', '2', '76', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('518', '2', '77', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('519', '2', '78', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('520', '2', '91', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('521', '2', '80', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('522', '2', '81', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('523', '2', '82', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('524', '2', '83', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('525', '2', '85', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('526', '2', '86', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('527', '2', '87', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('528', '2', '90', '2017-09-12 14:26:03', '2017-09-12 14:26:03', null, null, null);
+INSERT INTO vend_role_permission VALUES ('529', '3', '1', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('530', '3', '21', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('531', '3', '25', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('532', '3', '26', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('533', '3', '41', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('534', '3', '51', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('535', '3', '56', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('536', '3', '57', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('537', '3', '58', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('538', '3', '59', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('539', '3', '60', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('540', '3', '74', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('541', '3', '75', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('542', '3', '76', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('543', '3', '77', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('544', '3', '78', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('545', '3', '91', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('546', '3', '80', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('547', '3', '81', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('548', '3', '82', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('549', '3', '83', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('550', '3', '84', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('551', '3', '85', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('552', '3', '86', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('553', '3', '87', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('554', '3', '90', '2017-09-12 14:27:00', '2017-09-12 14:27:00', null, null, null);
+INSERT INTO vend_role_permission VALUES ('555', '4', '1', '2017-09-12 14:27:33', '2017-09-12 14:27:33', null, null, null);
+INSERT INTO vend_role_permission VALUES ('556', '4', '84', '2017-09-12 14:27:33', '2017-09-12 14:27:33', null, null, null);
+INSERT INTO vend_role_permission VALUES ('557', '4', '85', '2017-09-12 14:27:33', '2017-09-12 14:27:33', null, null, null);
+INSERT INTO vend_role_permission VALUES ('558', '4', '90', '2017-09-12 14:27:33', '2017-09-12 14:27:33', null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_shop_qrcode`
@@ -819,9 +912,13 @@ CREATE TABLE `vend_user` (
   `linkman` varchar(100) DEFAULT NULL COMMENT '联系人',
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
+  `permission_list` varchar(400) DEFAULT NULL COMMENT '权限列表',
   `extend1` varchar(150) DEFAULT NULL,
   `extend2` varchar(100) DEFAULT NULL,
   `extend3` varchar(100) DEFAULT NULL,
+  `extend4` varchar(150) DEFAULT NULL,
+  `extend5` varchar(100) DEFAULT NULL,
+  `extend6` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`usercode`),
   UNIQUE KEY `idx_username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息表';
@@ -829,6 +926,8 @@ CREATE TABLE `vend_user` (
 -- ----------------------------
 -- Records of vend_user
 -- ----------------------------
-INSERT INTO vend_user VALUES ('VM000', null, 'superuser', '3fcc1919615533f1', '1', '18640214798', '234', '4564', '2017-08-22 16:12:39', '2017-08-22 16:12:39', '1', null, null);
-INSERT INTO vend_user VALUES ('VM001', 'VM000', 'admin', '3fcc1919615533f1', '2', null, null, null, '2017-09-10 11:55:35', '2017-09-10 11:55:38', null, null, null);
-INSERT INTO vend_user VALUES ('VM2017083115230747', null, 'wujiyuan', '3fcc1919615533f1', '5', '18640214798', 'Zhengzhou', null, '2017-08-31 15:23:07', '2017-08-31 15:23:07', '1', '20', null);
+INSERT INTO vend_user VALUES ('VM000', null, 'system', '3fcc1919615533f1', '1', '18640214798', null, '4564', '2017-08-22 16:12:39', '2017-08-22 16:12:39', null, '1', null, null, null, null, null);
+INSERT INTO vend_user VALUES ('VM001', 'VM000', 'admin', '3fcc1919615533f1', '2', null, null, null, '2017-09-10 11:55:35', '2017-09-10 11:55:38', null, null, null, null, null, null, null);
+INSERT INTO vend_user VALUES ('VM2017083115230747', null, 'wujiyuan', '3fcc1919615533f1', '5', '18640214798', 'Zhengzhou', null, '2017-08-31 15:23:07', '2017-08-31 15:23:07', null, '1', '20', null, null, null, null);
+INSERT INTO vend_user VALUES ('VM2017091210521279', 'VM001', 'dl1', '3fcc1919615533f1', '3', '18640214798', '32234', '23423', '2017-09-12 10:52:12', '2017-09-12 10:52:12', '1,12,21,13,25,26', null, null, null, null, null, null);
+INSERT INTO vend_user VALUES ('VM2017091211292506', 'VM001', 'dl2', '3fcc1919615533f1', '3', '18934572345', null, '2342', '2017-09-12 11:29:25', '2017-09-12 11:29:25', null, null, null, null, null, null, null);

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import base.util.DateUtil;
@@ -117,6 +116,14 @@ public class VendUserServiceImpl implements VendUserService {
 	public VendUser selectByUsername(String username){
 		return vendUserMapper.selectByUsername(username);
 	}
+	/**
+	 * 按照地区查找用户
+	 * @param arealist
+	 * @return
+	 */
+	public List<VendUser> selectByArealist(String arealist[]){
+		return vendUserMapper.selectByArealist(arealist);
+	}
 	 /**
      * 按照用户名得到角色信息
      * @param userName
@@ -131,7 +138,6 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @param userName
 	 * @return
 	 */
- 	@CachePut(value="userCache")
 	@Override
 	public Set<String> getPermissions(String username){
 		Set<String> set1=vendUserMapper.getPermissions(username);

@@ -1,6 +1,7 @@
 package vend.controller;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,9 +25,11 @@ import base.util.Page;
 import vend.entity.CodeLibrary;
 import vend.entity.UserCoupon;
 import vend.entity.VendCoupon;
+import vend.entity.VendUser;
 import vend.service.CodeLibraryService;
 import vend.service.UserCouponService;
 import vend.service.VendCouponService;
+import vend.service.VendUserService;
 
 @Controller
 @RequestMapping("/coupon")
@@ -35,6 +38,8 @@ public class VendCouponController{
 	
 	@Autowired
 	VendCouponService vendCouponService;
+	@Autowired
+	VendUserService vendUserService;
 	@Autowired
 	UserCouponService userCouponService;
 	@Autowired
@@ -71,21 +76,10 @@ public class VendCouponController{
 	 * @throws IOException
 	 */
 	@RequestMapping(value="/jusecoupons",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
-	public @ResponseBody List<VendCoupon> getuseJson(HttpServletRequest request) throws IOException {
+	public @ResponseBody List<UserCoupon> getuseJson(HttpServletRequest request) throws IOException {
 		String usercode=request.getParameter("usercode");
 		List<UserCoupon> userCoupons = userCouponService.findByUsercode(usercode);
-		List<VendCoupon> list=new ArrayList<VendCoupon>();
-		for(UserCoupon userCoupon:userCoupons){
-			VendCoupon vendCoupon=vendCouponService.getOne(userCoupon.getCouponId());
-			if(vendCoupon!=null){
-				list.add(vendCoupon);
-			}
-		}
-		for(VendCoupon vendCoupon:list){
-			vendCoupon.setExtend2(DateUtil.format(vendCoupon.getStartTime()));
-			vendCoupon.setExtend3(DateUtil.format(vendCoupon.getEndTime()));
-		}
-		return list;
+		return userCoupons;
 	}
 	/**
 	 * 得到优惠券数据
@@ -140,6 +134,7 @@ public class VendCouponController{
     		newareaIds+=str+",";
     	}
     	vendCoupon.setAreaId(newareaIds);
+    	vendCoupon.setValid("0");
     	vendCouponService.insertVendCoupon(vendCoupon);
     	return "redirect:coupons";
 	}
@@ -206,9 +201,74 @@ public class VendCouponController{
     		newareaIds+=str+",";
     	}
     	vendCoupon.setAreaId(newareaIds);
+        vendCoupon.setValid("0");
     	vendCouponService.editVendCoupon(vendCoupon);
 		return "redirect:coupons";
 	}
+	/**
+	 * 投放优惠券
+	 * @param id
+	 * @return
+	 */
+    @RequestMapping(value="/{id}/puton")
+ 	public String putOn(@PathVariable Integer id){
+    	VendCoupon vendCoupon=vendCouponService.getOne(id);
+    	vendCoupon.setValid("1");
+    	int isOk=vendCouponService.editVendCoupon(vendCoupon);
+    	
+    	//投放后该优惠券适用地区自动获得该优惠券
+    	if(isOk==1){
+    		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+    		String arealist=vendCoupon.getAreaId();
+    		if(arealist!=null){
+    			String arealistArray[]=Function.stringSpilit(arealist, ",");
+    			List<VendUser> vendUsers=vendUserService.selectByArealist(arealistArray);
+    			for(VendUser vendUser:vendUsers){
+    				if(vendUser!=null){
+    					if(vendUser.getUsercode()!=null){
+    						UserCoupon userCoupon=userCouponService.findByUsercodeLimitCouponId(vendUser.getUsercode(), id);
+    						if(userCoupon!=null){
+            					userCoupon.setCouponId(id);
+            					userCoupon.setCreateTime(createTime);
+            					userCoupon.setExtend1("1");
+            					userCoupon.setExtend2(DateUtil.formatTime(vendCoupon.getStartTime()));//开始时间
+            					userCoupon.setExtend3(DateUtil.formatTime(vendCoupon.getEndTime()));//结束时间
+            					userCoupon.setExtend4(vendCoupon.getCouponScale().toString());//优惠金额
+            					userCoupon.setExtend5(vendCoupon.getCouponName());//优惠券名
+            					userCoupon.setExtend6(vendCoupon.getCouponInfo());//优惠券信息
+            					userCouponService.editUserCoupon(userCoupon);
+    						}else{
+    							userCoupon=new UserCoupon();
+    							userCoupon.setUsercode(vendUser.getUsercode());
+    							userCoupon.setCouponId(id);
+            					userCoupon.setCreateTime(createTime);
+            					userCoupon.setExtend1("1");
+            					userCoupon.setExtend2(DateUtil.formatTime(vendCoupon.getStartTime()));//开始时间
+            					userCoupon.setExtend3(DateUtil.formatTime(vendCoupon.getEndTime()));//结束时间
+            					userCoupon.setExtend4(vendCoupon.getCouponScale().toString());//优惠金额
+            					userCoupon.setExtend5(vendCoupon.getCouponName());//优惠券名
+            					userCoupon.setExtend6(vendCoupon.getCouponInfo());//优惠券信息
+            					userCouponService.insertUserCoupon(userCoupon);
+    						}
+    					}
+    				}
+    			}
+    		}
+    	}
+ 		return "redirect:/coupon/coupons";
+ 	}
+    /**
+	 * 收回优惠券
+	 * @param id
+	 * @return
+	 */
+    @RequestMapping(value="/{id}/revoke")
+ 	public String revoke(@PathVariable Integer id){
+    	VendCoupon vendCoupon=vendCouponService.getOne(id);
+    	vendCoupon.setValid("0");
+    	vendCouponService.editVendCoupon(vendCoupon);
+ 		return "redirect:/coupon/coupons";
+ 	}
     /**
      * 删除优惠券信息
      * @param user

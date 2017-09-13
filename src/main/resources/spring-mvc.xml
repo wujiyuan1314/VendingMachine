@@ -19,9 +19,9 @@
 	<context:component-scan base-package="vend/controller" />
 
 	<!--1.开启springmvc注解模式 a.自动注册DefaultAnnotationHandlerMapping,AnnotationMethodHandlerAdapter 
-		b.默认提供一系列的功能:数据绑定，数字和日期的format@NumberFormat,@DateTimeFormat c:xml,json的默认读写支持 -->
-		<context:component-scan base-package="vend.controller.VendGoodsController" />  
-        <context:annotation-config /> 
+		b.默认提供一系列的功能:数据绑定，数字和日期的format@NumberFormat,@DateTimeFormat c:xml,json的默认读写支持
+		<context:component-scan base-package="vend.controller" />  
+        <context:annotation-config />  -->
 	    <mvc:annotation-driven />
 
 	<!-- 2.访问静态资源 <mvc:resources location="/resources/" mapping="/resources//**"/> -->
@@ -29,15 +29,27 @@
 	<!--2.静态资源默认servlet配置 -->
 	<!-- 1).加入对静态资源处理：js,gif,png 2).允许使用 "/" 做整体映射 -->
 	<mvc:default-servlet-handler />
+	
+	<!-- 3.ehcache缓存配置管理 -->
+    <!-- 启用缓存注解开关 -->
+    <cache:annotation-driven cache-manager="cacheManager"/>
+    
+    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+      <property name="configLocation" value="classpath:ehcache.xml"/>
+    </bean>
 
-	<!--3.视图模式配置，定义跳转文件的前缀和后缀 -->
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+      <property name="cacheManager" ref="ehcache"/>
+    </bean>
+
+	<!--4.视图模式配置，定义跳转文件的前缀和后缀 -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 
-	<!--4.文件上传 -->
+	<!--5.文件上传 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 设置上传文件的最大尺寸为300MB -->
@@ -46,7 +58,7 @@
         <property name="defaultEncoding" value="UTF-8"></property>
 	</bean>
 	
-	<!-- 5.数据校验 -->
+	<!-- 6.数据校验 -->
     <!-- 国际化配置 -->    
      <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
      <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -65,11 +77,11 @@
          <!-- 这里配置将使用上面国际化配置的messageSource -->
          <property name="validationMessageSource" ref="messageSource" />
      </bean> 
-    <!-- 6.Shiro的spring拦截器开启-->
+    <!-- 7.Shiro的spring拦截器开启-->
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
 	        depends-on="lifecycleBeanPostProcessor" />
 	        
-	<!-- 7.定时任务的配置-->
+	<!-- 8.定时任务的配置-->
 	<!-- 第一步、Scheduler的配置。 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 
      <bean id="scheduler" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
           <property name="triggers">
@@ -101,7 +113,7 @@
      </bean> -->
      <!-- 第四步、业务类的配置 
     <bean id="orderJob" class="com.ylsoft.core.csm.util.OrderTask"/>-->
-     <!-- 8.用户没有权限时跳转的页面和用户没登录时跳转的页面 -->
+     <!-- 9.用户没有权限时跳转的页面和用户没登录时跳转的页面 -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
 	    <property name="exceptionMappings">  
 	        <props>  
@@ -114,15 +126,4 @@
 	        </props>  
 	    </property>  
     </bean>
-    <!-- 9.ehcache缓存配置管理 -->
-    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-      <property name="configLocation" value="classpath:ehcache.xml"/>
-    </bean>
-
-    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
-      <property name="cacheManager" ref="ehcache"/>
-    </bean>
-
-  <!-- 启用缓存注解开关 -->
-  <cache:annotation-driven cache-manager="cacheManager"/>
 </beans>
