@@ -62,5 +62,10 @@ public interface UserCouponService {
 	 * @param couponId
 	 */
 	UserCoupon findByUsercodeLimitCouponId(String usercode,Integer couponId);
+	/**
+	 * 按照当前时间查找
+	 * @return
+	 */
+	List<UserCoupon> findByEndtime(String CurrentDate);
 	
 }

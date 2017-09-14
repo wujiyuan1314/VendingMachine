@@ -26,8 +26,10 @@ import base.util.Const;
 import base.util.DateUtil;
 import base.util.Function;
 import vend.entity.UserCoupon;
+import vend.entity.VendAccount;
 import vend.entity.VendUser;
 import vend.service.UserCouponService;
+import vend.service.VendAccountService;
 import vend.service.VendUserService;
 
 @Controller
@@ -35,6 +37,8 @@ public class LoginController extends LogoutFilter{
 	public static Logger logger = Logger.getLogger(LoginController.class);
 	@Autowired
 	VendUserService vendUserService;
+	@Autowired
+	VendAccountService vendAccountService;
 	@Autowired
 	UserCouponService userCouponService;
 	@RequestMapping(value="/login",method=RequestMethod.GET)
@@ -171,6 +175,9 @@ public class LoginController extends LogoutFilter{
     		resultMap.put("msg", "您还没注册,请先进行注册");
     	}else{
     		List<UserCoupon> userCoupons=userCouponService.findByUsercode(venduser.getUsercode());
+    		VendAccount vendAccount = vendAccountService.getOne(venduser.getUsercode());
+    		//List<CodeLibrary> ordertypes =codeLibraryService.selectByCodeNo("ORDERTYPE");
+    		resultMap.put("vendAccount", vendAccount);
     		resultMap.put("userCoupons", userCoupons);
     		resultMap.put("usercode", venduser.getUsercode());
     		resultMap.put("success", "1");

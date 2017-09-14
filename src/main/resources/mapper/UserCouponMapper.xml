@@ -180,11 +180,18 @@
     from user_coupon
     where extend1=1  and usercode = #{usercode,jdbcType=VARCHAR}
   </select>
-  <select id="findByUsercodeLimitCouponId" resultMap="BaseResultMap">
+  <select id="findByUsercodeLimitCouponId" resultMap="BaseResultMap" parameterType="java.lang.String">
     select 
     <include refid="Base_Column_List" />
     from user_coupon
-    where extend1=1 and coupon_id=#{couponId,jdbcType=INTEGER} and usercode = #{usercode,jdbcType=VARCHAR}
+      where extend1=1 and coupon_id=#{couponId,jdbcType=INTEGER} and usercode = #{usercode,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findByEndtime" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_coupon
+    where extend1=1 and coupon_id=2 and extend3 <![CDATA[<]]> #{extend3,jdbcType=VARCHAR}
   </select>
   <!-- 批量添加 -->
   <insert id="insertBatch" parameterType="java.util.List">

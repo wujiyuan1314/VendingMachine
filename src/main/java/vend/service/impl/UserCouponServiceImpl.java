@@ -97,4 +97,11 @@ public class UserCouponServiceImpl implements UserCouponService {
 	public UserCoupon findByUsercodeLimitCouponId(String usercode,Integer couponId){
 		return userCouponMapper.findByUsercodeLimitCouponId(usercode, couponId);
 	}
+	/**
+	 * 按照当前时间查找
+	 * @return
+	 */
+	public List<UserCoupon> findByEndtime(String CurrentDate){
+		return userCouponMapper.findByEndtime(CurrentDate);
+	}
 }

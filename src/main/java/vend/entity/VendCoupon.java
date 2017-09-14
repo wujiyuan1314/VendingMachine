@@ -20,15 +20,15 @@ public class VendCoupon {
     private Integer goodsId;
 
     private String areaId;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startTime;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
 
     private String valid;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    
     private Date createTime;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    
     private Date updateTime;
 
     private String extend1;

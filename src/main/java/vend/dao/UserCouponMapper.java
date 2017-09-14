@@ -33,4 +33,6 @@ public interface UserCouponMapper {
     List<UserCoupon> findByUsercode(String usercode);
     
     UserCoupon findByUsercodeLimitCouponId(@Param("usercode") String usercode,@Param("couponId") Integer couponId);
+    
+    List<UserCoupon> findByEndtime(String CurrentDate);
 }

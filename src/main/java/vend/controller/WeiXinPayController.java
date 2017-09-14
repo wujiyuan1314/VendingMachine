@@ -242,7 +242,7 @@ public class WeiXinPayController {
 				json.put("msg", "剩余的使用余额支付");
 			}else if(isuseye.equals("0")){
 				json.put("success", 3);
-				json.put("lastamount", (price*100-couponAmount*100));
+				json.put("lastamount", (price-couponAmount));
 				json.put("msg", "剩余的使用微信在线支付");
 			}
 		}
@@ -463,7 +463,7 @@ public class WeiXinPayController {
 				vendOrder.setOrderstate("1");
 				vendOrderService.editVendOrder(vendOrder);
 			}
-			if(!usercouponId.equals("")){
+			if(usercouponId!=null||!usercouponId.equals("")){
 				UserCoupon userCoupon=userCouponService.getOne(Function.getInt(usercouponId, 0));
 				userCoupon.setExtend1("0");//优惠券使用后设置为无效
 				userCouponService.editUserCoupon(userCoupon);
@@ -476,7 +476,7 @@ public class WeiXinPayController {
 			double orderamount=vendOrder.getAmount().doubleValue();//订单金额
 			double zamount=0.00;//总后台分配金额
 			double lrbl1=0.00;
-			if(vendUser.getExtend2()!=null){
+			if(vendUser!=null&&vendUser.getExtend2()!=null){
 				lrbl1=Double.valueOf(vendUser.getExtend2())/100;
 			}
 			double amountnow1=orderamount*lrbl1;
@@ -500,7 +500,7 @@ public class WeiXinPayController {
 				VendAccount pendAccount=vendAccountService.getOne(vendUser.getParentUsercode());//代理用户账户
 				VendUser pvendUser=vendUserService.getOne(pendAccount.getUsercode());
 				double lrbl2=0.00;
-				if(pvendUser.getExtend2()!=null){
+				if(pvendUser!=null&&pvendUser.getExtend2()!=null){
 					lrbl2=Double.valueOf(pvendUser.getExtend2())/100;
 				}
 				double amountnow2=orderamount*lrbl2;

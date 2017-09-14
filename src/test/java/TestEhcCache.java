@@ -17,16 +17,17 @@ public class TestEhcCache {
 
         // Create a data element
         final Element putGreeting = new Element(key, "Hell, World!");
-
+        System.out.println(cache.getSize());
         // Put the element into the data store
         cache.put(putGreeting);
-
+         
+        System.out.println(cache.getSize());
         // Retrieve the data element
-        final Element getGreeting = cache.get("greeting");
-        cache.flush();
+        //final Element getGreeting = cache.get("vendGoods");
+        //cache.flush();
 
         // Print the value
-        System.out.println(getGreeting.getObjectValue());
+        //System.out.println(getGreeting.getObjectValue());
 	}
 
 }
