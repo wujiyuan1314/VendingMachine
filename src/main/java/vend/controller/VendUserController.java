@@ -71,10 +71,12 @@ public class VendUserController{
 		logger.info(vendUser.toString());
 		HttpSession session=request.getSession();
     	VendUser user=(VendUser)session.getAttribute("vendUser");
-		if(user!=null){//上级账号
-			vendUser.setParentUsercode(user.getUsercode());;
+    	String userlist="";
+		if(user!=null&&user.getUsercode()!=null){//上级账号
+			userlist=vendUserService.getNextUsers(user.getUsercode());
 		}
-		List<VendUser> vendUsers = vendUserService.listVendUser(vendUser, page);
+		String usersArray[]=Function.stringSpilit(userlist, ",");
+		List<VendUser> vendUsers = vendUserService.listVendUser(vendUser,usersArray,page);
 		model.addAttribute("vendUsers",vendUsers);
 		return "manage/user/user_list";
 	}

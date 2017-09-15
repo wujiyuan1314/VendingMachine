@@ -2,6 +2,7 @@ package vend.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import base.util.Function;
 import base.util.Page;
 import vend.entity.CodeLibrary;
 import vend.entity.VendShopQrcode;
+import vend.entity.VendUser;
 import vend.service.CodeLibraryService;
 import vend.service.VendShopQrcodeService;
 
@@ -48,6 +50,11 @@ public class VendShopQrcodeController{
 		}
 		logger.info(page.toString());
 		logger.info(vendShopQrcode.toString());
+		HttpSession session=request.getSession();
+		VendUser user=(VendUser)session.getAttribute("vendUser");
+		if(user!=null&&user.getRoleId()==4){
+			vendShopQrcode.setUsercode(user.getUsercode());	
+		}
 		List<CodeLibrary> qrcodetypes=codeLibraryService.selectByCodeNo("QRCODETYPE");
 		model.addAttribute("qrcodetypes", qrcodetypes);
 		List<VendShopQrcode> vendShopQrcodes = vendShopQrcodeService.listVendShopQrcode(vendShopQrcode, page);
@@ -85,6 +92,11 @@ public class VendShopQrcodeController{
     	if(br.hasErrors()){
     		return "manage/qrcode/qrcode_add";
     	}
+    	HttpSession session=request.getSession();
+		VendUser user=(VendUser)session.getAttribute("vendUser");
+		if(user!=null){
+			vendShopQrcode.setUsercode(user.getUsercode());	
+		}
     	vendShopQrcodeService.insertVendShopQrcode(vendShopQrcode);
     	return "redirect:qrcodes";
 	}

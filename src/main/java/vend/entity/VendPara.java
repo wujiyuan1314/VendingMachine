@@ -1,5 +1,7 @@
 package vend.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class VendPara {
     private Integer id;
 
@@ -22,7 +24,7 @@ public class VendPara {
     public void setId(Integer id) {
         this.id = id;
     }
-
+    @NotEmpty(message="系统参数代码不能为空")
     public String getParaCode() {
         return paraCode;
     }
@@ -30,7 +32,7 @@ public class VendPara {
     public void setParaCode(String paraCode) {
         this.paraCode = paraCode == null ? null : paraCode.trim();
     }
-
+    @NotEmpty(message="系统参数内容不能为空")
     public String getParaContent() {
         return paraContent;
     }

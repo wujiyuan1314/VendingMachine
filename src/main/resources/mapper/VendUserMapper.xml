@@ -252,8 +252,12 @@
   <select id="listVendUser" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List" />
-	from vend_user
+	from vend_user 
 	<where>
+	        usercode in
+	    <foreach item="item" collection="usersArray" open="(" separator="," close=")">  
+		    #{item}  
+		</foreach>
 		<if test="vendUser.username != null and !&quot;&quot;.equals(vendUser.username.trim())">
 			and username = #{vendUser.username}
 		</if>
@@ -269,20 +273,24 @@
 	</where>order by usercode limit #{page.dbIndex},#{page.dbNumber}
   </select>
   
-  <select id="countVendUser" resultType="int" parameterType="vend.entity.VendUser">
+  <select id="countVendUser" resultType="int">
  	select count(*) from vend_user
  	<where>
- 		<if test="username != null and !&quot;&quot;.equals(username.trim())">
-		  and username = #{username}
+ 	      usercode in
+	    <foreach item="item" collection="usersArray" open="(" separator="," close=")">  
+		  #{item}  
+		</foreach>
+ 		<if test="vendUser.username != null and !&quot;&quot;.equals(vendUser.username.trim())">
+		  and username = #{vendUser.username}
 	    </if>
-	    <if test="mobile != null and !&quot;&quot;.equals(mobile.trim())">
-		  and mobile = #{mobile}
+	    <if test="vendUser.mobile != null and !&quot;&quot;.equals(vendUser.mobile.trim())">
+		  and mobile = #{vendUser.mobile}
 	    </if>
-	    <if test="parentUsercode != null and !&quot;&quot;.equals(parentUsercode.trim())">
-			and parent_usercode = #{parentUsercode}
+	    <if test="vendUser.parentUsercode != null and !&quot;&quot;.equals(vendUser.parentUsercode.trim())">
+			and parent_usercode = #{vendUser.parentUsercode}
 		</if>
-	    <if test="roleId != null and !&quot;&quot;.equals(roleId.trim())">
-		  and role_id = #{roleId}
+	    <if test="vendUser.roleId != null and !&quot;&quot;.equals(vendUser.roleId.trim())">
+		  and role_id = #{vendUser.roleId}
 	    </if>
  	</where>
   </select>
@@ -321,6 +329,12 @@
 		 <foreach item="item" collection="array" open="(" separator="," close=")">  
 		  #{item}  
 		 </foreach>  
+	</select> 
+	<select id="selectByParentUsercode" resultMap="BaseResultMap" parameterType="java.lang.String">  
+		 select  
+		 <include refid="Base_Column_List" />  
+		 from vend_user 
+		 where  parent_usercode = #{parentUsercode,jdbcType=VARCHAR} 
 	</select> 
   <!-- 批量删除 -->
     <delete id="deleteBatch" parameterType="int">

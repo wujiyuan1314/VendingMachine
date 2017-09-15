@@ -3,9 +3,11 @@ package vend.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class VendCoupon {
@@ -67,6 +69,7 @@ public class VendCoupon {
         this.couponInfo = couponInfo == null ? null : couponInfo.trim();
     }
     @NotNull(message="优惠金额不能为空")
+    @DecimalMin("0")
     public BigDecimal getCouponScale() {
         return couponScale;
     }

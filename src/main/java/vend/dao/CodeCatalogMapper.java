@@ -20,7 +20,7 @@ public interface CodeCatalogMapper {
 
     int updateByPrimaryKey(CodeCatalog record);
  // 下面为自定义方法
- 	List<CodeCatalog> listCodeCatalog(@Param("codeCatalog") CodeCatalog bookInfo, @Param("page") Page page);
+ 	List<CodeCatalog> listCodeCatalog(@Param("codeCatalog") CodeCatalog codeCatalog, @Param("page") Page page);
  	
  	int countCodeCatalog(CodeCatalog codeCatalog);
 }

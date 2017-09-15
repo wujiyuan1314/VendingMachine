@@ -5,6 +5,7 @@
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
@@ -14,8 +15,9 @@
 	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 	http://www.springframework.org/schema/aop 
 	http://www.springframework.org/schema/aop/spring-aop.xsd
-	">
-	<!-- 引入属性文件 -->
+	http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+	<!-- 1.引入属性文件 -->
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
@@ -26,12 +28,12 @@
 			</list>
 		</property>
 	</bean>
-	
 	<import resource="spring-mybatis.xml"/>
     <import resource="spring-shiro.xml"/>
-	<!-- 定时任务，运行去掉
-	<import resource="spring-timer.xml"/>
-	 -->
+    <!-- spring自带定时器任务-->
+    <import resource="spring-timer.xml"/>
+	<!-- 定时任务quartz，运行去掉
+	<import resource="spring-quartz.xml"/>-->
     
     <context:component-scan base-package="vend/service" />
 	<aop:config proxy-target-class="true"></aop:config>

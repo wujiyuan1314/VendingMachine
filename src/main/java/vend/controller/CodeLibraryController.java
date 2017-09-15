@@ -29,7 +29,7 @@ public class CodeLibraryController {
 	
 	@Autowired
 	CodeLibraryService codeLibraryService;
-	@RequiresPermissions({"codeLibrary:list"})
+	@RequiresPermissions({"codeLibrary:codeLibrarys"})
 	@RequestMapping(value="/codeLibrarys")
 	public String listCodeLibrary(Model model, @ModelAttribute CodeLibrary CodeLibrary,HttpServletRequest request) {
 		List<CodeLibrary> codeLibrarys = codeLibraryService.listCodeLibrary(CodeLibrary);

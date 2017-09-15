@@ -1,4 +1,5 @@
 package vend.controller;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ import vend.service.CodeLibraryService;
 import vend.service.VendAdService;
 import vend.service.VendMachineService;
 import vend.service.VendShopQrcodeService;
+import vend.service.VendUserService;
 
 @Controller
 @RequestMapping("/machine")
@@ -38,11 +40,13 @@ public class VendMachineController{
 	@Autowired
 	VendAdService vendAdService;
 	@Autowired
+	VendUserService vendUserService;
+	@Autowired
 	VendShopQrcodeService vendShopQrcodeService;
 	@Autowired
 	CodeLibraryService codeLibraryService;
 	/**
-	 * 根据输入信息条件查询广告列表，并分页显示
+	 * 根据输入信息条件查询机器列表，并分页显示
 	 * @param model
 	 * @param vendMachine
 	 * @param page
@@ -68,7 +72,19 @@ public class VendMachineController{
 		List<CodeLibrary> usestatus=codeLibraryService.selectByCodeNo("USESTATUS");
 		model.addAttribute("usestatus", usestatus);
 		List<VendMachine> vendMachines = vendMachineService.listVendMachine(vendMachine, page);
-		model.addAttribute("vendMachines",vendMachines);
+		String userlist="";
+		if(user!=null&&user.getUsercode()!=null){//上级账号
+			userlist=vendUserService.getNextUsers(user.getUsercode());
+		}
+		List<VendMachine> vendMachines1=new ArrayList<VendMachine>();
+		if(userlist!=null){
+			for(VendMachine vendMachine1:vendMachines){
+				if(userlist.indexOf(vendMachine1.getUsercode())!=-1){
+					vendMachines1.add(vendMachine1);
+				}
+			}
+		}
+		model.addAttribute("vendMachines",vendMachines1);
 		return "manage/machine/machine_list";
 	}
 	/**
@@ -124,7 +140,7 @@ public class VendMachineController{
 		return "manage/machine/machine_detail"; 
 	}
 	/**
-	 * 跳转广告信息添加界面
+	 * 跳转机器信息添加界面
 	 * @param model
 	 * @return
 	 */
@@ -137,7 +153,7 @@ public class VendMachineController{
 		return "manage/machine/machine_add";
 	}
    /**
-    * 添加广告信息
+    * 添加机器信息
     * @param request
     * @param model
     * @param vendMachine
@@ -156,7 +172,7 @@ public class VendMachineController{
     	return "redirect:machines";
 	}
     /**
-	 * 跳转广告修改界面
+	 * 跳转机器修改界面
 	 * @param model
 	 * @return
 	 */
@@ -172,7 +188,7 @@ public class VendMachineController{
 		return "manage/machine/machine_edit";
 	}
 	/**
-	 * 修改广告信息
+	 * 修改机器信息
 	 * @param request
 	 * @param model
 	 * @param vendMachine
@@ -189,7 +205,7 @@ public class VendMachineController{
 		return "redirect:machines";
 	}
     /**
-     * 删除广告信息
+     * 删除机器信息
      * @param user
      * @param br
      * @return
@@ -201,7 +217,7 @@ public class VendMachineController{
  		return "redirect:/machine/machines";
  	}
     /**
-     * 批量删除广告信息
+     * 批量删除机器信息
      * @param ids
      * @return
      */

@@ -29,6 +29,7 @@ import vend.entity.VendUser;
 import vend.service.CodeLibraryService;
 import vend.service.UserCouponService;
 import vend.service.VendCouponService;
+import vend.service.VendParaService;
 import vend.service.VendUserService;
 
 @Controller
@@ -44,6 +45,8 @@ public class VendCouponController{
 	UserCouponService userCouponService;
 	@Autowired
 	CodeLibraryService codeLibraryService;
+	@Autowired
+	VendParaService vendParaService;
 	/**
 	 * 根据输入信息条件查询优惠券列表，并分页显示
 	 * @param model
@@ -119,6 +122,10 @@ public class VendCouponController{
 	@RequiresPermissions({"coupon:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String coupond(HttpServletRequest request,Model model,@Validated VendCoupon vendCoupon,BindingResult br){
+		double couponPrice=Function.getDouble(vendParaService.selectByParaCode("coupon_price"),0.00);
+		if(vendCoupon.getCouponScale().doubleValue()>couponPrice){
+			br.rejectValue("couponScale", "NOTBELOGNGOODSPRICE", "优惠券金额不能高于商品最高金额");
+		}
 		String newareaId[]=request.getParameterValues("areaId");
 		if(newareaId.length==0){
 			br.rejectValue("roleId", "NOCHOOSEAREA", "请选择地区");

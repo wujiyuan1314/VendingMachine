@@ -21,9 +21,9 @@ public interface VendUserMapper {
 
     int updateByPrimaryKey(VendUser record);
     /**下为自定义方法 */
-    List<VendUser> listVendUser(@Param("vendUser") VendUser vendUser, @Param("page") Page page);
+    List<VendUser> listVendUser(@Param("vendUser") VendUser vendUser,@Param("usersArray") String usersArray[],@Param("page") Page page);
     
-    int countVendUser(VendUser vendUser);
+    int countVendUser(@Param("vendUser") VendUser vendUser,@Param("usersArray") String usersArray[]);
     
     void insertBatch(List<VendUser> list);
     
@@ -34,6 +34,8 @@ public interface VendUserMapper {
     List<VendUser> selectByArealist(String arealist[]);
     
     VendUser selectByUsername(String username);
+    
+    List<VendUser> selectByParentUsercode(String parentUsercode);
     
     public Set<String> getRoles(String userName);
 	

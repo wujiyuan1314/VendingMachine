@@ -13,7 +13,7 @@ public interface VendUserService {
 	 * @param page
 	 * @return
 	 */
-	List<VendUser> listVendUser(VendUser vendUser,Page page);
+	List<VendUser> listVendUser(VendUser vendUser,String usersArray[],Page page);
 	/**
 	 * 添加用户
 	 * @param vendUser
@@ -71,5 +71,10 @@ public interface VendUserService {
 	 * @return
 	 */
 	public Set<String> getPermissions(String username);
-	
+	/**
+	 * 得到该用户的下级用户
+	 * @param parentUsercode
+	 * @return
+	 */
+	public String getNextUsers(String parentUsercode);
 }

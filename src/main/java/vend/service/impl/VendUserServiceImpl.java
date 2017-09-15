@@ -38,10 +38,10 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @param page
 	 * @return
 	 */
-	public List<VendUser> listVendUser(VendUser vendUser,Page page){
-		int totalNumber = vendUserMapper.countVendUser(vendUser);
+	public List<VendUser> listVendUser(VendUser vendUser,String usersArray[],Page page){
+		int totalNumber = vendUserMapper.countVendUser(vendUser,usersArray);
 		page.setTotalNumber(totalNumber);
-		return vendUserMapper.listVendUser(vendUser, page);
+		return vendUserMapper.listVendUser(vendUser,usersArray, page);
 	}
 	/**
 	 * 添加用户
@@ -162,5 +162,21 @@ public class VendUserServiceImpl implements VendUserService {
 			}
 		}
 		return set2;
+	}
+	/**
+	 * 得到该用户的下级用户
+	 * @param parentUsercode
+	 * @return
+	 */
+	public String getNextUsers(String parentUsercode){
+		List<VendUser> vendUsers=vendUserMapper.selectByParentUsercode(parentUsercode);
+		String userslist="";
+		for(VendUser vendUser:vendUsers){
+			if(vendUser!=null){
+				userslist+=vendUser.getUsercode()+",";
+				userslist+=getNextUsers(vendUser.getUsercode());
+			}
+		}
+		return userslist;
 	}
 }

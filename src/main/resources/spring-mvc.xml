@@ -87,39 +87,7 @@
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
 	        depends-on="lifecycleBeanPostProcessor" />
 	        
-	<!-- 8.定时任务的配置-->
-	<!-- 第一步、Scheduler的配置。 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序  -->
-     <bean id="scheduler" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-          <property name="triggers">
-              <list>
-                  <ref bean="trigger"/>
-              </list>
-          </property>
-      </bean> 
-      <!-- 第二步、Trigger的配置。 定义触发时间   每天凌晨2点执行一次 -->
-     <bean id="trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-          <property name="jobDetail">
-              <ref bean="jobDetail"/>
-          </property>
-          <property name="cronExpression">
-             <value>0 46 20 * * ?</value>
-          </property>
-      </bean>
-      <!-- 第三步.JobDetail的配置。 定义调用对象和调用对象的方法-->
-    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-          <property name="targetObject">
-              <ref bean="userCouponJob"/>
-          </property>
-          <property name="targetMethod">
-              <value>doTask</value>
-          </property>
-          <property name="concurrent">  
-              <value>false</value>  
-          </property>  
-     </bean>
-     <!-- 第四步、业务类的配置 -->
-    <bean id="userCouponJob" class="base.task.UserCouponTask"/>
-     <!-- 9.用户没有权限时跳转的页面和用户没登录时跳转的页面 -->
+    <!-- 8.用户没有权限时跳转的页面和用户没登录时跳转的页面 -->
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
 	    <property name="exceptionMappings">  
 	        <props>  

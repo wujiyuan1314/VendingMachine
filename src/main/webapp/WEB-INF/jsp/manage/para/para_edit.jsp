@@ -23,7 +23,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>codeCatalog/codeCatalogs" class="current">商品列表</a>
+      <a href="<%=basePath1%>para/paras" class="current">商品列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -35,24 +35,31 @@
 		<div class="span12">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-info-sign"></i></span>
-                 <h5>参数修改</h5>
+                 <h5>系统参数修改</h5>
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/codeCatalog/edit" enctype="multipart/form-data" commandName="codeCatalog" name="basic_validate" id="basic_validate" novalidate="novalidate">
-	              <sf:hidden path="codeno"/>
+			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/para/edit" enctype="multipart/form-data" commandName="vendPara" name="basic_validate" id="basic_validate" novalidate="novalidate">
+	              <sf:hidden path="id"/>
 	              <div class="control-group">
-	                <label class="control-label">参数名</label>
+	                <label class="control-label">系统参数代码</label>
 	                <div class="controls">
-	                  <sf:input path="codename"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="codename" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <sf:input path="paraCode"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="paraCode" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">参数描述</label>
+	                <label class="control-label">系统参数名</label>
 	                <div class="controls">
-	                  <sf:input path="codedescribe"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="codedescribe" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <sf:input path="paraContent"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="paraContent" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
+	              <div class="control-group">
+	                <label class="control-label">系统参数描述</label>
+	                <div class="controls">
+	                  <sf:input path="desprision"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="desprision" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="form-actions">

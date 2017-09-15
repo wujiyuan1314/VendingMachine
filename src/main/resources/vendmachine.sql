@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-09-13 17:59:55
+Date: 2017-09-15 18:04:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -145,7 +145,7 @@ CREATE TABLE `menuitem` (
   `extend1` varchar(200) DEFAULT NULL,
   `extend2` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menuitem
@@ -179,6 +179,8 @@ INSERT INTO menuitem VALUES ('26', '1', '机器管理', '-', 'icon-coffee', null
 INSERT INTO menuitem VALUES ('27', '26', '机器列表', 'machine/machines', '-', null, '2017-09-04 19:30:18', '2017-09-04 19:30:18', null, null);
 INSERT INTO menuitem VALUES ('28', '22', '用户提现记录', 'accountdetail/draw', '-', null, '2017-09-09 09:15:42', '2017-09-09 09:15:42', null, null);
 INSERT INTO menuitem VALUES ('29', '17', '活动列表', 'coupon/couponhd', '-', null, '2017-09-10 16:04:34', '2017-09-10 16:04:34', null, null);
+INSERT INTO menuitem VALUES ('30', '1', '系统参数管理', '--', '-', null, '2017-09-15 17:47:17', '2017-09-15 17:47:17', null, null);
+INSERT INTO menuitem VALUES ('31', '30', '系统参数列表', 'para/paras', '-', null, '2017-09-15 17:47:43', '2017-09-15 17:47:43', null, null);
 
 -- ----------------------------
 -- Table structure for `user_coupon`
@@ -196,13 +198,13 @@ CREATE TABLE `user_coupon` (
   `extend5` varchar(200) DEFAULT NULL,
   `extend6` varchar(600) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_coupon
 -- ----------------------------
 INSERT INTO user_coupon VALUES ('1', 'VM2017083115230747', '1', '2017-09-13 15:55:07', '1', '2017-09-12', '2017-09-15', '2', '优惠券', '用户首次注册会获得的优惠券');
-INSERT INTO user_coupon VALUES ('2', 'VM2017083115230747', '2', '2017-09-13 15:56:18', '1', '2017-09-10', '2017-09-16', '4.5', '活动优惠券', '活动优惠券,在活动期间该活动适用地区的用户都会自动获得一张该优惠券');
+INSERT INTO user_coupon VALUES ('2', 'VM2017083115230747', '2', '2017-09-13 15:56:18', '1', '2017-09-10', '2017-09-15', '4.5', '活动优惠券', '活动优惠券,在活动期间该活动适用地区的用户都会自动获得一张该优惠券');
 
 -- ----------------------------
 -- Table structure for `vend_account`
@@ -316,13 +318,13 @@ CREATE TABLE `vend_coupon` (
   `extend5` varchar(100) DEFAULT NULL,
   `extend6` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='优惠券表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='优惠券表';
 
 -- ----------------------------
 -- Records of vend_coupon
 -- ----------------------------
 INSERT INTO vend_coupon VALUES ('1', '优惠券', '用户首次注册会获得的优惠券', '2.00', null, null, '2017-08-26 00:00:00', '2017-08-26 00:00:00', '1', '2017-08-26 17:54:43', '2017-08-26 17:54:43', '1', '1', null, null, null, null);
-INSERT INTO vend_coupon VALUES ('2', '活动优惠券', '活动优惠券,在活动期间该活动适用地区的用户都会自动获得一张该优惠券', '4.00', null, 'zhengzhou,', '2017-09-13 00:00:00', '2017-09-13 00:00:00', '0', '2017-09-13 10:07:55', '2017-09-13 10:07:55', null, '1', null, null, null, null);
+INSERT INTO vend_coupon VALUES ('2', '活动优惠券', '活动优惠券,在活动期间该活动适用地区的用户都会自动获得一张该优惠券', '4.00', null, 'xuchang,', '2017-09-14 00:00:00', '2017-09-20 00:00:00', '1', '2017-09-13 10:07:55', '2017-09-13 10:07:55', null, '1', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_goods`
@@ -459,6 +461,10 @@ INSERT INTO vend_order VALUES ('C1709131748359187', '343', 'VM2017083115230747',
 INSERT INTO vend_order VALUES ('C1709131752310981', '4324', 'VM2017083115230747', '', '23', '微信支付', '1', '1.00', '0', '1', '2017-09-13 17:52:31', null, '1', null, null);
 INSERT INTO vend_order VALUES ('C1709131754405589', '434', 'VM2017083115230747', '', '23', '余额支付', '1', '3.00', '0', '1', '2017-09-13 17:54:39', null, '1', null, null);
 INSERT INTO vend_order VALUES ('C1709131756219480', '234', 'VM2017083115230747', '', '24', '余额支付', '1', '1.00', '0', '1', '2017-09-13 17:56:21', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709140942363820', '324', 'VM2017083115230747', '', '23', '微信支付', '1', '50.00', '0', '0', '2017-09-14 09:42:26', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709140944347870', '231', 'VM2017083115230747', '', '23', '微信支付', '1', '0.50', '0', '1', '2017-09-14 09:44:33', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709140952225455', '3434', 'VM2017083115230747', '', '23', '微信支付', '1', '0.50', '0', '1', '2017-09-14 09:52:22', null, '1', null, null);
+INSERT INTO vend_order VALUES ('C1709140955183822', '23', 'VM2017083115230747', '', '23', '微信支付', '1', '0.50', '0', '1', '2017-09-14 09:55:18', null, '1', null, null);
 
 -- ----------------------------
 -- Table structure for `vend_para`
@@ -473,7 +479,7 @@ CREATE TABLE `vend_para` (
   `extend3` varchar(150) DEFAULT NULL,
   `desprision` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of vend_para
@@ -482,6 +488,7 @@ INSERT INTO vend_para VALUES ('1', 'appid', 'wx61085e86760cb2ca', '', '', '', '�
 INSERT INTO vend_para VALUES ('2', 'key', 'HNBBNdwl65990055zzy8891695585565', '', '', '', '微信支付公众号设置的key');
 INSERT INTO vend_para VALUES ('3', 'mch_id', '1488575892', '', '', '', '微信支付商户号');
 INSERT INTO vend_para VALUES ('4', 'appsecret', '0afc728dca13ffb5a840e667c38146f5', '', '', '', '微信小程序appSecret');
+INSERT INTO vend_para VALUES ('5', 'coupon_price', '5', null, null, null, '优惠券最高价');
 
 -- ----------------------------
 -- Table structure for `vend_permission`
@@ -499,7 +506,7 @@ CREATE TABLE `vend_permission` (
   `extend3` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `inx_permission_name` (`permission_name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8 COMMENT='管理后台权限表\r\n\r\n\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8 COMMENT='管理后台权限表\r\n\r\n\r\n';
 
 -- ----------------------------
 -- Records of vend_permission
@@ -584,6 +591,11 @@ INSERT INTO vend_permission VALUES ('87', '84', 'qrcodeattend:dels', '二维码�
 INSERT INTO vend_permission VALUES ('88', '20', 'account:draw', '提现', '2017-09-10 11:48:25', '2017-09-10 11:48:25', null, null, null);
 INSERT INTO vend_permission VALUES ('90', '84', 'qrcodeattend:qrcodeattends', '二维码关注列表', '2017-09-11 14:03:07', '2017-09-11 14:03:07', null, null, null);
 INSERT INTO vend_permission VALUES ('91', '73', 'user:addpermission', '用户权限添加', '2017-09-12 14:16:25', '2017-09-12 14:16:25', null, null, null);
+INSERT INTO vend_permission VALUES ('92', '1', '系统参数', '系统参数设置', '2017-09-15 17:48:41', '2017-09-15 17:48:41', null, null, null);
+INSERT INTO vend_permission VALUES ('93', '92', 'para:paras', '系统参数列表', '2017-09-15 17:49:09', '2017-09-15 17:49:09', null, null, null);
+INSERT INTO vend_permission VALUES ('94', '92', 'para:add', '系统参数添加', '2017-09-15 17:49:20', '2017-09-15 17:49:20', null, null, null);
+INSERT INTO vend_permission VALUES ('95', '92', 'para:edit', '系统参数修改', '2017-09-15 17:49:31', '2017-09-15 17:49:31', null, null, null);
+INSERT INTO vend_permission VALUES ('96', '92', 'para:del', '系统参数删除', '2017-09-15 17:49:46', '2017-09-15 17:49:46', null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_qrcode_attend`
@@ -628,8 +640,8 @@ CREATE TABLE `vend_role` (
 -- ----------------------------
 -- Records of vend_role
 -- ----------------------------
-INSERT INTO vend_role VALUES ('1', '0', '开发者后台', '最高权限', '2017-08-24 13:33:16', '2017-08-24 13:33:19', '1,2,3,4,5,6,25,7,8,9,10,11,12,13,14,15,16,17,18,29,19,20,21,22,23,24,28,26,27', null, '1', null, null, null);
-INSERT INTO vend_role VALUES ('2', '1', '总后台', '客户总权限用户', '2017-08-22 14:33:17', '2017-08-22 14:33:17', '2,3,4,5,6,25,10,11,13,14,17,18,29,19,20,21,22,23,24,28,26,27', null, '1', null, null, null);
+INSERT INTO vend_role VALUES ('1', '0', '开发者后台', '最高权限', '2017-08-24 13:33:16', '2017-08-24 13:33:19', ',1,2,3,4,5,6,25,7,8,9,10,11,12,13,14,15,16,17,18,29,19,20,21,22,23,24,28,26,27,30,31,', null, '1', null, null, null);
+INSERT INTO vend_role VALUES ('2', '1', '总后台', '客户总权限用户', '2017-08-22 14:33:17', '2017-08-22 14:33:17', ',1,9,17,3,4,5,6,25,10,11,13,14,18,19,20,21,22,23,24,28,26,27,', null, '1', null, null, null);
 INSERT INTO vend_role VALUES ('3', '2', '代理后台', '代理总后台管理一部分商户', '2017-08-22 14:33:44', '2017-08-22 14:33:44', '2,3,4,5,6,25,9,10,11,13,14,17,18,19,20,21,23,24,26,27', null, '1', null, null, null);
 INSERT INTO vend_role VALUES ('4', '3', '商家', '普通商户', '2017-08-22 14:33:58', '2017-08-22 14:33:58', null, null, '1', null, null, null);
 INSERT INTO vend_role VALUES ('5', '4', '消费用户', '利用客户端购买商品的消费用户', '2017-08-22 14:34:25', '2017-08-22 14:34:25', null, null, '1', null, null, null);
@@ -649,7 +661,7 @@ CREATE TABLE `vend_role_permission` (
   `extend3` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_role_permission` (`role_id`,`permission_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=559 DEFAULT CHARSET=utf8 COMMENT='角色权限对照表';
+) ENGINE=InnoDB AUTO_INCREMENT=564 DEFAULT CHARSET=utf8 COMMENT='角色权限对照表';
 
 -- ----------------------------
 -- Records of vend_role_permission
@@ -848,6 +860,11 @@ INSERT INTO vend_role_permission VALUES ('555', '4', '1', '2017-09-12 14:27:33',
 INSERT INTO vend_role_permission VALUES ('556', '4', '84', '2017-09-12 14:27:33', '2017-09-12 14:27:33', null, null, null);
 INSERT INTO vend_role_permission VALUES ('557', '4', '85', '2017-09-12 14:27:33', '2017-09-12 14:27:33', null, null, null);
 INSERT INTO vend_role_permission VALUES ('558', '4', '90', '2017-09-12 14:27:33', '2017-09-12 14:27:33', null, null, null);
+INSERT INTO vend_role_permission VALUES ('559', '1', '92', '2017-09-15 17:49:59', '2017-09-15 17:49:59', null, null, null);
+INSERT INTO vend_role_permission VALUES ('560', '1', '93', '2017-09-15 17:49:59', '2017-09-15 17:49:59', null, null, null);
+INSERT INTO vend_role_permission VALUES ('561', '1', '94', '2017-09-15 17:49:59', '2017-09-15 17:49:59', null, null, null);
+INSERT INTO vend_role_permission VALUES ('562', '1', '95', '2017-09-15 17:49:59', '2017-09-15 17:49:59', null, null, null);
+INSERT INTO vend_role_permission VALUES ('563', '1', '96', '2017-09-15 17:49:59', '2017-09-15 17:49:59', null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_shop_qrcode`

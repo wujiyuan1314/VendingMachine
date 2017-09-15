@@ -1,5 +1,8 @@
 package vend.controller;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,7 +17,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
 import vend.entity.VendQrcodeAttend;
@@ -141,4 +146,28 @@ public class VendQrcodeAttendController{
     	vendQrcodeAttendService.delVendQrcodeAttends(idArray1);
   		return "redirect:/qrcodeAtt/qrcodeAtts";
   	}
+	/**
+	 * 用户关注商家二维码后发送的请求
+	 * @param map
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/jusecoupons",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
+	public @ResponseBody void getuseJson(Map<String,String> map) throws IOException {
+		Date attendTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+		String usercode=map.get("usercode");
+		int qrcodeId=Function.getInt(map.get("qrcodeId"),0);
+		
+		VendQrcodeAttend vendQrcodeAttend =new VendQrcodeAttend();
+		vendQrcodeAttend.setUsercode(usercode);
+		vendQrcodeAttend.setQrcodeId(qrcodeId);
+		vendQrcodeAttend.setAttendTime(attendTime);
+		vendQrcodeAttendService.insertVendQrcodeAttend(vendQrcodeAttend);
+		
+		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(qrcodeId);
+		if(vendShopQrcode!=null){
+			vendShopQrcode.setAttenNum(vendShopQrcode.getAttenNum()+1);
+			vendShopQrcodeService.editVendShopQrcode(vendShopQrcode);
+		}
+		
+	}
 }
