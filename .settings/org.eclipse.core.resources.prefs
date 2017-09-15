@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java/base/shiro/UserRealm.java=UTF-8
 encoding//src/main/java/base/util/FileUploadUtils.java=UTF-8
 encoding//src/main/java/vend/controller/CodeCatalogController.java=UTF-8
 encoding//src/main/java/vend/controller/CodeLibraryController.java=UTF-8

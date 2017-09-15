@@ -66,9 +66,6 @@ public class VendMachineController{
 		logger.info(vendMachine.toString());
 		HttpSession session=request.getSession();
 		VendUser user=(VendUser)session.getAttribute("vendUser");
-		if(user!=null){
-			vendMachine.setUsercode(user.getUsercode());
-		}
 		List<CodeLibrary> usestatus=codeLibraryService.selectByCodeNo("USESTATUS");
 		model.addAttribute("usestatus", usestatus);
 		List<VendMachine> vendMachines = vendMachineService.listVendMachine(vendMachine, page);

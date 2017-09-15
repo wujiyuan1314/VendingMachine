@@ -1,15 +1,12 @@
-/*
+﻿/*
 Navicat MySQL Data Transfer
-
 Source Server         : 本地
 Source Server Version : 50713
 Source Host           : localhost:3306
 Source Database       : vendmachine
-
 Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
-
 Date: 2017-09-15 18:04:45
 */
 

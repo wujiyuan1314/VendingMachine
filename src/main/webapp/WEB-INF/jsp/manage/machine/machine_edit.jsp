@@ -23,7 +23,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>user/users" class="current">机器列表</a>
+      <a href="<%=basePath1%>machine/machines" class="current">机器列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
