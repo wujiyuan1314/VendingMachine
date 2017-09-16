@@ -13,7 +13,7 @@ var basePath="<%=basePath2%>";
 <script src="<%=basePath2 %>resources/js/jquery.peity.min.js"></script> 
 <script src="<%=basePath2 %>resources/js/fullcalendar.min.js"></script> 
 <script src="<%=basePath2 %>resources/js/matrix.js"></script> 
-<script src="<%=basePath2 %>resources/js/jquery.gritter.min.js"></script> 
+<script src="<%=basePath2 %>resources/js/jquery.gritter.min.js"></script>
 <script src="<%=basePath2 %>resources/js/matrix.chat.js"></script> 
 <script src="<%=basePath2 %>resources/js/jquery.validate.js"></script> 
 <script src="<%=basePath2 %>resources/js/matrix.form_validation.js"></script> 
@@ -24,7 +24,7 @@ var basePath="<%=basePath2%>";
 <script src="<%=basePath2 %>resources/js/jquery.dataTables.min.js"></script> 
 <script src="<%=basePath2 %>resources/js/jquery.form.js"></script> 
 <script src="<%=basePath2 %>resources/js/matrix.tables.js"></script> 
-<script src="<%=basePath2 %>resources/js/bootstrap-treeview.js"></script>
+<script src="<%=basePath2 %>resources/js/bootstrap-treeview.js"></script>   
 <script src="<%=basePath2 %>resources/js/bootstrap-datetimepicker.js" charset="UTF-8"></script> 
 <script src="<%=basePath2 %>resources/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script src="<%=basePath2 %>resources/js/back/list.js"></script> 

@@ -62,7 +62,9 @@
 	              <div class="control-group">
 	                <label class="control-label">价格</label>
 	                <div class="controls">
-	                  <sf:input path="price"/>
+	                  <div class="input-append">
+	                     <sf:input path="price" class="span2"/><span class="add-on">$</span>
+	                  </div>
 	                 <span for="required" generated="true" class="help-inline"> <sf:errors path="price" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>

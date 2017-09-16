@@ -42,8 +42,9 @@ public class VendQrcodeAttendController{
 	 * @param vendQrcodeAttend
 	 * @param page
 	 * @param request
-	 * @return
+	 * @returnqrcodeattend:qrcodeattends
 	 */
+	@RequiresPermissions({"qrcodeattend:qrcodeattends"})
 	@RequestMapping(value="/qrcodeAtts")
 	public String listVendQrcodeAttend(Model model,@ModelAttribute VendQrcodeAttend vendQrcodeAttend, @ModelAttribute Page page,HttpServletRequest request) {
 		String currentPageStr = request.getParameter("currentPage");
