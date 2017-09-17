@@ -160,7 +160,7 @@ public class VendAd {
     public void setExtend1(String extend1) {
         this.extend1 = extend1 == null ? null : extend1.trim();
     }
-    
+    @NotEmpty(message="广告屏样式不能为空")
     public String getExtend2() {
         return extend2;
     }
