@@ -163,7 +163,7 @@
 								<div class="modal-body">
 									<c:forEach items="${adscreens}" var="adscreen" varStatus="st">
 									  <label>
-									   <input type="radio" class="adtype" value="${adscreen.itemno }"/>${adscreen.itemname }
+									   <input type="radio" id="adtype" value="${adscreen.itemno }"/>${adscreen.itemname }
 									  </label>
 									</c:forEach>
                                 </div>
@@ -217,6 +217,11 @@
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
 <script type="text/javascript">
+$(".radio span").click(function(){
+	alert("sdd");
+	$(".radio span").removeClass("checked");
+	$(this).addClass("checked");
+})
 function adscreen(){
 	var adtype=$(".radio .checked .adtype").val();
 	$("#extend2").val(adtype);
