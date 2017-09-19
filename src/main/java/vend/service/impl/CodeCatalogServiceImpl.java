@@ -3,6 +3,7 @@ package vend.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import base.util.Page;
@@ -14,6 +15,7 @@ public class CodeCatalogServiceImpl implements CodeCatalogService {
 	@Autowired
 	CodeCatalogMapper codeCatalogMapper;
 	@Override
+	@Cacheable(value="codeCache")
 	public List<CodeCatalog> listCodeCatalog(CodeCatalog codeCatalog, Page page) {
 		// TODO Auto-generated method stub
 		int totalNumber = codeCatalogMapper.countCodeCatalog(codeCatalog);
@@ -49,6 +51,7 @@ public class CodeCatalogServiceImpl implements CodeCatalogService {
 	}
 
 	@Override
+	@Cacheable(value="codeCache")
 	public CodeCatalog getCodeCatalogByID(String id) {
 		// TODO Auto-generated method stub
 		return codeCatalogMapper.selectByPrimaryKey(id);

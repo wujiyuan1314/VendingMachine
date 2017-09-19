@@ -138,7 +138,16 @@
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="height" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
+	              
 	              <div class="control-group">
+	                <label class="control-label">广告屏样式选择</label>
+	                <div class="controls">
+	                   <sf:select path="extend2" items="${adscreens}" itemLabel="extend1" itemValue="itemno" style="width:280px;">
+								            </sf:select>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend1" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
+	             <!--  <div class="control-group">
 	                <label class="control-label">广告屏样式选择</label>
 	                <div class="controls">
 	                  <div class="input-append date datepicker">
@@ -146,10 +155,10 @@
 	                    <span class="add-on" data-toggle="modal" data-target="#myModal"><i class="icon-caret-down"></i></span>
 	                  </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend1" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
-	                </div>
+	                </div> -->
 	               
 	                <!-- 模态框（Modal） -->
-					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					 <!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -173,10 +182,10 @@
 									</button>
 								</div>
 							</div><!-- /.modal-content -->
-						</div><!-- /.modal-dialog -->
-					</div><!-- /.modal -->
+						<!--</div> /.modal-dialog -->
+					<!--</div> /.modal 
 	
-	              </div>
+	              </div>-->
 	              
 	              <div class="control-group">
 	                <label class="control-label">广告开始时间</label>
@@ -218,7 +227,6 @@
 <%@ include file="../../common/common_js.jsp" %>
 <script type="text/javascript">
 $(".radio span").click(function(){
-	alert("sdd");
 	$(".radio span").removeClass("checked");
 	$(this).addClass("checked");
 })

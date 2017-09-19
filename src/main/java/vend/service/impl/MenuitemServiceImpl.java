@@ -3,6 +3,7 @@ package vend.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import vend.dao.MenuitemMapper;
@@ -16,6 +17,7 @@ public class MenuitemServiceImpl implements MenuitemService {
 	MenuitemMapper menuitemMapper;
 	
 	@Override
+	@Cacheable(value="menuitemCache")
 	public int editMenuitem(Menuitem menuitem) {
 		// TODO Auto-generated method stub
 		return menuitemMapper.updateByPrimaryKeySelective(menuitem);
@@ -42,12 +44,14 @@ public class MenuitemServiceImpl implements MenuitemService {
 	}
 
 	@Override
+	@Cacheable(value="menuitemCache")
 	public Menuitem getMenuitemByID(int id) {
 		// TODO Auto-generated method stub
 		return menuitemMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
+	@Cacheable(value="menuitemCache")
 	public List<Menuitem> selectByParentId(int parentId) {
 		// TODO Auto-generated method stub
 		return menuitemMapper.selectByParentId(parentId);
@@ -56,6 +60,7 @@ public class MenuitemServiceImpl implements MenuitemService {
 	 * 查找全部
 	 * @return
 	 */
+	@Cacheable(value="menuitemCache")
 	public List<Menuitem> findAll(){
 		return menuitemMapper.findAll();
 	}

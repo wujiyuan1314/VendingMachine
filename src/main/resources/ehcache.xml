@@ -103,6 +103,24 @@
            overflowToDisk="false"
            memoryStoreEvictionPolicy="LRU">
     </cache>
+    <!-- 参数缓存 -->
+    <cache name="codeCache"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToIdleSeconds="5"
+           timeToLiveSeconds="5"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LRU">
+    </cache>
+     <!-- 二维码缓存 -->
+    <cache name="qrcodeCache"
+           maxElementsInMemory="1000"
+           eternal="false"
+           timeToIdleSeconds="5"
+           timeToLiveSeconds="5"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LRU">
+    </cache>
     <!-- 登录记录缓存 锁定10分钟 -->
     <cache name="passwordRetryCache"
            maxEntriesLocalHeap="2000"

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import base.util.DateUtil;
@@ -38,6 +39,7 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @param page
 	 * @return
 	 */
+	@Cacheable(value="userCache")
 	public List<VendUser> listVendUser(VendUser vendUser,String usersArray[],Page page){
 		int totalNumber = vendUserMapper.countVendUser(vendUser,usersArray);
 		page.setTotalNumber(totalNumber);
@@ -101,9 +103,11 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @param id
 	 * @return
 	 */
+	@Cacheable(value="userCache")
 	public VendUser getOne(String usercode){
 		return vendUserMapper.selectByPrimaryKey(usercode);
 	}
+	@Cacheable(value="userCache")
 	public List<VendUser> findAll() {
 		// TODO Auto-generated method stub
 		return vendUserMapper.findAll();
@@ -113,6 +117,7 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @param username
 	 * @return
 	 */
+	@Cacheable(value="userCache")
 	public VendUser selectByUsername(String username){
 		return vendUserMapper.selectByUsername(username);
 	}
@@ -121,6 +126,7 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @param arealist
 	 * @return
 	 */
+	@Cacheable(value="userCache")
 	public List<VendUser> selectByArealist(String arealist[]){
 		return vendUserMapper.selectByArealist(arealist);
 	}
@@ -130,6 +136,7 @@ public class VendUserServiceImpl implements VendUserService {
      * @return
      */
     @Override
+    @Cacheable(value="userCache")
 	public Set<String> getRoles(String username){
     	return vendUserMapper.getRoles(username);
     }
@@ -139,6 +146,7 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @return
 	 */
 	@Override
+	@Cacheable(value="userCache")
 	public Set<String> getPermissions(String username){
 		Set<String> set1=vendUserMapper.getPermissions(username);
 		Set<String> set2=new HashSet<String>();
@@ -168,6 +176,7 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @param parentUsercode
 	 * @return
 	 */
+	@Cacheable(value="userCache")
 	public String getNextUsers(String parentUsercode){
 		List<VendUser> vendUsers=vendUserMapper.selectByParentUsercode(parentUsercode);
 		String userslist="";

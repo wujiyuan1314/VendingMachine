@@ -3,6 +3,7 @@ package vend.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import vend.dao.VendRolePermissionMapper;
@@ -17,6 +18,7 @@ public class VendRolePermissionServiceImpl implements VendRolePermissionService 
 	 * @param roleId
 	 * @return
 	 */
+	@Cacheable(value="permissionCache")
 	public List<VendRolePermission> selectByRoleId(Integer roleId){
 		return vendRolePermissionMapper.selectByRoleId(roleId);
 	}

@@ -3,6 +3,7 @@ package vend.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import vend.dao.CodeLibraryMapper;
@@ -13,12 +14,14 @@ public class CodeLibraryServiceImpl implements CodeLibraryService {
 	@Autowired
 	CodeLibraryMapper codeLibraryMapper;
 	@Override
+	@Cacheable(value="codeCache")
 	public List<CodeLibrary> listCodeLibrary(CodeLibrary codeLibrary) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
+	@Cacheable(value="codeCache")
 	public List<CodeLibrary> selectByCodeNo(String codeno) {
 		// TODO Auto-generated method stub
 		return codeLibraryMapper.selectByCodeNo(codeno);
@@ -51,6 +54,7 @@ public class CodeLibraryServiceImpl implements CodeLibraryService {
 	}
 
 	@Override
+	@Cacheable(value="codeCache")
 	public CodeLibrary getCodeLibraryByID(String id) {
 		// TODO Auto-generated method stub
 		return codeLibraryMapper.selectByPrimaryKey(id);

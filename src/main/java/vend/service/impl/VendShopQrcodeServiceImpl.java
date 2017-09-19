@@ -3,6 +3,7 @@ package vend.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import base.util.Page;
@@ -14,6 +15,7 @@ public class VendShopQrcodeServiceImpl implements VendShopQrcodeService {
 	@Autowired
 	VendShopQrcodeMapper vendShopQrcodeMapper;
 	@Override
+	@Cacheable(value="qrcodeCache")
 	public List<VendShopQrcode> listVendShopQrcode(VendShopQrcode vendShopQrcode, Page page) {
 		// TODO Auto-generated method stub
 		int totalNumber = vendShopQrcodeMapper.countVendShopQrcode(vendShopQrcode);
@@ -46,12 +48,14 @@ public class VendShopQrcodeServiceImpl implements VendShopQrcodeService {
 	}
 
 	@Override
+	@Cacheable(value="qrcodeCache")
 	public VendShopQrcode getOne(int id) {
 		// TODO Auto-generated method stub
 		return vendShopQrcodeMapper.selectByPrimaryKey(id);
 	}
 
 	@Override
+	@Cacheable(value="qrcodeCache")
 	public List<VendShopQrcode> findAll() {
 		// TODO Auto-generated method stub
 		return vendShopQrcodeMapper.findAll();
@@ -61,6 +65,7 @@ public class VendShopQrcodeServiceImpl implements VendShopQrcodeService {
 	 * @param extend2
 	 * @return
 	 */
+	@Cacheable(value="qrcodeCache")
 	public List<VendShopQrcode> selectByType(String extend2){
 		return vendShopQrcodeMapper.selectByType(extend2);
 	}

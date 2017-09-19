@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import base.util.DateUtil;
@@ -22,6 +23,7 @@ public class VendRoleServiceImpl implements VendRoleService {
 	 * @param page
 	 * @return
 	 */
+	@Cacheable(value="roleCache")
 	public List<VendRole> listVendRole(VendRole vendRole,Page page){
 		int totalNumber = vendRoleMapper.countVendRole(vendRole);
 		page.setTotalNumber(totalNumber);
@@ -65,6 +67,7 @@ public class VendRoleServiceImpl implements VendRoleService {
 	 * @param id
 	 * @return
 	 */
+	@Cacheable(value="roleCache")
 	public VendRole getOne(int id){
 		return vendRoleMapper.selectByPrimaryKey(id);
 	}
@@ -72,6 +75,7 @@ public class VendRoleServiceImpl implements VendRoleService {
 	 * 查找全部
 	 * @return
 	 */
+	@Cacheable(value="roleCache")
 	public List<VendRole> findAll() {
 		// TODO Auto-generated method stub
 		return vendRoleMapper.findAll();
@@ -81,6 +85,7 @@ public class VendRoleServiceImpl implements VendRoleService {
 	 * @param parentId
 	 * @return
 	 */
+	@Cacheable(value="roleCache")
 	public List<VendRole> findNext(Integer roleId){
 		return vendRoleMapper.findNext(roleId);
 	}
@@ -89,6 +94,7 @@ public class VendRoleServiceImpl implements VendRoleService {
 	 * @param roleId
 	 * @return
 	 */
+	@Cacheable(value="roleCache")
 	public List<VendRole> findNextAll(Integer roleId){
 		return vendRoleMapper.findNextAll(roleId);
 	}
@@ -97,6 +103,7 @@ public class VendRoleServiceImpl implements VendRoleService {
 	 * @param roleId
 	 * @return
 	 */
+	@Cacheable(value="roleCache")
 	public List<VendRole> findNextAllNOTSELF(Integer roleId){
 		return vendRoleMapper.findNextAllNOTSELF(roleId);
 	}
@@ -105,6 +112,7 @@ public class VendRoleServiceImpl implements VendRoleService {
 	 * @param roleName
 	 * @return
 	 */
+	@Cacheable(value="roleCache")
 	public VendRole selectByRoleName(String roleName){
 		return vendRoleMapper.selectByRoleName(roleName);
 	}

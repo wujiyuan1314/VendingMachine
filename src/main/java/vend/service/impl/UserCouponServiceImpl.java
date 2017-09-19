@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import base.util.DateUtil;
@@ -22,6 +23,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 * @param page
 	 * @return
 	 */
+	@Cacheable(value="couponCache")
 	public List<UserCoupon> listUserCoupon(UserCoupon userCoupon,Page page){
 		int totalNumber = userCouponMapper.countUserCoupon(userCoupon);
 		page.setTotalNumber(totalNumber);
@@ -71,6 +73,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 * @param id
 	 * @return
 	 */
+	@Cacheable(value="couponCache")
 	public UserCoupon getOne(int id){
 		return userCouponMapper.selectByPrimaryKey(id);
 	}
@@ -78,6 +81,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 * 查找全部
 	 * @return
 	 */
+	@Cacheable(value="couponCache")
 	public List<UserCoupon> findAll() {
 		// TODO Auto-generated method stub
 		return userCouponMapper.findAll();
@@ -86,6 +90,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 * 按照usercode查找
 	 * @return
 	 */
+	@Cacheable(value="couponCache")
 	public List<UserCoupon> findByUsercode(String usercode){
 		return userCouponMapper.findByUsercode(usercode);
 	}
@@ -94,6 +99,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 * @param usercode
 	 * @param couponId
 	 */
+	@Cacheable(value="couponCache")
 	public UserCoupon findByUsercodeLimitCouponId(String usercode,Integer couponId){
 		return userCouponMapper.findByUsercodeLimitCouponId(usercode, couponId);
 	}
@@ -101,6 +107,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 * 按照当前时间查找
 	 * @return
 	 */
+	@Cacheable(value="couponCache")
 	public List<UserCoupon> findByEndtime(String CurrentDate){
 		return userCouponMapper.findByEndtime(CurrentDate);
 	}

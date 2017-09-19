@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import base.util.DateUtil;
@@ -22,6 +23,7 @@ public class VendCouponServiceImpl implements VendCouponService {
 	 * @param page
 	 * @return
 	 */
+	@Cacheable(value="couponCache")
 	public List<VendCoupon> listVendCoupon(VendCoupon vendCoupon,Page page){
 		int totalNumber = vendCouponMapper.countVendCoupon(vendCoupon);
 		page.setTotalNumber(totalNumber);
@@ -65,9 +67,11 @@ public class VendCouponServiceImpl implements VendCouponService {
 	 * @param id
 	 * @return
 	 */
+	@Cacheable(value="couponCache")
 	public VendCoupon getOne(int id){
 		return vendCouponMapper.selectByPrimaryKey(id);
 	}
+	@Cacheable(value="couponCache")
 	public List<VendCoupon> findAll() {
 		// TODO Auto-generated method stub
 		return vendCouponMapper.findAll();

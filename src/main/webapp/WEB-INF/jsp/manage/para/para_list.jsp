@@ -54,7 +54,7 @@
 			      <table class="table table-bordered table-striped with-check">
 			         <thead>
 			            <tr>
-			              <th><input type="checkbox" onclick="selectAll('id');" id="all" name="title-table-checkbox" /></th>
+			              <th><input type="checkbox" onclick="selectAll('para');" id="all" name="title-table-checkbox" /></th>
 		                  <th style="width:25px;">序号</th>
 		                  <th>系统参数代码</th>
 		                  <th>系统参数内容</th>

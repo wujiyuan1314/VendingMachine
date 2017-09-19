@@ -3,6 +3,7 @@ package vend.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import base.util.Page;
@@ -20,6 +21,7 @@ public class VendOrderServiceImpl implements VendOrderService {
 	 * @param page
 	 * @return
 	 */
+	@Cacheable(value="orderCache")
 	public List<VendOrder> listVendOrder(VendOrder vendOrder,String beginTime,String endTime,Page page){
 		int totalNumber = vendOrderMapper.countVendOrder(vendOrder,beginTime,endTime);
 		page.setTotalNumber(totalNumber);
@@ -32,6 +34,7 @@ public class VendOrderServiceImpl implements VendOrderService {
 	 * @param endTime
 	 * @return
 	 */
+	@Cacheable(value="orderCache")
 	public List<VendOrder> selectByParams(VendOrder vendOrder,String beginTime,String endTime){
 		return vendOrderMapper.selectByParams(vendOrder, beginTime, endTime);
 	}
@@ -70,6 +73,7 @@ public class VendOrderServiceImpl implements VendOrderService {
 	 * @param id
 	 * @return
 	 */
+	@Cacheable(value="orderCache")
 	public VendOrder getOne(String orderId){
 		return vendOrderMapper.selectByPrimaryKey(orderId);
 	}

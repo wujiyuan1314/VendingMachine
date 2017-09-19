@@ -67,12 +67,14 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 	 * @param id
 	 * @return
 	 */
+	@Cacheable(value="goodsCache")
 	public VendGoods getOne(int id){
 		return vendGoodsMapper.selectByPrimaryKey(id);
 	}
 	/**
 	 * 查找全部
 	 */
+	@Cacheable(value="goodsCache")
 	public List<VendGoods> findAll() {
 		// TODO Auto-generated method stub
 		return vendGoodsMapper.findAll();

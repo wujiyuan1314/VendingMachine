@@ -147,7 +147,7 @@
 	              <div class="control-group">
 	                <label class="control-label">广告屏样式选择</label>
 	                <div class="controls">
-	                   <sf:select path="extend2" items="${adscreens}" itemLabel="itemname" itemValue="itemno">
+	                   <sf:select path="extend2" items="${adscreens}" itemLabel="extend1" itemValue="itemno" style="width:280px;">
 								            </sf:select>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend1" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
