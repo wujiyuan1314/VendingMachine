@@ -314,8 +314,8 @@ public class VendManageController{
 		payload.accumulate("operation", "setDevParam");
 		JSONObject params = new JSONObject();
 		params.accumulate("chNo", "0");
-		params.accumulate("item1", "item1");
-		params.accumulate("item2", "item2");
+		params.accumulate("water", "35");
+		params.accumulate("mater", "65");
 		payload.accumulate("params", "params");
 		Map<String,Object> dataMap = new HashMap<String,Object>();
 		dataMap.put("id", id);
