@@ -63,11 +63,7 @@ public class VendPermissionController{
 			zNode.setpId(vendPermission.getParentId());
 			zNode.setName(vendPermission.getPermissionDescription());
 			zNode.setFile(basePath+"/permission/"+vendPermission.getId()+"/edit");
-			if(vendPermission.getId()==1){
-				zNode.setOpen(true);
-			}else{
-				zNode.setOpen(false);
-			}
+			zNode.setOpen(true);
 		    list.add(zNode);
 		}
 		JSONArray json = JSONArray.fromObject(list);
@@ -104,11 +100,7 @@ public class VendPermissionController{
 				zNode.setId(vendPermission.getId());
 				zNode.setpId(vendPermission.getParentId());
 				zNode.setName(vendPermission.getPermissionDescription());
-				if(vendPermission.getParentId()==1){
-					zNode.setOpen(true);
-				}else{
-					zNode.setOpen(false);
-				}
+			    zNode.setOpen(true);
 				for(int roleId2:roleIdArray){
 					if(roleId2==vendPermission.getId()){
 						zNode.setChecked(true);
@@ -127,11 +119,7 @@ public class VendPermissionController{
 					zNode.setId(vendPermission.getId());
 					zNode.setpId(vendPermission.getParentId());
 					zNode.setName(vendPermission.getPermissionDescription());
-					if(vendPermission.getId()==1){
-						zNode.setOpen(true);
-					}else{
-						zNode.setOpen(false);
-					}
+					zNode.setOpen(true);
 					zNode.setChecked(false);
 					for(int roleId2:roleIdArray){
 						if(vendPermission.getId()==roleId2){
@@ -147,11 +135,7 @@ public class VendPermissionController{
 							zNode.setId(vendPermission.getId());
 							zNode.setpId(vendPermission.getParentId());
 							zNode.setName(vendPermission.getPermissionDescription());
-							if(vendPermission.getId()==1){
-								zNode.setOpen(true);
-							}else{
-								zNode.setOpen(false);
-							}
+							zNode.setOpen(true);
 							zNode.setChecked(true);
 							list.add(zNode);
 						}

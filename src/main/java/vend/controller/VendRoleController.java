@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import base.util.CacheUtils;
 import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
@@ -151,6 +152,9 @@ public class VendRoleController{
 	            int upid = map.get(in);//得到每个key多对用value的值
 	            vendRolePermissionService.deleteVendRolePermission(upid);//上一次选中这一次没选中的删掉
 	     }
+		 
+		 CacheUtils.remove("userCache", "key_getRoles"+roleId1);//移除缓存
+		 
 		 return "redirect:"+roleId1+"/"+pid1+"/addpermission";
 	}
 	  /**

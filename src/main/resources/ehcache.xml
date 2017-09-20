@@ -5,157 +5,156 @@
     <!--<diskStore path="java.io.tmpdir"/>-->
     <diskStore path="java.io.tmpdir/ehcache"/>
 	 <defaultCache
-	          maxEntriesLocalHeap="10000"
-	          eternal="false"
-	          timeToIdleSeconds="120"
-	          timeToLiveSeconds="120"
-	          maxEntriesLocalDisk="10000000"
-	          diskExpiryThreadIntervalSeconds="120"
-	          memoryStoreEvictionPolicy="LRU">
+	        maxElementsInMemory="10000"  
+            eternal="false"  
+            timeToIdleSeconds="120"  
+            timeToLiveSeconds="120"  
+            overflowToDisk="true"  
+            maxElementsOnDisk="10000000"  
+            diskPersistent="false"  
+            diskExpiryThreadIntervalSeconds="120"  
+            memoryStoreEvictionPolicy="LRU" >
 	</defaultCache>
 	<!-- 商品缓存 -->
     <cache name="goodsCache"
          maxElementsInMemory="1000"
-         eternal="false"
-         timeToIdleSeconds="5"
-         timeToLiveSeconds="5"
+         eternal="true"
+         timeToIdleSeconds="120"
+         timeToLiveSeconds="120"
          overflowToDisk="false"
          memoryStoreEvictionPolicy="LRU">
          </cache>
 	<!-- 用户缓存 -->
     <cache name="userCache"
            maxElementsInMemory="1000"
-           eternal="false"
-           timeToIdleSeconds="5"
-           timeToLiveSeconds="5"
+           eternal="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
            overflowToDisk="false"
            memoryStoreEvictionPolicy="LRU">
     </cache>
     <!-- 权限缓存 -->
     <cache name="permissionCache"
            maxElementsInMemory="1000"
-           eternal="false"
-           timeToIdleSeconds="5"
-           timeToLiveSeconds="5"
+           eternal="true"
+         timeToIdleSeconds="120"
+         timeToLiveSeconds="120"
            overflowToDisk="false"
            memoryStoreEvictionPolicy="LRU">
     </cache>
     <!-- 角色缓存 -->
     <cache name="roleCache"
            maxElementsInMemory="1000"
-           eternal="false"
-           timeToIdleSeconds="5"
-           timeToLiveSeconds="5"
+          eternal="true"
+         timeToIdleSeconds="120"
+         timeToLiveSeconds="120"
            overflowToDisk="false"
            memoryStoreEvictionPolicy="LRU">
     </cache>
     <!-- 菜单缓存 -->
     <cache name="menuitemCache"
            maxElementsInMemory="1000"
-           eternal="false"
-           timeToIdleSeconds="5"
-           timeToLiveSeconds="5"
+           eternal="true"
+         timeToIdleSeconds="120"
+         timeToLiveSeconds="120"
            overflowToDisk="false"
            memoryStoreEvictionPolicy="LRU">
     </cache>
     <!-- 广告缓存 -->
     <cache name="adCache"
            maxElementsInMemory="1000"
-           eternal="false"
-           timeToIdleSeconds="5"
-           timeToLiveSeconds="5"
+          eternal="true"
+         timeToIdleSeconds="120"
+         timeToLiveSeconds="120"
            overflowToDisk="false"
            memoryStoreEvictionPolicy="LRU">
     </cache>
     <!-- 优惠券缓存 -->
     <cache name="couponCache"
            maxElementsInMemory="1000"
-           eternal="false"
-           timeToIdleSeconds="5"
-           timeToLiveSeconds="5"
+          eternal="true"
+         timeToIdleSeconds="120"
+         timeToLiveSeconds="120"
            overflowToDisk="false"
            memoryStoreEvictionPolicy="LRU">
     </cache>
     <!-- 账户缓存 -->
     <cache name="accountCache"
            maxElementsInMemory="1000"
-           eternal="false"
-           timeToIdleSeconds="5"
-           timeToLiveSeconds="5"
+           eternal="true"
+         timeToIdleSeconds="120"
+         timeToLiveSeconds="120"
            overflowToDisk="false"
            memoryStoreEvictionPolicy="LRU">
     </cache>
     <!-- 机器缓存 -->
     <cache name="machineCache"
            maxElementsInMemory="1000"
-           eternal="false"
-           timeToIdleSeconds="5"
-           timeToLiveSeconds="5"
+          eternal="true"
+         timeToIdleSeconds="120"
+         timeToLiveSeconds="120"
            overflowToDisk="false"
            memoryStoreEvictionPolicy="LRU">
     </cache>
     <!-- 订单缓存 -->
     <cache name="orderCache"
            maxElementsInMemory="1000"
-           eternal="false"
-           timeToIdleSeconds="5"
-           timeToLiveSeconds="5"
+           eternal="true"
+         timeToIdleSeconds="120"
+         timeToLiveSeconds="120"
            overflowToDisk="false"
            memoryStoreEvictionPolicy="LRU">
     </cache>
     <!-- 参数缓存 -->
     <cache name="codeCache"
            maxElementsInMemory="1000"
-           eternal="false"
-           timeToIdleSeconds="5"
-           timeToLiveSeconds="5"
+           eternal="true"
+         timeToIdleSeconds="120"
+         timeToLiveSeconds="120"
            overflowToDisk="false"
            memoryStoreEvictionPolicy="LRU">
     </cache>
      <!-- 二维码缓存 -->
     <cache name="qrcodeCache"
            maxElementsInMemory="1000"
-           eternal="false"
-           timeToIdleSeconds="5"
-           timeToLiveSeconds="5"
+          eternal="true"
+         timeToIdleSeconds="120"
+         timeToLiveSeconds="120"
            overflowToDisk="false"
            memoryStoreEvictionPolicy="LRU">
     </cache>
     <!-- 登录记录缓存 锁定10分钟 -->
     <cache name="passwordRetryCache"
-           maxEntriesLocalHeap="2000"
-           eternal="false"
-           timeToIdleSeconds="3600"
-           timeToLiveSeconds="0"
+           maxElementsInMemory="1000"
+           eternal="true"
+         timeToIdleSeconds="120"
+         timeToLiveSeconds="120"
            overflowToDisk="false"
-           statistics="true">
+           memoryStoreEvictionPolicy="LRU">
     </cache>
-
     <cache name="authorizationCache"
-           maxEntriesLocalHeap="2000"
-           eternal="false"
-           timeToIdleSeconds="3600"
-           timeToLiveSeconds="0"
+           maxElementsInMemory="1000"
+           eternal="true"
+         timeToIdleSeconds="120"
+         timeToLiveSeconds="120"
            overflowToDisk="false"
-           statistics="true">
+           memoryStoreEvictionPolicy="LRU">
     </cache>
-
     <cache name="authenticationCache"
-           maxEntriesLocalHeap="2000"
-           eternal="false"
-           timeToIdleSeconds="3600"
-           timeToLiveSeconds="0"
+           maxElementsInMemory="1000"
+           eternal="true"
+         timeToIdleSeconds="120"
+         timeToLiveSeconds="120"
            overflowToDisk="false"
-           statistics="true">
+           memoryStoreEvictionPolicy="LRU">
     </cache>
-
     <cache name="shiro-activeSessionCache"
-           maxEntriesLocalHeap="2000"
-           eternal="false"
-           timeToIdleSeconds="3600"
-           timeToLiveSeconds="0"	
+         maxElementsInMemory="1000"
+           eternal="true"
+           timeToIdleSeconds="120"
+           timeToLiveSeconds="120"
            overflowToDisk="false"
-           statistics="true">
+           memoryStoreEvictionPolicy="LRU">
     </cache>
     <!-- 
 	    name：缓存名称。

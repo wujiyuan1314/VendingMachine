@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
+import base.util.CacheUtils;
 import base.util.Function;
 import base.util.Page;
 import net.sf.json.JSONArray;
@@ -111,11 +112,7 @@ public class VendUserController{
 			zNode.setId(vendPermission.getId());
 			zNode.setpId(vendPermission.getParentId());
 			zNode.setName(vendPermission.getPermissionDescription());
-			if(vendPermission.getParentId()==1){
-				zNode.setOpen(true);
-			}else{
-				zNode.setOpen(false);
-			}
+			zNode.setOpen(true);
 			if(permissionlist.indexOf(vendPermission.getId().toString()+",")!=-1){
 				zNode.setChecked(true);
 			}else{
@@ -157,8 +154,11 @@ public class VendUserController{
 		
 		VendUser vendUser=vendUserService.getOne(usercode);
 		if(vendUser!=null){
-			vendUser.setPermissionList(permissionList);;
-			vendUserService.editVendUser(vendUser);
+			vendUser.setPermissionList(permissionList);
+			int isOk=vendUserService.editVendUser(vendUser);
+			if(isOk==1){
+				CacheUtils.remove("userCache", "key_usergetRoles"+vendUser.getUsername());
+			}
 		}
 		return "redirect:/user/users";
 	 }

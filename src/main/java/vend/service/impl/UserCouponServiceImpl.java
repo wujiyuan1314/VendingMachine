@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import base.util.CacheUtils;
 import base.util.DateUtil;
 import base.util.Page;
 import vend.dao.UserCouponMapper;
@@ -37,7 +38,11 @@ public class UserCouponServiceImpl implements UserCouponService {
 	public int insertUserCoupon(UserCoupon userCoupon){
 		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 		userCoupon.setCreateTime(createTime);
-		return userCouponMapper.insertSelective(userCoupon);
+		int isOk=userCouponMapper.insertSelective(userCoupon);
+		if(isOk==1){
+			CacheUtils.remove("couponCache","key_UserCoupon_findAll");
+		}
+		return isOk;
 	}
 	/**
 	 * 修改消费用户优惠券
@@ -45,21 +50,32 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 * @return
 	 */
 	public int editUserCoupon(UserCoupon userCoupon){
-		return userCouponMapper.updateByPrimaryKeySelective(userCoupon);
+		int isOk= userCouponMapper.updateByPrimaryKeySelective(userCoupon);
+		if(isOk==1){
+			CacheUtils.remove("couponCache","key_UserCoupon_findAll");
+		}
+		return isOk;
 	}
 	/**
 	 * 删除�?个商�?
 	 * @param id
 	 */
 	public void delUserCoupon(int id){
-		userCouponMapper.deleteByPrimaryKey(id);
+		int isOk= userCouponMapper.deleteByPrimaryKey(id);
+		if(isOk==1){
+			CacheUtils.remove("couponCache","key_UserCoupon_findAll");
+		}
 	}
 	/**
 	 * 批量删除消费用户优惠券
 	 * @param id
 	 */
 	public int delUserCoupons(int ids[]){
-		return userCouponMapper.deleteBatch(ids);
+		int isOk= userCouponMapper.deleteBatch(ids);
+		if(isOk==1){
+			CacheUtils.remove("couponCache","key_UserCoupon_findAll");
+		}
+		return isOk;
 	}
 	/**
 	 * 批量添加
@@ -75,40 +91,66 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 */
 	@Cacheable(value="couponCache")
 	public UserCoupon getOne(int id){
-		return userCouponMapper.selectByPrimaryKey(id);
+		String key="key_UserCoupon_getOne";
+		UserCoupon userCoupon=(UserCoupon)CacheUtils.get("couponCache", key);
+		if(userCoupon==null){
+			userCoupon=userCouponMapper.selectByPrimaryKey(id);
+			CacheUtils.put("couponCache", key, userCoupon);
+		}
+		return userCoupon;
 	}
 	/**
 	 * 查找全部
 	 * @return
 	 */
-	@Cacheable(value="couponCache")
 	public List<UserCoupon> findAll() {
 		// TODO Auto-generated method stub
-		return userCouponMapper.findAll();
+		String key="key_UserCoupon_findAll";
+		List<UserCoupon> userCoupons=(List<UserCoupon>)CacheUtils.get("couponCache", key);
+		if(userCoupons==null){
+			userCoupons=userCouponMapper.findAll();
+			CacheUtils.put("couponCache", key, userCoupons);
+		}
+		return userCoupons;
 	}
 	/**
 	 * 按照usercode查找
 	 * @return
 	 */
-	@Cacheable(value="couponCache")
 	public List<UserCoupon> findByUsercode(String usercode){
-		return userCouponMapper.findByUsercode(usercode);
+		String key="key_UserCoupon_findByUsercode"+usercode;
+		List<UserCoupon> userCoupons=(List<UserCoupon>)CacheUtils.get("couponCache", key);
+		if(userCoupons==null){
+			userCoupons=userCouponMapper.findByUsercode(usercode);
+			CacheUtils.put("couponCache", key, userCoupons);
+		}
+		return userCoupons;
 	}
 	/**
 	 * 按照usercode和优惠券ID查找
 	 * @param usercode
 	 * @param couponId
 	 */
-	@Cacheable(value="couponCache")
 	public UserCoupon findByUsercodeLimitCouponId(String usercode,Integer couponId){
-		return userCouponMapper.findByUsercodeLimitCouponId(usercode, couponId);
+		String key="key_UserCoupon_findByUsercodeLimitCouponId"+usercode+couponId;
+		UserCoupon userCoupon=(UserCoupon)CacheUtils.get("couponCache", key);
+		if(userCoupon==null){
+			userCoupon=userCouponMapper.findByUsercodeLimitCouponId(usercode, couponId);
+			CacheUtils.put("couponCache", key, userCoupon);
+		}
+		return userCoupon;
 	}
 	/**
 	 * 按照当前时间查找
 	 * @return
 	 */
-	@Cacheable(value="couponCache")
 	public List<UserCoupon> findByEndtime(String CurrentDate){
-		return userCouponMapper.findByEndtime(CurrentDate);
+		String key="key_UserCoupon_findByEndtime"+CurrentDate;
+		List<UserCoupon> userCoupons=(List<UserCoupon>)CacheUtils.get("couponCache", key);
+		if(userCoupons==null){
+			userCoupons=userCouponMapper.findByEndtime(CurrentDate);
+			CacheUtils.put("couponCache", key, userCoupons);
+		}
+		return userCoupons;
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import base.util.CacheUtils;
 import base.util.DateUtil;
 import base.util.Page;
 import vend.dao.VendMachineMapper;
@@ -87,5 +88,19 @@ public class VendMachineServiceImpl implements VendMachineService {
 	@Cacheable(value="machineCache")
 	public VendMachine selectByMachineCode(String machineCode){
 		return vendMachineMapper.selectByMachineCode(machineCode);
+	}
+	/**
+	 * 按照machineCode查找
+	 * @param machineCode
+	 * @return
+	 */
+	public List<VendMachine> selectByUsercode(String usercodelist[]){
+		String key="key_machine_selectByUsercode"+usercodelist;
+		List<VendMachine> vendMachines=(List<VendMachine>)CacheUtils.get("machineCache", key);
+		if(vendMachines==null){
+			vendMachines=vendMachineMapper.selectByUsercode(usercodelist);
+			CacheUtils.put("machineCache", key, vendMachines);
+		}
+		return vendMachines;
 	}
 }

@@ -68,6 +68,9 @@ public class VendGoodsController{
 		List<VendGoods> vendGoodss = vendGoodsService.findAll();
 		String path = request.getContextPath();
 		String basePath1 = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
+		if(vendGoodss.size()>3){
+			vendGoodss=vendGoodss.subList(0, 3);
+		}
 		for(VendGoods vendGoods:vendGoodss){
 			vendGoods.setPic(basePath1+vendGoods.getPic());
 		}

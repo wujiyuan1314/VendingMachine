@@ -32,6 +32,8 @@
     <import resource="spring-shiro.xml"/>
     <!-- spring自带定时器任务-->
     <import resource="spring-timer.xml"/>
+    <!-- spring-ehcahce管理-->
+    <import resource="spring-ehcache.xml"/>
 	<!-- 定时任务quartz，运行去掉
 	<import resource="spring-quartz.xml"/>-->
     

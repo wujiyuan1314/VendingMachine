@@ -13,7 +13,7 @@
     </bean>
     
     <!-- 缓存管理器 使用Ehcache实现 -->
-    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+    <bean id="scacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
         <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/>
     </bean>
 

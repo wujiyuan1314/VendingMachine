@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import base.util.CacheUtils;
 import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
@@ -117,9 +118,14 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @param username
 	 * @return
 	 */
-	@Cacheable(value="userCache")
 	public VendUser selectByUsername(String username){
-		return vendUserMapper.selectByUsername(username);
+		String key="key_selectByUsername"+username;
+		VendUser vendUser=(VendUser)CacheUtils.get("userCache", key);
+		if(vendUser==null){
+			vendUser=vendUserMapper.selectByUsername(username);
+			CacheUtils.put("userCache", key, vendUser);
+		}
+		return vendUser;
 	}
 	/**
 	 * 按照地区查找用户
@@ -136,9 +142,14 @@ public class VendUserServiceImpl implements VendUserService {
      * @return
      */
     @Override
-    @Cacheable(value="userCache")
 	public Set<String> getRoles(String username){
-    	return vendUserMapper.getRoles(username);
+    	String key="key_getRoles"+username;
+    	Set<String> set=(Set<String>)CacheUtils.get("userCache", key);
+    	if(set==null){
+    		set=vendUserMapper.getRoles(username);
+    		CacheUtils.put("userCache", key, set);
+    	}
+    	return set;
     }
 	/**
 	 * 按到用户名得到权限信息
@@ -146,28 +157,45 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @return
 	 */
 	@Override
-	@Cacheable(value="userCache")
 	public Set<String> getPermissions(String username){
-		Set<String> set1=vendUserMapper.getPermissions(username);
-		Set<String> set2=new HashSet<String>();
-		
-		VendUser pvendUser=vendUserMapper.selectByUsername(username);
-		String permissionlist="";
-		if(pvendUser!=null){
-			permissionlist=pvendUser.getPermissionList();
-		}
-		if(permissionlist==null||"".equals(permissionlist)){
-			for(String permissionid:set1){
-				VendPermission vendPermission=vendPermissionMapper.selectByPrimaryKey(Integer.parseInt(permissionid));
-				set2.add(vendPermission.getPermissionName());
+		String key2="key_usergetRoles"+username;
+		Set<String> set2=(Set<String>)CacheUtils.get("userCache", key2);
+		if(set2==null){
+			VendUser pvendUser=(VendUser)CacheUtils.get("userCache", "key_selectByUsername"+username);
+			if(pvendUser==null){
+				pvendUser=vendUserMapper.selectByUsername(username);
+				CacheUtils.put("userCache", "key_selectByUsername"+username, pvendUser);
 			}
-		}else{
-			for(String permissionid:set1){
-				if(permissionlist.indexOf(permissionid+",")!=-1){
+			
+			String key1="key_getRoles"+pvendUser.getRoleId();
+			Set<String> set1=(Set<String>)CacheUtils.get("userCache", key1);
+			if(set1==null){
+				set1=vendUserMapper.getPermissions(username);
+				CacheUtils.put("userCache", key1, set1);
+			}
+			
+			String permissionlist="";
+			if(pvendUser!=null){
+				permissionlist=pvendUser.getPermissionList();
+			}
+			if(permissionlist==null||"".equals(permissionlist)){
+				for(String permissionid:set1){
 					VendPermission vendPermission=vendPermissionMapper.selectByPrimaryKey(Integer.parseInt(permissionid));
-					set2.add(vendPermission.getPermissionName());
+					if(vendPermission!=null){
+						set2.add(vendPermission.getPermissionName());
+					}
+				}
+			}else{
+				for(String permissionid:set1){
+					if(permissionlist.indexOf(permissionid+",")!=-1){
+						VendPermission vendPermission=vendPermissionMapper.selectByPrimaryKey(Integer.parseInt(permissionid));
+						if(vendPermission!=null){
+							set2.add(vendPermission.getPermissionName());
+						}
+					}
 				}
 			}
+			CacheUtils.put("userCache", key2, set2);
 		}
 		return set2;
 	}

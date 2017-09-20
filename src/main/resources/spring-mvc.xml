@@ -36,18 +36,6 @@
 	<!-- 1).加入对静态资源处理：js,gif,png 2).允许使用 "/" 做整体映射 -->
 	<mvc:default-servlet-handler />
 	
-	<!-- 3.ehcache缓存配置管理 -->
-    <!-- 启用缓存注解开关 -->
-    <cache:annotation-driven cache-manager="cacheManager"/>
-    
-    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-      <property name="configLocation" value="classpath:ehcache.xml"/>
-    </bean>
-
-    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
-      <property name="cacheManager" ref="ehcache"/>
-    </bean>
-
 	<!--4.视图模式配置，定义跳转文件的前缀和后缀 -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

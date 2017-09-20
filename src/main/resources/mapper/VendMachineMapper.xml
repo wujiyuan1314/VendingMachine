@@ -322,6 +322,16 @@
     from vend_machine
     where machine_code = #{machineCode,jdbcType=VARCHAR}
   </select>
+  
+   <select id="selectByUsercode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_machine
+    where usercode in
+    <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+    </foreach>
+  </select>
   <!-- 批量删除 -->
     <delete id="deleteBatch" parameterType="int">
         delete from vend_machine where id in

@@ -27,18 +27,47 @@
 
 <!--Action boxes-->
   <div class="container-fluid">
-    <div class="row clearfix">
-		<div class="col-md-12 column">
-			<div class="alert alert-success alert-dismissable">
-				 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-				<h4>
-					欢迎进入自动售货机管理系统!
-				</h4> <strong>简介!</strong> 自动售货机（Vending Machine，VEM）是能根据投入的钱币自动付货的机器。自动售货机是商业自动化的常用设备，它不受时间、地点的限制，能节省人力、方便交易。是一种全新的商业零售形式，又被称为24小时营业的微型超市。目前国内常见的自动售卖机共分为四种：饮料自动售货机、食品自动售货机、综合自动售货机、化妆品自动售卖机。</a>
-			</div>
+    <div class="row fluid">
+      <input type="hidden" name="currentPage" id="currentPage" value="1" />
+		<div class="span4">
+		  <div class="widget-box">
+		      <div class="widget-title"> <span class="icon"><i class="icon-eye-open"></i></span>
+                 <h5>每天销售情况统计</h5>
+              </div>
+              
+			  <div class="widget-content nopadding">
+			     <table class="table table-bordered">
+		         <thead>
+	               <tr>
+	                 <th>项目</th>
+	                 <th>情况</th>
+	               </tr>
+	             </thead>
+		         <tbody>
+	                <tr>
+	                  <td>消费用户数</td>
+	                  <td></td>
+	                </tr>
+	                <tr>
+	                  <td>销售量</td>
+	                  <td></td>
+	                </tr>
+	                <tr>
+	                  <td>销售收入现金</td>
+	                  <td></td>
+	                </tr>
+	                <tr>
+	                  <td>免费数量</td>
+	                  <td></td>
+	                </tr>
+	              </tbody>
+			     </table>
+			  </div>
+		  </div>
 		</div>
-	</div>
+    </div>
+  </div>
 </div>
-
 <!--end-main-container-part-->
 
 <!--Footer-part-->

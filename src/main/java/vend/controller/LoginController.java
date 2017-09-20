@@ -50,9 +50,25 @@ public class LoginController extends LogoutFilter{
         	return "login";
         }
     }
-	 
+	 /**
+	  * 主界面
+	  * @param request
+	  * @return
+	  */
 	@RequestMapping(value="/welcome",method=RequestMethod.GET)
-    public String welcome(){
+    public String welcome(HttpServletRequest request){
+		/**
+		 * 每天销售统计
+		 */
+		HttpSession session=request.getSession();
+	    VendUser vendUser=(VendUser)session.getAttribute("vendUser");
+	    String usercodelist="";
+	    if(vendUser!=null){
+	    	usercodelist=vendUserService.getNextUsers(vendUser.getUsercode());
+	    	if(usercodelist==null){
+	    		usercodelist="";
+	    	}
+	    }
         return "welcome";
     }
 	@RequestMapping(value="/login",method=RequestMethod.POST)
