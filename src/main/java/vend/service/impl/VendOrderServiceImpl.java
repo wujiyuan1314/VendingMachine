@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import base.util.CacheUtils;
 import base.util.Page;
 import vend.dao.VendOrderMapper;
 import vend.entity.VendOrder;
@@ -21,11 +22,21 @@ public class VendOrderServiceImpl implements VendOrderService {
 	 * @param page
 	 * @return
 	 */
-	@Cacheable(value="orderCache")
 	public List<VendOrder> listVendOrder(VendOrder vendOrder,String beginTime,String endTime,Page page){
-		int totalNumber = vendOrderMapper.countVendOrder(vendOrder,beginTime,endTime);
-		page.setTotalNumber(totalNumber);
-		return vendOrderMapper.listVendOrder(vendOrder,beginTime,endTime,page);
+		String title=vendOrder.getUsercode()+beginTime+endTime;
+		String currentPage=Integer.toString(page.getCurrentPage());
+		if(title==null){
+			title="";
+		}
+		String key="key_listVendOrder"+title+currentPage;
+		List<VendOrder> vendOrders=(List<VendOrder>)CacheUtils.get("orderCache", key);
+		if(vendOrders==null){
+			int totalNumber = vendOrderMapper.countVendOrder(vendOrder,beginTime,endTime);
+			page.setTotalNumber(totalNumber);
+			vendOrders=vendOrderMapper.listVendOrder(vendOrder,beginTime,endTime,page);
+			CacheUtils.put("orderCache",key, vendOrders);
+		}
+		return vendOrders;
 	}
 	/**
 	 * 按照参数查找订单信息

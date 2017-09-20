@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import base.util.CacheUtils;
@@ -24,11 +23,21 @@ public class VendMachineServiceImpl implements VendMachineService {
 	 * @param page
 	 * @return
 	 */
-	@Cacheable(value="machineCache")
 	public List<VendMachine> listVendMachine(VendMachine vendMachine,Page page){
-		int totalNumber = vendMachineMapper.countVendMachine(vendMachine);
-		page.setTotalNumber(totalNumber);
-		return vendMachineMapper.listVendMachine(vendMachine, page);
+		String title=vendMachine.getUsercode();
+		String currentPage=Integer.toString(page.getCurrentPage());
+		if(title==null){
+			title="";
+		}
+		String key="key_listVendMachine"+title+currentPage;
+		List<VendMachine> vendMachines=(List<VendMachine>)CacheUtils.get("machineCache", key);
+		if(vendMachines==null){
+			int totalNumber = vendMachineMapper.countVendMachine(vendMachine);
+			page.setTotalNumber(totalNumber);
+			vendMachines=vendMachineMapper.listVendMachine(vendMachine, page);
+			CacheUtils.put("machineCache",key, vendMachines);
+		}
+		return vendMachines;
 	}
 	/**
 	 * 添加机器
@@ -39,7 +48,11 @@ public class VendMachineServiceImpl implements VendMachineService {
 		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 		vendMachine.setCreateTime(createTime);
 		vendMachine.setUpdateTime(createTime);
-		return vendMachineMapper.insertSelective(vendMachine);
+		int isOk=vendMachineMapper.insertSelective(vendMachine);
+		if(isOk==1){
+			CacheUtils.remove("adCache", "key_VendMachine_findAll");
+		}
+		return isOk;
 	}
 	/**
 	 * 修改机器
@@ -47,45 +60,59 @@ public class VendMachineServiceImpl implements VendMachineService {
 	 * @return
 	 */
 	public int editVendMachine(VendMachine vendMachine){
-		return vendMachineMapper.updateByPrimaryKeySelective(vendMachine);
+		int isOk=vendMachineMapper.updateByPrimaryKeySelective(vendMachine);
+		if(isOk==1){
+			CacheUtils.remove("adCache", "key_VendMachine_findAll");
+		}
+		return isOk;
 	}
 	/**
 	 * 删除一个机器
 	 * @param id
 	 */
 	public void delVendMachine(int id){
-		vendMachineMapper.deleteByPrimaryKey(id);
+		int isOk=	vendMachineMapper.deleteByPrimaryKey(id);
+		if(isOk==1){
+			CacheUtils.remove("adCache", "key_VendMachine_findAll");
+		}
 	}
 	/**
 	 * 批量删除机器
 	 * @param id
 	 */
 	public int delVendMachines(int ids[]){
-		return vendMachineMapper.deleteBatch(ids);
+		int isOk=vendMachineMapper.deleteBatch(ids);
+		if(isOk==1){
+			CacheUtils.remove("adCache", "key_VendMachine_findAll");
+		}
+		return isOk;
 	}
 	/**
 	 * 根据ID查找一个机器
 	 * @param id
 	 * @return
 	 */
-	@Cacheable(value="machineCache")
 	public VendMachine getOne(int id){
 		return vendMachineMapper.selectByPrimaryKey(id);
 	}
 	/**
 	 * 查找全部
 	 */
-	@Cacheable(value="machineCache")
 	public List<VendMachine> findAll() {
 		// TODO Auto-generated method stub
-		return vendMachineMapper.findAll();
+		String key="key_VendMachine_findAll";
+		List<VendMachine> vendMachines=(List<VendMachine>)CacheUtils.get("machineCache", key);
+		if(vendMachines==null){
+			vendMachines= vendMachineMapper.findAll();
+			CacheUtils.put("machineCache", key, vendMachines);
+		}
+		return vendMachines;
 	}
 	/**
 	 * 按照machineCode查找
 	 * @param machineCode
 	 * @return
 	 */
-	@Cacheable(value="machineCache")
 	public VendMachine selectByMachineCode(String machineCode){
 		return vendMachineMapper.selectByMachineCode(machineCode);
 	}

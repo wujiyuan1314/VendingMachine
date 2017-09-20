@@ -91,7 +91,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 */
 	@Cacheable(value="couponCache")
 	public UserCoupon getOne(int id){
-		String key="key_UserCoupon_getOne";
+		String key="key_UserCoupon_getOne"+id;
 		UserCoupon userCoupon=(UserCoupon)CacheUtils.get("couponCache", key);
 		if(userCoupon==null){
 			userCoupon=userCouponMapper.selectByPrimaryKey(id);

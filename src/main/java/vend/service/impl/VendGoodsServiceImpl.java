@@ -18,7 +18,7 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 	@Autowired
 	VendGoodsMapper vendGoodsMapper;
 	/**
-	 * 根据输入信息条件查询商品列表，并分页显示
+	 * 鏍规嵁杈撳叆淇℃伅鏉′欢鏌ヨ鍟嗗搧鍒楄〃锛屽苟鍒嗛〉鏄剧ず
 	 * @param vendGoods
 	 * @param page
 	 * @return
@@ -40,7 +40,7 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 		return vendGoodss;
 	}
 	/**
-	 * 添加商品
+	 * 娣诲姞鍟嗗搧
 	 * @param vendGoods
 	 * @return
 	 */
@@ -49,45 +49,48 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 		vendGoods.setCreateTime(createTime);
 		vendGoods.setUpdateTime(createTime);
 		int isOk= vendGoodsMapper.insertSelective(vendGoods);
-		//添加后删除缓存
+		//娣诲姞鍚庡垹闄ょ紦瀛�
 		if(isOk==1){
 			CacheUtils.remove("goodsCache", "key_Goods_findAll");
 		}
 		return isOk;
 	}
 	/**
-	 * 修改商品
+	 * 淇敼鍟嗗搧
 	 * @param vendGoods
 	 * @return
 	 */
 	public int editVendGoods(VendGoods vendGoods){
 		int isOk=vendGoodsMapper.updateByPrimaryKeySelective(vendGoods);
-		//修改后删除缓存
+		//淇敼鍚庡垹闄ょ紦瀛�
 		if(isOk==1){
 			CacheUtils.remove("goodsCache", "key_Goods_findAll");
 		}
 		return isOk;
 	}
 	/**
-	 * 删除一个商品
+	 * 鍒犻櫎涓�涓晢鍝�
 	 * @param id
 	 */
 	public void delVendGoods(int id){
 		int isOk=vendGoodsMapper.deleteByPrimaryKey(id);
-		//删除后删除缓存
 		if(isOk==1){
 			CacheUtils.remove("goodsCache", "key_Goods_findAll");
 		}
 	}
 	/**
-	 * 批量删除商品
+	 * 鎵归噺鍒犻櫎鍟嗗搧
 	 * @param id
 	 */
 	public int delVendGoodss(int ids[]){
-		return vendGoodsMapper.deleteBatch(ids);
+		int isOk=vendGoodsMapper.deleteBatch(ids);
+		if(isOk==1){
+			CacheUtils.remove("goodsCache", "key_Goods_findAll");
+		}
+		return isOk;
 	}
 	/**
-	 * 根据ID查找一个商品
+	 * 鏍规嵁ID鏌ユ壘涓�涓晢鍝�
 	 * @param id
 	 * @return
 	 */
@@ -100,7 +103,7 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 		return vendGoods;
 	}
 	/**
-	 * 查找全部
+	 * 鏌ユ壘鍏ㄩ儴
 	 */
 	public List<VendGoods> findAll() {
 		// TODO Auto-generated method stub
@@ -108,6 +111,7 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 		List<VendGoods> vendGoodss=(List<VendGoods>)CacheUtils.get("goodsCache", key);
 		if(vendGoodss==null){
 			vendGoodss=vendGoodsMapper.findAll();
+			CacheUtils.put("goodsCache", key, vendGoodss);
 		}
 		return vendGoodss;
 	}

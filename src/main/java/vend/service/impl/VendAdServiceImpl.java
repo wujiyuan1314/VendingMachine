@@ -4,9 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import base.util.CacheUtils;
 import base.util.DateUtil;
 import base.util.Page;
 import vend.dao.VendAdMapper;
@@ -23,11 +23,21 @@ public class VendAdServiceImpl implements VendAdService {
 	 * @param page
 	 * @return
 	 */
-	@Cacheable(value="adCache")
 	public List<VendAd> listVendAd(VendAd vendAd,Page page){
-		int totalNumber = vendAdMapper.countVendAd(vendAd);
-		page.setTotalNumber(totalNumber);
-		return vendAdMapper.listVendAd(vendAd, page);
+		String title=vendAd.getAdName();
+		String currentPage=Integer.toString(page.getCurrentPage());
+		if(title==null){
+			title="";
+		}
+		String key="key_listVendAd"+title+currentPage;
+		List<VendAd> vendAds=(List<VendAd>)CacheUtils.get("adCache", key);
+		if(vendAds==null){
+			int totalNumber = vendAdMapper.countVendAd(vendAd);
+			page.setTotalNumber(totalNumber);
+			vendAds=vendAdMapper.listVendAd(vendAd, page);
+			CacheUtils.put("adCache",key, vendAds);
+		}
+		return vendAds;
 	}
 	/**
 	 * 添加广告
@@ -38,7 +48,11 @@ public class VendAdServiceImpl implements VendAdService {
 		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 		vendAd.setCreateTime(createTime);
 		vendAd.setUpdateTime(createTime);
-		return vendAdMapper.insertSelective(vendAd);
+		int isOk=vendAdMapper.insertSelective(vendAd);
+		if(isOk==1){
+			CacheUtils.remove("adCache", "key_VendAd_findAll");
+		}
+		return isOk;
 	}
 	/**
 	 * 修改广告
@@ -46,37 +60,58 @@ public class VendAdServiceImpl implements VendAdService {
 	 * @return
 	 */
 	public int editVendAd(VendAd vendAd){
-		return vendAdMapper.updateByPrimaryKeySelective(vendAd);
+		int isOk=vendAdMapper.updateByPrimaryKeySelective(vendAd);
+		if(isOk==1){
+			CacheUtils.remove("adCache", "key_VendAd_findAll");
+		}
+		return isOk;
 	}
 	/**
 	 * 删除一个广告
 	 * @param id
 	 */
 	public void delVendAd(int id){
-		vendAdMapper.deleteByPrimaryKey(id);
+		int isOk=vendAdMapper.deleteByPrimaryKey(id);
+		if(isOk==1){
+			CacheUtils.remove("adCache", "key_VendAd_findAll");
+		}
 	}
 	/**
 	 * 批量删除广告
 	 * @param id
 	 */
 	public int delVendAds(int ids[]){
-		return vendAdMapper.deleteBatch(ids);
+		int isOk=vendAdMapper.deleteBatch(ids);
+		if(isOk==1){
+			CacheUtils.remove("adCache", "key_VendAd_findAll");
+		}
+		return isOk;
 	}
 	/**
 	 * 根据ID查找一个广告
 	 * @param id
 	 * @return
 	 */
-	@Cacheable(value="adCache")
 	public VendAd getOne(int id){
-		return vendAdMapper.selectByPrimaryKey(id);
+		String key="VendAd_getOne"+id;
+		VendAd vendAd=(VendAd)CacheUtils.get("adCache", key);
+		if(vendAd==null){
+			vendAd=vendAdMapper.selectByPrimaryKey(id);
+			CacheUtils.put("adCache", key, vendAd);
+		}
+		return vendAd;
 	}
 	/**
 	 * 查找全部
 	 */
-	@Cacheable(value="adCache")
 	public List<VendAd> findAll() {
 		// TODO Auto-generated method stub
-		return vendAdMapper.findAll();
+		String key="key_VendAd_findAll";
+		List<VendAd> vendAds=(List<VendAd>)CacheUtils.get("adCache", key);
+		if(vendAds==null){
+			vendAds= vendAdMapper.findAll();
+			CacheUtils.put("adCache", key, vendAds);
+		}
+		return vendAds;
 	}
 }

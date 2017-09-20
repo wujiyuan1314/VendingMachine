@@ -4,9 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import base.util.CacheUtils;
 import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
@@ -24,11 +24,22 @@ public class VendAccountServiceImpl implements VendAccountService {
 	 * @param page
 	 * @return
 	 */
-	@Cacheable(value="accountCache")
 	public List<VendAccount> listVendAccount(VendAccount vendAccount,Page page){
-		int totalNumber = vendAccountMapper.countVendAccount(vendAccount);
-		page.setTotalNumber(totalNumber);
-		return vendAccountMapper.listVendAccount(vendAccount, page);
+		String title=vendAccount.getUsercode();
+		String currentPage=Integer.toString(page.getCurrentPage());
+		if(title==null){
+			title="";
+		}
+		String key="key_listVendAccount"+title+currentPage;
+		List<VendAccount> vendAccounts=(List<VendAccount>)CacheUtils.get("accountCache", key);
+		if(vendAccounts==null){
+			int totalNumber = vendAccountMapper.countVendAccount(vendAccount);
+			page.setTotalNumber(totalNumber);
+			vendAccounts=vendAccountMapper.listVendAccount(vendAccount, page);
+			CacheUtils.put("accountCache", key, vendAccounts);
+		}
+		
+		return vendAccounts;
 	}
 	/**
 	 * 添加用户账户
@@ -41,7 +52,11 @@ public class VendAccountServiceImpl implements VendAccountService {
 		vendAccount.setUsercode(usercode);
 		vendAccount.setCreateTime(createTime);
 		vendAccount.setUpdateTime(createTime);
-		return vendAccountMapper.insertSelective(vendAccount);
+		int isOk=vendAccountMapper.insertSelective(vendAccount);
+		if(isOk==1){
+			CacheUtils.remove("accountCache", "key_VendAccount_findAll");
+		}
+		return isOk;
 	}
 	/**
 	 * 修改用户账户
@@ -56,30 +71,47 @@ public class VendAccountServiceImpl implements VendAccountService {
 	 * @param id
 	 */
 	public void delVendAccount(String usercode){
-		vendAccountMapper.deleteByPrimaryKey(usercode);
+		int isOk=vendAccountMapper.deleteByPrimaryKey(usercode);
+		if(isOk==1){
+			CacheUtils.remove("accountCache", "key_VendAccount_findAll");
+		}
 	}
 	/**
 	 * 批量删除用户账户
 	 * @param id
 	 */
 	public int delVendAccounts(String usercodes[]){
-		return vendAccountMapper.deleteBatch(usercodes);
+		int isOk= vendAccountMapper.deleteBatch(usercodes);
+		if(isOk==1){
+			CacheUtils.remove("accountCache", "key_VendAccount_findAll");
+		}
+		return isOk;
 	}
 	/**
 	 * 根据ID查找一个用户账户
 	 * @param id
 	 * @return
 	 */
-	@Cacheable(value="accountCache")
 	public VendAccount getOne(String usercode){
-		return vendAccountMapper.selectByPrimaryKey(usercode);
+		String key="key_VendAccount_getOne"+usercode;
+		VendAccount vendAccount=(VendAccount)CacheUtils.get("accountCache", key);
+		if(vendAccount==null){
+			vendAccount=vendAccountMapper.selectByPrimaryKey(usercode);
+			CacheUtils.put("accountCache", key, vendAccount);
+		}
+		return vendAccount;
 	}
 	/**
 	 * 查找全部
 	 */
-	@Cacheable(value="accountCache")
 	public List<VendAccount> findAll() {
 		// TODO Auto-generated method stub
-		return vendAccountMapper.findAll();
+		String key="key_VendAccount_findAll";
+		List<VendAccount> vendAccounts=(List<VendAccount>)CacheUtils.get("accountCache", key);
+		if(vendAccounts==null){
+			vendAccounts= vendAccountMapper.findAll();
+			CacheUtils.put("accountCache", key, vendAccounts);
+		}
+		return vendAccounts;
 	}
 }
