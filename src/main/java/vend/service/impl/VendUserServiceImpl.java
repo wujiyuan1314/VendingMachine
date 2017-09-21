@@ -161,6 +161,7 @@ public class VendUserServiceImpl implements VendUserService {
 		String key2="key_usergetRoles"+username;
 		Set<String> set2=(Set<String>)CacheUtils.get("userCache", key2);
 		if(set2==null){
+			set2=new HashSet<String>();
 			VendUser pvendUser=(VendUser)CacheUtils.get("userCache", "key_selectByUsername"+username);
 			if(pvendUser==null){
 				pvendUser=vendUserMapper.selectByUsername(username);

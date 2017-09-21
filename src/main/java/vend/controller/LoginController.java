@@ -27,9 +27,13 @@ import base.util.DateUtil;
 import base.util.Function;
 import vend.entity.UserCoupon;
 import vend.entity.VendAccount;
+import vend.entity.VendMachine;
+import vend.entity.VendOrder;
 import vend.entity.VendUser;
 import vend.service.UserCouponService;
 import vend.service.VendAccountService;
+import vend.service.VendMachineService;
+import vend.service.VendOrderService;
 import vend.service.VendUserService;
 
 @Controller
@@ -38,7 +42,11 @@ public class LoginController extends LogoutFilter{
 	@Autowired
 	VendUserService vendUserService;
 	@Autowired
+	VendMachineService vendMachineService;
+	@Autowired
 	VendAccountService vendAccountService;
+	@Autowired
+	VendOrderService vendOrderService;
 	@Autowired
 	UserCouponService userCouponService;
 	@RequestMapping(value="/login",method=RequestMethod.GET)
@@ -53,10 +61,11 @@ public class LoginController extends LogoutFilter{
 	 /**
 	  * 主界面
 	  * @param request
+	  * @param model
 	  * @return
 	  */
 	@RequestMapping(value="/welcome",method=RequestMethod.GET)
-    public String welcome(HttpServletRequest request){
+    public String welcome(HttpServletRequest request,Model model){
 		/**
 		 * 每天销售统计
 		 */
@@ -69,6 +78,52 @@ public class LoginController extends LogoutFilter{
 	    		usercodelist="";
 	    	}
 	    }
+	    
+	    String usercodeArray[]=Function.stringSpilit(usercodelist, ",");
+	    List<VendMachine> vendMachines=vendMachineService.selectByUsercode(usercodeArray);
+	    String mochinecodelist="";
+	    for(VendMachine vendMachine:vendMachines){
+	    	if(vendMachine!=null&&vendMachine.getMachineCode()!=null){
+	    		mochinecodelist+=vendMachine.getMachineCode()+",";
+	    	}
+	    }
+	    String mochinecodeArray[]=Function.stringSpilit(mochinecodelist, ",");
+	    
+	    //当天销售量
+	    VendOrder vendOrder=new VendOrder();
+	    String beginTime=DateUtil.getCurrentDateStr();
+	    String endTime=DateUtil.format(DateUtil.addDays(DateUtil.parseDate(beginTime),1));
+	    List<VendOrder> vendOrders =vendOrderService.selectByParams(vendOrder,mochinecodeArray,beginTime, endTime);
+	    
+	    int user_num=0;//消费用户数
+	    int sell_num=0;//销售量
+	    double sell_amount=0.0;//销售金额
+	    int free_num=0;//免费数量
+	    String buyusers="";
+	    for(VendOrder vendOrder1:vendOrders){
+	    	if(vendOrder1!=null&&vendOrder1.getUsercode()!=null){
+	    		if(buyusers.indexOf(vendOrder1.getUsercode()+",")==-1){
+	    			buyusers+=vendOrder1.getUsercode()+",";
+	    			user_num++;
+	    		}
+	    	}
+	    	if(vendOrder1!=null&&vendOrder1.getNum()!=null){
+	    		    sell_num+=vendOrder1.getNum();
+	    	}
+	    	if(vendOrder1!=null&&vendOrder1.getAmount()!=null){
+	    		    sell_amount+=vendOrder1.getAmount().doubleValue();
+	    	}
+	    	if(vendOrder1!=null&&vendOrder1.getFreeStatus()!=null&&vendOrder1.getFreeStatus().equals("1")){
+	    		    free_num++;
+    	    }
+	    }
+	    Map<String,Object> map=new HashMap<String,Object>();
+	    map.put("user_num", user_num);
+	    map.put("sell_num", sell_num);
+	    map.put("sell_amount", sell_amount);
+	    map.put("free_num", free_num);
+	    model.addAttribute("map", map);
+	    
         return "welcome";
     }
 	@RequestMapping(value="/login",method=RequestMethod.POST)
@@ -121,7 +176,7 @@ public class LoginController extends LogoutFilter{
 		//}
 		VendUser vendUser = vendUserService.selectByUsername(username);
 		subject.getSession().setAttribute("vendUser", vendUser);
-		return "welcome";
+		return "redirect:welcome";
 	}
     /**
      * 退出登录

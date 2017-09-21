@@ -1,10 +1,12 @@
 package vend.controller;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
@@ -19,11 +21,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import base.util.Function;
 import base.util.HttpClientUtil;
 import base.util.Page;
 import base.util.SysPara;
+import base.weixinpay.common.StreamUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import vend.entity.CodeLibrary;
@@ -50,7 +54,7 @@ public class VendManageController{
 	@Autowired
 	CodeLibraryService codeLibraryService;
 	/**
-	 * 根据输入信息条件查询广告列表，并分页显示
+	 * 根据输入信息条件查询机器列表，并分页显示
 	 * @param model
 	 * @param vendMachine
 	 * @param page
@@ -393,7 +397,7 @@ public class VendManageController{
 	}
 	
 	/**
-	 * 请求广告节目信息
+	 * 请求机器节目信息
 	 * @param id
 	 * @return
 	 */
@@ -415,7 +419,7 @@ public class VendManageController{
 	}
 	
 	/**
-	 * 设置广告节目信息
+	 * 设置机器节目信息
 	 * @param id
 	 * @return
 	 */
@@ -577,7 +581,17 @@ public class VendManageController{
 		}
 		return "redirect:../machines"; 
 	}
-	
+	/**
+	 * 机器回调地址
+	 * @param map
+	 * @return
+	 * @throws IOException 
+	 */
+	@RequestMapping(value="/callback",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
+	public @ResponseBody void callBack(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		String reqParams = StreamUtil.read(request.getInputStream());
+		logger.info("-------回调结果:"+reqParams);
+	}
 	/**
 	 * 详情
 	 * @param model
@@ -593,7 +607,7 @@ public class VendManageController{
 		return "manage/machine/machine_detail"; 
 	}
 	/**
-	 * 跳转广告信息添加界面
+	 * 跳转机器信息添加界面
 	 * @param model
 	 * @return
 	 */
@@ -606,7 +620,7 @@ public class VendManageController{
 		return "manage/machine/machine_add";
 	}
    /**
-    * 添加广告信息
+    * 添加机器信息
     * @param request
     * @param model
     * @param vendMachine
@@ -625,7 +639,7 @@ public class VendManageController{
     	return "redirect:machines";
 	}
     /**
-	 * 跳转广告修改界面
+	 * 跳转机器修改界面
 	 * @param model
 	 * @return
 	 */
@@ -641,7 +655,7 @@ public class VendManageController{
 		return "manage/machine/machine_edit";
 	}
 	/**
-	 * 修改广告信息
+	 * 修改机器信息
 	 * @param request
 	 * @param model
 	 * @param vendMachine
@@ -658,7 +672,7 @@ public class VendManageController{
 		return "redirect:machines";
 	}
     /**
-     * 删除广告信息
+     * 删除机器信息
      * @param user
      * @param br
      * @return
@@ -670,7 +684,7 @@ public class VendManageController{
  		return "redirect:/machine/machines";
  	}
     /**
-     * 批量删除广告信息
+     * 批量删除机器信息
      * @param ids
      * @return
      */

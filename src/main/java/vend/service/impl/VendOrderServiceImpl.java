@@ -46,8 +46,8 @@ public class VendOrderServiceImpl implements VendOrderService {
 	 * @return
 	 */
 	@Cacheable(value="orderCache")
-	public List<VendOrder> selectByParams(VendOrder vendOrder,String beginTime,String endTime){
-		return vendOrderMapper.selectByParams(vendOrder, beginTime, endTime);
+	public List<VendOrder> selectByParams(VendOrder vendOrder,String mochinecodeArray[],String beginTime,String endTime){
+		return vendOrderMapper.selectByParams(vendOrder,mochinecodeArray,beginTime, endTime);
 	}
 	/**
 	 * 添加订单

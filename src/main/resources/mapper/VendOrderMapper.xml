@@ -247,6 +247,10 @@
 	<include refid="Base_Column_List" />
 	from vend_order
 	<where>
+	    and machine_code in
+		<foreach item="item" collection="mochinecodeArray" open="(" separator="," close=")">
+	            #{item}
+	    </foreach>
 		<if test="vendOrder.usercode != null and !&quot;&quot;.equals(vendOrder.usercode.trim())">
 			and usercode = #{vendOrder.usercode}
 		</if>
@@ -266,10 +270,10 @@
 			and machine_code = #{vendOrder.machineCode}
 		</if>
 		<if test="beginTime!=null and !&quot;&quot;.equals(beginTime.trim())">
-          <![CDATA[   and DATE_FORMAT(vendOrder.create_time, '%Y-%m-%d %H:%i:%S')>=  DATE_FORMAT(#{beginTime}, '%Y-%m-%d %H:%i:%S')   ]]>
+          <![CDATA[   and DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%S')>=  DATE_FORMAT(#{beginTime}, '%Y-%m-%d %H:%i:%S')   ]]>
         </if>
         <if test="endTime!=null and !&quot;&quot;.equals(endTime.trim())">
-          <![CDATA[   and DATE_FORMAT(vendOrder.create_time, '%Y-%m-%d %H:%i:%S')<=  DATE_FORMAT(#{endTime}, '%Y-%m-%d %H:%i:%S')   ]]>
+          <![CDATA[   and DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%S')<=  DATE_FORMAT(#{endTime}, '%Y-%m-%d %H:%i:%S')   ]]>
         </if>
 	</where>
   </select>

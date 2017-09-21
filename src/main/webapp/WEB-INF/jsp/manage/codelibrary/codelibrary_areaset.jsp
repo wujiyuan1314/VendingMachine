@@ -36,7 +36,7 @@
 	          <div class="widget-title"> <span class="icon"> <i class="icon-file"></i> </span>
 	            <h5>地区列表</h5>
 	            <shiro:hasPermission name="codelibrary:add">
-	            <a href="/VendingMachine/codeLibrary/${codeno}/add" class="btn btn-success"/>添加地区</a>
+	            <a href="${pageContext.request.contextPath}/codeLibrary/${codeno}/add" class="btn btn-success"/>添加地区</a>
 	            </shiro:hasPermission>
 	          </div>
 	          <div class="widget-content nopadding">
@@ -56,7 +56,7 @@
 		                  <td>${couponarea.itemname}</td>
 		                  <td>${couponarea.extend1}</td>
 		                  <td>
-		                      <a href="/VendingMachine/codeLibrary/${couponarea.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+		                      <a href="${pageContext.request.contextPath}/codeLibrary/${couponarea.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
 			                  <a href="javascript:void(0);" onclick="delconfirm('${couponarea.id}','${codeno}');" class="btn btn-danger  icon-trash"/></a>
 		                  </td>
 		                </tr>

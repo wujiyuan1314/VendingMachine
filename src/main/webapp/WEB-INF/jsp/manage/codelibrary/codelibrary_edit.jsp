@@ -39,7 +39,7 @@
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/codeLibrary/edit" enctype="multipart/form-data" commandName="codeLibrary" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			    <sf:form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/codeLibrary/edit" enctype="multipart/form-data" commandName="codeLibrary" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="id"/>
 	              <sf:hidden path="codeno"/>
 	              <div class="control-group">

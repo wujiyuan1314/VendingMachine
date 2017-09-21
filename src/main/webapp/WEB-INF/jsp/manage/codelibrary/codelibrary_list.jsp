@@ -37,7 +37,7 @@
 	          <div class="widget-title"> <span class="icon"> <i class="icon-file"></i> </span>
 	            <h5>参数${codeno}的类别列表</h5>
 	            <shiro:hasPermission name="codelibrary:add">
-	            <a href="/VendingMachine/codeLibrary/${codeno}/add" class="btn btn-success"/>添加参数类别</a>
+	            <a href="${pageContext.request.contextPath}/codeLibrary/${codeno}/add" class="btn btn-success"/>添加参数类别</a>
 	            </shiro:hasPermission>
 	          </div>
 	          <div class="widget-content nopadding">
@@ -58,7 +58,7 @@
 		                  <td>${codeLibrary.extend1}</td>
 		                  <td>
 		                      <shiro:hasPermission name="codelibrary:edit">
-		                      <a href="/VendingMachine/codeLibrary/${codeLibrary.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+		                      <a href="${pageContext.request.contextPath}/codeLibrary/${codeLibrary.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
 			                  </shiro:hasPermission>
 			                  <shiro:hasPermission name="codelibrary:del">
 			                  <a href="javascript:void(0);" onclick="delconfirm('${codeLibrary.id}','${codeno}');" class="btn btn-danger  icon-trash"/></a>

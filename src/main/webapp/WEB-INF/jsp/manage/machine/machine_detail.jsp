@@ -122,7 +122,7 @@
               </div>
               
 			  <div class="widget-content nopadding">
-			  <sf:form class="form-horizontal" method="post" action="/VendingMachine/machine/edit" enctype="multipart/form-data" commandName="vendMachine" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			  <sf:form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/machine/edit" enctype="multipart/form-data" commandName="vendMachine" name="basic_validate" id="basic_validate" novalidate="novalidate">
 			     <sf:hidden path="id"/>
 			     <table class="table table-bordered">
 		         <thead>

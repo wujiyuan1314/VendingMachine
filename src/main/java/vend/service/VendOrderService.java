@@ -20,7 +20,7 @@ public interface VendOrderService {
 	 * @param endTime
 	 * @return
 	 */
-	List<VendOrder> selectByParams(VendOrder vendOrder,String beginTime,String endTime);
+	List<VendOrder> selectByParams(VendOrder vendOrder,String mochinecodeArray[],String beginTime,String endTime);
 	/**
 	 * 添加订单
 	 * @param vendOrder

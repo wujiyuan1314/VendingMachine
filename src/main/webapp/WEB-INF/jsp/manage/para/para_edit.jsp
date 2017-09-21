@@ -39,7 +39,7 @@
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/para/edit" enctype="multipart/form-data" commandName="vendPara" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			    <sf:form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/para/edit" enctype="multipart/form-data" commandName="vendPara" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="id"/>
 	              <div class="control-group">
 	                <label class="control-label">系统参数代码</label>

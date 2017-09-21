@@ -16,6 +16,8 @@
 %>
 <!--close-Header-part-->
 <!--top-Header-menu-->
+<script src="<%=basePath5%>resources/js/jquery.min.js"></script> 
+<script src="<%=basePath5%>resources/js/bootstrap.min.js"></script> 
 <div id="user-nav" class="navbar navbar-inverse">
   <ul class="nav">
     <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">欢迎${sessionScope.vendUser.username}</span><b class="caret"></b></a>
@@ -25,7 +27,7 @@
         <!--  <li class="divider"></li>
         <li><a href="#"><i class="icon-check"></i> 我的任务</a></li>-->
         <li class="divider"></li>
-        <li><a href="<%=basePath5%>/logout"><i class="icon-key"></i>退出</a></li>
+        <li><a href="<%=basePath5%>/logout"><i class="icon-share-alt"></i>退出</a></li>
       </ul>
     </li>
     <!-- <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">消息</span> <span class="label label-important">5</span> <b class="caret"></b></a>
@@ -40,9 +42,28 @@
       </ul>
     </li>
     <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">设置</span></a></li>-->
-    <li class=""><a title="" href="<%=basePath5%>/logout"><i class="icon icon-share-alt"></i> <span class="text">退出</span></a></li>
+    <li class="">
+	   <a title="" href="javascript:void(0)" onclick="clearcache()">
+	        <i class="icon icon-trash"></i>
+	        <span class="text">清除缓存</span>
+	   </a>
+    </li>
+    <li class="">
+	    <a title="" href="<%=basePath5%>/logout">
+		    <i class="icon icon-share-alt"></i> 
+		    <span class="text">退出</span>
+       </a>
+    </li>
   </ul>
 </div>
+<script type="text/javascript">
+var basePath5="<%=basePath5%>";
+function clearcache(){
+    $.post(basePath5+'/clearcache', function(result) {
+        window.location.reload();
+    }, 'json');
+}
+</script>
 <!--close-top-Header-menu-->
 <!--start-top-serch
 <div id="search">

@@ -35,7 +35,7 @@
 		  <div class="widget-box">
 	          <div class="widget-title"> <span class="icon"> <i class="icon-file"></i> </span>
 	            <h5>广告屏幕样式类别列表</h5>
-	            <a href="/VendingMachine/codeLibrary/${codeno}/add" class="btn btn-success"/>添加参数类别</a>
+	            <a href="${pageContext.request.contextPath}/codeLibrary/${codeno}/add" class="btn btn-success"/>添加参数类别</a>
 	          </div>
 	          <div class="widget-content nopadding">
 	            <table class="table table-bordered">
@@ -54,7 +54,7 @@
 		                  <td>${codeLibrary.itemname}</td>
 		                  <td>${codeLibrary.extend1}</td>
 		                  <td>
-		                      <a href="/VendingMachine/codeLibrary/${codeLibrary.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+		                      <a href="${pageContext.request.contextPath}/codeLibrary/${codeLibrary.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
 			                  <a href="javascript:void(0);" onclick="delconfirm('${codeLibrary.id}','${codeno}');" class="btn btn-danger  icon-trash"/></a>
 		                  </td>
 		                </tr>

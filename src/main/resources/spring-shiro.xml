@@ -61,6 +61,7 @@
                 /wxpay/* = anon
                 /code = anon
                 /clickcode = anon
+                /manage/callback = anon
                 /goods/jgoodss = anon
                 /coupon/jcoupons = anon
                 /coupon/jusecoupons = anon
