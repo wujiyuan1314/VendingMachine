@@ -100,6 +100,7 @@ public class LoginController extends LogoutFilter{
 	    
 	    //当天销售量
 	    VendOrder vendOrder=new VendOrder();
+	    vendOrder.setExtend1("1");
 	    String beginTime=DateUtil.getCurrentDateStr();
 	    String endTime=DateUtil.format(DateUtil.addDays(DateUtil.parseDate(beginTime),1));
 	    List<VendOrder> vendOrders=new ArrayList();

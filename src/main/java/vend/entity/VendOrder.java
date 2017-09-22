@@ -28,7 +28,7 @@ public class VendOrder {
 
     private Date payTime;
 
-    private String extend1;
+    private String extend1;//订单类型(1,支付。2，充值)
 
     private String extend2;
 

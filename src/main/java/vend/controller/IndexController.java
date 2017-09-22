@@ -78,6 +78,7 @@ public class IndexController {
 	    }
 	    String mochinecodeArray[]=Function.stringSpilit(mochinecodelist, ",");
 	    VendOrder vendOrder=new VendOrder();
+	    vendOrder.setExtend1("1");
 	    String beginTime=DateUtil.getCurrentDateStr();
 	    String endTime=DateUtil.format(DateUtil.addDays(DateUtil.parseDate(beginTime),1));
 	    List<VendOrder> vendOrders=new ArrayList();
@@ -150,6 +151,7 @@ public class IndexController {
 	    String mochinecodeArray[]=Function.stringSpilit(mochinecodelist, ",");
 	    
 	    VendOrder vendOrder=new VendOrder();
+	    vendOrder.setExtend1("1");
 	    String beginTime=DateUtil.formatTime(DateUtil.getTimesWeekmorning());
 	    String endTime=DateUtil.formatTime(DateUtil.getTimesWeeknight());
 	    List<VendOrder> vendOrders=new ArrayList();
@@ -222,6 +224,7 @@ public class IndexController {
 	    String mochinecodeArray[]=Function.stringSpilit(mochinecodelist, ",");
 	    
 	    VendOrder vendOrder=new VendOrder();
+	    vendOrder.setExtend1("1");
 	    String beginTime=request.getParameter("beginTime");
 	    String endTime=request.getParameter("endTime");
 	    List<VendOrder> vendOrders=new ArrayList();
