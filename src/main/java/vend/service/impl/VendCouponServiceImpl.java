@@ -50,7 +50,7 @@ public class VendCouponServiceImpl implements VendCouponService {
 		vendCoupon.setUpdateTime(createTime);
 		int isOk=vendCouponMapper.insertSelective(vendCoupon);
 		if(isOk==1){
-			CacheUtils.remove("adCache", "key_VendCoupon_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}
@@ -62,7 +62,7 @@ public class VendCouponServiceImpl implements VendCouponService {
 	public int editVendCoupon(VendCoupon vendCoupon){
 		int isOk=vendCouponMapper.updateByPrimaryKeySelective(vendCoupon);
 		if(isOk==1){
-			CacheUtils.remove("adCache", "key_VendCoupon_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}
@@ -73,7 +73,7 @@ public class VendCouponServiceImpl implements VendCouponService {
 	public void delVendCoupon(int id){
 		int isOk=vendCouponMapper.deleteByPrimaryKey(id);
 		if(isOk==1){
-			CacheUtils.remove("adCache", "key_VendCoupon_findAll");
+			CacheUtils.clear();
 		}
 	}
 	/**
@@ -83,12 +83,12 @@ public class VendCouponServiceImpl implements VendCouponService {
 	public int delVendCoupons(int ids[]){
 		int isOk=vendCouponMapper.deleteBatch(ids);
 		if(isOk==1){
-			CacheUtils.remove("adCache", "key_VendCoupon_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}
 	/**
-	 * 根据ID查找�?个商�?
+	 * 根据ID查找某个优惠券
 	 * @param id
 	 * @return
 	 */

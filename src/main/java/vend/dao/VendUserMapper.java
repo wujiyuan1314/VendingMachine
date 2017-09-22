@@ -25,6 +25,10 @@ public interface VendUserMapper {
     
     int countVendUser(@Param("vendUser") VendUser vendUser,@Param("usersArray") String usersArray[]);
     
+    List<VendUser> listVendUser1(@Param("vendUser") VendUser vendUser,@Param("page") Page page);
+    
+    int countVendUser1(@Param("vendUser") VendUser vendUser);
+    
     void insertBatch(List<VendUser> list);
     
     int deleteBatch(String usercodes[]);
@@ -32,6 +36,8 @@ public interface VendUserMapper {
     List<VendUser> findAll();
     
     List<VendUser> selectByArealist(String arealist[]);
+    
+    List<VendUser> selectByArealist1();
     
     VendUser selectByUsername(String username);
     

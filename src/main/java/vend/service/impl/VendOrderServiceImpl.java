@@ -45,9 +45,30 @@ public class VendOrderServiceImpl implements VendOrderService {
 	 * @param endTime
 	 * @return
 	 */
-	@Cacheable(value="orderCache")
 	public List<VendOrder> selectByParams(VendOrder vendOrder,String mochinecodeArray[],String beginTime,String endTime){
-		return vendOrderMapper.selectByParams(vendOrder,mochinecodeArray,beginTime, endTime);
+		String key="key_selectByParams"+vendOrder.getUsercode()+mochinecodeArray.length+beginTime+endTime;
+		List<VendOrder> vendOrders=(List<VendOrder>)CacheUtils.get("orderCache", key);
+		if(vendOrders==null){
+			vendOrders=vendOrderMapper.selectByParams(vendOrder,mochinecodeArray,beginTime, endTime);
+			CacheUtils.put("orderCache",key, vendOrders);
+		}
+		return vendOrders;
+	}
+	/**
+	 * 按照参数查找订单信息
+	 * @param vendOrder
+	 * @param beginTime
+	 * @param endTime
+	 * @return
+	 */
+	public List<VendOrder> selectByParams1(VendOrder vendOrder,String beginTime,String endTime){
+		String key="key_selectByParams"+vendOrder.getUsercode()+beginTime+endTime;
+		List<VendOrder> vendOrders=(List<VendOrder>)CacheUtils.get("orderCache", key);
+		if(vendOrders==null){
+			vendOrders=vendOrderMapper.selectByParams1(vendOrder,beginTime, endTime);
+			CacheUtils.put("orderCache",key, vendOrders);
+		}
+		return vendOrders;
 	}
 	/**
 	 * 添加订单
@@ -55,7 +76,11 @@ public class VendOrderServiceImpl implements VendOrderService {
 	 * @return
 	 */
 	public int insertVendOrder(VendOrder vendOrder){
-		return vendOrderMapper.insertSelective(vendOrder);
+		int isOk= vendOrderMapper.insertSelective(vendOrder);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
+		return isOk;
 	}
 	/**
 	 * 修改订单
@@ -70,14 +95,21 @@ public class VendOrderServiceImpl implements VendOrderService {
 	 * @param id
 	 */
 	public void delVendOrder(String orderId){
-		vendOrderMapper.deleteByPrimaryKey(orderId);
+		int isOk= vendOrderMapper.deleteByPrimaryKey(orderId);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
 	}
 	/**
 	 * 批量删除订单
 	 * @param id
 	 */
 	public int delVendOrders(String orderIds[]){
-		return vendOrderMapper.deleteBatch(orderIds);
+		int isOk= vendOrderMapper.deleteBatch(orderIds);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
+		return isOk;
 	}
 	/**
 	 * 根据ID查找一个订单

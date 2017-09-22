@@ -50,7 +50,7 @@ public class VendAdServiceImpl implements VendAdService {
 		vendAd.setUpdateTime(createTime);
 		int isOk=vendAdMapper.insertSelective(vendAd);
 		if(isOk==1){
-			CacheUtils.remove("adCache", "key_VendAd_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}
@@ -62,7 +62,7 @@ public class VendAdServiceImpl implements VendAdService {
 	public int editVendAd(VendAd vendAd){
 		int isOk=vendAdMapper.updateByPrimaryKeySelective(vendAd);
 		if(isOk==1){
-			CacheUtils.remove("adCache", "key_VendAd_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}
@@ -73,7 +73,7 @@ public class VendAdServiceImpl implements VendAdService {
 	public void delVendAd(int id){
 		int isOk=vendAdMapper.deleteByPrimaryKey(id);
 		if(isOk==1){
-			CacheUtils.remove("adCache", "key_VendAd_findAll");
+			CacheUtils.clear();
 		}
 	}
 	/**
@@ -83,7 +83,7 @@ public class VendAdServiceImpl implements VendAdService {
 	public int delVendAds(int ids[]){
 		int isOk=vendAdMapper.deleteBatch(ids);
 		if(isOk==1){
-			CacheUtils.remove("adCache", "key_VendAd_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}

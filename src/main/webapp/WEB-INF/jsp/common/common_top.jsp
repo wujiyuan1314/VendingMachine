@@ -1,4 +1,4 @@
-<!-- 顶部导航栏 -->
+	<!-- 顶部导航栏 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="vend.entity.VendUser" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -16,8 +16,7 @@
 %>
 <!--close-Header-part-->
 <!--top-Header-menu-->
-<script src="<%=basePath5%>resources/js/jquery.min.js"></script> 
-<script src="<%=basePath5%>resources/js/bootstrap.min.js"></script> 
+
 <div id="user-nav" class="navbar navbar-inverse">
   <ul class="nav">
     <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text">欢迎${sessionScope.vendUser.username}</span><b class="caret"></b></a>
@@ -48,6 +47,14 @@
 	        <span class="text">清除缓存</span>
 	   </a>
     </li>
+    <shiro:hasPermission name="login:log">
+    <li class="">
+	   <a title="" href="<%=basePath5%>/syslog/syslogs">
+	        <i class="icon icon-file-alt"></i>
+	        <span class="text">登录日志</span>
+	   </a>
+    </li>
+    </shiro:hasPermission>
     <li class="">
 	    <a title="" href="<%=basePath5%>/logout">
 		    <i class="icon icon-share-alt"></i> 

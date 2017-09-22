@@ -45,9 +45,9 @@
 			  <div class="widget-content nopadding">
 			      <table style="margin-bottom:5px;">
 			            <tr>
-		                  <td><a data-url="daysales" id="active" class="btn"/>每天</a>&nbsp;&nbsp;</td>
-		                  <td><a data-url="weeksales" class="btn"/>每周</a>&nbsp;&nbsp;</td>
-		                  <td><a data-url="bydatesales" class="btn"/>按照时间查询</a>
+		                  <td><a data-url="daysales" id="active" class="btn sales"/>每天</a>&nbsp;&nbsp;</td>
+		                  <td><a data-url="weeksales" class="btn sales"/>每周</a>&nbsp;&nbsp;</td>
+		                  <td><a data-url="bydatesales" class="btn sales"/>按照时间查询</a>
 		                  </td>
 		                </tr>
 			      </table>
@@ -59,7 +59,7 @@
 		                  <th>
 		                  <input type="text" name="endTime" id="endTime" value="<%=DateUtil.getCurrentDateStr()%>" placeholder="结束时间" class="span2"/>
 		                  </th>
-		                  <th><input type="button" onclick="bydatesales();" value="搜索" class="btn-success"/>&nbsp;&nbsp;</th>
+		                  <th><a onclick="bydatesales();" class="btn-success btn"/>搜索</a>&nbsp;&nbsp;</th>
 			          </tr>
 			      </table>
 			     <table class="table table-bordered">
@@ -72,15 +72,15 @@
 			         <tbody>
 		                <tr>
 		                  <td>消费用户数</td>
-		                  <td><span  class="free_num">${map.user_num}</span>/人</td>
+		                  <td><span  class="user_num">${map.user_num}</span>/人</td>
 		                </tr>
 		                <tr>
 		                  <td>销售量</td>
-		                  <td><span  class="free_num">${map.sell_num}</span>/瓶</td>
+		                  <td><span  class="sell_num">${map.sell_num}</span>/瓶</td>
 		                </tr>
 		                <tr>
 		                  <td>销售收入现金</td>
-		                  <td><span  class="free_num">${map.sell_amount}</span>/元</td>
+		                  <td><span  class="sell_amount">${map.sell_amount}</span>/元</td>
 		                </tr>
 		                <tr>
 		                  <td>免费数量</td>
@@ -106,8 +106,8 @@
 /**
  * 每周或每天查询销售统计
  */
- $(".btn").click(function(){
-	 $(".btn").attr("id","");
+ $(".sales").click(function(){
+	 $(".sales").attr("id","");
 	 $(this).attr("id","active");
 	 
 	 var path=$(this).attr("data-url");
@@ -117,10 +117,11 @@
 		 $(".datasearch").css("display","none"); 
 		 var url="${pageContext.request.contextPath}/"+path;
 		 $.post(url,"",function(res){
-			 $(".user_num").html(res.user_num);
-			 $(".sell_num").html(res.sell_num);
-			 $(".sell_amount").html(res.sell_amount);
-			 $(".free_num").html(res.free_num);
+			 var data=eval("("+res+")");//转化为json串
+			 $(".user_num").html(data.user_num);
+			 $(".sell_num").html(data.sell_num);
+			 $(".sell_amount").html(data.sell_amount);
+			 $(".free_num").html(data.free_num);
 		 })
 	 }
  })
@@ -134,11 +135,11 @@
 			 endTime:$("#endTime").val()
 	 };
 	 $.post(url,params,function(res){
-		 alert(res);
-		 $(".user_num").html(res.user_num);
-		 $(".sell_num").html(res.sell_num);
-		 $(".sell_amount").html(res.sell_amount);
-		 $(".free_num").html(res.free_num);
+		 var data=eval("("+res+")");//转化为json串
+		 $(".user_num").html(data.user_num);
+		 $(".sell_num").html(data.sell_num);
+		 $(".sell_amount").html(data.sell_amount);
+		 $(".free_num").html(data.free_num);
 	 })
 }
  

@@ -49,14 +49,13 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 		vendGoods.setCreateTime(createTime);
 		vendGoods.setUpdateTime(createTime);
 		int isOk= vendGoodsMapper.insertSelective(vendGoods);
-		//娣诲姞鍚庡垹闄ょ紦瀛�
 		if(isOk==1){
-			CacheUtils.remove("goodsCache", "key_Goods_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}
 	/**
-	 * 淇敼鍟嗗搧
+	 * 修改商品
 	 * @param vendGoods
 	 * @return
 	 */
@@ -64,7 +63,7 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 		int isOk=vendGoodsMapper.updateByPrimaryKeySelective(vendGoods);
 		//淇敼鍚庡垹闄ょ紦瀛�
 		if(isOk==1){
-			CacheUtils.remove("goodsCache", "key_Goods_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}
@@ -75,22 +74,22 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 	public void delVendGoods(int id){
 		int isOk=vendGoodsMapper.deleteByPrimaryKey(id);
 		if(isOk==1){
-			CacheUtils.remove("goodsCache", "key_Goods_findAll");
+			CacheUtils.clear();
 		}
 	}
 	/**
-	 * 鎵归噺鍒犻櫎鍟嗗搧
+	 * 批量删除
 	 * @param id
 	 */
 	public int delVendGoodss(int ids[]){
 		int isOk=vendGoodsMapper.deleteBatch(ids);
 		if(isOk==1){
-			CacheUtils.remove("goodsCache", "key_Goods_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}
 	/**
-	 * 鏍规嵁ID鏌ユ壘涓�涓晢鍝�
+	 * 得到一个商品
 	 * @param id
 	 * @return
 	 */
@@ -103,7 +102,7 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 		return vendGoods;
 	}
 	/**
-	 * 鏌ユ壘鍏ㄩ儴
+	 * 查找全部
 	 */
 	public List<VendGoods> findAll() {
 		// TODO Auto-generated method stub

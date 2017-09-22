@@ -9,6 +9,8 @@ public class VendMachine {
 
     private String machineName;
 
+    private String machineId;
+
     private String machineCode;
 
     private String usercode;
@@ -59,6 +61,14 @@ public class VendMachine {
 
     public void setMachineName(String machineName) {
         this.machineName = machineName == null ? null : machineName.trim();
+    }
+    @NotEmpty(message="机器ID不能为空")
+    public String getMachineId() {
+        return machineId;
+    }
+
+    public void setMachineId(String machineId) {
+        this.machineId = machineId == null ? null : machineId.trim();
     }
     @NotEmpty(message="机器码不能为空")
     public String getMachineCode() {

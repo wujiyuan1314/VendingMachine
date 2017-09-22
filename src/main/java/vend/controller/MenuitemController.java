@@ -98,7 +98,7 @@ public class MenuitemController {
 				zNode.setpId(menuitem.getParentId());
 				zNode.setName(menuitem.getMenuName());
 				zNode.setOpen(true);
-				if(menulist.indexOf(menuitem.getId().toString())!=-1){
+				if(menulist.indexOf(","+menuitem.getId().toString()+",")!=-1){
 					zNode.setChecked(true);
 				}
 			    list.add(zNode);
@@ -110,7 +110,7 @@ public class MenuitemController {
 				menulistP="";
 			}
 			for(Menuitem menuitem:menuitems){
-				if(menulistP.indexOf(menuitem.getId().toString())!=-1){
+				if(menulistP.indexOf(","+menuitem.getId().toString()+",")!=-1){
 					ZNode zNode=new ZNode();
 					zNode.setId(menuitem.getId());
 					zNode.setpId(menuitem.getParentId());

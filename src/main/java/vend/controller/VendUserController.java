@@ -74,7 +74,7 @@ public class VendUserController{
     	VendUser user=(VendUser)session.getAttribute("vendUser");
     	String userlist="";
 		if(user!=null&&user.getUsercode()!=null){//上级账号
-			userlist=vendUserService.getNextUsers(user.getUsercode());
+			userlist=vendUserService.getNextUsersOwnSelf(user.getUsercode());
 		}
 		String usersArray[]=Function.stringSpilit(userlist, ",");
 		List<VendUser> vendUsers = vendUserService.listVendUser(vendUser,usersArray,page);

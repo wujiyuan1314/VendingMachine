@@ -54,7 +54,7 @@ public class VendAccountServiceImpl implements VendAccountService {
 		vendAccount.setUpdateTime(createTime);
 		int isOk=vendAccountMapper.insertSelective(vendAccount);
 		if(isOk==1){
-			CacheUtils.remove("accountCache", "key_VendAccount_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}
@@ -73,7 +73,7 @@ public class VendAccountServiceImpl implements VendAccountService {
 	public void delVendAccount(String usercode){
 		int isOk=vendAccountMapper.deleteByPrimaryKey(usercode);
 		if(isOk==1){
-			CacheUtils.remove("accountCache", "key_VendAccount_findAll");
+			CacheUtils.clear();
 		}
 	}
 	/**
@@ -83,7 +83,7 @@ public class VendAccountServiceImpl implements VendAccountService {
 	public int delVendAccounts(String usercodes[]){
 		int isOk= vendAccountMapper.deleteBatch(usercodes);
 		if(isOk==1){
-			CacheUtils.remove("accountCache", "key_VendAccount_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}

@@ -3,8 +3,11 @@
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+
+import base.util.Function;
 
 public class Test {
     public static void path(HttpServletRequest request){
@@ -14,7 +17,7 @@ public class Test {
     }
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		HttpServletRequest request = null;
+		/*HttpServletRequest request = null;
 		String ids="";
 		String idArray[]=ids.split("3");
 		System.out.println(idArray.length);
@@ -23,6 +26,11 @@ public class Test {
 			System.out.println(idArray[i]+"ff");
 		}
     	int[] idArray1=new int[idArray.length];
+    	
+    	//String chars = "abcdefghijklmnopqrstuvwxyz";
+    	//System.out.println(chars.charAt((int)(Math.random() * 26)));*/
+    	System.out.println(Function.getmachineId());
+		
 	}
 
 }

@@ -1,4 +1,5 @@
 package vend.controller;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,11 +30,15 @@ import vend.entity.UserCoupon;
 import vend.entity.VendAccount;
 import vend.entity.VendMachine;
 import vend.entity.VendOrder;
+import vend.entity.VendRole;
+import vend.entity.VendSyslog;
 import vend.entity.VendUser;
 import vend.service.UserCouponService;
 import vend.service.VendAccountService;
 import vend.service.VendMachineService;
 import vend.service.VendOrderService;
+import vend.service.VendRoleService;
+import vend.service.VendSyslogService;
 import vend.service.VendUserService;
 
 @Controller
@@ -49,6 +54,10 @@ public class LoginController extends LogoutFilter{
 	VendOrderService vendOrderService;
 	@Autowired
 	UserCouponService userCouponService;
+	@Autowired
+	VendSyslogService vendSyslogService;
+	@Autowired
+	VendRoleService vendRoleService;
 	@RequestMapping(value="/login",method=RequestMethod.GET)
     public String login(){
 		Subject subject=SecurityUtils.getSubject();
@@ -93,7 +102,12 @@ public class LoginController extends LogoutFilter{
 	    VendOrder vendOrder=new VendOrder();
 	    String beginTime=DateUtil.getCurrentDateStr();
 	    String endTime=DateUtil.format(DateUtil.addDays(DateUtil.parseDate(beginTime),1));
-	    List<VendOrder> vendOrders =vendOrderService.selectByParams(vendOrder,mochinecodeArray,beginTime, endTime);
+	    List<VendOrder> vendOrders=new ArrayList();
+	    if(mochinecodeArray.length==0){
+	    	vendOrders =vendOrderService.selectByParams1(vendOrder,beginTime, endTime);
+	    }else{
+	    	vendOrders =vendOrderService.selectByParams(vendOrder,mochinecodeArray,beginTime, endTime);
+	    }
 	    
 	    int user_num=0;//消费用户数
 	    int sell_num=0;//销售量
@@ -175,6 +189,23 @@ public class LoginController extends LogoutFilter{
 		 //   return "login";
 		//}
 		VendUser vendUser = vendUserService.selectByUsername(username);
+		/**
+		 * 登录日志
+		 */
+		VendSyslog vendSyslog=new VendSyslog();
+		vendSyslog.setUsercode(vendUser.getUsercode());
+		vendSyslog.setUsername(username);
+		vendSyslog.setExtend1("");
+		vendSyslog.setOperIp(request.getRemoteAddr());
+		if(vendUser.getRoleId()!=null){
+			VendRole vendRole=vendRoleService.getOne(vendUser.getRoleId());
+			if(vendRole!=null&&vendRole.getRoleName()!=null){
+				vendSyslog.setExtend1(vendRole.getRoleName());
+			}
+		}
+		vendSyslog.setOperDescription("登录成功");
+		vendSyslogService.insertVendSyslog(vendSyslog);
+		
 		subject.getSession().setAttribute("vendUser", vendUser);
 		return "redirect:welcome";
 	}
@@ -226,10 +257,12 @@ public class LoginController extends LogoutFilter{
     }
     /**
      * 微信小程序用户登录
+     * @param request
+     * @param map
      * @return
      */
     @RequestMapping(value="/wxlogin",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
-    public @ResponseBody Map<String, Object> wxlogin(@RequestBody Map<String, String> map){
+    public @ResponseBody Map<String, Object> wxlogin(HttpServletRequest request,@RequestBody Map<String, String> map){
     	Map<String, Object> resultMap=new HashMap<String, Object>();
     	//存储状态信息
     	resultMap.put("avatarUrl", map.get("avatarUrl"));
@@ -253,6 +286,20 @@ public class LoginController extends LogoutFilter{
     		resultMap.put("usercode", venduser.getUsercode());
     		resultMap.put("success", "1");
     		resultMap.put("msg", "登录成功");
+    		
+    		VendSyslog vendSyslog=new VendSyslog();
+    		vendSyslog.setUsercode(venduser.getUsercode());
+    		vendSyslog.setUsername(username);
+    		vendSyslog.setOperIp(request.getRemoteAddr());
+    		vendSyslog.setExtend1("");
+    		if(venduser.getRoleId()!=null){
+    			VendRole vendRole=vendRoleService.getOne(venduser.getRoleId());
+    			if(vendRole!=null&&vendRole.getRoleName()!=null){
+    				vendSyslog.setExtend1(vendRole.getRoleName());
+    			}
+    		}
+    		vendSyslog.setOperDescription("登录成功");
+    		vendSyslogService.insertVendSyslog(vendSyslog);
     	}
     	return resultMap;
     }

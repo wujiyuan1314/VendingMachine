@@ -278,6 +278,39 @@
 	</where>
   </select>
   
+  <select id="selectByParams1" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_order
+	<where>
+	    and machine_code in ('')
+		<if test="vendOrder.usercode != null and !&quot;&quot;.equals(vendOrder.usercode.trim())">
+			and usercode = #{vendOrder.usercode}
+		</if>
+		<if test="vendOrder.shopusercode != null and !&quot;&quot;.equals(vendOrder.shopusercode.trim())">
+			and shopusercode = #{vendOrder.shopusercode}
+		</if>
+		<if test="vendOrder.freeStatus != null and !&quot;&quot;.equals(vendOrder.freeStatus.trim())">
+			and free_status = #{vendOrder.freeStatus}
+		</if>
+		<if test="vendOrder.extend1 != null and !&quot;&quot;.equals(vendOrder.extend1.trim())">
+			and extend1 = #{vendOrder.extend1}
+		</if>
+		<if test="vendOrder.goodsId != null and !&quot;&quot;.equals(vendOrder.goodsId.trim())">
+			and goods_id = #{vendOrder.goodsId}
+		</if>
+		<if test="vendOrder.machineCode != null and !&quot;&quot;.equals(vendOrder.machineCode.trim())">
+			and machine_code = #{vendOrder.machineCode}
+		</if>
+		<if test="beginTime!=null and !&quot;&quot;.equals(beginTime.trim())">
+          <![CDATA[   and DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%S')>=  DATE_FORMAT(#{beginTime}, '%Y-%m-%d %H:%i:%S')   ]]>
+        </if>
+        <if test="endTime!=null and !&quot;&quot;.equals(endTime.trim())">
+          <![CDATA[   and DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%S')<=  DATE_FORMAT(#{endTime}, '%Y-%m-%d %H:%i:%S')   ]]>
+        </if>
+	</where>
+  </select>
+  
   <select id="countVendOrder" resultType="int">
  	select count(*) from vend_order
  	<where>

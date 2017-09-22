@@ -56,6 +56,7 @@
 			            <tr>
 			              <th><input type="checkbox" onclick="selectAll('machinecode');" id="all" name="title-table-checkbox" /></th>
 		                  <th>机器名</th>
+		                  <th>机器ID</th>
 		                  <th>机器码</th>
 		                  <th>登录账号</th>
 		                  <th>咖啡机型号(可选择)</th>
@@ -70,6 +71,7 @@
 				           <tr class="gradeX">
 					          <th><input type="checkbox" name="Id" id="Id" value="${vendMachine.id}"/></th>
 			                  <td>${vendMachine.machineName}</td>
+			                  <td>${vendMachine.machineId}</td>
 			                  <td>${vendMachine.machineCode}</td>
 			                  <td>${vendMachine.usercode}</td>
 			                  <td>${vendMachine.machineType}</td>

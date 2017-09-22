@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 /**
  * 处理字符串相关工具类
@@ -16,6 +17,50 @@ public class Function {
 public static String getUUID(){
 	String uuid=Function.ClearTrim(UUID.randomUUID()).replaceAll("-", "");
 	return uuid;
+}
+//得到机器ID
+public static String getmachineId(){
+	int[]arr = {0,1,2,3,4,5,6,7};  
+    final int SIZE = 8;  
+    Random random = new Random();  
+    //重新排列  
+    for(int i=0;i<SIZE;i++){  
+        int p = random.nextInt(i+1);  
+        int tmp = arr[i];  
+        arr[i] = arr[p];  
+        arr[p] = tmp;  
+    }
+
+	String machineId="";
+	machineId=String.valueOf(random.nextInt(10));
+	String chars = "abcdefghijklmnopqrstuvwxyz";
+	for(int i=0;i<arr.length;i++){
+		if(arr[i]==0){
+			machineId+=String.valueOf(random.nextInt(10));
+		}
+		if(arr[i]==1){
+			machineId+=String.valueOf(random.nextInt(10));
+		}
+		if(arr[i]==2){
+			machineId+=chars.charAt((int)(Math.random() * 26));
+		}
+		if(arr[i]==3){
+			machineId+=String.valueOf(random.nextInt(10));
+		}
+		if(arr[i]==4){
+			machineId+=chars.charAt((int)(Math.random() * 26));
+		}
+		if(arr[i]==5){
+			machineId+=String.valueOf(random.nextInt(10));
+		}
+		if(arr[i]==6){
+			machineId+=String.valueOf(random.nextInt(10));
+		}
+		if(arr[i]==7){
+			machineId+=chars.charAt((int)(Math.random() * 26));
+		}
+	}
+	return machineId;
 }
 //得到用户usercode
 public static String getUsercode(){

@@ -256,8 +256,29 @@
 	<where>
 	        usercode in
 	    <foreach item="item" collection="usersArray" open="(" separator="," close=")">  
-		    #{item}  
+		    #{item}
 		</foreach>
+		<if test="vendUser.username != null and !&quot;&quot;.equals(vendUser.username.trim())">
+			and username = #{vendUser.username}
+		</if>
+		<if test="vendUser.mobile != null and !&quot;&quot;.equals(vendUser.mobile.trim())">
+			and mobile = #{vendUser.mobile}
+		</if>
+		<if test="vendUser.parentUsercode != null and !&quot;&quot;.equals(vendUser.parentUsercode.trim())">
+			and parent_usercode = #{vendUser.parentUsercode}
+		</if>
+		<if test="vendUser.roleId != null and !&quot;&quot;.equals(vendUser.roleId.trim())">
+			and role_id = #{vendUser.roleId}
+		</if>  
+	</where>order by usercode limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="listVendUser1" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_user 
+	<where>
+	     usercode in ('')
 		<if test="vendUser.username != null and !&quot;&quot;.equals(vendUser.username.trim())">
 			and username = #{vendUser.username}
 		</if>
@@ -280,6 +301,25 @@
 	    <foreach item="item" collection="usersArray" open="(" separator="," close=")">  
 		  #{item}  
 		</foreach>
+ 		<if test="vendUser.username != null and !&quot;&quot;.equals(vendUser.username.trim())">
+		  and username = #{vendUser.username}
+	    </if>
+	    <if test="vendUser.mobile != null and !&quot;&quot;.equals(vendUser.mobile.trim())">
+		  and mobile = #{vendUser.mobile}
+	    </if>
+	    <if test="vendUser.parentUsercode != null and !&quot;&quot;.equals(vendUser.parentUsercode.trim())">
+			and parent_usercode = #{vendUser.parentUsercode}
+		</if>
+	    <if test="vendUser.roleId != null and !&quot;&quot;.equals(vendUser.roleId.trim())">
+		  and role_id = #{vendUser.roleId}
+	    </if>
+ 	</where>
+  </select>
+  
+  <select id="countVendUser1" resultType="int">
+ 	select count(*) from vend_user
+ 	<where>
+ 	      usercode in ('')
  		<if test="vendUser.username != null and !&quot;&quot;.equals(vendUser.username.trim())">
 		  and username = #{vendUser.username}
 	    </if>
@@ -329,6 +369,11 @@
 		 <foreach item="item" collection="array" open="(" separator="," close=")">  
 		  #{item}  
 		 </foreach>  
+	</select>
+	<select id="selectByArealist1" resultMap="BaseResultMap">  
+		 select  
+		 <include refid="Base_Column_List" />  
+		 from vend_user where role_id=5 and address in('')
 	</select> 
 	<select id="selectByParentUsercode" resultMap="BaseResultMap" parameterType="java.lang.String">  
 		 select  

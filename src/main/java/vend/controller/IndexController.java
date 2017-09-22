@@ -1,6 +1,7 @@
 package vend.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -79,7 +80,12 @@ public class IndexController {
 	    VendOrder vendOrder=new VendOrder();
 	    String beginTime=DateUtil.getCurrentDateStr();
 	    String endTime=DateUtil.format(DateUtil.addDays(DateUtil.parseDate(beginTime),1));
-	    List<VendOrder> vendOrders =vendOrderService.selectByParams(vendOrder,mochinecodeArray,beginTime, endTime);
+	    List<VendOrder> vendOrders=new ArrayList();
+	    if(mochinecodeArray.length==0){
+	    	vendOrders =vendOrderService.selectByParams1(vendOrder,beginTime, endTime);
+	    }else{
+	    	vendOrders =vendOrderService.selectByParams(vendOrder,mochinecodeArray,beginTime, endTime);
+	    }
 	    
 	    int user_num=0;//消费用户数
 	    int sell_num=0;//销售量
@@ -146,7 +152,12 @@ public class IndexController {
 	    VendOrder vendOrder=new VendOrder();
 	    String beginTime=DateUtil.formatTime(DateUtil.getTimesWeekmorning());
 	    String endTime=DateUtil.formatTime(DateUtil.getTimesWeeknight());
-	    List<VendOrder> vendOrders =vendOrderService.selectByParams(vendOrder,mochinecodeArray,beginTime, endTime);
+	    List<VendOrder> vendOrders=new ArrayList();
+	    if(mochinecodeArray.length==0){
+	    	vendOrders =vendOrderService.selectByParams1(vendOrder,beginTime, endTime);
+	    }else{
+	    	vendOrders =vendOrderService.selectByParams(vendOrder,mochinecodeArray,beginTime, endTime);
+	    }
 	    
 	    int user_num=0;//消费用户数
 	    int sell_num=0;//销售量
@@ -213,7 +224,12 @@ public class IndexController {
 	    VendOrder vendOrder=new VendOrder();
 	    String beginTime=request.getParameter("beginTime");
 	    String endTime=request.getParameter("endTime");
-	    List<VendOrder> vendOrders =vendOrderService.selectByParams(vendOrder,mochinecodeArray,beginTime, endTime);
+	    List<VendOrder> vendOrders=new ArrayList();
+	    if(mochinecodeArray.length==0){
+	    	vendOrders =vendOrderService.selectByParams1(vendOrder,beginTime, endTime);
+	    }else{
+	    	vendOrders =vendOrderService.selectByParams(vendOrder,mochinecodeArray,beginTime, endTime);
+	    }
 	    
 	    int user_num=0;//消费用户数
 	    int sell_num=0;//销售量

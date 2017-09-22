@@ -22,6 +22,14 @@ public interface VendOrderService {
 	 */
 	List<VendOrder> selectByParams(VendOrder vendOrder,String mochinecodeArray[],String beginTime,String endTime);
 	/**
+	 * 按照参数查找订单信息
+	 * @param vendOrder
+	 * @param beginTime
+	 * @param endTime
+	 * @return
+	 */
+	List<VendOrder> selectByParams1(VendOrder vendOrder,String beginTime,String endTime);
+	/**
 	 * 添加订单
 	 * @param vendOrder
 	 * @return

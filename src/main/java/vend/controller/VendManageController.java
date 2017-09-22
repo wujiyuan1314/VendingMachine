@@ -93,7 +93,7 @@ public class VendManageController{
 	public String login(@PathVariable int id){
 		VendMachine vendMachine=vendMachineService.getOne(id);
 		JSONObject payload = new JSONObject();
-		payload.accumulate("device_id", id);
+		payload.accumulate("device_id", "1g8p5865c");
 		payload.accumulate("device_type", vendMachine.getMachineType());
 		payload.accumulate("operation", "login");
 		payload.accumulate("hwAddr", "1234567890abcdef");

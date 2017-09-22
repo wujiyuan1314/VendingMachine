@@ -77,4 +77,10 @@ public interface VendUserService {
 	 * @return
 	 */
 	public String getNextUsers(String parentUsercode);
+	/**
+	 * 得到该用户的下级用户(包括自己)
+	 * @param parentUsercode
+	 * @return
+	 */
+	public String getNextUsersOwnSelf(String parentUsercode);
 }

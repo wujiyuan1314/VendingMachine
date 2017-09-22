@@ -48,9 +48,13 @@ public class VendMachineServiceImpl implements VendMachineService {
 		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 		vendMachine.setCreateTime(createTime);
 		vendMachine.setUpdateTime(createTime);
+		vendMachine.setCleanStatus("0");
+		vendMachine.setHeatStatus("0");
+		vendMachine.setUseStatus("0");
+		vendMachine.setWaterStatus("0");
 		int isOk=vendMachineMapper.insertSelective(vendMachine);
 		if(isOk==1){
-			CacheUtils.remove("adCache", "key_VendMachine_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}
@@ -62,7 +66,7 @@ public class VendMachineServiceImpl implements VendMachineService {
 	public int editVendMachine(VendMachine vendMachine){
 		int isOk=vendMachineMapper.updateByPrimaryKeySelective(vendMachine);
 		if(isOk==1){
-			CacheUtils.remove("adCache", "key_VendMachine_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}
@@ -73,7 +77,7 @@ public class VendMachineServiceImpl implements VendMachineService {
 	public void delVendMachine(int id){
 		int isOk=	vendMachineMapper.deleteByPrimaryKey(id);
 		if(isOk==1){
-			CacheUtils.remove("adCache", "key_VendMachine_findAll");
+			CacheUtils.clear();
 		}
 	}
 	/**
@@ -83,7 +87,7 @@ public class VendMachineServiceImpl implements VendMachineService {
 	public int delVendMachines(int ids[]){
 		int isOk=vendMachineMapper.deleteBatch(ids);
 		if(isOk==1){
-			CacheUtils.remove("adCache", "key_VendMachine_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}
@@ -117,6 +121,14 @@ public class VendMachineServiceImpl implements VendMachineService {
 		return vendMachineMapper.selectByMachineCode(machineCode);
 	}
 	/**
+	 * 按照machineId查找
+	 * @param machineCode
+	 * @return
+	 */
+	public VendMachine selectByMachineId(String machineId){
+		return vendMachineMapper.selectByMachineId(machineId);
+	}
+	/**
 	 * 按照machineCode查找
 	 * @param machineCode
 	 * @return
@@ -125,7 +137,11 @@ public class VendMachineServiceImpl implements VendMachineService {
 		String key="key_machine_selectByUsercode"+usercodelist;
 		List<VendMachine> vendMachines=(List<VendMachine>)CacheUtils.get("machineCache", key);
 		if(vendMachines==null){
-			vendMachines=vendMachineMapper.selectByUsercode(usercodelist);
+			if(usercodelist.length==0){
+				vendMachines=vendMachineMapper.selectByUsercode1();
+			}else{
+				vendMachines=vendMachineMapper.selectByUsercode(usercodelist);
+			}
 			CacheUtils.put("machineCache", key, vendMachines);
 		}
 		return vendMachines;

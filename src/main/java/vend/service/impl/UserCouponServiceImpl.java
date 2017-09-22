@@ -40,7 +40,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 		userCoupon.setCreateTime(createTime);
 		int isOk=userCouponMapper.insertSelective(userCoupon);
 		if(isOk==1){
-			CacheUtils.remove("couponCache","key_UserCoupon_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}
@@ -52,7 +52,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 	public int editUserCoupon(UserCoupon userCoupon){
 		int isOk= userCouponMapper.updateByPrimaryKeySelective(userCoupon);
 		if(isOk==1){
-			CacheUtils.remove("couponCache","key_UserCoupon_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}
@@ -63,7 +63,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 	public void delUserCoupon(int id){
 		int isOk= userCouponMapper.deleteByPrimaryKey(id);
 		if(isOk==1){
-			CacheUtils.remove("couponCache","key_UserCoupon_findAll");
+			CacheUtils.clear();
 		}
 	}
 	/**
@@ -73,7 +73,7 @@ public class UserCouponServiceImpl implements UserCouponService {
 	public int delUserCoupons(int ids[]){
 		int isOk= userCouponMapper.deleteBatch(ids);
 		if(isOk==1){
-			CacheUtils.remove("couponCache","key_UserCoupon_findAll");
+			CacheUtils.clear();
 		}
 		return isOk;
 	}

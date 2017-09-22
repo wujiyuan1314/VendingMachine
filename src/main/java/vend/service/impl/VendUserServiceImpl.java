@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import base.util.CacheUtils;
@@ -40,11 +39,27 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @param page
 	 * @return
 	 */
-	@Cacheable(value="userCache")
 	public List<VendUser> listVendUser(VendUser vendUser,String usersArray[],Page page){
-		int totalNumber = vendUserMapper.countVendUser(vendUser,usersArray);
-		page.setTotalNumber(totalNumber);
-		return vendUserMapper.listVendUser(vendUser,usersArray, page);
+		String title=vendUser.getUsercode()+usersArray.length;
+		String currentPage=Integer.toString(page.getCurrentPage());
+		if(title==null){
+			title="";
+		}
+		String key="key_listVendUser"+title+currentPage;
+		List<VendUser> vendUsers=(List<VendUser>)CacheUtils.get("userCache", key);
+		if(vendUsers==null){
+			if(usersArray.length!=0){
+				int totalNumber = vendUserMapper.countVendUser(vendUser,usersArray);
+				page.setTotalNumber(totalNumber);
+				vendUsers= vendUserMapper.listVendUser(vendUser,usersArray, page);
+			}else{
+				int totalNumber = vendUserMapper.countVendUser1(vendUser);
+				page.setTotalNumber(totalNumber);
+				vendUsers= vendUserMapper.listVendUser1(vendUser,page);
+			}
+			CacheUtils.put("userCache",key, vendUsers);
+		}
+		return vendUsers;
 	}
 	/**
 	 * 添加用户
@@ -75,7 +90,11 @@ public class VendUserServiceImpl implements VendUserService {
 		userCoupon.setCreateTime(createTime);
 		userCouponMapper.insert(userCoupon);
 		
-		return vendUserMapper.insertSelective(vendUser);
+		int isOk=vendUserMapper.insertSelective(vendUser);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
+		return isOk;
 	}
 	/**
 	 * 修改用户
@@ -83,35 +102,50 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @return
 	 */
 	public int editVendUser(VendUser vendUser){
-		return vendUserMapper.updateByPrimaryKeySelective(vendUser);
+		int isOk=vendUserMapper.updateByPrimaryKeySelective(vendUser);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
+		return isOk;
 	}
 	/**
 	 * 删除一个用户
 	 * @param id
 	 */
 	public void delVendUser(String usercode){
-		vendUserMapper.deleteByPrimaryKey(usercode);
+		int isOk=vendUserMapper.deleteByPrimaryKey(usercode);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
 	}
 	/**
 	 * 批量删除用户
 	 * @param id
 	 */
 	public int delVendUsers(String usercodes[]){
-		return vendUserMapper.deleteBatch(usercodes);
+		int isOk=vendUserMapper.deleteBatch(usercodes);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
+		return isOk;
 	}
 	/**
 	 * 根据ID查找一个用户
 	 * @param id
 	 * @return
 	 */
-	@Cacheable(value="userCache")
 	public VendUser getOne(String usercode){
 		return vendUserMapper.selectByPrimaryKey(usercode);
 	}
-	@Cacheable(value="userCache")
 	public List<VendUser> findAll() {
 		// TODO Auto-generated method stub
-		return vendUserMapper.findAll();
+		String key="key_VendUser_findAll";
+		List<VendUser> vendUsers=(List<VendUser>)CacheUtils.get("userCache", key);
+		if(vendUsers==null){
+			vendUsers=vendUserMapper.findAll();
+			CacheUtils.put("userCache",key, vendUsers);
+		}
+		return vendUsers;
 	}
 	/**
 	 * 按照username查找用户
@@ -132,9 +166,18 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @param arealist
 	 * @return
 	 */
-	@Cacheable(value="userCache")
 	public List<VendUser> selectByArealist(String arealist[]){
-		return vendUserMapper.selectByArealist(arealist);
+		String key="key_selectByArealist"+arealist.length;
+		List<VendUser> vendUsers=(List<VendUser>)CacheUtils.get("userCache", key);
+		if(vendUsers==null){
+			if(arealist.length==0){
+				vendUsers=vendUserMapper.selectByArealist1();
+			}else{
+				vendUsers=vendUserMapper.selectByArealist(arealist);
+			}
+			CacheUtils.put("userCache", key, vendUsers);
+		}
+		return vendUsers;
 	}
 	 /**
      * 按照用户名得到角色信息
@@ -205,10 +248,25 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @param parentUsercode
 	 * @return
 	 */
-	@Cacheable(value="userCache")
 	public String getNextUsers(String parentUsercode){
-		List<VendUser> vendUsers=vendUserMapper.selectByParentUsercode(parentUsercode);
 		String userslist="";
+		List<VendUser> vendUsers=vendUserMapper.selectByParentUsercode(parentUsercode);
+		for(VendUser vendUser:vendUsers){
+			if(vendUser!=null){
+				userslist+=vendUser.getUsercode()+",";
+				userslist+=getNextUsers(vendUser.getUsercode());
+			}
+		}
+		return userslist;
+	}
+	/**
+	 * 得到该用户的下级用户(包括自己)
+	 * @param parentUsercode
+	 * @return
+	 */
+	public String getNextUsersOwnSelf(String parentUsercode){
+		String userslist=parentUsercode+",";
+		List<VendUser> vendUsers=vendUserMapper.selectByParentUsercode(parentUsercode);
 		for(VendUser vendUser:vendUsers){
 			if(vendUser!=null){
 				userslist+=vendUser.getUsercode()+",";

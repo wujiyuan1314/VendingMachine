@@ -71,7 +71,7 @@ public class VendMachineController{
 		List<VendMachine> vendMachines = vendMachineService.listVendMachine(vendMachine, page);
 		String userlist="";
 		if(user!=null&&user.getUsercode()!=null){//上级账号
-			userlist=vendUserService.getNextUsers(user.getUsercode());
+			userlist=vendUserService.getNextUsersOwnSelf(user.getUsercode());
 		}
 		List<VendMachine> vendMachines1=new ArrayList<VendMachine>();
 		if(userlist!=null){
@@ -144,8 +144,6 @@ public class VendMachineController{
 	@RequiresPermissions({"machine:add"})
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String machined(Model model){
-		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");
-		model.addAttribute("upvideotypes", upvideotypes);
 		model.addAttribute(new VendMachine());
 		return "manage/machine/machine_add";
 	}
@@ -160,8 +158,14 @@ public class VendMachineController{
 	@RequiresPermissions({"machine:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String machined(HttpServletRequest request,Model model,@Validated VendMachine vendMachine,BindingResult br){
-		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");
-		model.addAttribute("upvideotypes", upvideotypes);
+		VendMachine vendMachine1=vendMachineService.selectByMachineId(vendMachine.getMachineId());
+		if(vendMachine1!=null){
+			br.rejectValue("machineId", "MACHINEIDREPPEAT", "该机器ID已被绑定");
+		}
+		VendMachine vendMachine2=vendMachineService.selectByMachineCode(vendMachine.getMachineCode());
+		if(vendMachine2!=null){
+			br.rejectValue("machineId", "MACHINECODEREPPEAT", "该机器码已被绑定");
+		}
     	if(br.hasErrors()){
     		return "manage/machine/machine_add";
     	}
