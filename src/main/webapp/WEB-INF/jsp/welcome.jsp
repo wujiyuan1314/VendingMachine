@@ -79,7 +79,7 @@
 		                  <td><span  class="sell_num">${map.sell_num}</span>/瓶</td>
 		                </tr>
 		                <tr>
-		                  <td>销售收入现金</td>
+		                  <td>销售额</td>
 		                  <td><span  class="sell_amount">${map.sell_amount}</span>/元</td>
 		                </tr>
 		                <tr>
