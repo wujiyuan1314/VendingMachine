@@ -19,8 +19,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import base.util.Function;
@@ -591,11 +593,12 @@ public class VendManageController{
 	 * @return
 	 * @throws IOException 
 	 */
-	@RequestMapping(value="/callback",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
+	@RequestMapping(value="/callback",method=RequestMethod.GET)
 	@ResponseBody
-	public void callBack(String returnJSON) throws IOException{
-		System.out.println(returnJSON);
-		logger.info("-------回调结果:" + returnJSON);
+	public String callBack(@RequestParam String id,@RequestParam String payload) throws IOException{
+		System.out.println(payload);
+		logger.info("-------回调结果:" + payload);
+		return payload.toString();
 	}
 	/**
 	 * 详情
