@@ -47,7 +47,42 @@
 			              <th><input type="text" name="machineCode" id="machineCode" placeholder="按机器名搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                  <td><a href="add" class="btn btn-success"/>新增分机</a>&nbsp;&nbsp;</td>
-		                  <td><input type="button" onclick="dels('machine');" value="批量删除" class="btn btn-danger"/></td>
+		                  <td><a class="btn btn-danger" data-toggle="modal" data-target="#myModal"/>解绑</a>&nbsp;&nbsp;</td>
+		                  
+		                  <!-- 模态框（Modal）开始 -->
+		                  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+							  <div class="modal-content">
+							  
+							    <div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" 
+											aria-hidden="true">×
+									</button>
+									<h4 class="modal-title" id="myModalLabel">
+										解除绑定
+									</h4>
+								</div>
+								<div class="modal-body">
+									<dl>
+										<dd>要转移的商户名:
+										<input type="input" id="transusercode" name="transusercode"/></dd>
+										<dd class="binderror" style="color:#b94a48;"></dd>
+									</dl>
+                                </div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+									</button>
+									<button type="button" class="btn btn-primary" onclick="transmachine();">
+										提交
+									</button>
+								</div>
+								
+							  </div>
+							</div>
+					      </div>
+					      <!-- 模态框（Modal）结束 -->
+					
+		                  <!-- <td><input type="button" onclick="dels('machine');" value="批量删除" class="btn btn-danger"/></td> -->
 		                </tr>
 			      </table>
 			
@@ -56,6 +91,7 @@
 			            <tr>
 			              <th><input type="checkbox" onclick="selectAll('machinecode');" id="all" name="title-table-checkbox" /></th>
 		                  <th>机器名</th>
+		                  <th>机器ID</th>
 		                  <th>机器码</th>
 		                  <th>登录账号</th>
 		                  <th>咖啡机型号(可选择)</th>
@@ -70,6 +106,7 @@
 				           <tr class="gradeX">
 					          <th><input type="checkbox" name="Id" id="Id" value="${vendMachine.id}"/></th>
 			                  <td>${vendMachine.machineName}</td>
+			                  <td>${vendMachine.machineId}</td>
 			                  <td>${vendMachine.machineCode}</td>
 			                  <td>${vendMachine.usercode}</td>
 			                  <td>${vendMachine.machineType}</td>
@@ -93,7 +130,7 @@
 			                     <c:choose>
 			                       <c:when test="${vendMachine.useStatus==2||vendMachine.useStatus==3}">
 			                         <a href="${vendMachine.id}/edit" class="btn btn-success btn-mini"/>修改</a>&nbsp;&nbsp;
-			                         <a href="javascript:void(0);" onclick="delconfirm('${vendMachine.id}');" class="btn btn-danger btn-mini"/>删除</a>
+			                         <!--<a href="javascript:void(0);" onclick="delconfirm('${vendMachine.id}');" class="btn btn-danger btn-mini"/>删除</a>  -->
 			                       </c:when>
 			                     </c:choose>
 			                  </td>
@@ -134,6 +171,41 @@ function delconfirm(id){
 	 if(confirm("确定要删除吗?")){
 		window.location.href=basePath+"machine/"+id+"/del";
 	 }
+}
+/**
+ * 转移一个机器给另外一个商家
+ */
+ function transmachine(){
+	var machineId=new Array();
+	var length=0;
+	$("input[id='Id']:checked").each(function(){
+		length=machineId.push($(this).val());
+	})
+	if(length==0){
+		$(".binderror").html("请选择一条记录");
+		return;
+	}
+	if(length>1){
+		$(".binderror").html("只能选择一条记录");
+		return;
+	}
+	var id=machineId[0];
+	var transusercode=$("#transusercode").val();
+	if(transusercode==''){
+		$(".binderror").html("请输入要转移的用户名");
+		return;
+	}
+	if(confirm("确定要解绑吗?")){
+		var url=basePath+"machine/"+id+"/"+transusercode+"/unbind";
+		$.post(url,'',function(res){
+			var data=eval("("+res+")");
+			if(data.success==1){
+				window.location.reload();
+			}else if(data.success==0){
+				$(".binderror").html(data.msg);
+			}
+		})
+	}
 }
 </script>
 <script src="<%=basePath2 %>resources/js/back/machine_list.js"></script>

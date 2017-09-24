@@ -23,6 +23,8 @@ public class VendUser {
 
     private String linkman;
 
+    private String wechatpubNo;
+
     private Date createTime;
 
     private Date updateTime;
@@ -104,6 +106,14 @@ public class VendUser {
 
     public void setLinkman(String linkman) {
         this.linkman = linkman == null ? null : linkman.trim();
+    }
+
+    public String getWechatpubNo() {
+        return wechatpubNo;
+    }
+
+    public void setWechatpubNo(String wechatpubNo) {
+        this.wechatpubNo = wechatpubNo == null ? null : wechatpubNo.trim();
     }
 
     public Date getCreateTime() {

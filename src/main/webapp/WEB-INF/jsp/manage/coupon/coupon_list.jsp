@@ -64,6 +64,7 @@
 		                  <th>优惠券介绍</th>
 		                  <th>优惠券开始日期</th>
 		                  <th>优惠券结束日期</th>
+		                  <th>是否有效</th>
 		                  <th>操作</th>
 		                </tr>
 			         </thecoupon>
@@ -77,13 +78,33 @@
 			                  <td>${vendCoupon.couponInfo}</td>
 			                  <td><fmt:formatDate value="${vendCoupon.startTime}" pattern="yyyy-MM-dd"/></td>
 			                  <td><fmt:formatDate value="${vendCoupon.endTime}" pattern="yyyy-MM-dd"/></td>
+			                  <td>
+			                   <c:choose>
+			                     <c:when test="${vendCoupon.valid==1}">
+			                       <button class="btn btn-success btn-mini">有效</button>
+			                     </c:when>
+			                     <c:otherwise>
+			                       <button class="btn btn-danger btn-mini">无效</button>
+			                     </c:otherwise>
+			                    </c:choose>
+			                  </td>
 			                  <td class="center">
 			                     <shiro:hasPermission name="coupon:edit">
-			                     <a href="${vendCoupon.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                     <a href="${vendCoupon.id}/edit" class="btn btn-success btn-mini"/>修改</a>&nbsp;&nbsp;
 			                     </shiro:hasPermission>
 			                     <shiro:hasPermission name="coupon:del">
-			                     <a href="javascript:void(0);" onclick="delconfirm(${vendCoupon.id});" class="btn btn-danger  icon-trash"/></a>
+			                     <a href="javascript:void(0);" onclick="delconfirm(${vendCoupon.id});" class="btn btn-danger btn-mini"/>删除</a>
 			                     </shiro:hasPermission>
+			                     <c:choose>
+			                       <c:when test="${vendCoupon.valid==0}">
+			                         &nbsp;&nbsp;<a href="${vendCoupon.id}/puton" class="btn btn-success btn-mini"/>投放</a>
+			                       </c:when>
+			                     </c:choose>
+			                     <c:choose>
+			                       <c:when test="${vendCoupon.valid==1}">
+			                         &nbsp;&nbsp;<a href="${vendCoupon.id}/revoke" class="btn btn-success btn-mini"/>收回</a>
+			                       </c:when>
+			                     </c:choose>
 			                  </td>
 			                </tr>
 			           </c:forEach>

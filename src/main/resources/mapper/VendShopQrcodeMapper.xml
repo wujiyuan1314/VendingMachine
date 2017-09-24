@@ -144,6 +144,9 @@
 	<include refid="Base_Column_List" />
 	from vend_shop_qrcode
 	<where>
+	    <if test="vendShopQrcode.usercode != null and !&quot;&quot;.equals(vendShopQrcode.usercode.trim())">
+			and usercode = #{vendShopQrcode.usercode}
+		</if>
 		<if test="vendShopQrcode.extend1 != null and !&quot;&quot;.equals(vendShopQrcode.extend1.trim())">
 			and extend1 = #{vendShopQrcode.extend1}
 		</if>
@@ -156,6 +159,9 @@
   <select id="countVendShopQrcode" resultType="int" parameterType="vend.entity.VendShopQrcode">
  	select count(*) from vend_shop_qrcode
  	<where>
+ 	   <if test="usercode != null and !&quot;&quot;.equals(usercode.trim())">
+			and usercode = #{usercode}
+		</if>
  		<if test="extend1 != null and !&quot;&quot;.equals(extend1.trim())">
 		and extend1 = #{extend1}
 	    </if>

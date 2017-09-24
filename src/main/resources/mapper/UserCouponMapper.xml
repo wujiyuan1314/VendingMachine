@@ -178,8 +178,36 @@
     select 
     <include refid="Base_Column_List" />
     from user_coupon
-    where extend1=1 and usercode = #{usercode,jdbcType=VARCHAR}
+    where extend1=1  and usercode = #{usercode,jdbcType=VARCHAR}
   </select>
+  <select id="findByUsercodeLimitCouponId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List" />
+    from user_coupon
+      where extend1=1 and coupon_id=#{couponId,jdbcType=INTEGER} and usercode = #{usercode,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findByEndtime" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_coupon
+    where extend1=1 and coupon_id=2 and extend3 <![CDATA[<]]> #{extend3,jdbcType=VARCHAR}
+  </select>
+  <!-- 批量添加 -->
+  <insert id="insertBatch" parameterType="java.util.List">
+	  insert into user_coupon (usercode,coupon_id,create_time,extend1,extend2,extend3,exten4)
+	        values
+       <foreach collection="list" item="item" index="index" separator=",">
+           (#{item.usercode,jdbcType=VARCHAR},
+            #{item.couponId,jdbcType=INTEGER},
+            #{item.createTime,jdbcType=TIMESTAMP},
+	        #{extend1,jdbcType=VARCHAR},
+	        #{extend2,jdbcType=VARCHAR},
+	        #{extend3,jdbcType=VARCHAR},
+	        #{extend4,jdbcType=VARCHAR}
+            )
+       </foreach>
+  </insert>
   <!-- 批量删除 -->
     <delete id="deleteBatch" parameterType="int">
         delete from vend_coupon where id in

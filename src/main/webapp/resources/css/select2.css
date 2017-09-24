@@ -7,7 +7,7 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
     /* inline-block for ie7 */
     zoom: 1;
     *display: inline;
-    vertical-align: top; width:22.6%;
+    vertical-align: top; width:22.5%;
 }
 .dataTables_length .select2-container{ width:auto!important;}
 .select2-container,

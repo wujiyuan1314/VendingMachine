@@ -3,7 +3,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
 import org.springframework.web.servlet.tags.RequestContextAwareTag;
 
 import vend.entity.Menuitem;
@@ -20,7 +19,6 @@ public class MenuTag extends RequestContextAwareTag{
 	public int doStartTagInternal() throws JspException {
 		HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
 		try{
-			JspWriter out = pageContext.getOut();
 			menuitemService=this.getRequestContext().getWebApplicationContext().getBean(MenuitemService.class);
 			List<Menuitem> childrenmenus=menuitemService.selectByParentId(parentId);
 			request.setAttribute("childrenmenus", childrenmenus);

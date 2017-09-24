@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/bootstrap-responsive.min.css" />
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/bootstrap-datetimepicker.css" />
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/colorpicker.css" />
+<link rel="stylesheet" href="<%=basePath1 %>resources/css/datepicker.css" />
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/fullcalendar.css" />
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/matrix-style.css" />
 <link rel="stylesheet" href="<%=basePath1 %>resources/css/matrix-media.css" />

@@ -35,11 +35,11 @@
 		<div class="span12">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-info-sign"></i></span>
-                 <h5>商品修改</h5>
+                 <h5>参数修改</h5>
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/codeCatalog/edit" enctype="multipart/form-data" commandName="codeCatalog" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			    <sf:form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/codeCatalog/edit" enctype="multipart/form-data" commandName="codeCatalog" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="codeno"/>
 	              <div class="control-group">
 	                <label class="control-label">参数名</label>

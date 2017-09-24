@@ -24,9 +24,15 @@ public interface UserCouponMapper {
     
     int countUserCoupon(UserCoupon userCoupon);
     
+    void insertBatch(List<UserCoupon> list);
+    
     int deleteBatch(int ids[]);
     
     List<UserCoupon> findAll();
     
     List<UserCoupon> findByUsercode(String usercode);
+    
+    UserCoupon findByUsercodeLimitCouponId(@Param("usercode") String usercode,@Param("couponId") Integer couponId);
+    
+    List<UserCoupon> findByEndtime(String CurrentDate);
 }

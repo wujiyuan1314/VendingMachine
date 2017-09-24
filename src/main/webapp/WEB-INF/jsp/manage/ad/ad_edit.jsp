@@ -40,7 +40,7 @@
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/ad/edit" enctype="multipart/form-data" commandName="vendAd" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			    <sf:form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/ad/edit" enctype="multipart/form-data" commandName="vendAd" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="id"/>
 	              <div class="control-group">
 	                <label class="control-label">广告名</label>
@@ -147,7 +147,7 @@
 	              <div class="control-group">
 	                <label class="control-label">广告屏样式选择</label>
 	                <div class="controls">
-	                   <sf:select path="extend2" items="${adscreens}" itemLabel="itemname" itemValue="itemno">
+	                   <sf:select path="extend2" items="${adscreens}" itemLabel="extend1" itemValue="itemno" style="width:280px;">
 								            </sf:select>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend1" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
@@ -155,14 +155,20 @@
 	              <div class="control-group">
 	                <label class="control-label">广告开始时间</label>
 	                <div class="controls">
-	                  <sf:input path="startTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true"/>
+	                  <div class="input-append date datepicker">
+	                      <sf:input path="startTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true" class="span2" />
+		                  <span class="add-on"><i class="icon-th"></i></span>
+		              </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="startTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
 	                <label class="control-label">广告结束时间</label>
 	                <div class="controls">
-	                  <sf:input path="endTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true"/>
+	                  <div class="input-append date datepicker">
+	                      <sf:input path="endTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true" class="span2" />
+		                  <span class="add-on"><i class="icon-th"></i></span>
+		              </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="endTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>

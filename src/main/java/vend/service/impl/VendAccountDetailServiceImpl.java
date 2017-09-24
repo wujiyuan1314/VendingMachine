@@ -4,12 +4,15 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
+import base.util.CacheUtils;
 import base.util.DateUtil;
 import base.util.Page;
 import vend.dao.VendAccountDetailMapper;
+
 import vend.entity.VendAccountDetail;
+import vend.entity.VendGoods;
 import vend.service.VendAccountDetailService;
 
 @Service
@@ -23,9 +26,42 @@ public class VendAccountDetailServiceImpl implements VendAccountDetailService {
 	 * @return
 	 */
 	public List<VendAccountDetail> listVendAccountDetail(VendAccountDetail vendAccountDetail,Page page){
-		int totalNumber = vendAccountDetailMapper.countVendAccountDetail(vendAccountDetail);
-		page.setTotalNumber(totalNumber);
-		return vendAccountDetailMapper.listVendAccountDetail(vendAccountDetail, page);
+		String title=vendAccountDetail.getUsercode();
+		if(title==null){
+			title="";
+		}
+		String currentPage=Integer.toString(page.getCurrentPage());
+		String key="key_listVendAccountDetail"+title+currentPage;
+		List<VendAccountDetail> vendAccountDetails=(List<VendAccountDetail>)CacheUtils.get("accountCache", key);
+		if(vendAccountDetails==null){
+			int totalNumber = vendAccountDetailMapper.countVendAccountDetail(vendAccountDetail);
+			page.setTotalNumber(totalNumber);
+			vendAccountDetails =vendAccountDetailMapper.listVendAccountDetail(vendAccountDetail, page);
+			CacheUtils.put("accountCache",key, vendAccountDetails);
+		}
+		return vendAccountDetails;
+	}
+	/**
+	 * 根据输入信息条件查询账户提现纪录列表，并分页显示
+	 * @param vendAccountDetail
+	 * @param page
+	 * @return
+	 */
+	public List<VendAccountDetail> listVendAccountDetailTx(VendAccountDetail vendAccountDetail,Page page){
+		String title=vendAccountDetail.getUsercode();
+		if(title==null){
+			title="";
+		}
+		String currentPage=Integer.toString(page.getCurrentPage());
+		String key="key_listVendAccountDetailTx"+title+currentPage;
+		List<VendAccountDetail> vendAccountDetails=(List<VendAccountDetail>)CacheUtils.get("accountCache", key);
+		if(vendAccountDetails==null){
+			int totalNumber = vendAccountDetailMapper.countVendAccountDetailTx(vendAccountDetail);
+			page.setTotalNumber(totalNumber);
+			vendAccountDetails =vendAccountDetailMapper.listVendAccountDetailTx(vendAccountDetail, page);
+			CacheUtils.put("accountCache",key, vendAccountDetails);
+		}
+		return vendAccountDetails;
 	}
 	/**
 	 * 添加账户操作纪录
@@ -64,8 +100,15 @@ public class VendAccountDetailServiceImpl implements VendAccountDetailService {
 	 * @param id
 	 * @return
 	 */
+	@Cacheable(value="accountCache")
 	public VendAccountDetail getOne(int id){
-		return vendAccountDetailMapper.selectByPrimaryKey(id);
+		String key="key_VendAccountDetail_getOne"+id;
+		VendAccountDetail vendAccountDetail=(VendAccountDetail)CacheUtils.get("accountCache", key);
+		if(vendAccountDetail==null){
+			vendAccountDetail=vendAccountDetailMapper.selectByPrimaryKey(id);
+			CacheUtils.put("accountCache", key, vendAccountDetail);
+		}
+		return vendAccountDetail;
 	}
 	/**
 	 * 查找全部
@@ -73,6 +116,12 @@ public class VendAccountDetailServiceImpl implements VendAccountDetailService {
 	 */
 	public List<VendAccountDetail> findAll() {
 		// TODO Auto-generated method stub
-		return vendAccountDetailMapper.findAll();
+		String key="key_VendAccountDetail_findAll";
+		List<VendAccountDetail> vendAccountDetails=(List<VendAccountDetail>)CacheUtils.get("accountCache", key);
+		if(vendAccountDetails==null){
+			vendAccountDetails=vendAccountDetailMapper.findAll();
+			CacheUtils.put("accountCache", key, vendAccountDetails);
+		}
+		return vendAccountDetails;
 	}
 }

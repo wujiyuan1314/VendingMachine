@@ -34,7 +34,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>menuitem/menuitems" class="current">权限列表</a>
+      <a href="<%=basePath1%>menuitem/menuitems" class="current">角色列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -47,7 +47,7 @@
 		<div class="span12">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-                 <h5>权限列表</h5>
+                 <h5>角色列表</h5>
               </div>
 			  <div class="widget-content">
 			     <table class="table table-bordered table-striped with-check">

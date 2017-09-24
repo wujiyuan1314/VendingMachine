@@ -22,7 +22,9 @@ public interface VendOrderMapper {
     /**下为自定义方法 */
     List<VendOrder> listVendOrder(@Param("vendOrder") VendOrder vendOrder,@Param("beginTime") String beginTime,@Param("endTime") String endTime, @Param("page") Page page);
     
-    List<VendOrder> selectByParams(@Param("vendOrder") VendOrder vendOrder,@Param("beginTime") String beginTime,@Param("endTime") String endTime);
+    List<VendOrder> selectByParams(@Param("vendOrder") VendOrder vendOrder,@Param("mochinecodeArray") String mochinecodeArray[], @Param("beginTime") String beginTime,@Param("endTime") String endTime);
+    
+    List<VendOrder> selectByParams1(@Param("vendOrder") VendOrder vendOrder,@Param("beginTime") String beginTime,@Param("endTime") String endTime);
     
     int countVendOrder(@Param("vendOrder") VendOrder vendOrder,@Param("beginTime") String beginTime,@Param("endTime") String endTime);
     

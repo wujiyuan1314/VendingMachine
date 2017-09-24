@@ -41,7 +41,7 @@
               
 			  <div class="widget-content nopadding">
 			    <sf:form class="form-horizontal" method="post" action="add" enctype="multipart/form-data" commandName="vendShopQrcode" name="basic_validate" id="basic_validate" novalidate="novalidate">
-	              <sf:hidden path="usercode"/>
+	              <sf:hidden path="usercode" value="${sessionScope.vendUser.usercode}"/>
 	              <div class="control-group">
 	                <label class="control-label">二维码名</label>
 	                <div class="controls">

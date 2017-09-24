@@ -31,7 +31,7 @@ public class CodeCatalogController {
 	CodeCatalogService codeCatalogService;
 	@Autowired
 	CodeLibraryService codeLibraryService;
-	@RequiresPermissions({"codeCatalog:list"})
+	@RequiresPermissions({"codeCatalog:codeCatalogs"})
 	@RequestMapping(value="/codeCatalogs")
 	public String listCodeCatalog(Model model, @ModelAttribute CodeCatalog CodeCatalog, @ModelAttribute Page page, HttpServletRequest request) {
 		

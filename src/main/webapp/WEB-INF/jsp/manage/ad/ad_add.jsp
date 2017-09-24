@@ -138,25 +138,72 @@
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="height" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
+	              
 	              <div class="control-group">
 	                <label class="control-label">广告屏样式选择</label>
 	                <div class="controls">
-	                   <sf:select path="extend2" items="${adscreens}" itemLabel="itemname" itemValue="itemno">
+	                   <sf:select path="extend2" items="${adscreens}" itemLabel="extend1" itemValue="itemno" style="width:280px;">
 								            </sf:select>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend1" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
+	             <!--  <div class="control-group">
+	                <label class="control-label">广告屏样式选择</label>
+	                <div class="controls">
+	                  <div class="input-append date datepicker">
+	                    <sf:input path="extend2" readonly="true" data-toggle="modal" data-target="#myModal"/>
+	                    <span class="add-on" data-toggle="modal" data-target="#myModal"><i class="icon-caret-down"></i></span>
+	                  </div>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend1" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div> -->
+	               
+	                <!-- 模态框（Modal） -->
+					 <!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" 
+											aria-hidden="true">×
+									</button>
+									<h4 class="modal-title" id="myModalLabel">
+										广告样式选择
+									</h4>
+								</div>
+								<div class="modal-body">
+									<c:forEach items="${adscreens}" var="adscreen" varStatus="st">
+									  <label>
+									   <input type="radio" id="adtype" value="${adscreen.itemno }"/>${adscreen.itemname }
+									  </label>
+									</c:forEach>
+                                </div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="adscreen();">
+										提交
+									</button>
+								</div>
+							</div><!-- /.modal-content -->
+						<!--</div> /.modal-dialog -->
+					<!--</div> /.modal 
+	
+	              </div>-->
+	              
 	              <div class="control-group">
 	                <label class="control-label">广告开始时间</label>
 	                <div class="controls">
-	                  <sf:input path="startTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true"/>
+	                  <div class="input-append date datepicker">
+	                      <sf:input path="startTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true" class="span2" />
+		                  <span class="add-on"><i class="icon-th"></i></span>
+		              </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="startTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
 	                <label class="control-label">广告结束时间</label>
 	                <div class="controls">
-	                  <sf:input path="endTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true"/>
+	                  <div class="input-append date datepicker">
+	                      <sf:input path="endTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true" class="span2" />
+		                  <span class="add-on"><i class="icon-th"></i></span>
+		              </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="endTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
@@ -179,6 +226,15 @@
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
 <script type="text/javascript">
+$(".radio span").click(function(){
+	$(".radio span").removeClass("checked");
+	$(this).addClass("checked");
+})
+function adscreen(){
+	var adtype=$(".radio .checked .adtype").val();
+	$("#extend2").val(adtype);
+}
+
 $('#startTime').datetimepicker({
     format: 'yyyy-mm-dd hh:mm:ss'
 });

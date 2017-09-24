@@ -37,7 +37,7 @@
               </div>
               
 			  <div class="widget-content nopadding">
-			  <sf:form class="form-horizontal" method="post" action="/VendingMachine/user/editself" enctype="multipart/form-data" commandName="vendUser" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			  <sf:form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/user/editself" enctype="multipart/form-data" commandName="vendUser" name="basic_validate" id="basic_validate" novalidate="novalidate">
 			     <sf:hidden path="usercode" value="${sessionScope.vendUser.usercode}"/>
 			     <sf:hidden path="roleId" value="${sessionScope.vendUser.roleId}"/>
 			     <sf:hidden path="password" value="${sessionScope.vendUser.password}"/>

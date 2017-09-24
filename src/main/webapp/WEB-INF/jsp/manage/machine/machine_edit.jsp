@@ -23,7 +23,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>user/users" class="current">机器列表</a>
+      <a href="<%=basePath1%>machine/machines" class="current">机器列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -39,7 +39,7 @@
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/machine/edit" enctype="multipart/form-data" commandName="vendMachine" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			    <sf:form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/machine/edit" enctype="multipart/form-data" commandName="vendMachine" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="id"/>
 	              <div class="control-group">
 	                <label class="control-label">机器名</label>

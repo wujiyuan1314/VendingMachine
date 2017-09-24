@@ -51,7 +51,9 @@
 	              <div class="control-group">
 	                <label class="control-label">优惠券金额</label>
 	                <div class="controls">
-	                <sf:input path="couponScale"/>
+	                <div class="input-append">
+	                     <sf:input path="couponScale" class="span2"/><span class="add-on">$</span>
+	                  </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponScale" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
@@ -74,14 +76,20 @@
 	              <div class="control-group">
 	                <label class="control-label">优惠券开始日期</label>
 	                <div class="controls">
-	                  <sf:input path="startTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true"/>
+	                  <div class="input-append date datepicker">
+	                      <sf:input path="startTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true" class="span2" />
+		                  <span class="add-on"><i class="icon-th"></i></span>
+		              </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="startTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
 	                <label class="control-label">优惠券结束日期</label>
 	                <div class="controls">
-	                  <sf:input path="endTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true"/>
+	                 <div class="input-append date datepicker">
+	                      <sf:input path="endTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true" class="span2" />
+		                  <span class="add-on"><i class="icon-th"></i></span>
+		              </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="endTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>

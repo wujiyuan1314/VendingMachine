@@ -14,6 +14,13 @@ public interface VendAccountDetailService {
 	 */
 	List<VendAccountDetail> listVendAccountDetail(VendAccountDetail vendAccountDetail,Page page);
 	/**
+	 * 根据输入信息条件查询账户提现纪录列表，并分页显示
+	 * @param vendAccountDetail
+	 * @param page
+	 * @return
+	 */
+	List<VendAccountDetail> listVendAccountDetailTx(VendAccountDetail vendAccountDetail,Page page);
+	/**
 	 * 添加账户操作纪录
 	 * @param vendAccountDetail
 	 * @return

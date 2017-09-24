@@ -3,7 +3,6 @@ package base.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,7 +25,7 @@ public class FileUploadUtils {
         if(multipartResolver.isMultipart(request)){
             //再将request中的数据转化成multipart类型的数据
             MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-            Iterator iter = multiRequest.getFileNames();
+            Iterator<String> iter = multiRequest.getFileNames();
             while(iter.hasNext()){
                 MultipartFile file = multiRequest.getFile((String)iter.next());
                 if(file != null){

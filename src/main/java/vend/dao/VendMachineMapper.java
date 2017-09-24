@@ -29,4 +29,10 @@ public interface VendMachineMapper {
     List<VendMachine> findAll();
     
     VendMachine selectByMachineCode(String machineCode);
+    
+    VendMachine selectByMachineId(String machineId);
+    
+    List<VendMachine> selectByUsercode(String usercodelist[]);
+    
+    List<VendMachine> selectByUsercode1();
 }

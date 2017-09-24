@@ -1,4 +1,4 @@
-package vend.controller;
+	package vend.controller;
 
 import java.util.Date;
 import java.util.List;
@@ -29,7 +29,7 @@ public class CodeLibraryController {
 	
 	@Autowired
 	CodeLibraryService codeLibraryService;
-	@RequiresPermissions({"codeLibrary:list"})
+	@RequiresPermissions({"codeLibrary:codeLibrarys"})
 	@RequestMapping(value="/codeLibrarys")
 	public String listCodeLibrary(Model model, @ModelAttribute CodeLibrary CodeLibrary,HttpServletRequest request) {
 		List<CodeLibrary> codeLibrarys = codeLibraryService.listCodeLibrary(CodeLibrary);
@@ -37,18 +37,28 @@ public class CodeLibraryController {
 		return "manage/codelibrary/codelibrary_list";
 	}
 	/**
-	 *广告屏样式
+	 * 广告屏样式
 	 * @param model
-	 * @param CodeLibrary
-	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value="/adscreen")
-	public String listAdscreen(Model model, @ModelAttribute CodeLibrary CodeLibrary,HttpServletRequest request) {
+	public String listAdscreen(Model model) {
 		List<CodeLibrary> codeLibrarys = codeLibraryService.selectByCodeNo("ADSCREEN");
 		model.addAttribute("codeno", "ADSCREEN");
 		model.addAttribute("codeLibrarys",codeLibrarys);
 		return "manage/codelibrary/codelibrary_adscreen";
+	}
+	/**
+	 * 优惠券地址设置
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/areaset")
+	public String areaSet(Model model){
+		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
+		model.addAttribute("codeno", "COUPONAREA");
+		model.addAttribute("couponareas", couponareas);
+		return "manage/codelibrary/codelibrary_areaset";
 	}
 	/**
 	 * 跳转参数类别信息添加界面

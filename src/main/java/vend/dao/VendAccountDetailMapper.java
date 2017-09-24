@@ -24,6 +24,10 @@ public interface VendAccountDetailMapper {
     
     int countVendAccountDetail(VendAccountDetail vendAccountDetail);
     
+    List<VendAccountDetail> listVendAccountDetailTx(@Param("vendAccountDetail") VendAccountDetail vendAccountDetail, @Param("page") Page page);
+    
+    int countVendAccountDetailTx(VendAccountDetail vendAccountDetail);
+    
     int deleteBatch(int ids[]);
     
     List<VendAccountDetail> findAll();

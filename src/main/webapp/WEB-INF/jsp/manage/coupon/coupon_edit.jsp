@@ -40,7 +40,7 @@
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/coupon/edit" enctype="multipart/form-data" commandName="vendCoupon" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			    <sf:form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/coupon/edit" enctype="multipart/form-data" commandName="vendCoupon" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="id"/>
 	              <div class="control-group">
 	                <label class="control-label">优惠券名</label>
@@ -82,14 +82,20 @@
 	              <div class="control-group">
 	                <label class="control-label">优惠券开始日期</label>
 	                <div class="controls">
-	                  <sf:input path="startTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true"/>
+	                  <div class="input-append date datepicker">
+	                      <sf:input path="startTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true" class="span2" />
+		                  <span class="add-on"><i class="icon-th"></i></span>
+		              </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="startTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
 	                <label class="control-label">优惠券结束日期</label>
 	                <div class="controls">
-	                  <sf:input path="endTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true"/>
+	                 <div class="input-append date datepicker">
+	                      <sf:input path="endTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true" class="span2" />
+		                  <span class="add-on"><i class="icon-th"></i></span>
+		              </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="endTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
@@ -111,5 +117,13 @@
 
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
+<script type="text/javascript">
+$('#startTime').datetimepicker({
+    format: 'yyyy-mm-dd'
+});
+$('#endTime').datetimepicker({
+    format: 'yyyy-mm-dd'
+});
+</script>
 </body>
 </html>

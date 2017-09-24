@@ -113,7 +113,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>4.1.7.RELEASE</version>
+			<version>4.0.0.RELEASE</version>
 		</dependency>
 		<!--2)spring dao层依赖 -->
 		<dependency>
@@ -150,6 +150,11 @@
 			<version>2.10.2</version>
 			<type>pom</type>
 		</dependency>
+		<dependency>
+	       <groupId>com.googlecode.ehcache-spring-annotations</groupId>
+	       <artifactId>ehcache-spring-annotations</artifactId>
+	       <version>1.2.0</version>
+        </dependency>
 		<!-- shiro相关依赖 -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
@@ -239,7 +244,7 @@
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
-            <version>1.8.5</version>
+            <version>2.2.1</version>
         </dependency>
         <!-- 引入http服务依赖包 -->
         <dependency>
@@ -258,9 +263,15 @@
 			<artifactId>fastjson</artifactId>
 			<version>1.2.9</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.8</version>
+		</dependency>
     
 	</dependencies>
   <build>
-    <finalName>vend</finalName>
+    <finalName>ROOT</finalName>
   </build>
 </project>

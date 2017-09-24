@@ -1,7 +1,12 @@
 package vend.controller;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -16,17 +21,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.alibaba.fastjson.JSONObject;
+
+import base.util.CacheUtils;
+import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
 import vend.entity.CodeLibrary;
 import vend.entity.VendAd;
 import vend.entity.VendMachine;
+import vend.entity.VendOrder;
 import vend.entity.VendShopQrcode;
 import vend.entity.VendUser;
 import vend.service.CodeLibraryService;
 import vend.service.VendAdService;
 import vend.service.VendMachineService;
+import vend.service.VendOrderService;
 import vend.service.VendShopQrcodeService;
+import vend.service.VendUserService;
 
 @Controller
 @RequestMapping("/machine")
@@ -38,11 +50,15 @@ public class VendMachineController{
 	@Autowired
 	VendAdService vendAdService;
 	@Autowired
+	VendUserService vendUserService;
+	@Autowired
 	VendShopQrcodeService vendShopQrcodeService;
 	@Autowired
 	CodeLibraryService codeLibraryService;
+	@Autowired
+	VendOrderService vendOrderService;
 	/**
-	 * 根据输入信息条件查询广告列表，并分页显示
+	 * 根据输入信息条件查询机器列表，并分页显示
 	 * @param model
 	 * @param vendMachine
 	 * @param page
@@ -62,13 +78,23 @@ public class VendMachineController{
 		logger.info(vendMachine.toString());
 		HttpSession session=request.getSession();
 		VendUser user=(VendUser)session.getAttribute("vendUser");
-		if(user!=null){
-			vendMachine.setUsercode(user.getUsercode());
-		}
 		List<CodeLibrary> usestatus=codeLibraryService.selectByCodeNo("USESTATUS");
 		model.addAttribute("usestatus", usestatus);
 		List<VendMachine> vendMachines = vendMachineService.listVendMachine(vendMachine, page);
-		model.addAttribute("vendMachines",vendMachines);
+		String userlist="";
+		if(user!=null&&user.getUsercode()!=null){//上级账号
+			userlist=vendUserService.getNextUsersOwnSelf(user.getUsercode());
+		}
+		List<VendMachine> vendMachines1=new ArrayList<VendMachine>();
+		if(userlist!=null){
+			for(VendMachine vendMachine1:vendMachines){
+				if(userlist.indexOf(vendMachine1.getUsercode())!=-1){
+					vendMachines1.add(vendMachine1);
+				}
+			}
+		}
+		model.addAttribute("page", page);
+		model.addAttribute("vendMachines",vendMachines1);
 		return "manage/machine/machine_list";
 	}
 	/**
@@ -124,20 +150,18 @@ public class VendMachineController{
 		return "manage/machine/machine_detail"; 
 	}
 	/**
-	 * 跳转广告信息添加界面
+	 * 跳转机器信息添加界面
 	 * @param model
 	 * @return
 	 */
 	@RequiresPermissions({"machine:add"})
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String machined(Model model){
-		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");
-		model.addAttribute("upvideotypes", upvideotypes);
 		model.addAttribute(new VendMachine());
 		return "manage/machine/machine_add";
 	}
    /**
-    * 添加广告信息
+    * 添加机器信息
     * @param request
     * @param model
     * @param vendMachine
@@ -147,8 +171,14 @@ public class VendMachineController{
 	@RequiresPermissions({"machine:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String machined(HttpServletRequest request,Model model,@Validated VendMachine vendMachine,BindingResult br){
-		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");
-		model.addAttribute("upvideotypes", upvideotypes);
+		VendMachine vendMachine1=vendMachineService.selectByMachineId(vendMachine.getMachineId());
+		if(vendMachine1!=null){
+			br.rejectValue("machineId", "MACHINEIDREPPEAT", "该机器ID已被绑定");
+		}
+		VendMachine vendMachine2=vendMachineService.selectByMachineCode(vendMachine.getMachineCode());
+		if(vendMachine2!=null){
+			br.rejectValue("machineId", "MACHINECODEREPPEAT", "该机器码已被绑定");
+		}
     	if(br.hasErrors()){
     		return "manage/machine/machine_add";
     	}
@@ -156,7 +186,7 @@ public class VendMachineController{
     	return "redirect:machines";
 	}
     /**
-	 * 跳转广告修改界面
+	 * 跳转机器修改界面
 	 * @param model
 	 * @return
 	 */
@@ -172,7 +202,7 @@ public class VendMachineController{
 		return "manage/machine/machine_edit";
 	}
 	/**
-	 * 修改广告信息
+	 * 修改机器信息
 	 * @param request
 	 * @param model
 	 * @param vendMachine
@@ -185,11 +215,11 @@ public class VendMachineController{
     	if(br.hasErrors()){
     		return "manage/machine/machine_edit";
     	}
-    	int isOk=vendMachineService.editVendMachine(vendMachine);
+    	vendMachineService.editVendMachine(vendMachine);
 		return "redirect:machines";
 	}
     /**
-     * 删除广告信息
+     * 删除机器信息
      * @param user
      * @param br
      * @return
@@ -201,7 +231,7 @@ public class VendMachineController{
  		return "redirect:/machine/machines";
  	}
     /**
-     * 批量删除广告信息
+     * 批量删除机器信息
      * @param ids
      * @return
      */
@@ -214,7 +244,148 @@ public class VendMachineController{
     	for(int i=0;i<idArray.length;i++){
     		idArray1[i]=Function.getInt(idArray[i], 0);
     	}
-    	int isOk=vendMachineService.delVendMachines(idArray1);
+    	vendMachineService.delVendMachines(idArray1);
   		return "redirect:/machine/machines";
   	}
+	/**
+	 * 解绑机器
+	 * @param id
+	 * @param transusercode
+	 * @param response
+	 * @throws IOException 
+	 */
+	@RequiresPermissions({"machine:unbind"})
+    @RequestMapping(value="/{id}/{transusername}/unbind")
+  	public String unbind(@PathVariable Integer id,@PathVariable String transusername,HttpServletResponse response) throws IOException{
+		JSONObject json = new JSONObject();
+	    json.put("success", 0);
+	    json.put("msg", "解绑失败");
+		VendMachine vendMachine=vendMachineService.getOne(id);
+		if(vendMachine==null){
+			json.put("success", 0);
+			json.put("msg", "该机器不存在");
+			response.getWriter().append(json.toJSONString());
+			return null;
+		}
+		
+		VendUser vendUser=vendUserService.selectByUsername(transusername);
+		if(vendUser==null){
+			json.put("success", 0);
+			json.put("msg", "要转移的商户不存在");
+			response.getWriter().append(json.toJSONString());
+			return null;
+		}
+		if(vendUser.getRoleId()!=4){
+			json.put("success", 0);
+			json.put("msg", "要转移的用户必须是商家用户");
+			response.getWriter().append(json.toJSONString());
+			return null;
+		}
+		
+		if(vendUser.getUsercode()==null){
+			json.put("success", 0);
+			json.put("msg", "要转移的商户不存在");
+			response.getWriter().append(json.toJSONString());
+			return null;
+		}
+		
+		vendMachine.setUsercode(vendUser.getUsercode());
+    	int isOk=vendMachineService.editVendMachine(vendMachine);
+    	if(isOk==1){
+    		json.put("success", 1);
+			json.put("msg", "解绑成功");
+    		CacheUtils.clear();
+    	}
+
+		response.getWriter().append(json.toJSONString());
+		return null;
+
+  	}
+	/**
+	 * 每个机器销售统计
+	 * @param model
+	 * @param vendMachine
+	 * @param page
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/sales")
+	public String sales(Model model,@ModelAttribute VendMachine vendMachine, @ModelAttribute Page page,HttpServletRequest request) {
+		String currentPageStr = request.getParameter("currentPage");
+		logger.info(currentPageStr + "===========");
+		if(currentPageStr != null){
+			int currentPage = Integer.parseInt(currentPageStr);
+			page.setCurrentPage(currentPage);
+		}
+		logger.info(page.toString());
+		logger.info(vendMachine.toString());
+		HttpSession session=request.getSession();
+		VendUser user=(VendUser)session.getAttribute("vendUser");
+		List<CodeLibrary> usestatus=codeLibraryService.selectByCodeNo("USESTATUS");
+		model.addAttribute("usestatus", usestatus);
+		List<VendMachine> vendMachines = vendMachineService.listVendMachine(vendMachine, page);
+		String userlist="";
+		if(user!=null&&user.getUsercode()!=null){//上级账号
+			userlist=vendUserService.getNextUsersOwnSelf(user.getUsercode());
+		}
+		List<VendMachine> vendMachines1=new ArrayList<VendMachine>();
+		if(userlist!=null){
+			for(VendMachine vendMachine1:vendMachines){
+				if(userlist.indexOf(vendMachine1.getUsercode())!=-1){
+					vendMachines1.add(vendMachine1);
+				}
+			}
+		}
+		
+		String beginTime=request.getParameter("beginTime");
+		if(beginTime==null){
+			beginTime=DateUtil.getCurrentDateStr();
+		}
+		String endTime=request.getParameter("endTime");
+		if(endTime==null){
+			endTime=DateUtil.format(DateUtil.addDays(DateUtil.parseDate(DateUtil.getCurrentDateStr()),1));
+		}
+		List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();//每个机子的销售统计集合
+		for(VendMachine vendMachine2:vendMachines1){
+			if(vendMachine2!=null&&vendMachine2.getMachineCode()!=null){
+				String mochinecodeArray[]={vendMachine2.getMachineCode()};
+			    VendOrder vendOrder=new VendOrder();
+			    vendOrder.setExtend1("1");
+			    List<VendOrder> vendOrders=vendOrderService.selectByParams(vendOrder,mochinecodeArray,beginTime, endTime);
+			    
+			    int user_num=0;//消费用户数
+			    int sell_num=0;//销售量
+			    double sell_amount=0.0;//销售金额
+			    int free_num=0;//免费数量
+			    String buyusers="";
+			    for(VendOrder vendOrder1:vendOrders){
+			    	if(vendOrder1!=null&&vendOrder1.getUsercode()!=null){
+			    		if(buyusers.indexOf(vendOrder1.getUsercode()+",")==-1){
+			    			buyusers+=vendOrder1.getUsercode()+",";
+			    			user_num++;
+			    		}
+			    	}
+			    	if(vendOrder1!=null&&vendOrder1.getNum()!=null){
+			    		    sell_num+=vendOrder1.getNum();
+			    	}
+			    	if(vendOrder1!=null&&vendOrder1.getAmount()!=null){
+			    		    sell_amount+=vendOrder1.getAmount().doubleValue();
+			    	}
+			    	if(vendOrder1!=null&&vendOrder1.getFreeStatus()!=null&&vendOrder1.getFreeStatus().equals("1")){
+			    		    free_num++;
+		    	    }
+			    }
+			    Map<String,Object> map=new HashMap<String,Object> ();
+			    map.put("machinecode", vendMachine2.getMachineCode());
+			    map.put("user_num", user_num);
+			    map.put("sell_num", sell_num);
+			    map.put("sell_amount", sell_amount);
+			    map.put("free_num", free_num);
+			    list.add(map);
+			}
+		}
+		model.addAttribute("page", page);
+		model.addAttribute("list",list);
+		return "manage/machine/machine_sales";
+	}
 }

@@ -15,15 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import base.util.Function;
-import base.util.Page;
 import net.sf.json.JSONArray;
-import vend.entity.VendGoods;
 import vend.entity.VendPermission;
 import vend.entity.VendRolePermission;
 import vend.entity.VendUser;
@@ -66,11 +63,7 @@ public class VendPermissionController{
 			zNode.setpId(vendPermission.getParentId());
 			zNode.setName(vendPermission.getPermissionDescription());
 			zNode.setFile(basePath+"/permission/"+vendPermission.getId()+"/edit");
-			if(vendPermission.getId()==1){
-				zNode.setOpen(true);
-			}else{
-				zNode.setOpen(false);
-			}
+			zNode.setOpen(true);
 		    list.add(zNode);
 		}
 		JSONArray json = JSONArray.fromObject(list);
@@ -107,11 +100,7 @@ public class VendPermissionController{
 				zNode.setId(vendPermission.getId());
 				zNode.setpId(vendPermission.getParentId());
 				zNode.setName(vendPermission.getPermissionDescription());
-				if(vendPermission.getId()==1){
-					zNode.setOpen(true);
-				}else{
-					zNode.setOpen(false);
-				}
+			    zNode.setOpen(true);
 				for(int roleId2:roleIdArray){
 					if(roleId2==vendPermission.getId()){
 						zNode.setChecked(true);
@@ -130,11 +119,7 @@ public class VendPermissionController{
 					zNode.setId(vendPermission.getId());
 					zNode.setpId(vendPermission.getParentId());
 					zNode.setName(vendPermission.getPermissionDescription());
-					if(vendPermission.getId()==1){
-						zNode.setOpen(true);
-					}else{
-						zNode.setOpen(false);
-					}
+					zNode.setOpen(true);
 					zNode.setChecked(false);
 					for(int roleId2:roleIdArray){
 						if(vendPermission.getId()==roleId2){
@@ -150,11 +135,7 @@ public class VendPermissionController{
 							zNode.setId(vendPermission.getId());
 							zNode.setpId(vendPermission.getParentId());
 							zNode.setName(vendPermission.getPermissionDescription());
-							if(vendPermission.getId()==1){
-								zNode.setOpen(true);
-							}else{
-								zNode.setOpen(false);
-							}
+							zNode.setOpen(true);
 							zNode.setChecked(true);
 							list.add(zNode);
 						}

@@ -7,6 +7,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <%@ include file="../../common/common_css.jsp" %>
 </head>
+<style>
+.select2-container {
+width:80%;
+}
+</style>
 <body>
 
 <!--Header-part-->
@@ -45,7 +50,7 @@
 			              <th>二维码名:</th>
 			              <th><input type="text" name="extend1" id="extend1" placeholder="按二维码名搜索"/>&nbsp;&nbsp;</th>
 		                  <th>二维码类型:</th>
-		                  <th>
+		                  <th style="width:120px;">
 		                    <select name="extend2" id="extend2">
 						       <option value=" ">全部</option>
 							     <c:forEach items="${qrcodetypes}" var="qrcodetype" varStatus="status">

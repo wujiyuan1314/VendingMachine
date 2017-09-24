@@ -23,7 +23,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>machine/machines" class="current">用户列表</a>
+      <a href="<%=basePath1%>machine/machines" class="current">机器列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -46,6 +46,13 @@
 	                <div class="controls">
 	                  <sf:input path="machineName"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="machineName" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
+	              <div class="control-group">
+	                <label class="control-label">机器id</label>
+	                <div class="controls">
+	                  <sf:input path="machineId"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="machineId" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">

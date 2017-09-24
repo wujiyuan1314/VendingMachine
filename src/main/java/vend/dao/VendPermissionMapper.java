@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import base.util.Page;
 import vend.entity.VendPermission;
-import vend.entity.VendPermission;
 
 public interface VendPermissionMapper {
     int deleteByPrimaryKey(Integer id);

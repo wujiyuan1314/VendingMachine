@@ -1,5 +1,7 @@
 package vend.controller;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,8 +27,18 @@ import base.util.Const;
 import base.util.DateUtil;
 import base.util.Function;
 import vend.entity.UserCoupon;
+import vend.entity.VendAccount;
+import vend.entity.VendMachine;
+import vend.entity.VendOrder;
+import vend.entity.VendRole;
+import vend.entity.VendSyslog;
 import vend.entity.VendUser;
 import vend.service.UserCouponService;
+import vend.service.VendAccountService;
+import vend.service.VendMachineService;
+import vend.service.VendOrderService;
+import vend.service.VendRoleService;
+import vend.service.VendSyslogService;
 import vend.service.VendUserService;
 
 @Controller
@@ -35,7 +47,17 @@ public class LoginController extends LogoutFilter{
 	@Autowired
 	VendUserService vendUserService;
 	@Autowired
+	VendMachineService vendMachineService;
+	@Autowired
+	VendAccountService vendAccountService;
+	@Autowired
+	VendOrderService vendOrderService;
+	@Autowired
 	UserCouponService userCouponService;
+	@Autowired
+	VendSyslogService vendSyslogService;
+	@Autowired
+	VendRoleService vendRoleService;
 	@RequestMapping(value="/login",method=RequestMethod.GET)
     public String login(){
 		Subject subject=SecurityUtils.getSubject();
@@ -45,9 +67,78 @@ public class LoginController extends LogoutFilter{
         	return "login";
         }
     }
-	 
+	 /**
+	  * 主界面
+	  * @param request
+	  * @param model
+	  * @return
+	  */
 	@RequestMapping(value="/welcome",method=RequestMethod.GET)
-    public String welcome(){
+    public String welcome(HttpServletRequest request,Model model){
+		/**
+		 * 每天销售统计
+		 */
+		HttpSession session=request.getSession();
+	    VendUser vendUser=(VendUser)session.getAttribute("vendUser");
+	    String usercodelist="";
+	    if(vendUser!=null){
+	    	usercodelist=vendUserService.getNextUsers(vendUser.getUsercode());
+	    	if(usercodelist==null){
+	    		usercodelist="";
+	    	}
+	    }
+	    
+	    String usercodeArray[]=Function.stringSpilit(usercodelist, ",");
+	    List<VendMachine> vendMachines=vendMachineService.selectByUsercode(usercodeArray);
+	    String mochinecodelist="";
+	    for(VendMachine vendMachine:vendMachines){
+	    	if(vendMachine!=null&&vendMachine.getMachineCode()!=null){
+	    		mochinecodelist+=vendMachine.getMachineCode()+",";
+	    	}
+	    }
+	    String mochinecodeArray[]=Function.stringSpilit(mochinecodelist, ",");
+	    
+	    //当天销售量
+	    VendOrder vendOrder=new VendOrder();
+	    vendOrder.setExtend1("1");
+	    String beginTime=DateUtil.getCurrentDateStr();
+	    String endTime=DateUtil.format(DateUtil.addDays(DateUtil.parseDate(beginTime),1));
+	    List<VendOrder> vendOrders=new ArrayList();
+	    if(mochinecodeArray.length==0){
+	    	vendOrders =vendOrderService.selectByParams1(vendOrder,beginTime, endTime);
+	    }else{
+	    	vendOrders =vendOrderService.selectByParams(vendOrder,mochinecodeArray,beginTime, endTime);
+	    }
+	    
+	    int user_num=0;//消费用户数
+	    int sell_num=0;//销售量
+	    double sell_amount=0.0;//销售金额
+	    int free_num=0;//免费数量
+	    String buyusers="";
+	    for(VendOrder vendOrder1:vendOrders){
+	    	if(vendOrder1!=null&&vendOrder1.getUsercode()!=null){
+	    		if(buyusers.indexOf(vendOrder1.getUsercode()+",")==-1){
+	    			buyusers+=vendOrder1.getUsercode()+",";
+	    			user_num++;
+	    		}
+	    	}
+	    	if(vendOrder1!=null&&vendOrder1.getNum()!=null){
+	    		    sell_num+=vendOrder1.getNum();
+	    	}
+	    	if(vendOrder1!=null&&vendOrder1.getAmount()!=null){
+	    		    sell_amount+=vendOrder1.getAmount().doubleValue();
+	    	}
+	    	if(vendOrder1!=null&&vendOrder1.getFreeStatus()!=null&&vendOrder1.getFreeStatus().equals("1")){
+	    		    free_num++;
+    	    }
+	    }
+	    Map<String,Object> map=new HashMap<String,Object>();
+	    map.put("user_num", user_num);
+	    map.put("sell_num", sell_num);
+	    map.put("sell_amount", sell_amount);
+	    map.put("free_num", free_num);
+	    model.addAttribute("map", map);
+	    
         return "welcome";
     }
 	@RequestMapping(value="/login",method=RequestMethod.POST)
@@ -75,6 +166,15 @@ public class LoginController extends LogoutFilter{
 			 model.addAttribute("errorpassword", "请填写密码");
 			 return "login";
 		}
+		VendUser user=vendUserService.selectByUsername(username);
+		if(user==null){
+			model.addAttribute("erroruserName", "用户名不正确");
+			return "login";
+		}
+		if(!user.getPassword().equals(password)){
+			model.addAttribute("errorpassword", "密码不正确");
+			return "login";
+		}
 		if (subject.isAuthenticated()) {  
             return "welcome";  
         }  
@@ -90,8 +190,25 @@ public class LoginController extends LogoutFilter{
 		 //   return "login";
 		//}
 		VendUser vendUser = vendUserService.selectByUsername(username);
+		/**
+		 * 登录日志
+		 */
+		VendSyslog vendSyslog=new VendSyslog();
+		vendSyslog.setUsercode(vendUser.getUsercode());
+		vendSyslog.setUsername(username);
+		vendSyslog.setExtend1("");
+		vendSyslog.setOperIp(request.getRemoteAddr());
+		if(vendUser.getRoleId()!=null){
+			VendRole vendRole=vendRoleService.getOne(vendUser.getRoleId());
+			if(vendRole!=null&&vendRole.getRoleName()!=null){
+				vendSyslog.setExtend1(vendRole.getRoleName());
+			}
+		}
+		vendSyslog.setOperDescription("登录成功");
+		vendSyslogService.insertVendSyslog(vendSyslog);
+		
 		subject.getSession().setAttribute("vendUser", vendUser);
-		return "welcome";
+		return "redirect:welcome";
 	}
     /**
      * 退出登录
@@ -141,28 +258,50 @@ public class LoginController extends LogoutFilter{
     }
     /**
      * 微信小程序用户登录
+     * @param request
+     * @param map
      * @return
      */
     @RequestMapping(value="/wxlogin",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
-    public @ResponseBody Map<String, String> wxlogin(@RequestBody Map<String, String> map){
+    public @ResponseBody Map<String, Object> wxlogin(HttpServletRequest request,@RequestBody Map<String, String> map){
+    	Map<String, Object> resultMap=new HashMap<String, Object>();
     	//存储状态信息
-    	map.put("usercode", "");
-    	map.put("success", "0");
-    	map.put("msg", "登录错误");
+    	resultMap.put("avatarUrl", map.get("avatarUrl"));
+    	resultMap.put("nickName", map.get("nickName"));
+    	resultMap.put("usercode", "");
+    	resultMap.put("success", "0");
+    	resultMap.put("msg", "登录错误");
     	
     	String username=map.get("nickName");
     	VendUser venduser=vendUserService.selectByUsername(username);
     	if(venduser==null){
-    		map.put("usercode", "");
-    		map.put("success", "0");
-        	map.put("msg", "您还没注册,请先进行注册");
+    		resultMap.put("usercode", "");
+    		resultMap.put("success", "0");
+    		resultMap.put("msg", "您还没注册,请先进行注册");
     	}else{
     		List<UserCoupon> userCoupons=userCouponService.findByUsercode(venduser.getUsercode());
-    		map.put("couponnum", Integer.toString(userCoupons.size()));
-    		map.put("usercode", venduser.getUsercode());
-    		map.put("success", "1");
-        	map.put("msg", "登录成功");
+    		VendAccount vendAccount = vendAccountService.getOne(venduser.getUsercode());
+    		//List<CodeLibrary> ordertypes =codeLibraryService.selectByCodeNo("ORDERTYPE");
+    		resultMap.put("vendAccount", vendAccount);
+    		resultMap.put("userCoupons", userCoupons);
+    		resultMap.put("usercode", venduser.getUsercode());
+    		resultMap.put("success", "1");
+    		resultMap.put("msg", "登录成功");
+    		
+    		VendSyslog vendSyslog=new VendSyslog();
+    		vendSyslog.setUsercode(venduser.getUsercode());
+    		vendSyslog.setUsername(username);
+    		vendSyslog.setOperIp(request.getRemoteAddr());
+    		vendSyslog.setExtend1("");
+    		if(venduser.getRoleId()!=null){
+    			VendRole vendRole=vendRoleService.getOne(venduser.getRoleId());
+    			if(vendRole!=null&&vendRole.getRoleName()!=null){
+    				vendSyslog.setExtend1(vendRole.getRoleName());
+    			}
+    		}
+    		vendSyslog.setOperDescription("登录成功");
+    		vendSyslogService.insertVendSyslog(vendSyslog);
     	}
-    	return map;
+    	return resultMap;
     }
 }

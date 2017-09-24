@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="vend.entity.VendMachine" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="machine_name" property="machineName" jdbcType="VARCHAR" />
+    <result column="machine_id" property="machineId" jdbcType="VARCHAR" />
     <result column="machine_code" property="machineCode" jdbcType="VARCHAR" />
     <result column="usercode" property="usercode" jdbcType="VARCHAR" />
     <result column="machine_type" property="machineType" jdbcType="VARCHAR" />
@@ -24,7 +25,7 @@
     <result column="extend5" property="extend5" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, machine_name, machine_code, usercode, machine_type, use_status, water_status, 
+    id, machine_name, machine_id, machine_code, usercode, machine_type, use_status, water_status, 
     cup_status, heat_status, clean_status, client_qrcode, shop_qrcode, ad_id, create_time, 
     update_time, extend1, extend2, extend3, extend4, extend5
   </sql>
@@ -39,20 +40,22 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="vend.entity.VendMachine" >
-    insert into vend_machine (id, machine_name, machine_code, 
-      usercode, machine_type, use_status, 
-      water_status, cup_status, heat_status, 
-      clean_status, client_qrcode, shop_qrcode, 
-      ad_id, create_time, update_time, 
-      extend1, extend2, extend3, 
-      extend4, extend5)
-    values (#{id,jdbcType=INTEGER}, #{machineName,jdbcType=VARCHAR}, #{machineCode,jdbcType=VARCHAR}, 
-      #{usercode,jdbcType=VARCHAR}, #{machineType,jdbcType=VARCHAR}, #{useStatus,jdbcType=VARCHAR}, 
-      #{waterStatus,jdbcType=VARCHAR}, #{cupStatus,jdbcType=VARCHAR}, #{heatStatus,jdbcType=VARCHAR}, 
-      #{cleanStatus,jdbcType=VARCHAR}, #{clientQrcode,jdbcType=INTEGER}, #{shopQrcode,jdbcType=INTEGER}, 
-      #{adId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, 
-      #{extend4,jdbcType=VARCHAR}, #{extend5,jdbcType=VARCHAR})
+    insert into vend_machine (id, machine_name, machine_id, 
+      machine_code, usercode, machine_type, 
+      use_status, water_status, cup_status, 
+      heat_status, clean_status, client_qrcode, 
+      shop_qrcode, ad_id, create_time, 
+      update_time, extend1, extend2, 
+      extend3, extend4, extend5
+      )
+    values (#{id,jdbcType=INTEGER}, #{machineName,jdbcType=VARCHAR}, #{machineId,jdbcType=VARCHAR}, 
+      #{machineCode,jdbcType=VARCHAR}, #{usercode,jdbcType=VARCHAR}, #{machineType,jdbcType=VARCHAR}, 
+      #{useStatus,jdbcType=VARCHAR}, #{waterStatus,jdbcType=VARCHAR}, #{cupStatus,jdbcType=VARCHAR}, 
+      #{heatStatus,jdbcType=VARCHAR}, #{cleanStatus,jdbcType=VARCHAR}, #{clientQrcode,jdbcType=INTEGER}, 
+      #{shopQrcode,jdbcType=INTEGER}, #{adId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}, #{extend5,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="vend.entity.VendMachine" >
     insert into vend_machine
@@ -62,6 +65,9 @@
       </if>
       <if test="machineName != null" >
         machine_name,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
       </if>
       <if test="machineCode != null" >
         machine_code,
@@ -125,6 +131,9 @@
       <if test="machineName != null" >
         #{machineName,jdbcType=VARCHAR},
       </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=VARCHAR},
+      </if>
       <if test="machineCode != null" >
         #{machineCode,jdbcType=VARCHAR},
       </if>
@@ -187,6 +196,9 @@
       <if test="machineName != null" >
         machine_name = #{machineName,jdbcType=VARCHAR},
       </if>
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=VARCHAR},
+      </if>
       <if test="machineCode != null" >
         machine_code = #{machineCode,jdbcType=VARCHAR},
       </if>
@@ -247,6 +259,7 @@
   <update id="updateByPrimaryKey" parameterType="vend.entity.VendMachine" >
     update vend_machine
     set machine_name = #{machineName,jdbcType=VARCHAR},
+      machine_id = #{machineId,jdbcType=VARCHAR},
       machine_code = #{machineCode,jdbcType=VARCHAR},
       usercode = #{usercode,jdbcType=VARCHAR},
       machine_type = #{machineType,jdbcType=VARCHAR},
@@ -321,6 +334,30 @@
     <include refid="Base_Column_List" />
     from vend_machine
     where machine_code = #{machineCode,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="selectByMachineId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_machine
+    where machine_id = #{machineId,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="selectByUsercode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_machine
+    where usercode in
+    <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+    </foreach>
+  </select>
+  
+  <select id="selectByUsercode1" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from vend_machine
+    where usercode in ('')
   </select>
   <!-- 批量删除 -->
     <delete id="deleteBatch" parameterType="int">

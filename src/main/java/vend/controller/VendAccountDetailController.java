@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -25,9 +26,13 @@ import base.util.Page;
 import vend.entity.CodeLibrary;
 import vend.entity.VendAccount;
 import vend.entity.VendAccountDetail;
+import vend.entity.VendRole;
+import vend.entity.VendUser;
 import vend.service.CodeLibraryService;
 import vend.service.VendAccountDetailService;
 import vend.service.VendAccountService;
+import vend.service.VendRoleService;
+import vend.service.VendUserService;
 
 @Controller
 @RequestMapping("/accountdetail")
@@ -36,6 +41,10 @@ public class VendAccountDetailController{
 	
 	@Autowired
 	VendAccountDetailService vendAccountDetailService;
+	@Autowired
+	VendUserService vendUserService;
+	@Autowired
+	VendRoleService vendRoleService;
 	@Autowired
 	VendAccountService vendAccountService;
 	@Autowired
@@ -61,6 +70,16 @@ public class VendAccountDetailController{
 		List<CodeLibrary> accounttypes=codeLibraryService.selectByCodeNo("ACCOUNTTYPE");
 		model.addAttribute("accounttypes", accounttypes);
 		List<VendAccountDetail> vendAccountDetails = vendAccountDetailService.listVendAccountDetail(vendAccountDetail, page);
+		for(VendAccountDetail vendAccountDetail1:vendAccountDetails){
+			VendUser vendUser=vendUserService.getOne(vendAccountDetail1.getUsercode());
+			if(vendUser!=null&&vendUser.getUsername()!=null){
+				vendAccountDetail1.setUsercode(vendUser.getUsername());
+			}
+			VendRole vendRole=vendRoleService.getOne(vendUser.getRoleId());
+			if(vendRole!=null&&vendRole.getRoleName()!=null){
+				vendAccountDetail1.setExtend2(vendRole.getRoleName());
+			}
+		}
 		model.addAttribute("vendAccountDetails",vendAccountDetails);
 		return "manage/account/account_detail";
 	}
@@ -84,14 +103,22 @@ public class VendAccountDetailController{
 		logger.info(vendAccountDetail.toString());
 		List<CodeLibrary> accounttypes=codeLibraryService.selectByCodeNo("ACCOUNTTYPE");
 		model.addAttribute("accounttypes", accounttypes);
-		vendAccountDetail.setType("2");
-		List<VendAccountDetail> vendAccountDetails = vendAccountDetailService.listVendAccountDetail(vendAccountDetail, page);
+		List<VendAccountDetail> vendAccountDetails = vendAccountDetailService.listVendAccountDetailTx(vendAccountDetail, page);
 		List<VendAccountDetail> list=new ArrayList<VendAccountDetail>();
 		for(VendAccountDetail vendAccountDetail1:vendAccountDetails){
 			if(vendAccountDetail1.getExtend1()==null||"".equals(vendAccountDetail1.getExtend1())){
+				VendUser vendUser=vendUserService.getOne(vendAccountDetail1.getUsercode());
+				if(vendUser!=null&&vendUser.getUsername()!=null){
+					vendAccountDetail1.setUsercode(vendUser.getUsername());
+				}
+				VendRole vendRole=vendRoleService.getOne(vendUser.getRoleId());
+				if(vendRole!=null&&vendRole.getRoleName()!=null){
+					vendAccountDetail1.setExtend2(vendRole.getRoleName());
+				}
 				list.add(vendAccountDetail1);
 			}
 		}
+		model.addAttribute("page", page);
 		model.addAttribute("vendAccountDetails",list);
 		return "manage/account/account_draw";
 	}

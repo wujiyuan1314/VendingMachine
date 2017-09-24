@@ -49,6 +49,7 @@ public class VendAccountController{
 	 * @param request
 	 * @return
 	 */
+	@RequiresPermissions({"account:accounts"})
 	@RequestMapping(value="/accounts")
 	public String listVendAccount(Model model,@ModelAttribute VendAccount vendAccount, @ModelAttribute Page page,HttpServletRequest request) {
 		String currentPageStr = request.getParameter("currentPage");
@@ -88,6 +89,7 @@ public class VendAccountController{
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions({"account:add"})
 	@RequestMapping(value="/add",method=RequestMethod.GET)
 	public String add(Model model){
 		model.addAttribute(new VendAccount());
@@ -100,6 +102,7 @@ public class VendAccountController{
     * @param br
     * @return
     */
+	@RequiresPermissions({"account:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(Model model,@Validated VendAccount vendAccount,BindingResult br){
     	if(br.hasErrors()){
@@ -113,7 +116,7 @@ public class VendAccountController{
 	 * @param model
 	 * @return
 	 */
-    @RequiresPermissions({"acount:edit"})
+	@RequiresPermissions({"acount:edit"})
 	@RequestMapping(value="/{usercode}/edit",method=RequestMethod.GET)
 	public String edit(Model model,@PathVariable String usercode){
 		VendAccount vendAccount=vendAccountService.getOne(usercode);

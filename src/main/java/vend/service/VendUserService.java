@@ -13,7 +13,7 @@ public interface VendUserService {
 	 * @param page
 	 * @return
 	 */
-	List<VendUser> listVendUser(VendUser vendUser,Page page);
+	List<VendUser> listVendUser(VendUser vendUser,String usersArray[],Page page);
 	/**
 	 * 添加用户
 	 * @param vendUser
@@ -48,11 +48,23 @@ public interface VendUserService {
 	 */
 	List<VendUser> findAll();
 	/**
-	 * 按照username查找用户
+	 * 按照微信公众号号码查找用户 
+	 * @param wechatpubNo
+	 * @return
+	 */
+	VendUser selectByWechatpubNo(String wechatpubNo);
+	/**
+	 * 按照username查找用户 
 	 * @param username
 	 * @return
 	 */
 	VendUser selectByUsername(String username);
+	/**
+	 * 按照地区查找用户
+	 * @param arealist
+	 * @return
+	 */
+	List<VendUser> selectByArealist(String arealist[]);
 	/**
      * 按照用户名得到角色信息
      * @param userName
@@ -65,5 +77,16 @@ public interface VendUserService {
 	 * @return
 	 */
 	public Set<String> getPermissions(String username);
-	
+	/**
+	 * 得到该用户的下级用户
+	 * @param parentUsercode
+	 * @return
+	 */
+	public String getNextUsers(String parentUsercode);
+	/**
+	 * 得到该用户的下级用户(包括自己)
+	 * @param parentUsercode
+	 * @return
+	 */
+	public String getNextUsersOwnSelf(String parentUsercode);
 }

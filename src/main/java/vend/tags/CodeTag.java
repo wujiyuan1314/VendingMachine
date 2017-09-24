@@ -1,7 +1,5 @@
 package vend.tags;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import org.springframework.web.servlet.tags.RequestContextAwareTag;
@@ -19,7 +17,6 @@ public class CodeTag extends RequestContextAwareTag{
 	}
 	@Override
 	public int doStartTagInternal() throws JspException {
-		HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
 		try{
 			codeLibraryService=this.getRequestContext().getWebApplicationContext().getBean(CodeLibraryService.class);
 			JspWriter out = pageContext.getOut();

@@ -10,15 +10,19 @@
     <result column="area_id" property="areaId" jdbcType="VARCHAR" />
     <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
     <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="valid" property="valid" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="extend1" property="extend1" jdbcType="VARCHAR" />
     <result column="extend2" property="extend2" jdbcType="VARCHAR" />
     <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+    <result column="extend4" property="extend4" jdbcType="VARCHAR" />
+    <result column="extend5" property="extend5" jdbcType="VARCHAR" />
+    <result column="extend6" property="extend6" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, coupon_name, coupon_info, coupon_scale, goods_id, area_id, start_time, end_time, 
-    create_time, update_time, extend1, extend2, extend3
+    valid, create_time, update_time, extend1, extend2, extend3, extend4, extend5, extend6
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -33,14 +37,16 @@
   <insert id="insert" parameterType="vend.entity.VendCoupon" >
     insert into vend_coupon (id, coupon_name, coupon_info, 
       coupon_scale, goods_id, area_id, 
-      start_time, end_time, create_time, 
-      update_time, extend1, extend2, 
-      extend3)
+      start_time, end_time, valid, 
+      create_time, update_time, extend1, 
+      extend2, extend3, extend4, 
+      extend5, extend6)
     values (#{id,jdbcType=INTEGER}, #{couponName,jdbcType=VARCHAR}, #{couponInfo,jdbcType=VARCHAR}, 
       #{couponScale,jdbcType=DECIMAL}, #{goodsId,jdbcType=INTEGER}, #{areaId,jdbcType=VARCHAR}, 
-      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
-      #{extend3,jdbcType=VARCHAR})
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{valid,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, 
+      #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}, 
+      #{extend5,jdbcType=VARCHAR}, #{extend6,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="vend.entity.VendCoupon" >
     insert into vend_coupon
@@ -69,6 +75,9 @@
       <if test="endTime != null" >
         end_time,
       </if>
+      <if test="valid != null" >
+        valid,
+      </if>
       <if test="createTime != null" >
         create_time,
       </if>
@@ -83,6 +92,15 @@
       </if>
       <if test="extend3 != null" >
         extend3,
+      </if>
+      <if test="extend4 != null" >
+        extend4,
+      </if>
+      <if test="extend5 != null" >
+        extend5,
+      </if>
+      <if test="extend6 != null" >
+        extend6,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -110,6 +128,9 @@
       <if test="endTime != null" >
         #{endTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="valid != null" >
+        #{valid,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -124,6 +145,15 @@
       </if>
       <if test="extend3 != null" >
         #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        #{extend5,jdbcType=VARCHAR},
+      </if>
+      <if test="extend6 != null" >
+        #{extend6,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -151,6 +181,9 @@
       <if test="endTime != null" >
         end_time = #{endTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="valid != null" >
+        valid = #{valid,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -166,6 +199,15 @@
       <if test="extend3 != null" >
         extend3 = #{extend3,jdbcType=VARCHAR},
       </if>
+      <if test="extend4 != null" >
+        extend4 = #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        extend5 = #{extend5,jdbcType=VARCHAR},
+      </if>
+      <if test="extend6 != null" >
+        extend6 = #{extend6,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -178,11 +220,15 @@
       area_id = #{areaId,jdbcType=VARCHAR},
       start_time = #{startTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP},
+      valid = #{valid,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       extend1 = #{extend1,jdbcType=VARCHAR},
       extend2 = #{extend2,jdbcType=VARCHAR},
-      extend3 = #{extend3,jdbcType=VARCHAR}
+      extend3 = #{extend3,jdbcType=VARCHAR},
+      extend4 = #{extend4,jdbcType=VARCHAR},
+      extend5 = #{extend5,jdbcType=VARCHAR},
+      extend6 = #{extend6,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <!-- 一下为自定义方法 -->

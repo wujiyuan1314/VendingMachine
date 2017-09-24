@@ -12,7 +12,7 @@
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/permission/edit" enctype="multipart/form-data" commandName="vendPermission" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			    <sf:form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/permission/edit" enctype="multipart/form-data" commandName="vendPermission" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="id"/>
 	               <div class="control-group">
 	                <label class="control-label">权限名</label>

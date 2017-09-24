@@ -36,6 +36,11 @@ public interface UserCouponService {
 	 */
 	int delUserCoupons(int id[]);
 	/**
+	 * 批量添加
+	 * @param list
+	 */
+	void insertBatch(List<UserCoupon> list);
+	/**
 	 * 根据ID查找
 	 * @param id
 	 * @return
@@ -51,5 +56,16 @@ public interface UserCouponService {
 	 * @return
 	 */
 	List<UserCoupon> findByUsercode(String usercode);
+	/**
+	 * 按照usercode和优惠券ID查找
+	 * @param usercode
+	 * @param couponId
+	 */
+	UserCoupon findByUsercodeLimitCouponId(String usercode,Integer couponId);
+	/**
+	 * 按照当前时间查找
+	 * @return
+	 */
+	List<UserCoupon> findByEndtime(String CurrentDate);
 	
 }

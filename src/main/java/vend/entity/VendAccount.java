@@ -63,8 +63,8 @@ public class VendAccount {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-    @NotEmpty(message="ÌáÏÖ½ğ¶î²»ÄÜÎª¿Õ")
-    @Pattern(regexp="/^[1-9]*[1-9][0-9]*$/",message="Ö»ÄÜÊÇÕıÕûÊı")
+    @NotEmpty(message="ä¸èƒ½ä¸ºç©º")
+    @Pattern(regexp="/^[1-9]*[1-9][0-9]*$/",message="åªèƒ½æ˜¯æ•´æ•°")
     public String getExtend1() {
         return extend1;
     }

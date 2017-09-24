@@ -7,6 +7,13 @@ import vend.entity.VendPara;
 
 public interface VendParaService {
 	/**
+	 * 根据输入信息条件查询参数列表，并分页显示
+	 * @param codeCatalog
+	 * @param page
+	 * @return
+	 */
+	List<VendPara> listVendPara(VendPara vendPara, Page page);
+	/**
 	 * 添加参数
 	 * @param vendPara
 	 * @return

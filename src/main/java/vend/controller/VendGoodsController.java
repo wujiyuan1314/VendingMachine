@@ -43,6 +43,8 @@ public class VendGoodsController{
 	@RequiresPermissions({"goods:goodss"})
 	@RequestMapping(value="/goodss")
 	public String listVendGoods(Model model,@ModelAttribute VendGoods vendGoods, @ModelAttribute Page page,HttpServletRequest request) {
+		
+		
 		String currentPageStr = request.getParameter("currentPage");
 		logger.info(currentPageStr + "===========");
 		if(currentPageStr != null){
@@ -66,6 +68,9 @@ public class VendGoodsController{
 		List<VendGoods> vendGoodss = vendGoodsService.findAll();
 		String path = request.getContextPath();
 		String basePath1 = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
+		if(vendGoodss.size()>3){
+			vendGoodss=vendGoodss.subList(0, 3);
+		}
 		for(VendGoods vendGoods:vendGoodss){
 			vendGoods.setPic(basePath1+vendGoods.getPic());
 		}
@@ -137,7 +142,7 @@ public class VendGoodsController{
     		filepath=FileUploadUtils.tranferFile(request, "/userfiles/pic");
         	vendGoods.setPic(filepath);
     	}
-    	int isOk=vendGoodsService.editVendGoods(vendGoods);
+    	vendGoodsService.editVendGoods(vendGoods);
 		return "redirect:goodss";
 	}
     /**
@@ -166,7 +171,7 @@ public class VendGoodsController{
     	for(int i=0;i<idArray.length;i++){
     		idArray1[i]=Function.getInt(idArray[i], 0);
     	}
-    	int isOk=vendGoodsService.delVendGoodss(idArray1);
+    	vendGoodsService.delVendGoodss(idArray1);
   		return "redirect:/goods/goodss";
   	}
 }

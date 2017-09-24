@@ -1,6 +1,8 @@
 package vend.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,10 +24,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
+import base.util.CacheUtils;
 import base.util.Function;
 import base.util.Page;
+import net.sf.json.JSONArray;
+import vend.entity.VendPermission;
 import vend.entity.VendRole;
+import vend.entity.VendRolePermission;
 import vend.entity.VendUser;
+import vend.entity.ZNode;
+import vend.service.VendPermissionService;
+import vend.service.VendRolePermissionService;
 import vend.service.VendRoleService;
 import vend.service.VendUserService;
 
@@ -38,6 +47,10 @@ public class VendUserController{
 	VendUserService vendUserService;
 	@Autowired
 	VendRoleService vendRoleService;
+	@Autowired
+	VendRolePermissionService vendRolePermissionService;
+	@Autowired
+	VendPermissionService vendPermissionService;
 	/**
 	 * 根据输入信息条件查询用户列表，并分页显示
 	 * @param model
@@ -59,13 +72,96 @@ public class VendUserController{
 		logger.info(vendUser.toString());
 		HttpSession session=request.getSession();
     	VendUser user=(VendUser)session.getAttribute("vendUser");
-		if(user!=null){//上级账号
-			vendUser.setParentUsercode(user.getUsercode());;
+    	String userlist="";
+		if(user!=null&&user.getUsercode()!=null){//上级账号
+			userlist=vendUserService.getNextUsersOwnSelf(user.getUsercode());
 		}
-		List<VendUser> vendUsers = vendUserService.listVendUser(vendUser, page);
+		String usersArray[]=Function.stringSpilit(userlist, ",");
+		List<VendUser> vendUsers = vendUserService.listVendUser(vendUser,usersArray,page);
 		model.addAttribute("vendUsers",vendUsers);
 		return "manage/user/user_list";
 	}
+	/**
+	 * 得到权限Json数据
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/getJson",method=RequestMethod.POST)
+	public void getJson(HttpServletRequest request,HttpServletResponse response) throws IOException {	
+		String usercode=request.getParameter("usercode");
+		String roleId=request.getParameter("roleId");
+		int roleId1=Function.getInt(roleId, 0);
+		List<VendRolePermission> vendRolePermissions=vendRolePermissionService.selectByRoleId(roleId1);
+		List<VendPermission> vendPermissions=new ArrayList<VendPermission>();
+		for(VendRolePermission vendRolePermission:vendRolePermissions){
+			VendPermission vendPermission=vendPermissionService.getOne(vendRolePermission.getPermissionId());
+			vendPermissions.add(vendPermission);
+		}
+		VendUser vendUser=vendUserService.getOne(usercode);
+		String permissionlist="";
+		if(vendUser!=null){
+			permissionlist=vendUser.getPermissionList();
+			if(permissionlist==null){
+				permissionlist="";
+			}
+		}
+		
+		List<ZNode> list=new ArrayList<ZNode>();
+		for(VendPermission vendPermission:vendPermissions){
+			ZNode zNode=new ZNode();
+			zNode.setId(vendPermission.getId());
+			zNode.setpId(vendPermission.getParentId());
+			zNode.setName(vendPermission.getPermissionDescription());
+			zNode.setOpen(true);
+			if(permissionlist.indexOf(vendPermission.getId().toString()+",")!=-1){
+				zNode.setChecked(true);
+			}else{
+				zNode.setChecked(false);
+			}
+		    list.add(zNode);
+		}
+	
+		JSONArray json = JSONArray.fromObject(list);
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter out=response.getWriter();
+		out.print(json);
+	}
+	/**
+	 * 跳转用户权限添加界面
+	 * @param model
+	 * @param usercode
+	 * @return
+	 */
+	@RequiresPermissions({"user:addpermission"})
+	@RequestMapping(value="/{roleId}/{usercode}/addpermission",method=RequestMethod.GET)
+	public String addpermission(Model model,@PathVariable Integer roleId,@PathVariable String usercode){
+		VendUser vendUser=new VendUser();
+		vendUser.setUsercode(usercode);
+		vendUser.setRoleId(roleId);
+		model.addAttribute(vendUser);
+		return "manage/user/user_permission_add";
+	}
+	 /**
+	   * 用户权限设置
+	   * @param model
+	   * @param id
+	   * @return
+	   */
+	 @RequestMapping(value="/addpermission",method=RequestMethod.POST)
+	 public String setmenu(HttpServletRequest request){
+		String usercode=request.getParameter("usercode");
+		String permissionList=request.getParameter("nodeIds");
+		
+		VendUser vendUser=vendUserService.getOne(usercode);
+		if(vendUser!=null){
+			vendUser.setPermissionList(permissionList);
+			int isOk=vendUserService.editVendUser(vendUser);
+			if(isOk==1){
+				CacheUtils.remove("userCache", "key_usergetRoles"+vendUser.getUsername());
+			}
+		}
+		return "redirect:/user/users";
+	 }
 	/**
 	 * 跳转用户信息添加界面
 	 * @param request
@@ -99,6 +195,10 @@ public class VendUserController{
 			vendUser.setParentUsercode(user.getUsercode());
 			List<VendRole> roles=vendRoleService.findNextAllNOTSELF(user.getRoleId());//角色列表
 			model.addAttribute("roles",roles);
+		}
+		VendUser pvendUser=vendUserService.selectByUsername(vendUser.getUsername());
+		if(pvendUser!=null){
+			br.rejectValue("username", "NOREPEAT", "用户名不能重复");
 		}
     	if(br.hasErrors()){
     		return "manage/user/user_add";

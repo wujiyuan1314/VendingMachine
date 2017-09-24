@@ -72,7 +72,7 @@
 			         <tbody>
 			           <c:forEach items="${vendOrders}" var="vendOrder" varStatus="st">
 				           <tr class="gradeX">
-					          <th><input type="checkbox" name="orderId" id="orderId" value="${vendOrder.orderId}"/></th>
+					          <th><input type="checkbox" name="Id" id="Id" value="${vendOrder.orderId}"/></th>
 					          <td style="text-align:center;">${st.index+1}</td>
 					          <td>${vendOrder.orderId}</td>
 			                  <td>${vendOrder.usercode}</td>
@@ -83,7 +83,7 @@
 			                  <td><fmt:formatDate value="${vendOrder.payTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td class="center">
 			                     <shiro:hasPermission name="order:del">
-			                     <a href="javascript:void(0);" onclick="delconfirm(${vendOrder.orderId});" class="btn btn-danger  icon-trash"/></a>
+			                     <a href="javascript:void(0);" onclick="delconfirm('${vendOrder.orderId}');" class="btn btn-danger  icon-trash"/></a>
 			                     </shiro:hasPermission>
 			                  </td>
 			                </tr>
@@ -119,7 +119,7 @@
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
 <script type="text/javascript">
-function delconfirm(ordercode){
+function delconfirm(orderId){
 	 if(confirm("确定要删除吗?")){
 		window.location.href=basePath+"order/"+orderId+"/del";
 	 }

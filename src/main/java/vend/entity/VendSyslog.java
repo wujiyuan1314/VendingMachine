@@ -5,17 +5,17 @@ import java.util.Date;
 public class VendSyslog {
     private Integer id;
 
-    private Integer userId;
+    private String usercode;
 
-    private String userName;
+    private String username;
 
     private String operIp;
 
     private Date operTime;
 
-    private String operType;
+    private String operUrl;
 
-    private String extend0;
+    private String operDescription;
 
     private String extend1;
 
@@ -25,6 +25,8 @@ public class VendSyslog {
 
     private String extend4;
 
+    private String extend5;
+
     public Integer getId() {
         return id;
     }
@@ -33,20 +35,20 @@ public class VendSyslog {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUsercode() {
+        return usercode;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUsercode(String usercode) {
+        this.usercode = usercode == null ? null : usercode.trim();
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
     }
 
     public String getOperIp() {
@@ -65,20 +67,20 @@ public class VendSyslog {
         this.operTime = operTime;
     }
 
-    public String getOperType() {
-        return operType;
+    public String getOperUrl() {
+        return operUrl;
     }
 
-    public void setOperType(String operType) {
-        this.operType = operType == null ? null : operType.trim();
+    public void setOperUrl(String operUrl) {
+        this.operUrl = operUrl == null ? null : operUrl.trim();
     }
 
-    public String getExtend0() {
-        return extend0;
+    public String getOperDescription() {
+        return operDescription;
     }
 
-    public void setExtend0(String extend0) {
-        this.extend0 = extend0 == null ? null : extend0.trim();
+    public void setOperDescription(String operDescription) {
+        this.operDescription = operDescription == null ? null : operDescription.trim();
     }
 
     public String getExtend1() {
@@ -111,5 +113,13 @@ public class VendSyslog {
 
     public void setExtend4(String extend4) {
         this.extend4 = extend4 == null ? null : extend4.trim();
+    }
+
+    public String getExtend5() {
+        return extend5;
+    }
+
+    public void setExtend5(String extend5) {
+        this.extend5 = extend5 == null ? null : extend5.trim();
     }
 }

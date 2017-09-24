@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import base.util.CacheUtils;
 import base.util.DateUtil;
 import base.util.Page;
 import vend.dao.VendGoodsMapper;
@@ -17,18 +18,29 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 	@Autowired
 	VendGoodsMapper vendGoodsMapper;
 	/**
-	 * 根据输入信息条件查询商品列表，并分页显示
+	 * 鏍规嵁杈撳叆淇℃伅鏉′欢鏌ヨ鍟嗗搧鍒楄〃锛屽苟鍒嗛〉鏄剧ず
 	 * @param vendGoods
 	 * @param page
 	 * @return
-	 */
+	 */                                                                   
 	public List<VendGoods> listVendGoods(VendGoods vendGoods,Page page){
-		int totalNumber = vendGoodsMapper.countVendGoods(vendGoods);
-		page.setTotalNumber(totalNumber);
-		return vendGoodsMapper.listVendGoods(vendGoods, page);
+		String title=vendGoods.getGoodsName();
+		String currentPage=Integer.toString(page.getCurrentPage());
+		if(title==null){
+			title="";
+		}
+		String key="key_listVendGoods"+title+currentPage;
+		List<VendGoods> vendGoodss=(List<VendGoods>)CacheUtils.get("goodsCache", key);
+		if(vendGoodss==null){
+			int totalNumber = vendGoodsMapper.countVendGoods(vendGoods);
+			page.setTotalNumber(totalNumber);
+			vendGoodss= vendGoodsMapper.listVendGoods(vendGoods, page);
+			CacheUtils.put("goodsCache",key, vendGoodss);
+		}
+		return vendGoodss;
 	}
 	/**
-	 * 添加商品
+	 * 娣诲姞鍟嗗搧
 	 * @param vendGoods
 	 * @return
 	 */
@@ -36,7 +48,11 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 		vendGoods.setCreateTime(createTime);
 		vendGoods.setUpdateTime(createTime);
-		return vendGoodsMapper.insertSelective(vendGoods);
+		int isOk= vendGoodsMapper.insertSelective(vendGoods);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
+		return isOk;
 	}
 	/**
 	 * 修改商品
@@ -44,32 +60,58 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 	 * @return
 	 */
 	public int editVendGoods(VendGoods vendGoods){
-		return vendGoodsMapper.updateByPrimaryKeySelective(vendGoods);
+		int isOk=vendGoodsMapper.updateByPrimaryKeySelective(vendGoods);
+		//淇敼鍚庡垹闄ょ紦瀛�
+		if(isOk==1){
+			CacheUtils.clear();
+		}
+		return isOk;
 	}
 	/**
-	 * 删除一个商品
+	 * 鍒犻櫎涓�涓晢鍝�
 	 * @param id
 	 */
 	public void delVendGoods(int id){
-		vendGoodsMapper.deleteByPrimaryKey(id);
+		int isOk=vendGoodsMapper.deleteByPrimaryKey(id);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
 	}
 	/**
-	 * 批量删除商品
+	 * 批量删除
 	 * @param id
 	 */
 	public int delVendGoodss(int ids[]){
-		return vendGoodsMapper.deleteBatch(ids);
+		int isOk=vendGoodsMapper.deleteBatch(ids);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
+		return isOk;
 	}
 	/**
-	 * 根据ID查找一个商品
+	 * 得到一个商品
 	 * @param id
 	 * @return
 	 */
 	public VendGoods getOne(int id){
-		return vendGoodsMapper.selectByPrimaryKey(id);
+		String key="key_Goods_getOne"+id;
+		VendGoods vendGoods=(VendGoods)CacheUtils.get("goodsCache", key);
+		if(vendGoods==null){
+			vendGoods=vendGoodsMapper.selectByPrimaryKey(id);
+		}
+		return vendGoods;
 	}
+	/**
+	 * 查找全部
+	 */
 	public List<VendGoods> findAll() {
 		// TODO Auto-generated method stub
-		return vendGoodsMapper.findAll();
+		String key="key_Goods_findAll";
+		List<VendGoods> vendGoodss=(List<VendGoods>)CacheUtils.get("goodsCache", key);
+		if(vendGoodss==null){
+			vendGoodss=vendGoodsMapper.findAll();
+			CacheUtils.put("goodsCache", key, vendGoodss);
+		}
+		return vendGoodss;
 	}
 }

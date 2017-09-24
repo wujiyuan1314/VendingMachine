@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import base.util.DateUtil;
@@ -22,6 +23,7 @@ public class VendPermissionServiceImpl implements VendPermissionService {
 	 * @param page
 	 * @return
 	 */
+	 @Cacheable(value="permissionCache")
 	public List<VendPermission> listVendPermission(VendPermission vendPermission,Page page){
 		int totalNumber = vendPermissionMapper.countVendPermission(vendPermission);
 		page.setTotalNumber(totalNumber);
@@ -65,6 +67,7 @@ public class VendPermissionServiceImpl implements VendPermissionService {
 	 * @param id
 	 * @return
 	 */
+	@Cacheable(value="permissionCache")
 	public VendPermission getOne(int id){
 		return vendPermissionMapper.selectByPrimaryKey(id);
 	}
@@ -72,6 +75,7 @@ public class VendPermissionServiceImpl implements VendPermissionService {
 	 * 查找全部
 	 * @return
 	 */
+	@Cacheable(value="permissionCache")
 	public List<VendPermission> findAll() {
 		// TODO Auto-generated method stub
 		return vendPermissionMapper.findAll();
@@ -81,6 +85,7 @@ public class VendPermissionServiceImpl implements VendPermissionService {
 	 * @param roleName
 	 * @return
 	 */
+	@Cacheable(value="permissionCache")
 	public VendPermission selectByPermissionName(String permissionName){
 		return vendPermissionMapper.selectByPermissionName(permissionName);
 	}

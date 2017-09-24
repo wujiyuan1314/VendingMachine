@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import base.util.CacheUtils;
 import base.util.Page;
 import vend.dao.CodeCatalogMapper;
 import vend.entity.CodeCatalog;
@@ -16,9 +17,19 @@ public class CodeCatalogServiceImpl implements CodeCatalogService {
 	@Override
 	public List<CodeCatalog> listCodeCatalog(CodeCatalog codeCatalog, Page page) {
 		// TODO Auto-generated method stub
-		int totalNumber = codeCatalogMapper.countCodeCatalog(codeCatalog);
-		page.setTotalNumber(totalNumber);
-		List<CodeCatalog> codeCatalogs = codeCatalogMapper.listCodeCatalog(codeCatalog, page);
+		String title=codeCatalog.getCodename();
+		String currentPage=Integer.toString(page.getCurrentPage());
+		if(title==null){
+			title="";
+		}
+		String key="key_listCodeCatalog"+title+currentPage;
+		List<CodeCatalog> codeCatalogs=(List<CodeCatalog>)CacheUtils.get("codeCache", key);
+		if(codeCatalogs==null){
+			int totalNumber = codeCatalogMapper.countCodeCatalog(codeCatalog);
+			page.setTotalNumber(totalNumber);
+			codeCatalogs = codeCatalogMapper.listCodeCatalog(codeCatalog, page);;
+			CacheUtils.put("codeCache",key, codeCatalogs);
+		}
 		return codeCatalogs;
 	}
 
@@ -51,7 +62,13 @@ public class CodeCatalogServiceImpl implements CodeCatalogService {
 	@Override
 	public CodeCatalog getCodeCatalogByID(String id) {
 		// TODO Auto-generated method stub
-		return codeCatalogMapper.selectByPrimaryKey(id);
+		String key="key_CodeCatalog_getCodeCatalogByID"+id;
+		CodeCatalog codeCatalog=(CodeCatalog)CacheUtils.get("codeCache", key);
+		if(codeCatalog==null){
+			codeCatalog=codeCatalogMapper.selectByPrimaryKey(id);
+			CacheUtils.put("codeCache", key, codeCatalog);
+		}
+		return codeCatalog;
 	}
 
 }

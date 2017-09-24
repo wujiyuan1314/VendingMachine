@@ -85,6 +85,9 @@
 			                     <shiro:hasPermission name="user:del">
 			                     <a href="javascript:void(0);" onclick="delconfirm('${vendUser.usercode}');" class="btn btn-danger  icon-trash"/></a>
 			                     </shiro:hasPermission>
+			                     <shiro:hasPermission name="user:addpermission">
+			                     &nbsp;&nbsp;<a href="${vendUser.roleId}/${vendUser.usercode}/addpermission" class="btn btn-warning  icon-asterisk"/></a>
+			                     </shiro:hasPermission>
 			                  </td>
 			                </tr>
 			           </c:forEach>

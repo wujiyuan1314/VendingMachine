@@ -7,6 +7,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <%@ include file="../../common/common_css.jsp" %>
 </head>
+<style>
+.select2-container {
+width:100%;
+}
+</style>
 <body>
 
 <!--Header-part-->

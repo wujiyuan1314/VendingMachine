@@ -21,9 +21,13 @@ public interface VendUserMapper {
 
     int updateByPrimaryKey(VendUser record);
     /**下为自定义方法 */
-    List<VendUser> listVendUser(@Param("vendUser") VendUser vendUser, @Param("page") Page page);
+    List<VendUser> listVendUser(@Param("vendUser") VendUser vendUser,@Param("usersArray") String usersArray[],@Param("page") Page page);
     
-    int countVendUser(VendUser vendUser);
+    int countVendUser(@Param("vendUser") VendUser vendUser,@Param("usersArray") String usersArray[]);
+    
+    List<VendUser> listVendUser1(@Param("vendUser") VendUser vendUser,@Param("page") Page page);
+    
+    int countVendUser1(@Param("vendUser") VendUser vendUser);
     
     void insertBatch(List<VendUser> list);
     
@@ -31,7 +35,15 @@ public interface VendUserMapper {
     
     List<VendUser> findAll();
     
+    List<VendUser> selectByArealist(String arealist[]);
+    
+    List<VendUser> selectByArealist1();
+    
     VendUser selectByUsername(String username);
+    
+    List<VendUser> selectByParentUsercode(String parentUsercode);
+    
+    VendUser selectByWechatpubNo(String wechatpubNo);
     
     public Set<String> getRoles(String userName);
 	

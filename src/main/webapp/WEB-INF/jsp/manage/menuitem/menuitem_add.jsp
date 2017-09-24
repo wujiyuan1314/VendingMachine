@@ -12,7 +12,7 @@
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="/VendingMachine/menuitem/add" enctype="multipart/form-data" commandName="menuitem" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			    <sf:form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/menuitem/add" enctype="multipart/form-data" commandName="menuitem" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="parentId" value="${pid }"/>
 	              <div class="control-group">
 	                <label class="control-label">菜单名</label>

@@ -120,4 +120,24 @@
       desprision = #{desprision,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!-- 一下为自定义方法 -->
+  <select id="listVendPara" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from vend_para
+  	<where>
+  		<if test="vendPara.paraCode != null and !&quot;&quot;.equals(vendPara.paraCode.trim())">
+  			and para_code = #{vendPara.paraCode}
+  		</if>
+  	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="countVendPara" resultType="int" parameterType="vend.entity.VendPara">
+  	select count(*) from vend_para
+  	<where>
+  		<if test="paraCode != null and !&quot;&quot;.equals(paraCode.trim())">
+  			and para_code = #{paraCode}
+  		</if>
+  	</where>
+  </select>
 </mapper>

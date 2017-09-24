@@ -1,20 +1,26 @@
 package vend.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import base.util.Page;
 import vend.entity.VendSyslog;
-import vend.entity.VendSyslogWithBLOBs;
 
 public interface VendSyslogMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(VendSyslogWithBLOBs record);
+    int insert(VendSyslog record);
 
-    int insertSelective(VendSyslogWithBLOBs record);
+    int insertSelective(VendSyslog record);
 
-    VendSyslogWithBLOBs selectByPrimaryKey(Integer id);
+    VendSyslog selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(VendSyslogWithBLOBs record);
-
-    int updateByPrimaryKeyWithBLOBs(VendSyslogWithBLOBs record);
+    int updateByPrimaryKeySelective(VendSyslog record);
 
     int updateByPrimaryKey(VendSyslog record);
+    // 下面为自定义方法
+ 	List<VendSyslog> listVendSyslog(@Param("vendSyslog") VendSyslog vendSyslog, @Param("page") Page page);
+ 	
+ 	int countVendSyslog(VendSyslog vendSyslog);
 }

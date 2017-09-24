@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
+import base.util.CacheUtils;
 import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
@@ -39,10 +39,27 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @param page
 	 * @return
 	 */
-	public List<VendUser> listVendUser(VendUser vendUser,Page page){
-		int totalNumber = vendUserMapper.countVendUser(vendUser);
-		page.setTotalNumber(totalNumber);
-		return vendUserMapper.listVendUser(vendUser, page);
+	public List<VendUser> listVendUser(VendUser vendUser,String usersArray[],Page page){
+		String title=vendUser.getUsercode()+usersArray.length;
+		String currentPage=Integer.toString(page.getCurrentPage());
+		if(title==null){
+			title="";
+		}
+		String key="key_listVendUser"+title+currentPage;
+		List<VendUser> vendUsers=(List<VendUser>)CacheUtils.get("userCache", key);
+		if(vendUsers==null){
+			if(usersArray.length!=0){
+				int totalNumber = vendUserMapper.countVendUser(vendUser,usersArray);
+				page.setTotalNumber(totalNumber);
+				vendUsers= vendUserMapper.listVendUser(vendUser,usersArray, page);
+			}else{
+				int totalNumber = vendUserMapper.countVendUser1(vendUser);
+				page.setTotalNumber(totalNumber);
+				vendUsers= vendUserMapper.listVendUser1(vendUser,page);
+			}
+			CacheUtils.put("userCache",key, vendUsers);
+		}
+		return vendUsers;
 	}
 	/**
 	 * 添加用户
@@ -73,7 +90,11 @@ public class VendUserServiceImpl implements VendUserService {
 		userCoupon.setCreateTime(createTime);
 		userCouponMapper.insert(userCoupon);
 		
-		return vendUserMapper.insertSelective(vendUser);
+		int isOk=vendUserMapper.insertSelective(vendUser);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
+		return isOk;
 	}
 	/**
 	 * 修改用户
@@ -81,21 +102,32 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @return
 	 */
 	public int editVendUser(VendUser vendUser){
-		return vendUserMapper.updateByPrimaryKeySelective(vendUser);
+		int isOk=vendUserMapper.updateByPrimaryKeySelective(vendUser);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
+		return isOk;
 	}
 	/**
 	 * 删除一个用户
 	 * @param id
 	 */
 	public void delVendUser(String usercode){
-		vendUserMapper.deleteByPrimaryKey(usercode);
+		int isOk=vendUserMapper.deleteByPrimaryKey(usercode);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
 	}
 	/**
 	 * 批量删除用户
 	 * @param id
 	 */
 	public int delVendUsers(String usercodes[]){
-		return vendUserMapper.deleteBatch(usercodes);
+		int isOk=vendUserMapper.deleteBatch(usercodes);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
+		return isOk;
 	}
 	/**
 	 * 根据ID查找一个用户
@@ -107,7 +139,13 @@ public class VendUserServiceImpl implements VendUserService {
 	}
 	public List<VendUser> findAll() {
 		// TODO Auto-generated method stub
-		return vendUserMapper.findAll();
+		String key="key_VendUser_findAll";
+		List<VendUser> vendUsers=(List<VendUser>)CacheUtils.get("userCache", key);
+		if(vendUsers==null){
+			vendUsers=vendUserMapper.findAll();
+			CacheUtils.put("userCache",key, vendUsers);
+		}
+		return vendUsers;
 	}
 	/**
 	 * 按照username查找用户
@@ -115,7 +153,45 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @return
 	 */
 	public VendUser selectByUsername(String username){
-		return vendUserMapper.selectByUsername(username);
+		String key="key_selectByUsername"+username;
+		VendUser vendUser=(VendUser)CacheUtils.get("userCache", key);
+		if(vendUser==null){
+			vendUser=vendUserMapper.selectByUsername(username);
+			CacheUtils.put("userCache", key, vendUser);
+		}
+		return vendUser;
+	}
+	/**
+	 * 按照微信公众号号码查找用户 
+	 * @param wechatpubNo
+	 * @return
+	 */
+	public VendUser selectByWechatpubNo(String wechatpubNo){
+		String key="key_selectByWechatpubNo"+wechatpubNo;
+		VendUser vendUser=(VendUser)CacheUtils.get("userCache", key);
+		if(vendUser==null){
+			vendUser=vendUserMapper.selectByWechatpubNo(wechatpubNo);
+			CacheUtils.put("userCache", key, vendUser);
+		}
+		return vendUser;
+	}
+	/**
+	 * 按照地区查找用户
+	 * @param arealist
+	 * @return
+	 */
+	public List<VendUser> selectByArealist(String arealist[]){
+		String key="key_selectByArealist"+arealist.length;
+		List<VendUser> vendUsers=(List<VendUser>)CacheUtils.get("userCache", key);
+		if(vendUsers==null){
+			if(arealist.length==0){
+				vendUsers=vendUserMapper.selectByArealist1();
+			}else{
+				vendUsers=vendUserMapper.selectByArealist(arealist);
+			}
+			CacheUtils.put("userCache", key, vendUsers);
+		}
+		return vendUsers;
 	}
 	 /**
      * 按照用户名得到角色信息
@@ -124,22 +200,93 @@ public class VendUserServiceImpl implements VendUserService {
      */
     @Override
 	public Set<String> getRoles(String username){
-    	return vendUserMapper.getRoles(username);
+    	String key="key_getRoles"+username;
+    	Set<String> set=(Set<String>)CacheUtils.get("userCache", key);
+    	if(set==null){
+    		set=vendUserMapper.getRoles(username);
+    		CacheUtils.put("userCache", key, set);
+    	}
+    	return set;
     }
 	/**
 	 * 按到用户名得到权限信息
 	 * @param userName
 	 * @return
 	 */
- 	@CachePut(value="userCache")
 	@Override
 	public Set<String> getPermissions(String username){
-		Set<String> set1=vendUserMapper.getPermissions(username);
-		Set<String> set2=new HashSet<String>();
-		for(String permissionid:set1){
-			VendPermission vendPermission=vendPermissionMapper.selectByPrimaryKey(Integer.parseInt(permissionid));
-			set2.add(vendPermission.getPermissionName());
+		String key2="key_usergetRoles"+username;
+		Set<String> set2=(Set<String>)CacheUtils.get("userCache", key2);
+		if(set2==null){
+			set2=new HashSet<String>();
+			VendUser pvendUser=(VendUser)CacheUtils.get("userCache", "key_selectByUsername"+username);
+			if(pvendUser==null){
+				pvendUser=vendUserMapper.selectByUsername(username);
+				CacheUtils.put("userCache", "key_selectByUsername"+username, pvendUser);
+			}
+			
+			String key1="key_getRoles"+pvendUser.getRoleId();
+			Set<String> set1=(Set<String>)CacheUtils.get("userCache", key1);
+			if(set1==null){
+				set1=vendUserMapper.getPermissions(username);
+				CacheUtils.put("userCache", key1, set1);
+			}
+			
+			String permissionlist="";
+			if(pvendUser!=null){
+				permissionlist=pvendUser.getPermissionList();
+			}
+			if(permissionlist==null||"".equals(permissionlist)){
+				for(String permissionid:set1){
+					VendPermission vendPermission=vendPermissionMapper.selectByPrimaryKey(Integer.parseInt(permissionid));
+					if(vendPermission!=null){
+						set2.add(vendPermission.getPermissionName());
+					}
+				}
+			}else{
+				for(String permissionid:set1){
+					if(permissionlist.indexOf(permissionid+",")!=-1){
+						VendPermission vendPermission=vendPermissionMapper.selectByPrimaryKey(Integer.parseInt(permissionid));
+						if(vendPermission!=null){
+							set2.add(vendPermission.getPermissionName());
+						}
+					}
+				}
+			}
+			CacheUtils.put("userCache", key2, set2);
 		}
 		return set2;
+	}
+	/**
+	 * 得到该用户的下级用户
+	 * @param parentUsercode
+	 * @return
+	 */
+	public String getNextUsers(String parentUsercode){
+		String userslist="";
+		List<VendUser> vendUsers=vendUserMapper.selectByParentUsercode(parentUsercode);
+		for(VendUser vendUser:vendUsers){
+			if(vendUser!=null){
+				userslist+=vendUser.getUsercode()+",";
+				userslist+=getNextUsers(vendUser.getUsercode());
+			}
+		}
+		return userslist;
+	}
+	/**
+	 * 得到该用户的下级用户(包括自己)
+	 * @param parentUsercode
+	 * @return
+	 */
+	public String getNextUsersOwnSelf(String parentUsercode){
+		String userslist=parentUsercode+",";
+		List<VendUser> vendUsers=vendUserMapper.selectByParentUsercode(parentUsercode);
+		for(VendUser vendUser:vendUsers){
+			if(vendUser!=null){
+				userslist+=vendUser.getUsercode()+",";
+				userslist+=getNextUsers(vendUser.getUsercode());
+			}
+		}
+		return userslist;
 	}
 }

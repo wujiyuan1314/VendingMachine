@@ -7,6 +7,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <%@ include file="../../common/common_css.jsp" %>
 </head>
+<style>
+.select2-container {
+width:100%;
+}
+</style>
 <body>
 <!--Header-part-->
 <%@ include file="../../common/common_top.jsp" %>
@@ -63,6 +68,7 @@
 			              <th><input type="checkbox" onclick="selectAll('usercode');" id="all" name="title-table-checkbox" /></th>
 		                  <th style="width:25px;">序号</th>
 		                  <th>用户名</th>
+		                  <th>用户角色</th>
 		                  <th>操作类型</th>
 		                  <th>金额</th>
 		                  <th>创建时间</th>
@@ -75,6 +81,7 @@
 					          <th><input type="checkbox" name="Id" id="Id" value="${vendAccountDetail.usercode}"/></th>
 					          <td style="text-align:center;">${st.index+1}</td>
 			                  <td>${vendAccountDetail.usercode}</td>
+			                  <td>${vendAccount.extend2}</td>
 			                  <td><code:itemname codeno="ACCOUNTTYPE" itemno="${vendAccountDetail.type}"></code:itemname></td>
 			                  <td>${vendAccountDetail.amount}</td>
 			                  <td><fmt:formatDate value="${vendAccountDetail.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
