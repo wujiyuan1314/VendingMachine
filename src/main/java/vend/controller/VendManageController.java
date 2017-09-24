@@ -593,11 +593,12 @@ public class VendManageController{
 	 * @return
 	 * @throws IOException 
 	 */
-	@RequestMapping(value="/callback",method=RequestMethod.GET)
+	@RequestMapping(value="/callback")
 	@ResponseBody
 	public String callBack(@RequestParam String id,@RequestParam String payload) throws IOException{
 		System.out.println(payload);
 		logger.info("-------回调结果:" + payload);
+		System.out.println("-------回调结果----------------:" + payload);
 		return payload.toString();
 	}
 	/**

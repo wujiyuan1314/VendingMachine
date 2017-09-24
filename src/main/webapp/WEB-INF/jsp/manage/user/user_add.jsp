@@ -57,10 +57,28 @@
 	              <div class="control-group">
 	                <label class="control-label">角色</label>
 	                <div class="controls">
-	                  <sf:select path="roleId" items="${roles}" itemLabel="roleName" itemValue="id">
+	                  <sf:select path="roleId" items="${roles}" itemLabel="roleName" itemValue="id" onchange="shchange();">
 	                  </sf:select>
 	                </div>
 	              </div>
+	              
+	              
+	              <div class="control-group" id="wxgzh" style="display:none;">
+	                <label class="control-label">微信公众号</label>
+	                <div class="controls">
+	                  <sf:input path="wechatpubNo"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="wechatpubNo" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
+	              <div class="control-group" id="lrbl" style="display:none;">
+	                <label class="control-label">利润比例</label>
+	                <div class="controls">
+	                  <sf:input path="extend4"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend4" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
+	              </div>
+	         
+	              
 	              <div class="control-group">
 	                <label class="control-label">手机号</label>
 	                <div class="controls">
@@ -100,5 +118,27 @@
 
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
+<script type="text/javascript">
+$(document).ready(function(){
+  var roleid=$("#roleId").val();
+  if(roleid==4){
+	  $("#wxgzh").css("display","block");
+	  $("#lrbl").css("display","block");
+  }else{
+	  $("#wxgzh").css("display","none");
+	  $("#lrbl").css("display","none");
+  }
+});
+function shchange(){
+	 var roleid=$("#roleId").val();
+	  if(roleid==4){
+		  $("#wxgzh").css("display","block");
+		  $("#lrbl").css("display","block");
+	  }else{
+		  $("#wxgzh").css("display","none");
+		  $("#lrbl").css("display","none");
+	  }
+}
+</script>
 </body>
 </html>

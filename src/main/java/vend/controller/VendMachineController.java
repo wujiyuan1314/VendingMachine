@@ -257,6 +257,7 @@ public class VendMachineController{
 	@RequiresPermissions({"machine:unbind"})
     @RequestMapping(value="/{id}/{transusername}/unbind")
   	public String unbind(@PathVariable Integer id,@PathVariable String transusername,HttpServletResponse response) throws IOException{
+		response.setCharacterEncoding("UTF-8");
 		JSONObject json = new JSONObject();
 	    json.put("success", 0);
 	    json.put("msg", "解绑失败");
@@ -387,5 +388,28 @@ public class VendMachineController{
 		model.addAttribute("page", page);
 		model.addAttribute("list",list);
 		return "manage/machine/machine_sales";
+	}
+	/**
+	 * 进到生成机器ID界面
+	 * @return
+	 */
+	@RequestMapping(value="/togenerateId")
+	public String generateId(){
+		return "manage/machine/machine_generateid";
+	}
+	/**
+	 * 生成机器ID
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/generateId",method=RequestMethod.POST)
+	public void generateId(HttpServletResponse response) throws IOException{
+		response.setCharacterEncoding("UTF-8");
+		JSONObject json = new JSONObject();
+		json.put("machineId", "");
+		String machineId=Function.getmachineId();
+		json.put("machineId", machineId);
+		response.getWriter().append(json.toJSONString());
 	}
 }

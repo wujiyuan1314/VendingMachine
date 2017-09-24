@@ -70,10 +70,10 @@
 				           <tr class="gradeX">
 					          <th><input type="checkbox" name="Id" id="Id" value="${vendMachine.id}"/></th>
 			                  <td>${vendMachine.machinecode}</td>
-			                  <td><a class="btn-info btn-mini" style="border-radius:32px;">${vendMachine.user_num}</a></td>
-			                  <td><a class="btn-info btn-mini" style="border-radius:32px;">${vendMachine.sell_num}</a></td>
+			                  <td><a class="badge badge-info">${vendMachine.user_num}</a></td>
+			                  <td><a class="badge badge-info">${vendMachine.sell_num}</a></td>
 			                  <td><a style="color:red;font-weight:600;">${vendMachine.sell_amount}</a></td>
-			                  <td><a class="btn-info btn-mini" style="border-radius:32px;">${vendMachine.free_num}</a></td>
+			                  <td><a class="badge badge-info">${vendMachine.free_num}</a></td>
 			                </tr>
 			           </c:forEach>
 			         </tbody>
