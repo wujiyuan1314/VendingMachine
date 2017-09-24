@@ -24,6 +24,8 @@ public class VendAdServiceImpl implements VendAdService {
 	 * @return
 	 */
 	public List<VendAd> listVendAd(VendAd vendAd,Page page){
+		int totalNumber = vendAdMapper.countVendAd(vendAd);
+		page.setTotalNumber(totalNumber);
 		String title=vendAd.getAdName();
 		String currentPage=Integer.toString(page.getCurrentPage());
 		if(title==null){
@@ -32,8 +34,6 @@ public class VendAdServiceImpl implements VendAdService {
 		String key="key_listVendAd"+title+currentPage;
 		List<VendAd> vendAds=(List<VendAd>)CacheUtils.get("adCache", key);
 		if(vendAds==null){
-			int totalNumber = vendAdMapper.countVendAd(vendAd);
-			page.setTotalNumber(totalNumber);
 			vendAds=vendAdMapper.listVendAd(vendAd, page);
 			CacheUtils.put("adCache",key, vendAds);
 		}

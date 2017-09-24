@@ -29,9 +29,19 @@ public class Test {
     	
     	//String chars = "abcdefghijklmnopqrstuvwxyz";
     	//System.out.println(chars.charAt((int)(Math.random() * 26)));*/
-		String m="dgfd,ghjgg,ghjh,ghjgj,";
+		String array[]=new String[3];
+		System.out.println(array.length);
+		for(int i=0;i<array.length;i++){
+			System.out.print(array[i]+"ff");
+		}
+		String m=null;
+		array=m.split(":");
+		System.out.println(array.length);
+		for(int i=0;i<array.length;i++){
+			System.out.print(array[i]+"gg");
+		}
 		
-    	System.out.println(m.indexOf("ghjgj,"));
+    	//System.out.println(m.indexOf("ghjgj,"));
 		
 	}
 

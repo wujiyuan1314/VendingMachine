@@ -29,12 +29,14 @@ import base.util.Function;
 import base.util.Page;
 import vend.entity.CodeLibrary;
 import vend.entity.VendAd;
+import vend.entity.VendGoods;
 import vend.entity.VendMachine;
 import vend.entity.VendOrder;
 import vend.entity.VendShopQrcode;
 import vend.entity.VendUser;
 import vend.service.CodeLibraryService;
 import vend.service.VendAdService;
+import vend.service.VendGoodsService;
 import vend.service.VendMachineService;
 import vend.service.VendOrderService;
 import vend.service.VendShopQrcodeService;
@@ -49,6 +51,8 @@ public class VendMachineController{
 	VendMachineService vendMachineService;
 	@Autowired
 	VendAdService vendAdService;
+	@Autowired
+	VendGoodsService vendGoodsService;
 	@Autowired
 	VendUserService vendUserService;
 	@Autowired
@@ -411,5 +415,16 @@ public class VendMachineController{
 		String machineId=Function.getmachineId();
 		json.put("machineId", machineId);
 		response.getWriter().append(json.toJSONString());
+	}
+	/**
+	 * 初始化机器信息
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/{id}/initialize",method=RequestMethod.GET)
+	public String initialize(@PathVariable int id){
+		List<VendGoods> vendGoodss=vendGoodsService.findAll();
+		return "manage/machine/machine_initialize"; 
 	}
 }

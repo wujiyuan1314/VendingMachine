@@ -18,6 +18,8 @@ public class VendQrcodeAttendServiceImpl implements VendQrcodeAttendService {
 	@Override
 	public List<VendQrcodeAttend> listVendQrcodeAttend(VendQrcodeAttend vendQrcodeAttend, Page page) {
 		// TODO Auto-generated method stub
+		int totalNumber = vendQrcodeAttendMapper.countVendQrcodeAttend(vendQrcodeAttend);
+		page.setTotalNumber(totalNumber);
 		String title=vendQrcodeAttend.getUsercode();
 		String currentPage=Integer.toString(page.getCurrentPage());
 		if(title==null){
@@ -26,8 +28,6 @@ public class VendQrcodeAttendServiceImpl implements VendQrcodeAttendService {
 		String key="key_listVendQrcodeAttend"+title+currentPage;
 		List<VendQrcodeAttend> vendQrcodeAttends=(List<VendQrcodeAttend>)CacheUtils.get("qrcodeCache", key);
 		if(vendQrcodeAttends==null){
-			int totalNumber = vendQrcodeAttendMapper.countVendQrcodeAttend(vendQrcodeAttend);
-			page.setTotalNumber(totalNumber);
 			vendQrcodeAttends= vendQrcodeAttendMapper.listVendQrcodeAttend(vendQrcodeAttend, page);
 			CacheUtils.put("qrcodeCache",key, vendQrcodeAttends);
 		}	

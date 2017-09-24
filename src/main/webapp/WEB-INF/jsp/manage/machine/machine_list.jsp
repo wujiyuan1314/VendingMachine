@@ -109,7 +109,7 @@
 			                  <td>${vendMachine.machineId}</td>
 			                  <td>${vendMachine.machineCode}</td>
 			                  <td>${vendMachine.usercode}</td>
-			                  <td><button class="btn btn-primary btn-mini">gyp206</button></td>
+			                  <td><a href="${vendMachine.id}/initialize" class="btn btn-primary btn-mini">gyp206</a></td>
 			                  <td><code:itemname codeno="USESTATUS" itemno="${vendMachine.useStatus}"></code:itemname></td>
 			                  <td><a href="javascript:detail('${vendMachine.id}');" class="btn btn-success btn-mini">详情</a></td>
 			                  <td><fmt:formatDate value="${vendMachine.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>

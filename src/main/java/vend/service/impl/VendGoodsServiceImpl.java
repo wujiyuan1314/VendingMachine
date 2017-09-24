@@ -24,6 +24,8 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 	 * @return
 	 */                                                                   
 	public List<VendGoods> listVendGoods(VendGoods vendGoods,Page page){
+		int totalNumber = vendGoodsMapper.countVendGoods(vendGoods);
+		page.setTotalNumber(totalNumber);
 		String title=vendGoods.getGoodsName();
 		String currentPage=Integer.toString(page.getCurrentPage());
 		if(title==null){
@@ -32,8 +34,6 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 		String key="key_listVendGoods"+title+currentPage;
 		List<VendGoods> vendGoodss=(List<VendGoods>)CacheUtils.get("goodsCache", key);
 		if(vendGoodss==null){
-			int totalNumber = vendGoodsMapper.countVendGoods(vendGoods);
-			page.setTotalNumber(totalNumber);
 			vendGoodss= vendGoodsMapper.listVendGoods(vendGoods, page);
 			CacheUtils.put("goodsCache",key, vendGoodss);
 		}

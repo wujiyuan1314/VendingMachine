@@ -24,6 +24,8 @@ public class VendCouponServiceImpl implements VendCouponService {
 	 * @return
 	 */
 	public List<VendCoupon> listVendCoupon(VendCoupon vendCoupon,Page page){
+		int totalNumber = vendCouponMapper.countVendCoupon(vendCoupon);
+		page.setTotalNumber(totalNumber);
 		String title=vendCoupon.getCouponName();
 		String currentPage=Integer.toString(page.getCurrentPage());
 		if(title==null){
@@ -32,8 +34,6 @@ public class VendCouponServiceImpl implements VendCouponService {
 		String key="key_listVendCoupon"+title+currentPage;
 		List<VendCoupon> vendCoupons=(List<VendCoupon>)CacheUtils.get("couponCache", key);
 		if(vendCoupons==null){
-			int totalNumber = vendCouponMapper.countVendCoupon(vendCoupon);
-			page.setTotalNumber(totalNumber);
 			vendCoupons=vendCouponMapper.listVendCoupon(vendCoupon, page);
 			CacheUtils.put("couponCache",key, vendCoupons);
 		}

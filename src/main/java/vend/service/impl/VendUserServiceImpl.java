@@ -40,6 +40,13 @@ public class VendUserServiceImpl implements VendUserService {
 	 * @return
 	 */
 	public List<VendUser> listVendUser(VendUser vendUser,String usersArray[],Page page){
+		if(usersArray.length!=0){
+			int totalNumber = vendUserMapper.countVendUser(vendUser,usersArray);
+			page.setTotalNumber(totalNumber);
+		}else{
+			int totalNumber = vendUserMapper.countVendUser1(vendUser);
+			page.setTotalNumber(totalNumber);
+		}
 		String title=vendUser.getUsercode()+usersArray.length;
 		String currentPage=Integer.toString(page.getCurrentPage());
 		if(title==null){
@@ -49,12 +56,8 @@ public class VendUserServiceImpl implements VendUserService {
 		List<VendUser> vendUsers=(List<VendUser>)CacheUtils.get("userCache", key);
 		if(vendUsers==null){
 			if(usersArray.length!=0){
-				int totalNumber = vendUserMapper.countVendUser(vendUser,usersArray);
-				page.setTotalNumber(totalNumber);
 				vendUsers= vendUserMapper.listVendUser(vendUser,usersArray, page);
 			}else{
-				int totalNumber = vendUserMapper.countVendUser1(vendUser);
-				page.setTotalNumber(totalNumber);
 				vendUsers= vendUserMapper.listVendUser1(vendUser,page);
 			}
 			CacheUtils.put("userCache",key, vendUsers);

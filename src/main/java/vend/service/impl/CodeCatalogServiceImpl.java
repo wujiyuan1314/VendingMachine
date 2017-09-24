@@ -16,6 +16,8 @@ public class CodeCatalogServiceImpl implements CodeCatalogService {
 	CodeCatalogMapper codeCatalogMapper;
 	@Override
 	public List<CodeCatalog> listCodeCatalog(CodeCatalog codeCatalog, Page page) {
+		int totalNumber = codeCatalogMapper.countCodeCatalog(codeCatalog);
+		page.setTotalNumber(totalNumber);
 		// TODO Auto-generated method stub
 		String title=codeCatalog.getCodename();
 		String currentPage=Integer.toString(page.getCurrentPage());
@@ -25,8 +27,6 @@ public class CodeCatalogServiceImpl implements CodeCatalogService {
 		String key="key_listCodeCatalog"+title+currentPage;
 		List<CodeCatalog> codeCatalogs=(List<CodeCatalog>)CacheUtils.get("codeCache", key);
 		if(codeCatalogs==null){
-			int totalNumber = codeCatalogMapper.countCodeCatalog(codeCatalog);
-			page.setTotalNumber(totalNumber);
 			codeCatalogs = codeCatalogMapper.listCodeCatalog(codeCatalog, page);;
 			CacheUtils.put("codeCache",key, codeCatalogs);
 		}

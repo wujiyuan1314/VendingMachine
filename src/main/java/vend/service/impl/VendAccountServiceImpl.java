@@ -25,6 +25,8 @@ public class VendAccountServiceImpl implements VendAccountService {
 	 * @return
 	 */
 	public List<VendAccount> listVendAccount(VendAccount vendAccount,Page page){
+		int totalNumber = vendAccountMapper.countVendAccount(vendAccount);
+		page.setTotalNumber(totalNumber);
 		String title=vendAccount.getUsercode();
 		String currentPage=Integer.toString(page.getCurrentPage());
 		if(title==null){
@@ -33,8 +35,6 @@ public class VendAccountServiceImpl implements VendAccountService {
 		String key="key_listVendAccount"+title+currentPage;
 		List<VendAccount> vendAccounts=(List<VendAccount>)CacheUtils.get("accountCache", key);
 		if(vendAccounts==null){
-			int totalNumber = vendAccountMapper.countVendAccount(vendAccount);
-			page.setTotalNumber(totalNumber);
 			vendAccounts=vendAccountMapper.listVendAccount(vendAccount, page);
 			CacheUtils.put("accountCache", key, vendAccounts);
 		}

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -200,6 +201,35 @@ public class VendUserController{
 		if(pvendUser!=null){
 			br.rejectValue("username", "NOREPEAT", "用户名不能重复");
 		}
+		
+		if(vendUser.getRoleId()==4){
+			if(vendUser.getWechatpubNo()==null&&vendUser.getWechatpubNo().equals("")){
+				br.rejectValue("wechatpubNo", "NOTEMPTY", "商户微信号不能为空");
+			}
+			if(vendUser.getExtend4()==null&&vendUser.getExtend4().equals("")){
+				br.rejectValue("extend4", "NOTEMPTY", "商户利润比例不能为空");
+			}else{
+				String extend4Array[]=Function.stringSpilit(vendUser.getExtend4(), ":");
+				if(extend4Array.length!=3){
+					br.rejectValue("extend4", "ERROR", "商户利润比例的格式必须是（xx:xx:xx,冒号是英文冒号）形式");
+				}else{
+					boolean m1=StringUtils.isNumeric(extend4Array[0]);
+					boolean m2=StringUtils.isNumeric(extend4Array[1]);
+					boolean m3=StringUtils.isNumeric(extend4Array[2]);
+					if(m1&&m2&&m3){
+						int number=Integer.parseInt(extend4Array[0])+Integer.parseInt(extend4Array[1])+Integer.parseInt(extend4Array[2]);
+					    if(number!=10){
+					    	br.rejectValue("extend4", "ERROR", "冒号两边整数的和必须是10");
+					    }
+					}else{
+						br.rejectValue("extend4", "ERROR", "冒号两边必须是整数");
+					}
+				}
+			}
+		}else{
+			vendUser.setWechatpubNo("");
+			vendUser.setExtend4("");
+		}
     	if(br.hasErrors()){
     		return "manage/user/user_add";
     	}
@@ -244,6 +274,36 @@ public class VendUserController{
 			List<VendRole> roles=vendRoleService.findNextAllNOTSELF(user.getRoleId());//角色列表
 			model.addAttribute("roles",roles);
 		}
+		
+		if(vendUser.getRoleId()==4){
+			if(vendUser.getWechatpubNo()==null&&vendUser.getWechatpubNo().equals("")){
+				br.rejectValue("wechatpubNo", "NOTEMPTY", "商户微信号不能为空");
+			}
+			if(vendUser.getExtend4()==null&&vendUser.getExtend4().equals("")){
+				br.rejectValue("extend4", "NOTEMPTY", "商户利润比例不能为空");
+			}else{
+				String extend4Array[]=Function.stringSpilit(vendUser.getExtend4(), ":");
+				if(extend4Array.length!=3){
+					br.rejectValue("extend4", "ERROR", "商户利润比例的格式必须是（xx:xx:xx,冒号是英文冒号）形式");
+				}else{
+					boolean m1=StringUtils.isNumeric(extend4Array[0]);
+					boolean m2=StringUtils.isNumeric(extend4Array[1]);
+					boolean m3=StringUtils.isNumeric(extend4Array[2]);
+					if(m1&&m2&&m3){
+						int number=Integer.parseInt(extend4Array[0])+Integer.parseInt(extend4Array[1])+Integer.parseInt(extend4Array[2]);
+					    if(number!=10){
+					    	br.rejectValue("extend4", "ERROR", "冒号两边整数的和必须是10");
+					    }
+					}else{
+						br.rejectValue("extend4", "ERROR", "冒号两边必须是整数");
+					}
+				}
+			}
+		}else{
+			vendUser.setWechatpubNo("");
+			vendUser.setExtend4("");
+		}
+		
     	if(br.hasErrors()){
     		return "manage/user/user_edit";
     	}

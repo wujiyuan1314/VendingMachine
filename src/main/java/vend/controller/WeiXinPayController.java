@@ -394,10 +394,19 @@ public class WeiXinPayController {
 			VendUser vendUser=vendUserService.getOne(shopusercode);
 			double orderamount=price;//订单金额
 			double zamount=0.00;//总后台分配金额
-			double lrbl1=0.00;
-			if(vendUser.getExtend2()!=null){
-				lrbl1=Double.valueOf(vendUser.getExtend2())/100;
+			String lrbl=vendUser.getExtend4();
+			double lrbl1=0.40;//商家利润比例
+			double lrbl2=0.30;//代理后台用户比例
+			double lrbl3=0.30;//总后台用户比例
+			if(lrbl!=null){
+				String lrblarray[]=Function.stringSpilit(lrbl, ":");
+				if(lrblarray.length==3){
+					lrbl1=Double.valueOf(lrblarray[0])/10;
+					lrbl2=Double.valueOf(lrblarray[1])/10;
+					lrbl3=Double.valueOf(lrblarray[2])/10;
+				}
 			}
+			
 			double amountnow1=orderamount*lrbl1;
 			double amountpre1=vendAccount.getOwnAmount().doubleValue();
 			BigDecimal totalamount=BigDecimal.valueOf(amountnow1+amountpre1);
@@ -417,11 +426,6 @@ public class WeiXinPayController {
 			/**代理用户账户*/
 			if(vendUser!=null){
 				VendAccount pendAccount=vendAccountService.getOne(vendUser.getParentUsercode());//代理用户账户
-				VendUser pvendUser=vendUserService.getOne(pendAccount.getUsercode());
-				double lrbl2=0.00;
-				if(pvendUser.getExtend2()!=null){
-					lrbl2=Double.valueOf(pvendUser.getExtend2())/100;
-				}
 				double amountnow2=orderamount*lrbl2;
 				zamount=orderamount-amountnow1-amountnow2;
 				double amountpre2=vendAccount.getOwnAmount().doubleValue();
@@ -546,10 +550,19 @@ public class WeiXinPayController {
 			VendUser vendUser=vendUserService.getOne(shopusercode);
 			double orderamount=vendOrder.getAmount().doubleValue();//订单金额
 			double zamount=0.00;//总后台分配金额
-			double lrbl1=0.00;
-			if(vendUser!=null&&vendUser.getExtend2()!=null){
-				lrbl1=Double.valueOf(vendUser.getExtend2())/100;
+			String lrbl=vendUser.getExtend4();
+			double lrbl1=0.40;//商家利润比例
+			double lrbl2=0.30;//代理后台用户比例
+			double lrbl3=0.30;//总后台用户比例
+			if(lrbl!=null){
+				String lrblarray[]=Function.stringSpilit(lrbl, ":");
+				if(lrblarray.length==3){
+					lrbl1=Double.valueOf(lrblarray[0])/10;
+					lrbl2=Double.valueOf(lrblarray[1])/10;
+					lrbl3=Double.valueOf(lrblarray[2])/10;
+				}
 			}
+			
 			double amountnow1=orderamount*lrbl1;
 			double amountpre1=vendAccount.getOwnAmount().doubleValue();
 			BigDecimal totalamount=BigDecimal.valueOf(amountnow1+amountpre1);
@@ -569,11 +582,6 @@ public class WeiXinPayController {
 			/**代理用户账户*/
 			if(vendUser!=null){
 				VendAccount pendAccount=vendAccountService.getOne(vendUser.getParentUsercode());//代理用户账户
-				VendUser pvendUser=vendUserService.getOne(pendAccount.getUsercode());
-				double lrbl2=0.00;
-				if(pvendUser!=null&&pvendUser.getExtend2()!=null){
-					lrbl2=Double.valueOf(pvendUser.getExtend2())/100;
-				}
 				double amountnow2=orderamount*lrbl2;
 				zamount=orderamount-amountnow1-amountnow2;
 				double amountpre2=vendAccount.getOwnAmount().doubleValue();
