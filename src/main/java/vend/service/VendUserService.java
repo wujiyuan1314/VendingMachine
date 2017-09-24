@@ -48,7 +48,13 @@ public interface VendUserService {
 	 */
 	List<VendUser> findAll();
 	/**
-	 * 按照username查找用户
+	 * 按照微信公众号号码查找用户 
+	 * @param wechatpubNo
+	 * @return
+	 */
+	VendUser selectByWechatpubNo(String wechatpubNo);
+	/**
+	 * 按照username查找用户 
 	 * @param username
 	 * @return
 	 */

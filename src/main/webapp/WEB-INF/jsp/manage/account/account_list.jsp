@@ -59,7 +59,7 @@
 			              <th><input type="checkbox" onclick="selectAll('usercode');" id="all" name="title-table-checkbox" /></th>
 		                  <th style="width:25px;">序号</th>
 		                  <th>用户名</th>
-		                  <th>账户金额</th>
+		                  <th>账户余额</th>
 		                  <th>创建时间</th>
 		                </tr>
 			         </thead>

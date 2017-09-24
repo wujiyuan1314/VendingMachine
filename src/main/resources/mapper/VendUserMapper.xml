@@ -10,6 +10,7 @@
     <result column="mobile" property="mobile" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="linkman" property="linkman" jdbcType="VARCHAR" />
+    <result column="wechatpub_no" property="wechatpubNo" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="permission_list" property="permissionList" jdbcType="VARCHAR" />
@@ -22,8 +23,8 @@
   </resultMap>
   <sql id="Base_Column_List" >
     usercode, parent_usercode, username, password, role_id, mobile, address, linkman, 
-    create_time, update_time, permission_list, extend1, extend2, extend3, extend4, extend5, 
-    extend6
+    wechatpub_no, create_time, update_time, permission_list, extend1, extend2, extend3, 
+    extend4, extend5, extend6
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -32,7 +33,7 @@
     where usercode = #{usercode,jdbcType=VARCHAR}
   </select>
   
-  <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from vend_user
@@ -54,16 +55,18 @@
   <insert id="insert" parameterType="vend.entity.VendUser" >
     insert into vend_user (usercode, parent_usercode, username, 
       password, role_id, mobile, 
-      address, linkman, create_time, 
-      update_time, permission_list, extend1, 
-      extend2, extend3, extend4, 
-      extend5, extend6)
+      address, linkman, wechatpub_no, 
+      create_time, update_time, permission_list, 
+      extend1, extend2, extend3, 
+      extend4, extend5, extend6
+      )
     values (#{usercode,jdbcType=VARCHAR}, #{parentUsercode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{permissionList,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, 
-      #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}, 
-      #{extend5,jdbcType=VARCHAR}, #{extend6,jdbcType=VARCHAR})
+      #{address,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR}, #{wechatpubNo,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{permissionList,jdbcType=VARCHAR}, 
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, 
+      #{extend4,jdbcType=VARCHAR}, #{extend5,jdbcType=VARCHAR}, #{extend6,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="vend.entity.VendUser" >
     insert into vend_user
@@ -91,6 +94,9 @@
       </if>
       <if test="linkman != null" >
         linkman,
+      </if>
+      <if test="wechatpubNo != null" >
+        wechatpub_no,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -145,6 +151,9 @@
       <if test="linkman != null" >
         #{linkman,jdbcType=VARCHAR},
       </if>
+      <if test="wechatpubNo != null" >
+        #{wechatpubNo,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -198,6 +207,9 @@
       <if test="linkman != null" >
         linkman = #{linkman,jdbcType=VARCHAR},
       </if>
+      <if test="wechatpubNo != null" >
+        wechatpub_no = #{wechatpubNo,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -237,6 +249,7 @@
       mobile = #{mobile,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       linkman = #{linkman,jdbcType=VARCHAR},
+      wechatpub_no = #{wechatpubNo,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       permission_list = #{permissionList,jdbcType=VARCHAR},
@@ -248,7 +261,7 @@
       extend6 = #{extend6,jdbcType=VARCHAR}
     where usercode = #{usercode,jdbcType=VARCHAR}
   </update>
- <!-- 一下为自定义方法 -->
+   <!-- 一下为自定义方法 -->
   <select id="listVendUser" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List" />
@@ -338,7 +351,7 @@
    <select id="findAll" resultMap="BaseResultMap">
  	select * from vend_user
   </select>
-  <!-- 批量添加 -->
+    <!-- 批量添加 -->
   <insert id="insertBatch" parameterType="java.util.List">
 	  insert into vend_user (parent_usercode,username,password,role_id,mobile,address,linkman,create_time,update_time,permission_list,extend1,extend2,extend3，extend4,extend5,extend6)
 	        values
@@ -379,7 +392,13 @@
 		 select  
 		 <include refid="Base_Column_List" />  
 		 from vend_user 
-		 where  parent_usercode = #{parentUsercode,jdbcType=VARCHAR} 
+		 where  parent_usercode = #{parentUsercode,jdbcType=VARCHAR}
+	</select> 
+	<select id="selectByWechatpubNo" resultMap="BaseResultMap" parameterType="java.lang.String">  
+		 select  
+		 <include refid="Base_Column_List" />  
+		 from vend_user 
+		 where  wechatpub_no = #{wechatpubNo,jdbcType=VARCHAR}
 	</select> 
   <!-- 批量删除 -->
     <delete id="deleteBatch" parameterType="int">

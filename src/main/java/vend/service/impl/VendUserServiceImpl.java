@@ -162,6 +162,20 @@ public class VendUserServiceImpl implements VendUserService {
 		return vendUser;
 	}
 	/**
+	 * 按照微信公众号号码查找用户 
+	 * @param wechatpubNo
+	 * @return
+	 */
+	public VendUser selectByWechatpubNo(String wechatpubNo){
+		String key="key_selectByWechatpubNo"+wechatpubNo;
+		VendUser vendUser=(VendUser)CacheUtils.get("userCache", key);
+		if(vendUser==null){
+			vendUser=vendUserMapper.selectByWechatpubNo(wechatpubNo);
+			CacheUtils.put("userCache", key, vendUser);
+		}
+		return vendUser;
+	}
+	/**
 	 * 按照地区查找用户
 	 * @param arealist
 	 * @return

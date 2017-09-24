@@ -43,6 +43,8 @@ public interface VendUserMapper {
     
     List<VendUser> selectByParentUsercode(String parentUsercode);
     
+    VendUser selectByWechatpubNo(String wechatpubNo);
+    
     public Set<String> getRoles(String userName);
 	
    	public Set<String> getPermissions(String userName);

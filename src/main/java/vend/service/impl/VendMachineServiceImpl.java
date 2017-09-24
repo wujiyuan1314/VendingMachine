@@ -24,6 +24,9 @@ public class VendMachineServiceImpl implements VendMachineService {
 	 * @return
 	 */
 	public List<VendMachine> listVendMachine(VendMachine vendMachine,Page page){
+		int totalNumber = vendMachineMapper.countVendMachine(vendMachine);
+		page.setTotalNumber(totalNumber);
+		
 		String title=vendMachine.getUsercode();
 		String currentPage=Integer.toString(page.getCurrentPage());
 		if(title==null){
@@ -32,8 +35,6 @@ public class VendMachineServiceImpl implements VendMachineService {
 		String key="key_listVendMachine"+title+currentPage;
 		List<VendMachine> vendMachines=(List<VendMachine>)CacheUtils.get("machineCache", key);
 		if(vendMachines==null){
-			int totalNumber = vendMachineMapper.countVendMachine(vendMachine);
-			page.setTotalNumber(totalNumber);
 			vendMachines=vendMachineMapper.listVendMachine(vendMachine, page);
 			CacheUtils.put("machineCache",key, vendMachines);
 		}

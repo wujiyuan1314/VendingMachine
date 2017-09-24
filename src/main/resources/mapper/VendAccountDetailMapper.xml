@@ -152,6 +152,28 @@
  	</where>
   </select>
   
+  <select id="listVendAccountDetailTx" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_accountdetail
+	<where>
+	    and type=2
+		<if test="vendAccountDetail.usercode != null and !&quot;&quot;.equals(vendAccountDetail.usercode.trim())">
+			and usercode = #{vendAccountDetail.usercode}
+		</if>
+	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="countVendAccountDetailTx" resultType="int" parameterType="vend.entity.VendAccountDetail">
+ 	select count(*) from vend_accountdetail
+ 	<where>
+ 	    and type=2
+ 		<if test="usercode != null and !&quot;&quot;.equals(usercode.trim())">
+		  and usercode = #{usercode}
+	    </if>
+ 	</where>
+  </select>
+  
    <select id="findAll" resultMap="BaseResultMap">
  	select * from vend_accountdetail
   </select>

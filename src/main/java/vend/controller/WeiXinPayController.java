@@ -27,6 +27,7 @@ import vend.entity.VendAccount;
 import vend.entity.VendAccountDetail;
 import vend.entity.VendMachine;
 import vend.entity.VendOrder;
+import vend.entity.VendQrcodeAttend;
 import vend.entity.VendUser;
 import vend.service.UserCouponService;
 import vend.service.VendAccountDetailService;
@@ -34,6 +35,7 @@ import vend.service.VendAccountService;
 import vend.service.VendMachineService;
 import vend.service.VendOrderService;
 import vend.service.VendParaService;
+import vend.service.VendQrcodeAttendService;
 import vend.service.VendUserService;
 
 import java.io.IOException;
@@ -65,6 +67,8 @@ public class WeiXinPayController {
 	VendAccountService vendAccountService;
 	@Autowired
 	VendAccountDetailService vendAccountDetailService;
+	@Autowired
+	VendQrcodeAttendService vendQrcodeAttendService;
 	/**
 	 * 得到本次支付的openid
 	 * @param map
@@ -167,6 +171,73 @@ public class WeiXinPayController {
 		}
 	}
 	/**
+	 * 免费获取商品
+	 * @param response
+	 * @param map
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/freePay",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
+	public @ResponseBody String freePay(HttpServletResponse response,@RequestBody Map<String, String> map) throws IOException{
+		response.setCharacterEncoding("UTF-8");
+		JSONObject json = new JSONObject();
+		json.put("success", "0");
+		json.put("msg", "购买失败");
+		
+		int id=Function.getInt(map.get("id"),0);//商品ID
+		String machinecode=map.get("machinecode");//机器码
+		
+		String wechatpubNo=map.get("wechatpubNo");//微信公众号的号码
+		VendUser vendUser=vendUserService.selectByWechatpubNo(wechatpubNo);
+		String wechatusercode="";
+		if(vendUser!=null){
+			wechatusercode=vendUser.getUsercode();//被关注二维码的商家
+		}
+		
+		VendMachine vendMachine=vendMachineService.selectByMachineCode(machinecode);
+		String shopusercode="";//购买的商品所属的商家
+		if(vendMachine!=null){
+			shopusercode=vendMachine.getUsercode();
+		}
+		String usercode=map.get("usercode");
+		//1,订单操作
+		VendOrder vendOrder=new VendOrder();
+		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+		vendOrder.setAmount(BigDecimal.valueOf(0.00));
+		String orderId=Function.getOrderId();
+		vendOrder.setOrderId(orderId);
+		vendOrder.setUsercode(usercode);
+		vendOrder.setShopusercode(shopusercode);
+		vendOrder.setGoodsId(id);
+		vendOrder.setMachineCode(machinecode);
+		vendOrder.setNum(1);
+		vendOrder.setCreateTime(createTime);
+		vendOrder.setOrderstate("1");
+		vendOrder.setFreeStatus("1");//2优惠券代替支付免费，1关注二维码免费，0不免费支付
+		vendOrder.setExtend1("1");//购买
+		vendOrder.setPayType("扫描二维码免费领取");
+		int isOk=vendOrderService.insertVendOrder(vendOrder);
+		if(isOk==1){
+			json.put("success", 1);
+			json.put("msg", "购买成功");
+		}
+		
+		//2,二维码关注操作
+		VendQrcodeAttend vendQrcodeAttend=new VendQrcodeAttend();
+		vendQrcodeAttend.setAttendTime(createTime);
+		vendQrcodeAttend.setUsercode(usercode);
+		vendQrcodeAttend.setExend1(wechatusercode);
+		vendQrcodeAttendService.insertVendQrcodeAttend(vendQrcodeAttend);
+		
+		try {
+			response.getWriter().append(json.toJSONString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/**
 	 * 使用优惠券支付
 	 * @param response
 	 * @param map
@@ -223,7 +294,7 @@ public class WeiXinPayController {
 			vendOrder.setNum(1);
 			vendOrder.setCreateTime(createTime);
 			vendOrder.setOrderstate("1");
-			vendOrder.setFreeStatus("1");//是否使用免费券,1使用，0不使用
+			vendOrder.setFreeStatus("2");//2优惠券代替支付免费，1关注二维码免费，0不免费支付
 			vendOrder.setExtend1("1");//购买
 			vendOrder.setPayType("优惠券支付");
 			int isOk=vendOrderService.insertVendOrder(vendOrder);
@@ -285,7 +356,7 @@ public class WeiXinPayController {
 		vendOrder.setNum(1);
 		vendOrder.setCreateTime(createTime);
 		vendOrder.setOrderstate("1");
-		vendOrder.setFreeStatus("0");//是否使用免费券,1使用，0不使用
+		vendOrder.setFreeStatus("0");//2优惠券代替支付免费，1关注二维码免费，0不免费支付
 		vendOrder.setExtend1("1");//购买
 		vendOrder.setPayType("余额支付");
 		vendOrderService.insertVendOrder(vendOrder);

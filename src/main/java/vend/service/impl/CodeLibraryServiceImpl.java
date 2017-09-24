@@ -37,19 +37,31 @@ public class CodeLibraryServiceImpl implements CodeLibraryService {
 	@Override
 	public int editCodeLibrary(CodeLibrary codeLibrary) {
 		// TODO Auto-generated method stub
-		return codeLibraryMapper.updateByPrimaryKeySelective(codeLibrary);
+		int isOk= codeLibraryMapper.updateByPrimaryKeySelective(codeLibrary);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
+		return isOk;
 	}
 
 	@Override
 	public int insertCodeLibrary(CodeLibrary codeLibrary) {
 		// TODO Auto-generated method stub
-		return codeLibraryMapper.insertSelective(codeLibrary);
+		int isOk= codeLibraryMapper.insertSelective(codeLibrary);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
+		return isOk;
 	}
 
 	@Override
 	public int deleteCodeLibrary(String id) {
 		// TODO Auto-generated method stub
-		return codeLibraryMapper.deleteByPrimaryKey(id);
+		int isOk= codeLibraryMapper.deleteByPrimaryKey(id);
+		if(isOk==1){
+			CacheUtils.clear();
+		}
+		return isOk;
 	}
 
 	@Override

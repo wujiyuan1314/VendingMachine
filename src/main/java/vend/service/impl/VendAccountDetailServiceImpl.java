@@ -42,6 +42,28 @@ public class VendAccountDetailServiceImpl implements VendAccountDetailService {
 		return vendAccountDetails;
 	}
 	/**
+	 * 根据输入信息条件查询账户提现纪录列表，并分页显示
+	 * @param vendAccountDetail
+	 * @param page
+	 * @return
+	 */
+	public List<VendAccountDetail> listVendAccountDetailTx(VendAccountDetail vendAccountDetail,Page page){
+		String title=vendAccountDetail.getUsercode();
+		if(title==null){
+			title="";
+		}
+		String currentPage=Integer.toString(page.getCurrentPage());
+		String key="key_listVendAccountDetailTx"+title+currentPage;
+		List<VendAccountDetail> vendAccountDetails=(List<VendAccountDetail>)CacheUtils.get("accountCache", key);
+		if(vendAccountDetails==null){
+			int totalNumber = vendAccountDetailMapper.countVendAccountDetailTx(vendAccountDetail);
+			page.setTotalNumber(totalNumber);
+			vendAccountDetails =vendAccountDetailMapper.listVendAccountDetailTx(vendAccountDetail, page);
+			CacheUtils.put("accountCache",key, vendAccountDetails);
+		}
+		return vendAccountDetails;
+	}
+	/**
 	 * 添加账户操作纪录
 	 * @param vendAccountDetail
 	 * @return

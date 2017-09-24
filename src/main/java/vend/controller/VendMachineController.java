@@ -1,10 +1,12 @@
 package vend.controller;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -19,6 +21,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.alibaba.fastjson.JSONObject;
+
+import base.util.CacheUtils;
 import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
@@ -88,6 +93,7 @@ public class VendMachineController{
 				}
 			}
 		}
+		model.addAttribute("page", page);
 		model.addAttribute("vendMachines",vendMachines1);
 		return "manage/machine/machine_list";
 	}
@@ -242,6 +248,60 @@ public class VendMachineController{
   		return "redirect:/machine/machines";
   	}
 	/**
+	 * 解绑机器
+	 * @param id
+	 * @param transusercode
+	 * @param response
+	 * @throws IOException 
+	 */
+	@RequiresPermissions({"machine:unbind"})
+    @RequestMapping(value="/{id}/{transusername}/unbind")
+  	public String unbind(@PathVariable Integer id,@PathVariable String transusername,HttpServletResponse response) throws IOException{
+		JSONObject json = new JSONObject();
+	    json.put("success", 0);
+	    json.put("msg", "解绑失败");
+		VendMachine vendMachine=vendMachineService.getOne(id);
+		if(vendMachine==null){
+			json.put("success", 0);
+			json.put("msg", "该机器不存在");
+			response.getWriter().append(json.toJSONString());
+			return null;
+		}
+		
+		VendUser vendUser=vendUserService.selectByUsername(transusername);
+		if(vendUser==null){
+			json.put("success", 0);
+			json.put("msg", "要转移的商户不存在");
+			response.getWriter().append(json.toJSONString());
+			return null;
+		}
+		if(vendUser.getRoleId()!=4){
+			json.put("success", 0);
+			json.put("msg", "要转移的用户必须是商家用户");
+			response.getWriter().append(json.toJSONString());
+			return null;
+		}
+		
+		if(vendUser.getUsercode()==null){
+			json.put("success", 0);
+			json.put("msg", "要转移的商户不存在");
+			response.getWriter().append(json.toJSONString());
+			return null;
+		}
+		
+		vendMachine.setUsercode(vendUser.getUsercode());
+    	int isOk=vendMachineService.editVendMachine(vendMachine);
+    	if(isOk==1){
+    		json.put("success", 1);
+			json.put("msg", "解绑成功");
+    		CacheUtils.clear();
+    	}
+
+		response.getWriter().append(json.toJSONString());
+		return null;
+
+  	}
+	/**
 	 * 每个机器销售统计
 	 * @param model
 	 * @param vendMachine
@@ -278,7 +338,13 @@ public class VendMachineController{
 		}
 		
 		String beginTime=request.getParameter("beginTime");
+		if(beginTime==null){
+			beginTime=DateUtil.getCurrentDateStr();
+		}
 		String endTime=request.getParameter("endTime");
+		if(endTime==null){
+			endTime=DateUtil.format(DateUtil.addDays(DateUtil.parseDate(DateUtil.getCurrentDateStr()),1));
+		}
 		List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();//每个机子的销售统计集合
 		for(VendMachine vendMachine2:vendMachines1){
 			if(vendMachine2!=null&&vendMachine2.getMachineCode()!=null){

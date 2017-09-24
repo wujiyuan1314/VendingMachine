@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%@page import="base.util.DateUtil" %>
 <title>自动售货机管理系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -30,7 +31,7 @@
 <!--Action boxes-->
   <div class="container-fluid">
     <div class="row fluid">
-      <sf:form action="machines" method="post" id="Paramform" class="form-horizontal">
+      <sf:form action="sales" method="post" id="Paramform" class="form-horizontal">
       <input type="hidden" name="currentPage" id="currentPage" value="1" />
 		<div class="span12">
 		  <div class="widget-box">
@@ -43,6 +44,12 @@
 			            <tr>
 		                  <th>机器码:</th>
 			              <th><input type="text" name="machineCode" id="machineCode" placeholder="按机器销售统计名搜索"/>&nbsp;&nbsp;</th>
+		                  <th>
+		                  <input type="text" name="beginTime" id="beginTime" value="<%=DateUtil.getCurrentDateStr()%>" placeholder="开始时间" class="span2"/>
+		                  </th>
+		                  <th>
+		                  <input type="text" name="endTime" id="endTime" value="<%=DateUtil.format(DateUtil.addDays(DateUtil.parseDate(DateUtil.getCurrentDateStr()),1))%>" placeholder="结束时间" class="span2"/>
+		                  </th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                </tr>
 			      </table>
@@ -63,10 +70,10 @@
 				           <tr class="gradeX">
 					          <th><input type="checkbox" name="Id" id="Id" value="${vendMachine.id}"/></th>
 			                  <td>${vendMachine.machinecode}</td>
-			                  <td>${vendMachine.user_num}</td>
-			                  <td>${vendMachine.sell_num}</td>
-			                  <td>${vendMachine.sell_amount}</td>
-			                  <td>${vendMachine.free_num}</td>
+			                  <td><a class="btn-info btn-mini" style="border-radius:32px;">${vendMachine.user_num}</a></td>
+			                  <td><a class="btn-info btn-mini" style="border-radius:32px;">${vendMachine.sell_num}</a></td>
+			                  <td><a style="color:red;font-weight:600;">${vendMachine.sell_amount}</a></td>
+			                  <td><a class="btn-info btn-mini" style="border-radius:32px;">${vendMachine.free_num}</a></td>
 			                </tr>
 			           </c:forEach>
 			         </tbody>
@@ -105,6 +112,12 @@ function delconfirm(id){
 		window.location.href=basePath+"machine/"+id+"/del";
 	 }
 }
+$('#beginTime').datetimepicker({
+    format: 'yyyy-mm-dd'
+});
+$('#endTime').datetimepicker({
+    format: 'yyyy-mm-dd'
+})
 </script>
 <script src="<%=basePath2 %>resources/js/back/machine_list.js"></script>
 </body>

@@ -29,7 +29,9 @@ public class Test {
     	
     	//String chars = "abcdefghijklmnopqrstuvwxyz";
     	//System.out.println(chars.charAt((int)(Math.random() * 26)));*/
-    	System.out.println(Function.getmachineId());
+		String m="dgfd,ghjgg,ghjh,ghjgj,";
+		
+    	System.out.println(m.indexOf("ghjgj,"));
 		
 	}
 
