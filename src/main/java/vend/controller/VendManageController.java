@@ -93,18 +93,22 @@ public class VendManageController{
 	public String login(@PathVariable int id){
 		VendMachine vendMachine=vendMachineService.getOne(id);
 		JSONObject payload = new JSONObject();
-		payload.accumulate("device_id", "1g8p5865c");
+		/*payload.accumulate("device_id", "1g8p5865c");
 		payload.accumulate("device_type", vendMachine.getMachineType());
 		payload.accumulate("operation", "login");
-		payload.accumulate("hwAddr", "1234567890abcdef");
+		payload.accumulate("hwAddr", "1234567890abcdef");*/
+		//设备参数
+		payload.accumulate("device_id", "1g8p5865c");
+		payload.accumulate("operation", "getDevParam");
 		Map<String,Object> dataMap = new HashMap<String,Object>();
-		dataMap.put("id", id);
+		dataMap.put("id", "1g8p5865c");
 		dataMap.put("payload", payload);
 		try {
+			//String listMap = HttpClientUtil.httpPostRequest(SysPara.midQueryUrl,dataMap);
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
 			if(StringUtils.isNotBlank(retMsg)){
 				JSONObject retJson = JSONObject.fromObject(retMsg);	
-				String retCode = retJson.getString("error_code");
+				String retCode = retJson.getString("result");
 				if(retCode.equals("0")){
 					if(vendMachine!=null){
 						vendMachine.setUseStatus("1");
@@ -172,7 +176,7 @@ public class VendManageController{
 		payload.accumulate("device_id", id);
 		payload.accumulate("operation", "reboot");
 		Map<String,Object> dataMap = new HashMap<String,Object>();
-		dataMap.put("id", id);
+		dataMap.put("id", "1g8p5865c");
 		dataMap.put("payload", payload);
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
@@ -207,10 +211,10 @@ public class VendManageController{
 		System.out.println(id);
 		VendMachine vendMachine=vendMachineService.getOne(id);
 		JSONObject payload = new JSONObject();
-		payload.accumulate("device_id", id);
+		payload.accumulate("device_id", "1g8p5865c");
 		payload.accumulate("operation", "shutdown");
 		Map<String,Object> dataMap = new HashMap<String,Object>();
-		dataMap.put("id", id);
+		dataMap.put("id", "1g8p5865c");
 		dataMap.put("payload", payload);
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
@@ -314,7 +318,7 @@ public class VendManageController{
 	@RequestMapping(value="/{id}/setDevParam")
 	public String setDevParam(@PathVariable int id){
 		JSONObject payload = new JSONObject();
-		payload.accumulate("device_id", id);
+		payload.accumulate("device_id", "1g8p5865c");
 		payload.accumulate("operation", "setDevParam");
 		JSONObject params = new JSONObject();
 		params.accumulate("chNo", "0");
@@ -587,10 +591,11 @@ public class VendManageController{
 	 * @return
 	 * @throws IOException 
 	 */
-	@RequestMapping(value="/callback",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
-	public @ResponseBody void callBack(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		String reqParams = StreamUtil.read(request.getInputStream());
-		logger.info("-------回调结果:"+reqParams);
+	@RequestMapping(value="/callback",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public void callBack(String returnJSON) throws IOException{
+		System.out.println(returnJSON);
+		logger.info("-------回调结果:" + returnJSON);
 	}
 	/**
 	 * 详情
