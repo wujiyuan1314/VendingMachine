@@ -38,29 +38,31 @@
 	            <a href="${pageContext.request.contextPath}/codeLibrary/${codeno}/add" class="btn btn-success"/>添加参数类别</a>
 	          </div>
 	          <div class="widget-content nopadding">
-	            <table class="table table-bordered">
-	              <thead>
-	                <tr>
-	                  <th>类别编号</th>
-	                  <th>类别值</th>
-	                  <th>详细描述</th>
-	                  <th>操作</th>
-	                </tr>
-	              </thead>
-	              <tbody>
-		              <c:forEach items="${codeLibrarys}" var="codeLibrary" varStatus="st">
-		                <tr>
-		                  <td>${codeLibrary.itemno}</td>
-		                  <td>${codeLibrary.itemname}</td>
-		                  <td>${codeLibrary.extend1}</td>
-		                  <td>
-		                      <a href="${pageContext.request.contextPath}/codeLibrary/${codeLibrary.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
-			                  <a href="javascript:void(0);" onclick="delconfirm('${codeLibrary.id}','${codeno}');" class="btn btn-danger  icon-trash"/></a>
-		                  </td>
-		                </tr>
-		              </c:forEach>
-	              </tbody>
-	            </table>
+	            <div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+						    <ul class="thumbnails">
+						      <c:forEach items="${codeLibrarys}" var="codeLibrary" varStatus="st">
+								<li class="span2">
+									<div class="thumbnail">
+										<img src="${pageContext.request.contextPath}/resources/img/adscreen/fg${st.index+1}.jpg" style="width:120px;height:150px;">
+										<div class="caption">
+											<p>
+											    ${codeLibrary.itemname}
+											</p>
+											<p>
+												<a href="${pageContext.request.contextPath}/codeLibrary/${codeLibrary.id}/edit" class="btn btn-success btn-mini"/>修改</a>&nbsp;&nbsp;
+			                                    <a href="javascript:void(0);" onclick="delconfirm('${codeLibrary.id}','${codeno}');" class="btn btn-danger btn-mini"/>删除</a>
+											</p>
+										</div>
+									</div>
+								</li>
+							  </c:forEach>
+							</ul>
+		                </div>
+					</div>
+				</div>
+		                
 	          </div>
 	        </div>
 		  </div>

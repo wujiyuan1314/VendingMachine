@@ -32,7 +32,7 @@
     <div class="row fluid">
       <sf:form action="machines" method="post" id="Paramform" class="form-horizontal">
       <input type="hidden" name="currentPage" id="currentPage" value="1" />
-		<div class="span12">
+		<div class="span10">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
                  <h5>机器初始化信息设置</h5>
@@ -41,35 +41,51 @@
 			  <div class="widget-content">
 			      <table style="margin-bottom:5px;">
 			            <tr>
-			              <th>机器名:</th>
+			              <th>型号:gyp206</th>
 		                </tr>
 			      </table>
 			
 			      <table class="table table-bordered table-striped with-check">
 			      <thead>
 			            <tr>
-			              <th><input type="checkbox" onclick="selectAll('machinecode');" id="all" name="title-table-checkbox" /></th>
-		                  <th>机器名</th>
-		                  <th>机器ID</th>
-		                  <th>机器码</th>
-		                  <th>登录账号</th>
-		                  <th>咖啡机型号(可选择)</th>
+		                  <th style="width:150px;">商品名</th>
+		                  <th>冷热状态</th>
+		                  <th>名字</th>
+		                  <th>出水时间<i style="color:red;">(10~999s)</i></th>
+		                  <th>出料时间<i style="color:red;">(10~999s)</i></th>
 		                </tr>
 			         </thead>
 			         <tbody>
-			           <c:forEach items="${list}" var="map" varStatus="st">
+			           <c:forEach items="${vendMachineInts}" var="vendMachineInt" varStatus="st">
 				           <tr class="gradeX">
-					          <th><input type="checkbox" name="Id" id="Id" value="${vendMachine.id}"/></th>
-			                  <td>${vendMachine.machineName}</td>
-			                  <td>${vendMachine.machineId}</td>
-			                  <td>${vendMachine.machineCode}</td>
-			                  <td>${vendMachine.usercode}</td>
-			                   <td>${vendMachine.usercode}</td>
+				           <input type="hidden" name="id${st.index}" id="id${st.index}" value="${vendMachineInt.id}">
+					          <td>${vendMachineInt.goodsName}</td>
+			                  <td>
+				                  <c:choose>
+					                  <c:when test="${vendMachineInt.hotStatus==0 }">
+					                      <span style="color:blue;font-weight:999;">冷</span>
+					                  </c:when>
+				                  </c:choose>
+				                   <c:choose>
+					                  <c:when test="${vendMachineInt.hotStatus==1 }">
+					                      <span style="color:red;font-weight:999;">热</span>
+					                  </c:when>
+				                  </c:choose>
+			                  </td>
+			                  <th><input class="span2" name="wareName${st.index}" id="wareName${st.index}" value="${vendMachineInt.wareName}"/></th>
+			                  <th><input class="span1" name="waterOutTime${st.index}" id="waterOutTime${st.index}" value="${vendMachineInt.waterOutTime}"/></th>
+			                  <th><input class="span1" name="grainOutTime${st.index}" id="grainOutTime${st.index}" value="${vendMachineInt.grainOutTime}"/></th>
 			                </tr>
 			           </c:forEach>
 			         </tbody>
 			      </table>
 			  </div>
+			   <div class="form-actions">
+	                <span style="color:#b94a48;font-size:15px;" class="errormsg"></span>
+	           </div> 
+			   <div class="form-actions">
+	                <input type="button" value="提交" class="btn btn-success" onclick="initalize();">
+	           </div>
 			  
 		  </div>
 		</div>
@@ -86,45 +102,47 @@
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
 <script type="text/javascript">
-function delconfirm(id){
-	 if(confirm("确定要删除吗?")){
-		window.location.href=basePath+"machine/"+id+"/del";
-	 }
-}
 /**
- * 转移一个机器给另外一个商家
+ * 提交初始化参数
  */
- function transmachine(){
-	var machineId=new Array();
-	var length=0;
-	$("input[id='Id']:checked").each(function(){
-		length=machineId.push($(this).val());
-	})
-	if(length==0){
-		$(".binderror").html("请选择一条记录");
-		return;
+ function initalize(){
+	var length=${vendMachineInts.size()}
+	var vendMachineIntArray=new Array();
+	var map={};
+	for(var i=0;i<length;i++){
+		map['id']=$("#id"+i).val();
+		map['wareName']=$("#wareName"+i).val();
+		map['waterOutTime']=$("#waterOutTime"+i).val();
+		map['grainOutTime']=$("#grainOutTime"+i).val();
+		var json=JSON.stringify(map);
+		vendMachineIntArray.push(json);
 	}
-	if(length>1){
-		$(".binderror").html("只能选择一条记录");
-		return;
-	}
-	var id=machineId[0];
-	var transusercode=$("#transusercode").val();
-	if(transusercode==''){
-		$(".binderror").html("请输入要转移的用户名");
-		return;
-	}
-	if(confirm("确定要解绑吗?")){
-		var url=basePath+"machine/"+id+"/"+transusercode+"/unbind";
-		$.post(url,'',function(res){
+    var params={
+    		vendMachineIntArray:vendMachineIntArray
+    }	
+	var url=basePath+"machine/initialize";
+	$.ajax({url:url,
+		type:'post',
+		async: false,      //ajax同步
+		dataType:"html",
+		traditional: true,//这个设置为true，data:{"steps":["qwe","asd","zxc"]}会转换成steps=qwe&steps=asd&...
+		data:params,//URL参数
+		success:function(res){
 			var data=eval("("+res+")");
-			if(data.success==1){
-				window.location.reload();
-			}else if(data.success==0){
-				$(".binderror").html(data.msg);
+			var success=data.success;
+			var msg=data.msg;
+			if(success==0){
+				$(".errormsg").html(msg);
+			}else{
+				alert(msg,function(){
+					window.location.reload();
+				});
 			}
-		})
-	}
+		},
+	    error:function(){
+           alert("错误");
+           }
+	});
 }
 </script>
 <script src="<%=basePath2 %>resources/js/back/machine_list.js"></script>

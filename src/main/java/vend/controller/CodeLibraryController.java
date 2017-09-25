@@ -112,6 +112,7 @@ public class CodeLibraryController {
 	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
 	public String editCodeLibrary(Model model,@PathVariable String id){
 		CodeLibrary codeLibrary=codeLibraryService.getCodeLibraryByID(id);
+		model.addAttribute("codeno", codeLibrary.getCodeno());
 		model.addAttribute(codeLibrary);
 		return "manage/codelibrary/codelibrary_edit";
 	}

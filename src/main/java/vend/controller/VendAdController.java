@@ -111,6 +111,13 @@ public class VendAdController{
 		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");
 		model.addAttribute("upvideotypes", upvideotypes);
 		VendAd vendAd=vendAdService.getOne(id);
+		String adtypename="";
+		for(CodeLibrary codeLibrary:adscreens){
+			if(vendAd.getExtend2()!=null&&codeLibrary.getItemno().equals(vendAd.getExtend2())){
+				adtypename=codeLibrary.getItemname();
+			}
+		}
+		model.addAttribute("adtypename", adtypename);
 		model.addAttribute(vendAd);
 		return "manage/ad/ad_edit";
 	}

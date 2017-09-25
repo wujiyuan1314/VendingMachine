@@ -95,18 +95,14 @@ public class VendManageController{
 	public String login(@PathVariable int id){
 		VendMachine vendMachine=vendMachineService.getOne(id);
 		JSONObject payload = new JSONObject();
-		/*payload.accumulate("device_id", "1g8p5865c");
+		payload.accumulate("device_id", "1g8p5865c");
 		payload.accumulate("device_type", vendMachine.getMachineType());
 		payload.accumulate("operation", "login");
-		payload.accumulate("hwAddr", "1234567890abcdef");*/
-		//设备参数
-		payload.accumulate("device_id", "1g8p5865c");
-		payload.accumulate("operation", "getDevParam");
+		payload.accumulate("hwAddr", "1234567890abcdef");
 		Map<String,Object> dataMap = new HashMap<String,Object>();
 		dataMap.put("id", "1g8p5865c");
 		dataMap.put("payload", payload);
 		try {
-			//String listMap = HttpClientUtil.httpPostRequest(SysPara.midQueryUrl,dataMap);
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
 			if(StringUtils.isNotBlank(retMsg)){
 				JSONObject retJson = JSONObject.fromObject(retMsg);	
@@ -528,7 +524,7 @@ public class VendManageController{
 	@RequestMapping(value="/{id}/sell")
 	public String sell(@PathVariable int id){
 		JSONObject payload = new JSONObject();
-		payload.accumulate("device_id", id);
+		payload.accumulate("device_id", "1g8p5865c");
 		payload.accumulate("operation", "sell");
 		payload.accumulate("order", 123456);
 		//商品详情
@@ -541,7 +537,7 @@ public class VendManageController{
 		
 		orderGoods.accumulate("params", params);
 		Map<String,Object> dataMap = new HashMap<String,Object>();
-		dataMap.put("id", id);
+		dataMap.put("id", "1g8p5865c");
 		dataMap.put("payload", payload);
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);

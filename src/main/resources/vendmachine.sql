@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-09-24 18:06:16
+Date: 2017-09-25 20:50:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -301,7 +301,7 @@ CREATE TABLE `vend_ad` (
 -- ----------------------------
 -- Records of vend_ad
 -- ----------------------------
-INSERT INTO vend_ad VALUES ('1', '广告2', '3', '/userfiles/pic/201709091700288860.jpg', '/userfiles/pic/201709041457278635.jpg', '', '', '', '', '/userfiles/video/201709041457476423.mp4', '45', '45', '2017-09-09 17:00:20', '2017-09-09 17:00:20', '2017-09-04 14:57:56', '2017-09-04 14:57:56', '水电费', '4', null);
+INSERT INTO vend_ad VALUES ('1', '广告2', '3', '/userfiles/pic/201709091700288860.jpg', '/userfiles/pic/201709041457278635.jpg', '', '', '', '', '/userfiles/video/201709041457476423.mp4', '45', '45', '2017-09-25 20:48:42', '2017-09-25 20:48:42', '2017-09-04 14:57:56', '2017-09-04 14:57:56', '水电费', '4', null);
 INSERT INTO vend_ad VALUES ('2', '广告1', '6', '/userfiles/pic/201709041522151457.jpg', '/userfiles/pic/201709041522182234.jpg', '', '', '', '', '/userfiles/video/201709041522380132.mp4', '67', '67', '2017-09-04 15:22:03', '2017-09-04 15:22:03', '2017-09-04 15:23:17', '2017-09-04 15:23:17', '电饭锅', '5', null);
 
 -- ----------------------------
@@ -393,7 +393,43 @@ CREATE TABLE `vend_machine` (
 -- ----------------------------
 -- Records of vend_machine
 -- ----------------------------
-INSERT INTO vend_machine VALUES ('3', '机器1', '1g8p5865c', '10000', 'VM2017092216353547', null, '3', '0', null, '0', '0', null, null, null, '2017-09-22 17:09:05', '2017-09-22 17:09:05', null, null, null, null, null);
+INSERT INTO vend_machine VALUES ('3', '机器1', '1g8p5865c', '10000', 'VM2017092216353547', null, '2', '0', null, '0', '0', null, null, null, '2017-09-22 17:09:05', '2017-09-22 17:09:05', null, null, null, null, null);
+
+-- ----------------------------
+-- Table structure for `vend_machine_int`
+-- ----------------------------
+DROP TABLE IF EXISTS `vend_machine_int`;
+CREATE TABLE `vend_machine_int` (
+  `id` int(19) NOT NULL AUTO_INCREMENT,
+  `belong_machine` int(19) DEFAULT NULL COMMENT '机器的id',
+  `goods_id` int(19) DEFAULT NULL COMMENT '商品id',
+  `goods_name` varchar(150) DEFAULT NULL COMMENT '商品名',
+  `ware_name` varchar(150) DEFAULT NULL,
+  `hot_status` varchar(10) DEFAULT NULL COMMENT '冷热状态，0冷，1热',
+  `water_out_time` int(19) DEFAULT NULL COMMENT '出水时间',
+  `grain_out_time` int(19) DEFAULT NULL COMMENT '出料时间',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `extend1` varchar(150) DEFAULT NULL,
+  `extend2` varchar(150) DEFAULT NULL,
+  `extend3` varchar(150) DEFAULT NULL,
+  `extend4` varchar(150) DEFAULT NULL,
+  `extend5` varchar(150) DEFAULT NULL,
+  `extend6` varchar(150) DEFAULT NULL,
+  `extend7` varchar(150) DEFAULT NULL,
+  `extend8` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='机器初始化信息';
+
+-- ----------------------------
+-- Records of vend_machine_int
+-- ----------------------------
+INSERT INTO vend_machine_int VALUES ('1', '3', '23', '雪碧3455', '', '0', '22', '22', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO vend_machine_int VALUES ('2', '3', '23', '雪碧3455', '', '1', '22', '22', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO vend_machine_int VALUES ('3', '3', '24', '芬达', '', '0', '28', '22', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO vend_machine_int VALUES ('4', '3', '24', '芬达', '', '1', '22', '22', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO vend_machine_int VALUES ('5', '3', '25', '王老吉', '', '0', '25', '22', null, null, null, null, null, null, null, null, null, null);
+INSERT INTO vend_machine_int VALUES ('6', '3', '25', '王老吉', '', '1', '23', '22', null, null, null, null, null, null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_order`
@@ -909,7 +945,7 @@ CREATE TABLE `vend_syslog` (
   `extend4` varchar(150) DEFAULT NULL,
   `extend5` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of vend_syslog
@@ -949,6 +985,24 @@ INSERT INTO vend_syslog VALUES ('32', 'VM000', 'system', '127.0.0.1', '2017-09-2
 INSERT INTO vend_syslog VALUES ('33', 'VM000', 'system', '127.0.0.1', '2017-09-24 15:39:15', null, '登录成功', '开发者后台', null, null, null, null);
 INSERT INTO vend_syslog VALUES ('34', 'VM000', 'system', '127.0.0.1', '2017-09-24 15:51:27', null, '登录成功', '开发者后台', null, null, null, null);
 INSERT INTO vend_syslog VALUES ('35', 'VM000', 'system', '127.0.0.1', '2017-09-24 17:45:49', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('36', 'VM000', 'system', '127.0.0.1', '2017-09-25 11:18:46', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('37', 'VM000', 'system', '127.0.0.1', '2017-09-25 11:35:10', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('38', 'VM000', 'system', '127.0.0.1', '2017-09-25 14:18:14', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('39', 'VM000', 'system', '127.0.0.1', '2017-09-25 14:46:18', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('40', 'VM000', 'system', '127.0.0.1', '2017-09-25 14:53:05', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('41', 'VM000', 'system', '127.0.0.1', '2017-09-25 14:54:38', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('42', 'VM000', 'system', '127.0.0.1', '2017-09-25 15:05:54', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('43', 'VM000', 'system', '127.0.0.1', '2017-09-25 15:14:08', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('44', 'VM000', 'system', '127.0.0.1', '2017-09-25 15:23:34', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('45', 'VM000', 'system', '127.0.0.1', '2017-09-25 15:50:33', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('46', 'VM000', 'system', '127.0.0.1', '2017-09-25 16:03:07', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('47', 'VM000', 'system', '127.0.0.1', '2017-09-25 17:23:23', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('48', 'VM000', 'system', '127.0.0.1', '2017-09-25 17:41:07', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('49', 'VM000', 'system', '127.0.0.1', '2017-09-25 18:39:38', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('50', 'VM000', 'system', '127.0.0.1', '2017-09-25 18:47:21', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('51', 'VM000', 'system', '127.0.0.1', '2017-09-25 19:05:09', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('52', 'VM000', 'system', '127.0.0.1', '2017-09-25 20:13:44', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('53', 'VM000', 'system', '127.0.0.1', '2017-09-25 20:48:31', null, '登录成功', '开发者后台', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_user`

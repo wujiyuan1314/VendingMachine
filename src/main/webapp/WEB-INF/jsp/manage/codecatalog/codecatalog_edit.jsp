@@ -23,7 +23,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>codeCatalog/codeCatalogs" class="current">商品列表</a>
+      <a href="<%=basePath1%>codeCatalog/codeCatalogs" class="current">参数列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->

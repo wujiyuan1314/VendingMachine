@@ -17,6 +17,10 @@
                     userId="root" password="mingming45" >
     </jdbcConnection>
     
+    <javaTypeResolver>
+        <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+    
     <!-- 生成模型的包名和位置-->
     <javaModelGenerator targetPackage="vend.entity" targetProject="VendingMachine\src\main\java">
         <!-- enableSubPackages:是否让schema作为包的后缀 -->  
@@ -32,15 +36,15 @@
     
     <!-- 配置生成相应的接口类，对应与Mapper.xml中的一系列CRUD方法SQL语句 -->  
     <javaClientGenerator targetPackage="vend.dao" targetProject="VendingMachine\src\main\java" type="XMLMAPPER">  
-        <property name="enableSubPackages" value="false" />  
+        <property name="enableSubPackages" value="true" />  
     </javaClientGenerator> 
         
     <!-- 用户表 -->  
-    <table schema="t" tableName="vend_user" domainObjectName="VendUser"  
+    <table schema="t" tableName="vend_machine_int" domainObjectName="VendMachineInt"  
         enableCountByExample="false"  
-        enableUpdateByExample="false"  
-        enableDeleteByExample="false"  
-        enableSelectByExample="false"  
+        enableUpdateByExample="false" 
+        enableDeleteByExample="false" 
+        enableSelectByExample="false"
         selectByExampleQueryId="true"  
         >    
     </table>

@@ -144,14 +144,70 @@
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="height" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
+	              
 	              <div class="control-group">
 	                <label class="control-label">广告屏样式选择</label>
 	                <div class="controls">
-	                   <sf:select path="extend2" items="${adscreens}" itemLabel="extend1" itemValue="itemno" style="width:280px;">
-								            </sf:select>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend1" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <div class="input-append date datepicker">
+	                  <sf:hidden path="extend2"/>
+	                    <input type="text" id="adtypename" value="${adtypename}" readonly="true" data-toggle="modal" data-target="#myModal"/>
+	                    <span class="add-on" data-toggle="modal" data-target="#myModal"><i class="icon-caret-down"></i></span>
+	                  </div>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend2" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
+	               
+	                <!-- 模态框（Modal）开始 -->
+					 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" 
+											aria-hidden="true">×
+									</button>
+									<h4 class="modal-title" id="myModalLabel">
+										广告样式选择
+									</h4>
+								</div>
+								<div class="modal-body">
+									<div class="container-fluid">
+										<div class="row-fluid">
+											<div class="span12">
+											    <ul class="thumbnails">
+											      <c:forEach items="${adscreens}" var="adscreen" varStatus="st">
+													<li class="span2">
+														<div class="thumbnail">
+															<img src="${pageContext.request.contextPath}/resources/img/adscreen/fg${st.index+1}.jpg" style="width:120px;height:150px;">
+															<div class="caption">
+																<p>
+																    ${adscreen.itemname}
+																</p>
+																<p>
+																  <div class="radio" id="uniform-adtype">
+																   <span data-itemname="${adscreen.itemname}" data-itemno="${adscreen.itemno}" id="thumbBox${st.index}" onclick="checkitemno(${st.index});"></span>
+																  </div>
+																</p>
+															</div>
+														</div>
+													</li>
+												  </c:forEach>
+												</ul>
+							                </div>
+										</div>
+									</div>
+									
+                                </div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="adscreen();">
+										提交
+									</button>
+								</div>
+							</div>
+						</div> 
+					</div>
+					<!-- 模态框（Modal）jieshu-->
+					 
 	              </div>
+	              
 	              <div class="control-group">
 	                <label class="control-label">广告开始时间</label>
 	                <div class="controls">
@@ -191,6 +247,34 @@
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
 <script type="text/javascript">
+//模拟框正中
+$("#adtypename").click(function(){
+	$(".modal").css("margin-left","-450px");
+})
+$(".add-on").click(function(){
+	$(".modal").css("margin-left","-450px");
+})
+//选择广告屏
+var length=${adscreens.size()};
+function checkitemno(j){
+	for(var i=0;i<length;i++){
+		$("#thumbBox"+i).removeClass("checked");
+	}
+	$("#thumbBox"+j).addClass("checked");
+	
+}
+
+function adscreen(){
+	var adtype=$(".checked").attr("data-itemno");
+	if(typeof(adtype)=="undefined"){ 
+		alert("请选择一个"); 
+        return;
+	} 
+	var adtypename=$(".checked").attr("data-itemname");
+	$("#extend2").val(adtype);
+	$("#adtypename").val(adtypename);
+}
+
 $('#startTime').datetimepicker({
     format: 'yyyy-mm-dd hh:mm:ss'
 });

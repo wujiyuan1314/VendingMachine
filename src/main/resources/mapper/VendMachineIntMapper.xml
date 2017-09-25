@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="vend.dao.VendMachineIntMapper" >
+  <resultMap id="BaseResultMap" type="vend.entity.VendMachineInt" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="belong_machine" property="belongMachine" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="ware_name" property="wareName" jdbcType="VARCHAR" />
+    <result column="hot_status" property="hotStatus" jdbcType="VARCHAR" />
+    <result column="water_out_time" property="waterOutTime" jdbcType="INTEGER" />
+    <result column="grain_out_time" property="grainOutTime" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="extend1" property="extend1" jdbcType="VARCHAR" />
+    <result column="extend2" property="extend2" jdbcType="VARCHAR" />
+    <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+    <result column="extend4" property="extend4" jdbcType="VARCHAR" />
+    <result column="extend5" property="extend5" jdbcType="VARCHAR" />
+    <result column="extend6" property="extend6" jdbcType="VARCHAR" />
+    <result column="extend7" property="extend7" jdbcType="VARCHAR" />
+    <result column="extend8" property="extend8" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, belong_machine, goods_id, goods_name, ware_name, hot_status, water_out_time, 
+    grain_out_time, create_time, update_time, extend1, extend2, extend3, extend4, extend5, 
+    extend6, extend7, extend8
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_machine_int
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from vend_machine_int
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="vend.entity.VendMachineInt" >
+    insert into vend_machine_int (id, belong_machine, goods_id, 
+      goods_name, ware_name, hot_status, 
+      water_out_time, grain_out_time, create_time, 
+      update_time, extend1, extend2, 
+      extend3, extend4, extend5, 
+      extend6, extend7, extend8
+      )
+    values (#{id,jdbcType=INTEGER}, #{belongMachine,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, 
+      #{goodsName,jdbcType=VARCHAR}, #{wareName,jdbcType=VARCHAR}, #{hotStatus,jdbcType=VARCHAR}, 
+      #{waterOutTime,jdbcType=INTEGER}, #{grainOutTime,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
+      #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}, #{extend5,jdbcType=VARCHAR}, 
+      #{extend6,jdbcType=VARCHAR}, #{extend7,jdbcType=VARCHAR}, #{extend8,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="vend.entity.VendMachineInt" >
+    insert into vend_machine_int
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="belongMachine != null" >
+        belong_machine,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="wareName != null" >
+        ware_name,
+      </if>
+      <if test="hotStatus != null" >
+        hot_status,
+      </if>
+      <if test="waterOutTime != null" >
+        water_out_time,
+      </if>
+      <if test="grainOutTime != null" >
+        grain_out_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="extend1 != null" >
+        extend1,
+      </if>
+      <if test="extend2 != null" >
+        extend2,
+      </if>
+      <if test="extend3 != null" >
+        extend3,
+      </if>
+      <if test="extend4 != null" >
+        extend4,
+      </if>
+      <if test="extend5 != null" >
+        extend5,
+      </if>
+      <if test="extend6 != null" >
+        extend6,
+      </if>
+      <if test="extend7 != null" >
+        extend7,
+      </if>
+      <if test="extend8 != null" >
+        extend8,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="belongMachine != null" >
+        #{belongMachine,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="wareName != null" >
+        #{wareName,jdbcType=VARCHAR},
+      </if>
+      <if test="hotStatus != null" >
+        #{hotStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="waterOutTime != null" >
+        #{waterOutTime,jdbcType=INTEGER},
+      </if>
+      <if test="grainOutTime != null" >
+        #{grainOutTime,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        #{extend5,jdbcType=VARCHAR},
+      </if>
+      <if test="extend6 != null" >
+        #{extend6,jdbcType=VARCHAR},
+      </if>
+      <if test="extend7 != null" >
+        #{extend7,jdbcType=VARCHAR},
+      </if>
+      <if test="extend8 != null" >
+        #{extend8,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="vend.entity.VendMachineInt" >
+    update vend_machine_int
+    <set >
+      <if test="belongMachine != null" >
+        belong_machine = #{belongMachine,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="wareName != null" >
+        ware_name = #{wareName,jdbcType=VARCHAR},
+      </if>
+      <if test="hotStatus != null" >
+        hot_status = #{hotStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="waterOutTime != null" >
+        water_out_time = #{waterOutTime,jdbcType=INTEGER},
+      </if>
+      <if test="grainOutTime != null" >
+        grain_out_time = #{grainOutTime,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extend1 != null" >
+        extend1 = #{extend1,jdbcType=VARCHAR},
+      </if>
+      <if test="extend2 != null" >
+        extend2 = #{extend2,jdbcType=VARCHAR},
+      </if>
+      <if test="extend3 != null" >
+        extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        extend4 = #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        extend5 = #{extend5,jdbcType=VARCHAR},
+      </if>
+      <if test="extend6 != null" >
+        extend6 = #{extend6,jdbcType=VARCHAR},
+      </if>
+      <if test="extend7 != null" >
+        extend7 = #{extend7,jdbcType=VARCHAR},
+      </if>
+      <if test="extend8 != null" >
+        extend8 = #{extend8,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="vend.entity.VendMachineInt" >
+    update vend_machine_int
+    set belong_machine = #{belongMachine,jdbcType=INTEGER},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      ware_name = #{wareName,jdbcType=VARCHAR},
+      hot_status = #{hotStatus,jdbcType=VARCHAR},
+      water_out_time = #{waterOutTime,jdbcType=INTEGER},
+      grain_out_time = #{grainOutTime,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      extend1 = #{extend1,jdbcType=VARCHAR},
+      extend2 = #{extend2,jdbcType=VARCHAR},
+      extend3 = #{extend3,jdbcType=VARCHAR},
+      extend4 = #{extend4,jdbcType=VARCHAR},
+      extend5 = #{extend5,jdbcType=VARCHAR},
+      extend6 = #{extend6,jdbcType=VARCHAR},
+      extend7 = #{extend7,jdbcType=VARCHAR},
+      extend8 = #{extend8,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <!-- 下面是自定义方法 -->
+  <select id="selectByBelongMachine" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_machine_int
+    where belong_machine = #{belongMachine,jdbcType=INTEGER}
+  </select>
+</mapper>
