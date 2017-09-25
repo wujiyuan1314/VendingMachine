@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
@@ -19,7 +18,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,7 +27,6 @@ import base.util.Function;
 import base.util.HttpClientUtil;
 import base.util.Page;
 import base.util.SysPara;
-import base.weixinpay.common.StreamUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import vend.entity.CodeLibrary;
@@ -95,7 +92,7 @@ public class VendManageController{
 	public String login(@PathVariable int id){
 		VendMachine vendMachine=vendMachineService.getOne(id);
 		JSONObject payload = new JSONObject();
-		payload.accumulate("device_id", "1g8p5865c");
+		payload.accumulate("device_id", "1g8p5465d");
 		payload.accumulate("device_type", vendMachine.getMachineType());
 		payload.accumulate("operation", "login");
 		payload.accumulate("hwAddr", "1234567890abcdef");

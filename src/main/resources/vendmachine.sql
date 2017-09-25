@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50713
 File Encoding         : 65001
 
-Date: 2017-09-25 20:50:52
+Date: 2017-09-25 23:13:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -152,37 +152,36 @@ CREATE TABLE `menuitem` (
 -- Records of menuitem
 -- ----------------------------
 INSERT INTO menuitem VALUES ('1', '0', '根目录', '-', '-', null, null, null, null, null);
-INSERT INTO menuitem VALUES ('2', '1', '首页', 'welcome', 'icon-home', null, '2017-08-25 15:47:30', '2017-08-25 15:47:33', null, null);
-INSERT INTO menuitem VALUES ('3', '1', '商品管理', '-', 'icon-briefcase', null, '2017-08-25 15:04:08', '2017-08-25 15:04:08', null, null);
+INSERT INTO menuitem VALUES ('2', '1', '数据统计', 'welcome', 'icon-home', null, '2017-08-25 15:47:30', '2017-08-25 15:47:33', '1', null);
+INSERT INTO menuitem VALUES ('3', '1', '商品管理', '-', 'icon-briefcase', null, '2017-08-25 15:04:08', '2017-08-25 15:04:08', '4', null);
 INSERT INTO menuitem VALUES ('4', '3', '商品列表', 'goods/goodss', '-', null, '2017-08-25 15:19:53', '2017-08-25 15:19:53', null, null);
-INSERT INTO menuitem VALUES ('5', '1', '广告管理', '-', 'icon-volume-up', null, '2017-08-25 15:20:53', '2017-08-25 15:20:53', null, null);
+INSERT INTO menuitem VALUES ('5', '1', '广告投放', '-', 'icon-volume-up', null, '2017-08-25 15:20:53', '2017-08-25 15:20:53', '7', null);
 INSERT INTO menuitem VALUES ('6', '5', '广告列表', 'ad/ads', '-', null, '2017-08-25 15:21:23', '2017-08-25 15:21:23', null, null);
 INSERT INTO menuitem VALUES ('7', '1', '菜单管理', '-', 'icon-align-justify', null, '2017-08-25 15:21:49', '2017-08-25 15:21:49', null, null);
 INSERT INTO menuitem VALUES ('8', '7', '菜单列表', 'menuitem/menuitems', '-', null, '2017-08-25 15:22:09', '2017-08-25 15:22:09', null, null);
-INSERT INTO menuitem VALUES ('9', '1', '用户权限管理', '-', 'icon-user', null, '2017-08-25 15:22:42', '2017-08-25 15:22:42', null, null);
+INSERT INTO menuitem VALUES ('9', '1', '角色权限管理', '-', 'icon-user', null, '2017-08-25 15:22:42', '2017-08-25 15:22:42', '2', null);
 INSERT INTO menuitem VALUES ('10', '9', '用户管理', 'user/users', '-', null, '2017-08-25 15:23:15', '2017-08-25 15:23:15', null, null);
 INSERT INTO menuitem VALUES ('11', '9', '角色管理', 'role/roles', '-', null, '2017-08-25 15:50:38', '2017-08-25 15:50:38', null, null);
 INSERT INTO menuitem VALUES ('12', '9', '权限设置', 'permission/permissions', '-', null, '2017-08-25 15:51:27', '2017-08-25 15:51:27', null, null);
-INSERT INTO menuitem VALUES ('13', '1', '订单管理', '-', 'icon-file-alt', null, '2017-08-25 15:52:01', '2017-08-25 15:52:01', null, null);
+INSERT INTO menuitem VALUES ('13', '1', '订单管理', '-', 'icon-file-alt', null, '2017-08-25 15:52:01', '2017-08-25 15:52:01', '9', null);
 INSERT INTO menuitem VALUES ('14', '13', '订单列表', 'order/orders', '-', null, '2017-08-25 15:52:21', '2017-08-25 15:52:21', null, null);
 INSERT INTO menuitem VALUES ('15', '1', '分类管理', '-', 'icon-th', null, '2017-08-25 15:52:44', '2017-08-25 15:52:44', null, null);
 INSERT INTO menuitem VALUES ('16', '15', '参数列表', 'codeCatalog/codeCatalogs', '-', null, '2017-08-25 15:53:07', '2017-08-25 15:53:07', null, null);
-INSERT INTO menuitem VALUES ('17', '1', '优惠活动管理', '-', 'icon-strikethrough', null, '2017-08-26 17:04:46', '2017-08-26 17:04:46', null, null);
+INSERT INTO menuitem VALUES ('17', '1', '优惠活动管理', '-', 'icon-strikethrough', null, '2017-08-26 17:04:46', '2017-08-26 17:04:46', '5', null);
 INSERT INTO menuitem VALUES ('18', '17', '优惠券列表', 'coupon/coupons', '-', null, '2017-08-26 17:05:26', '2017-08-26 17:05:26', null, null);
-INSERT INTO menuitem VALUES ('19', '1', '二维码管理', '-', 'icon-qrcode', null, '2017-08-28 14:25:03', '2017-08-28 14:25:03', null, null);
+INSERT INTO menuitem VALUES ('19', '1', '二维码管理', '-', 'icon-qrcode', null, '2017-08-28 14:25:03', '2017-08-28 14:25:03', '6', null);
 INSERT INTO menuitem VALUES ('20', '19', '二维码列表', 'qrcode/qrcodes', '-', null, '2017-08-28 14:25:32', '2017-08-28 14:25:32', null, null);
 INSERT INTO menuitem VALUES ('21', '19', '二维码关注列表', 'qrcodeAtt/qrcodeAtts', '-', null, '2017-08-28 17:04:00', '2017-08-28 17:04:00', null, null);
-INSERT INTO menuitem VALUES ('22', '1', '用户账户管理', '-', 'icon-credit-card', null, '2017-08-29 10:44:19', '2017-08-29 10:44:19', null, null);
+INSERT INTO menuitem VALUES ('22', '1', '用户账户管理', '-', 'icon-credit-card', null, '2017-08-29 10:44:19', '2017-08-29 10:44:19', '3', null);
 INSERT INTO menuitem VALUES ('23', '22', '账户列表', 'account/accounts', '-', null, '2017-08-29 10:44:44', '2017-08-29 10:44:44', null, null);
 INSERT INTO menuitem VALUES ('24', '22', '账户操作纪录', 'accountdetail/accountdetails', '-', null, '2017-08-29 14:00:05', '2017-08-29 14:00:05', null, null);
 INSERT INTO menuitem VALUES ('25', '5', '广告屏样式', 'codeLibrary/adscreen', '-', null, '2017-09-04 11:44:28', '2017-09-04 11:44:28', null, null);
-INSERT INTO menuitem VALUES ('26', '1', '机器管理', '-', 'icon-coffee', null, '2017-09-04 19:29:50', '2017-09-04 19:29:50', null, null);
+INSERT INTO menuitem VALUES ('26', '1', '机器管理', '-', 'icon-coffee', null, '2017-09-04 19:29:50', '2017-09-04 19:29:50', '8', null);
 INSERT INTO menuitem VALUES ('27', '26', '机器列表', 'machine/machines', '-', null, '2017-09-04 19:30:18', '2017-09-04 19:30:18', null, null);
 INSERT INTO menuitem VALUES ('28', '22', '用户提现申请', 'accountdetail/draw', '-', null, '2017-09-09 09:15:42', '2017-09-09 09:15:42', null, null);
 INSERT INTO menuitem VALUES ('30', '1', '系统参数管理', '--', 'icon-cog', null, '2017-09-15 17:47:17', '2017-09-15 17:47:17', null, null);
 INSERT INTO menuitem VALUES ('31', '30', '系统参数列表', 'para/paras', '-', null, '2017-09-15 17:47:43', '2017-09-15 17:47:43', null, null);
 INSERT INTO menuitem VALUES ('32', '17', '优惠地区设置', 'codeLibrary/areaset', '-', null, '2017-09-16 09:36:43', '2017-09-16 09:36:43', null, null);
-INSERT INTO menuitem VALUES ('33', '2', '销售统计', 'welcome', '-', null, '2017-09-22 20:43:33', '2017-09-22 20:43:33', null, null);
 INSERT INTO menuitem VALUES ('34', '26', '分机销售统计', 'machine/sales', '-', null, '2017-09-24 08:58:02', '2017-09-24 08:58:02', null, null);
 INSERT INTO menuitem VALUES ('35', '26', '生成机器ID', 'machine/togenerateId', '-', null, '2017-09-24 13:41:11', '2017-09-24 13:41:11', null, null);
 
@@ -393,7 +392,7 @@ CREATE TABLE `vend_machine` (
 -- ----------------------------
 -- Records of vend_machine
 -- ----------------------------
-INSERT INTO vend_machine VALUES ('3', '机器1', '1g8p5865c', '10000', 'VM2017092216353547', null, '2', '0', null, '0', '0', null, null, null, '2017-09-22 17:09:05', '2017-09-22 17:09:05', null, null, null, null, null);
+INSERT INTO vend_machine VALUES ('3', '机器1', '1g8p5865c', '10000', 'VM2017092216353547', 'gyp206', '2', '0', null, '0', '0', null, null, null, '2017-09-22 17:09:05', '2017-09-22 17:09:05', null, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_machine_int`
@@ -945,7 +944,7 @@ CREATE TABLE `vend_syslog` (
   `extend4` varchar(150) DEFAULT NULL,
   `extend5` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of vend_syslog
@@ -1003,6 +1002,10 @@ INSERT INTO vend_syslog VALUES ('50', 'VM000', 'system', '127.0.0.1', '2017-09-2
 INSERT INTO vend_syslog VALUES ('51', 'VM000', 'system', '127.0.0.1', '2017-09-25 19:05:09', null, '登录成功', '开发者后台', null, null, null, null);
 INSERT INTO vend_syslog VALUES ('52', 'VM000', 'system', '127.0.0.1', '2017-09-25 20:13:44', null, '登录成功', '开发者后台', null, null, null, null);
 INSERT INTO vend_syslog VALUES ('53', 'VM000', 'system', '127.0.0.1', '2017-09-25 20:48:31', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('54', 'VM000', 'system', '127.0.0.1', '2017-09-25 22:25:31', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('55', 'VM000', 'system', '127.0.0.1', '2017-09-25 22:38:55', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('56', 'VM000', 'system', '127.0.0.1', '2017-09-25 22:46:54', null, '登录成功', '开发者后台', null, null, null, null);
+INSERT INTO vend_syslog VALUES ('57', 'VM000', 'system', '127.0.0.1', '2017-09-25 23:02:17', null, '登录成功', '开发者后台', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `vend_user`

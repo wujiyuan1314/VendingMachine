@@ -12,6 +12,7 @@ encoding//src/main/java/vend/controller/VendAccountDetailController.java=UTF-8
 encoding//src/main/java/vend/controller/VendAdController.java=UTF-8
 encoding//src/main/java/vend/controller/VendCouponController.java=UTF-8
 encoding//src/main/java/vend/controller/VendMachineController.java=UTF-8
+encoding//src/main/java/vend/controller/VendManageController.java=UTF-8
 encoding//src/main/java/vend/controller/VendParaController.java=UTF-8
 encoding//src/main/java/vend/controller/VendPermissionController.java=UTF-8
 encoding//src/main/java/vend/controller/VendQrcodeAttendController.java=UTF-8
