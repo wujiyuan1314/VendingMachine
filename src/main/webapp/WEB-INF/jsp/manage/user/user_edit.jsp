@@ -71,6 +71,8 @@
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="wechatpubNo" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
+	              
+	              <shiro:hasPermission name="lrbl:show">
 	              <div class="control-group" id="lrbl" style="display:none;">
 	                <label class="control-label">利润比例</label>
 	                <div class="controls">
@@ -78,6 +80,7 @@
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend4" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
+	              </shiro:hasPermission>
 		              
 	              <div class="control-group">
 	                <label class="control-label">手机号</label>

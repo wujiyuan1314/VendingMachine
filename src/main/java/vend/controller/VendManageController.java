@@ -37,6 +37,7 @@ import vend.entity.VendUser;
 import vend.service.CodeLibraryService;
 import vend.service.VendAdService;
 import vend.service.VendMachineService;
+import vend.service.VendParaService;
 import vend.service.VendShopQrcodeService;
 
 @Controller
@@ -46,6 +47,8 @@ public class VendManageController{
 	
 	@Autowired
 	VendMachineService vendMachineService;
+	@Autowired
+	VendParaService vendParaService;
 	@Autowired
 	VendAdService vendAdService;
 	@Autowired
@@ -92,14 +95,14 @@ public class VendManageController{
 	public String login(@PathVariable int id){
 		VendMachine vendMachine=vendMachineService.getOne(id);
 		JSONObject payload = new JSONObject();
-		payload.accumulate("device_id", "1g8p5465d");
+		payload.accumulate("device_id", "1g8p5865c");
 		payload.accumulate("device_type", vendMachine.getMachineType());
 		payload.accumulate("operation", "login");
 		payload.accumulate("hwAddr", "1234567890abcdef");
 		Map<String,Object> dataMap = new HashMap<String,Object>();
 		dataMap.put("id", "1g8p5865c");
 		dataMap.put("payload", payload);
-		try {
+		/*try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
 			if(StringUtils.isNotBlank(retMsg)){
 				JSONObject retJson = JSONObject.fromObject(retMsg);	
@@ -114,12 +117,13 @@ public class VendManageController{
 				System.out.println("登陆失败");
 			}
 			
-			return "redirect:../machines";
+			return "redirect:../machine/machines";
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return "redirect:../machines"; 
+		}*/
+		String bathPath=vendParaService.selectByParaCode("basePath");
+		return "redirect:"+bathPath+"/machine/machines"; 
 	}
 	
 	/**
@@ -155,7 +159,8 @@ public class VendManageController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:../machines"; 
+		String bathPath=vendParaService.selectByParaCode("basePath");
+		return "redirect:"+bathPath+"/machine/machines";  
 	}
 	
 	/**
@@ -193,7 +198,8 @@ public class VendManageController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:../machines"; 
+		String bathPath=vendParaService.selectByParaCode("basePath");
+		return "redirect:"+bathPath+"/machine/machines";  
 	}
 	
 	/**
@@ -269,7 +275,8 @@ public class VendManageController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:../machines"; 
+		String bathPath=vendParaService.selectByParaCode("basePath");
+		return "redirect:"+bathPath+"/machine/machines";  
 	}
 	
 	/**
@@ -302,7 +309,8 @@ public class VendManageController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:../machines"; 
+		String bathPath=vendParaService.selectByParaCode("basePath");
+		return "redirect:"+bathPath+"/machine/machines"; 
 	}
 	
 	/**
@@ -330,18 +338,23 @@ public class VendManageController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:../machines"; 
+		String bathPath=vendParaService.selectByParaCode("basePath");
+		return "redirect:"+bathPath+"/machine/machines";  
 	}
 	
 	/**
-	 * 更新显示的二维码
 	 * @param id
+	 * @param shopQrcode
 	 * @return
 	 */
-	@RequestMapping(value="/{id}/setQR")
-	public String setQR(@PathVariable int id){
+	@RequestMapping(value="/{id}/{shopQrcode}/setQR")
+	public String setQR(@PathVariable int id,@PathVariable int shopQrcode){
+		VendMachine vendMachine=vendMachineService.getOne(id);//机器信息
+		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(shopQrcode);//二维码信息
+		
+		
 		JSONObject payload = new JSONObject();
-		payload.accumulate("device_id", id);
+		payload.accumulate("device_id", vendMachine.getMachineId());
 		payload.accumulate("operation", "setQR");
 		//TODO 二维码判断是否重复
 		payload.accumulate("qrPic", "http://device.xxx.com/adsdfa.jpg");
@@ -361,7 +374,8 @@ public class VendManageController{
 			// TODO 更新显示的二维码异常处理
 			e.printStackTrace();
 		}
-		return "redirect:../machines"; 
+		String bathPath=vendParaService.selectByParaCode("basePath");
+		return "redirect:"+bathPath+"/machine/machines";  
 	}
 	
 	/**
@@ -392,7 +406,8 @@ public class VendManageController{
 			// TODO 更新机器码异常处理
 			e.printStackTrace();
 		}
-		return "redirect:../machines"; 
+		String bathPath=vendParaService.selectByParaCode("basePath");
+		return "redirect:"+bathPath+"/machine/machines";  
 	}
 	
 	/**
@@ -414,7 +429,8 @@ public class VendManageController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:../machines"; 
+		String bathPath=vendParaService.selectByParaCode("basePath");
+		return "redirect:"+bathPath+"/machine/machines";  
 	}
 	
 	/**
@@ -469,7 +485,8 @@ public class VendManageController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:../machines"; 
+		String bathPath=vendParaService.selectByParaCode("basePath");
+		return "redirect:"+bathPath+"/machine/machines";  
 	}
 	
 	/**
@@ -510,7 +527,8 @@ public class VendManageController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:../machines"; 
+		String bathPath=vendParaService.selectByParaCode("basePath");
+		return "redirect:"+bathPath+"/machine/machines";  
 	}
 	
 	/**
@@ -561,7 +579,8 @@ public class VendManageController{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "redirect:../machines"; 
+		String bathPath=vendParaService.selectByParaCode("basePath");
+		return "redirect:"+bathPath+"/machine/machines"; 
 	}
 	
 	
@@ -578,7 +597,8 @@ public class VendManageController{
 			vendMachine.setUseStatus("1");
 			vendMachineService.editVendMachine(vendMachine);
 		}
-		return "redirect:../machines"; 
+		String bathPath=vendParaService.selectByParaCode("basePath");
+		return "redirect:"+bathPath+"/machine/machines"; 
 	}
 	/**
 	 * 机器回调地址
@@ -683,7 +703,8 @@ public class VendManageController{
     @RequestMapping(value="/{id}/del")
  	public String del(@PathVariable Integer id){
     	vendMachineService.delVendMachine(id);;
- 		return "redirect:/machine/machines";
+    	String bathPath=vendParaService.selectByParaCode("basePath");
+		return "redirect:"+bathPath+"/machine/machines"; 
  	}
     /**
      * 批量删除机器信息
@@ -700,6 +721,7 @@ public class VendManageController{
     		idArray1[i]=Function.getInt(idArray[i], 0);
     	}
     	int isOk=vendMachineService.delVendMachines(idArray1);
-  		return "redirect:/machine/machines";
+    	String bathPath=vendParaService.selectByParaCode("basePath");
+		return "redirect:"+bathPath+"/machine/machines"; 
   	}
 }

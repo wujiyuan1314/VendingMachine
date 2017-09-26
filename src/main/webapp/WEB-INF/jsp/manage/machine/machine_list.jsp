@@ -32,7 +32,7 @@
     <div class="row fluid">
       <sf:form action="machines" method="post" id="Paramform" class="form-horizontal">
       <input type="hidden" name="currentPage" id="currentPage" value="1" />
-		<div class="span12">
+		<div class="span14">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
                  <h5>机器列表</h5>
@@ -65,7 +65,7 @@
 								<div class="modal-body">
 									<dl>
 										<dd>要转移的商户名:
-										<input type="input" id="transusercode" name="transusercode"/></dd>
+										<input type="text" id="transusercode" name="transusercode"/></dd>
 										<dd class="binderror" style="color:#b94a48;"></dd>
 									</dl>
                                 </div>
@@ -98,7 +98,7 @@
 		                  <th>使用状态</th>
 		                  <th>咖啡机状态</th>
 		                  <th>创建时间</th>
-		                  <th>操作</th>
+		                  <th style="width:32%;">操作</th>
 		                </tr>
 			         </thead>
 			         <tbody>
@@ -116,7 +116,7 @@
 			                  <td class="center">
 			                     <c:choose>
 			                       <c:when test="${vendMachine.useStatus==2}">
-			                         <a href="javascript:open('${vendMachine.id}');" class="btn btn-primary btn-mini"/>开机</a>&nbsp;&nbsp;
+			                         <a href="javascript:open('${vendMachine.id}');" class="btn btn-primary btn-mini"/>登陆</a>&nbsp;&nbsp;
 			                       </c:when>
 			                     </c:choose>
 			                      <c:choose>
@@ -125,11 +125,16 @@
 			                         <a href="javascript:reboot('${vendMachine.id}');" class="btn btn-primary btn-mini"/>重启</a>&nbsp;&nbsp;
 		                             <a href="javascript:autoClean('${vendMachine.id}');" class="btn btn-primary btn-mini"/>清洗</a>&nbsp;&nbsp;
 			                         <a href="javascript:selfCheck('${vendMachine.id}');" class="btn btn-primary btn-mini"/>自检</a>&nbsp;&nbsp;
+			                         <shiro:hasPermission name="adputon">
+			                           <a href="${vendMachine.id}/adputon" class="btn btn-primary btn-mini"/>广告投放</a>&nbsp;&nbsp;
+			                         </shiro:hasPermission>
+			                         <shiro:hasPermission name="qrcodeputon">
+			                           <a href="${vendMachine.id}/qrcodeputon" class="btn btn-primary btn-mini"/>二维码投放</a>&nbsp;&nbsp;
+			                         </shiro:hasPermission>
 			                       </c:when>
 			                     </c:choose>
 			                     <c:choose>
 			                       <c:when test="${vendMachine.useStatus==2||vendMachine.useStatus==3}">
-			                         <a href="${vendMachine.id}/edit" class="btn btn-success btn-mini"/>修改</a>&nbsp;&nbsp;
 			                         <!--<a href="javascript:void(0);" onclick="delconfirm('${vendMachine.id}');" class="btn btn-danger btn-mini"/>删除</a>  -->
 			                       </c:when>
 			                     </c:choose>

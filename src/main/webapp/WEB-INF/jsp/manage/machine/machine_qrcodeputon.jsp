@@ -49,18 +49,11 @@
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">选择广告</label>
-	                <div class="controls">
-	                  <sf:select path="adId" items="${ads}" itemLabel="adName" itemValue="id">
-	                  </sf:select>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="adId" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
-	                </div>
-	              </div>
-	              <div class="control-group">
 	                <label class="control-label">选择商户二维码</label>
 	                <div class="controls">
 	                  <sf:select path="shopQrcode" items="${vendShopQrcodes}" itemLabel="extend1" itemValue="id">
 	                  </sf:select>
+	                  <a href="javascript:adPuton('${vendMachine.id}');" class="btn btn-success btn-mini">投放</a>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="shopQrcode" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
@@ -82,5 +75,6 @@
 
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
+<script src="<%=basePath2 %>resources/js/back/machine_list.js"></script>
 </body>
 </html>

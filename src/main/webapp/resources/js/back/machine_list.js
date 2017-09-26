@@ -1,5 +1,5 @@
 /**
- * 开机
+ * 登陆
  * @param id
  * @returns
  */
@@ -53,6 +53,28 @@ function autoClean(id){
 function selfCheck(id){
 	if(confirm("确定要自检吗?")){
 		window.location.href=basePath+"manage/"+id+"/selfCheck";
+	 }
+}
+/**
+ * 广告投放
+ * @param id
+ * @returns
+ */
+function adPuton(id){
+	var adId=$("#adId").val();
+	if(confirm("确定要投放吗?")){
+		window.location.href=basePath+"manage/"+id+"/"+adId+"/adPuton";
+	 }
+}
+/**
+ * 二维码投放
+ * @param id
+ * @returns
+ */
+function adPuton(id){
+	var shopQrcode=$("#shopQrcode").val();
+	if(confirm("确定要投放吗?")){
+		window.location.href=basePath+"manage/"+id+"/"+shopQrcode+"/adPuton";
 	 }
 }
 /**

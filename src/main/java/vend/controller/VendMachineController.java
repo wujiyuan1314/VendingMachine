@@ -195,20 +195,32 @@ public class VendMachineController{
     	return "redirect:machines";
 	}
     /**
-	 * 跳转机器修改界面
+	 * 跳转投放广告界面
 	 * @param model
 	 * @return
 	 */
-	@RequiresPermissions({"machine:edit"})
-	@RequestMapping(value="/{id}/edit",method=RequestMethod.GET)
-	public String edit(Model model,@PathVariable int id){
+	@RequiresPermissions({"machine:adputon"})
+	@RequestMapping(value="/{id}/adputon",method=RequestMethod.GET)
+	public String adPuton(Model model,@PathVariable int id){
 		List<VendAd> ads=vendAdService.findAll();
 		model.addAttribute("ads", ads);
+		VendMachine vendMachine=vendMachineService.getOne(id);
+		model.addAttribute(vendMachine);
+		return "manage/machine/machine_adputon";
+	}
+	/**
+	 * 跳转投放商户二维码界面
+	 * @param model
+	 * @return
+	 */
+	@RequiresPermissions({"machine:qrcodeputon"})
+	@RequestMapping(value="/{id}/qrcodeputon",method=RequestMethod.GET)
+	public String qrcodePuton(Model model,@PathVariable int id){
 		List<VendShopQrcode> vendShopQrcodes=vendShopQrcodeService.selectByType("1");
 		model.addAttribute("vendShopQrcodes", vendShopQrcodes);
 		VendMachine vendMachine=vendMachineService.getOne(id);
 		model.addAttribute(vendMachine);
-		return "manage/machine/machine_edit";
+		return "manage/machine/machine_qrcodeputon";
 	}
 	/**
 	 * 修改机器信息
