@@ -105,7 +105,8 @@
 	                    </c:choose></td>
 	                </tr>
 	                <tr>
-	                  <td colspan=2><button class="btn btn-danger btn-mini">实时查询杯数</button></td>
+	                  <td><a onclick="javascript:getDevList('${vendMachine.id}');" class="btn btn-danger btn-mini">实时查询杯数</a></td>
+	                  <td><a onclick="javascript:getDevParam('${vendMachine.id}');" class="btn btn-danger btn-mini">查询设备参数</a></td>
 	                </tr>
 	                 <tr>
 	                  <td colspan=2><a href="<%=basePath1%>machine/machines" class="btn btn-success">立即返回</a></td>

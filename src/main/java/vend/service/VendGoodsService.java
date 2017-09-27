@@ -4,6 +4,8 @@ import java.util.List;
 
 import base.util.Page;
 import vend.entity.VendGoods;
+import vend.entity.VendMachine;
+import vend.entity.VendOrder;
 
 public interface VendGoodsService {
 	/**
@@ -46,5 +48,12 @@ public interface VendGoodsService {
 	 * @return
 	 */
 	List<VendGoods> findAll();
+	/**
+	 * 售卖指令
+	 * @param vendMachine
+	 * @param vendGoods
+	 * @param vendOrder
+	 */
+	void sellGoods(VendMachine vendMachine,VendGoods vendGoods,VendOrder vendOrder);
 	
 }

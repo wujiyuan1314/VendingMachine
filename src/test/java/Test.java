@@ -1,5 +1,7 @@
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -29,17 +31,23 @@ public class Test {
     	
     	//String chars = "abcdefghijklmnopqrstuvwxyz";
     	//System.out.println(chars.charAt((int)(Math.random() * 26)));*/
-		String array[]=new String[3];
-		System.out.println(array.length);
-		for(int i=0;i<array.length;i++){
-			System.out.print(array[i]+"ff");
-		}
-		String m=null;
-		array=m.split(":");
-		System.out.println(array.length);
-		for(int i=0;i<array.length;i++){
-			System.out.print(array[i]+"gg");
-		}
+		File file=new File("F:/workspace_tmms/VendingMachine/src/main/webapp/userfiles/pic/xmgz.jpg");
+		long filesize=0;
+		if (file.exists() && file.isFile()){  
+			filesize=file.length();
+			System.out.println(file.getParentFile());
+			System.out.println(file.getName());
+			System.out.println(file.getParent());
+			try {
+				System.out.println(file.getCanonicalPath());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(file.getPath());
+			System.out.println(file.getAbsolutePath());
+			System.out.println(filesize);
+	    }
 		
     	//System.out.println(m.indexOf("ghjgj,"));
 		

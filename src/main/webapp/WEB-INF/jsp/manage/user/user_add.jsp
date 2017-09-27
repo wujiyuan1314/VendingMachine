@@ -70,13 +70,15 @@
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="wechatpubNo" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
+	              <shiro:hasPermission name="lrbl:show">
 	              <div class="control-group" id="lrbl" style="display:none;">
 	                <label class="control-label">利润比例</label>
 	                <div class="controls">
 	                  <sf:input path="extend4"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend4" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend4" cssClass="errors" style="color:#b94a48;">格式(商家:代理:总后台)</sf:errors></span>
 	                </div>
 	              </div>
+	              </shiro:hasPermission>
 	         
 	              
 	              <div class="control-group">

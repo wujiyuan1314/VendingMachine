@@ -1,16 +1,25 @@
 package vend.service.impl;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import base.util.CacheUtils;
 import base.util.DateUtil;
+import base.util.HttpClientUtil;
 import base.util.Page;
+import base.util.SysPara;
+import net.sf.json.JSONObject;
 import vend.dao.VendGoodsMapper;
 import vend.entity.VendGoods;
+import vend.entity.VendMachine;
+import vend.entity.VendOrder;
 import vend.service.VendGoodsService;
 
 @Service
@@ -18,7 +27,7 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 	@Autowired
 	VendGoodsMapper vendGoodsMapper;
 	/**
-	 * 鏍规嵁杈撳叆淇℃伅鏉′欢鏌ヨ鍟嗗搧鍒楄〃锛屽苟鍒嗛〉鏄剧ず
+	 * 商品列表
 	 * @param vendGoods
 	 * @param page
 	 * @return
@@ -40,7 +49,7 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 		return vendGoodss;
 	}
 	/**
-	 * 娣诲姞鍟嗗搧
+	 * 添加
 	 * @param vendGoods
 	 * @return
 	 */
@@ -55,20 +64,19 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 		return isOk;
 	}
 	/**
-	 * 修改商品
+	 * 修改
 	 * @param vendGoods
 	 * @return
 	 */
 	public int editVendGoods(VendGoods vendGoods){
 		int isOk=vendGoodsMapper.updateByPrimaryKeySelective(vendGoods);
-		//淇敼鍚庡垹闄ょ紦瀛�
 		if(isOk==1){
 			CacheUtils.clear();
 		}
 		return isOk;
 	}
 	/**
-	 * 鍒犻櫎涓�涓晢鍝�
+	 * 删除
 	 * @param id
 	 */
 	public void delVendGoods(int id){
@@ -113,5 +121,45 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 			CacheUtils.put("goodsCache", key, vendGoodss);
 		}
 		return vendGoodss;
+	}
+	/**
+	 * 售卖商品指令
+	 * @param vendMachine
+	 * @param vendGoods
+	 * @param orderId
+	 */
+	public void sellGoods(VendMachine vendMachine,VendGoods vendGoods,VendOrder vendOrder){
+		JSONObject payload = new JSONObject();
+		payload.accumulate("device_id", vendMachine.getMachineId());
+		payload.accumulate("operation", "sell");
+		payload.accumulate("order", vendOrder.getOrderId());
+		//商品详情
+		JSONObject orderGoods = new JSONObject();
+		orderGoods.accumulate("chNo", vendGoods.getId());
+		orderGoods.accumulate("count", vendOrder.getNum());
+		//商品参数详情
+		JSONObject params = new JSONObject();
+		params.accumulate("selfCup", 1);
+		orderGoods.accumulate("params", params);
+		
+		payload.accumulate("orderGoods", orderGoods);
+		Map<String,Object> dataMap = new HashMap<String,Object>();
+		dataMap.put("id", vendMachine.getMachineId());
+		dataMap.put("payload", payload);
+		try {
+			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
+			if(StringUtils.isNotBlank(retMsg)){
+				JSONObject retJson = JSONObject.fromObject(retMsg);	
+				String retCode = retJson.getString("errCode");
+				if(retCode.equals("0")){
+					System.out.println("售卖成功:" + retJson.getString("msg"));
+				}else{
+					System.out.println("售卖失败:" + retJson.getString("msg"));
+				}
+			}
+	    }catch (UnsupportedEncodingException e) {
+		// TODO Auto-generated catch block
+		    e.printStackTrace();
+	    }
 	}
 }

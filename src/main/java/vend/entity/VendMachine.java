@@ -70,7 +70,7 @@ public class VendMachine {
     public void setMachineId(String machineId) {
         this.machineId = machineId == null ? null : machineId.trim();
     }
-    @NotEmpty(message="机器码不能为空")
+
     public String getMachineCode() {
         return machineCode;
     }

@@ -35,16 +35,16 @@ public class HttpClientUtil {
     private static void init() {  
         if (cm == null) {  
             cm = new PoolingHttpClientConnectionManager();  
-            cm.setMaxTotal(50);// �������ӳ����������  
-            cm.setDefaultMaxPerRoute(5);// ÿ·�������������Ĭ��ֵ��2  
+            cm.setMaxTotal(50);// 整个连接池最大连接数  
+            cm.setDefaultMaxPerRoute(5);// 每路由最大连接数，默认值是2    
         }  
     }  
   
     /** 
-     * ͨ�����ӳػ�ȡHttpClient 
+     * 通过连接池获取HttpClient 
      *  
      * @return 
-     */  
+     */   
     private static CloseableHttpClient getHttpClient() {  
         init();  
         return HttpClients.custom().setConnectionManager(cm).build();  
@@ -122,11 +122,11 @@ public class HttpClientUtil {
     }  
   
     /** 
-     * ����Http���� 
+     * 处理Http请求 
      *  
      * @param request 
      * @return 
-     */  
+     */   
     private static String getResult(HttpRequestBase request) {  
         // CloseableHttpClient httpClient = HttpClients.createDefault();  
         CloseableHttpClient httpClient = getHttpClient();  

@@ -25,6 +25,7 @@ import base.weixinpay.model.SignInfo;
 import vend.entity.UserCoupon;
 import vend.entity.VendAccount;
 import vend.entity.VendAccountDetail;
+import vend.entity.VendGoods;
 import vend.entity.VendMachine;
 import vend.entity.VendOrder;
 import vend.entity.VendQrcodeAttend;
@@ -32,6 +33,7 @@ import vend.entity.VendUser;
 import vend.service.UserCouponService;
 import vend.service.VendAccountDetailService;
 import vend.service.VendAccountService;
+import vend.service.VendGoodsService;
 import vend.service.VendMachineService;
 import vend.service.VendOrderService;
 import vend.service.VendParaService;
@@ -57,6 +59,8 @@ public class WeiXinPayController {
 	VendParaService vendParaService;
 	@Autowired
 	VendOrderService vendOrderService;
+	@Autowired
+	VendGoodsService vendGoodsService;
 	@Autowired
 	VendUserService vendUserService;
 	@Autowired
@@ -531,8 +535,18 @@ public class WeiXinPayController {
 		String orderId = request.getParameter("orderId");
 		logger.info("-------支付结果:"+requestPayment);
 		if(requestPayment.equals("requestPayment:ok")){
-			//1,修改订单
 			VendOrder vendOrder=vendOrderService.getOne(orderId);
+			/**售卖指令*/
+			if(vendOrder.getMachineCode()!=null){
+				VendMachine vendMachine=vendMachineService.selectByMachineCode(vendOrder.getMachineCode());
+				VendGoods vendGoods=vendGoodsService.getOne(vendOrder.getGoodsId());
+				if(vendMachine!=null&&vendGoods!=null){
+					vendGoodsService.sellGoods(vendMachine, vendGoods, vendOrder);
+				}
+			}
+			/**售卖指令*/
+			
+			/**修改订单*/
 			String shopusercode=vendOrder.getShopusercode();//商家账号
 			if(vendOrder!=null){
 				vendOrder.setOrderstate("1");
@@ -543,8 +557,10 @@ public class WeiXinPayController {
 				userCoupon.setExtend1("0");//优惠券使用后设置为无效
 				userCouponService.editUserCoupon(userCoupon);
 			}
-			//2,修改账户
-			/**商家账户*/
+			/**修改订单*/
+			
+			/**修改账户*/
+			//商家账户
 			Date updateTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
 			VendAccount vendAccount=vendAccountService.getOne(shopusercode);//商户账户
 			VendUser vendUser=vendUserService.getOne(shopusercode);
@@ -579,7 +595,7 @@ public class WeiXinPayController {
 			vendAccountDetail1.setCreateTime(updateTime);
 			vendAccountDetailService.insertVendAccountDetail(vendAccountDetail1);
 			
-			/**代理用户账户*/
+			//代理用户账户
 			if(vendUser!=null){
 				VendAccount pendAccount=vendAccountService.getOne(vendUser.getParentUsercode());//代理用户账户
 				double amountnow2=orderamount*lrbl2;
@@ -600,7 +616,7 @@ public class WeiXinPayController {
 				vendAccountDetailService.insertVendAccountDetail(vendAccountDetail2);
 			}
 			
-			/**总后台用户账户*/
+			//总后台用户账户
 			VendAccount zendAccount=vendAccountService.getOne("VM001");//总账户
 			double amountnow3=zamount;
 			double amountpre3=zendAccount.getOwnAmount().doubleValue();
@@ -617,6 +633,7 @@ public class WeiXinPayController {
 			vendAccountDetail3.setType("3");//购买
 			vendAccountDetail3.setCreateTime(updateTime);
 			vendAccountDetailService.insertVendAccountDetail(vendAccountDetail3);
+			/**修改账户*/
 		}
 	}
 }

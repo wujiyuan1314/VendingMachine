@@ -47,10 +47,10 @@
 			              <th><input type="text" name="machineCode" id="machineCode" placeholder="按机器名搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                  <td><a href="add" class="btn btn-success"/>新增分机</a>&nbsp;&nbsp;</td>
-		                  <td><a class="btn btn-danger" data-toggle="modal" data-target="#myModal"/>解绑</a>&nbsp;&nbsp;</td>
+		                  <td><a class="btn btn-danger" data-toggle="modal" data-target="#myModal1" id="ubbind"/>解绑</a>&nbsp;&nbsp;</td>
 		                  
 		                  <!-- 模态框（Modal）开始 -->
-		                  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		                  <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 							<div class="modal-dialog">
 							  <div class="modal-content">
 							  
@@ -73,6 +73,41 @@
 									<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 									</button>
 									<button type="button" class="btn btn-primary" onclick="transmachine();">
+										提交
+									</button>
+								</div>
+								
+							  </div>
+							</div>
+					      </div>
+					      <!-- 模态框（Modal）结束 -->
+					      
+					      <td><a class="btn btn-primary" data-toggle="modal" data-target="#myModal2" id="setCsrCode"/>设置机器码</a>&nbsp;&nbsp;</td>
+		                  
+		                  <!-- 模态框（Modal）开始 -->
+		                  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+							  <div class="modal-content">
+							  
+							    <div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" 
+											aria-hidden="true">×
+									</button>
+									<h4 class="modal-title" id="myModalLabel">
+										设置机器码
+									</h4>
+								</div>
+								<div class="modal-body">
+									<dl>
+										<dd>机器码:
+										<input type="text" id="csrCode" name="csrCode"/></dd>
+										<dd class="csrCodeerror" style="color:#b94a48;"></dd>
+									</dl>
+                                </div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+									</button>
+									<button type="button" class="btn btn-primary" onclick="setCsrCode();">
 										提交
 									</button>
 								</div>
@@ -172,6 +207,13 @@
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
 <script type="text/javascript">
+$("#ubbind").click(function(){
+	$(".modal").css("margin-left","-450px");
+})
+$("#setCsrCode").click(function(){
+	$(".modal").css("margin-left","-450px");
+})
+
 function delconfirm(id){
 	 if(confirm("确定要删除吗?")){
 		window.location.href=basePath+"machine/"+id+"/del";

@@ -84,7 +84,8 @@
 	                <span style="color:#b94a48;font-size:15px;" class="errormsg"></span>
 	           </div> 
 			   <div class="form-actions">
-	                <input type="button" value="提交" class="btn btn-success" onclick="initalize();">
+	                <input type="button" value="保存" class="btn btn-success" onclick="initalize();">
+	                <input type="button" value="设备参数设置" class="btn btn-success" onclick="initalize();">
 	           </div>
 			  
 		  </div>

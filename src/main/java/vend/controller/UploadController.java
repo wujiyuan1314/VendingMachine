@@ -93,11 +93,11 @@ public class UploadController extends LogoutFilter{
         logger.info("------------------------path的值是:"+path);
         //得到存储到本地的文件名
         String localFileName=DateUtil.getCurrentDateTimeKeyStr()+FileUploadUtils.getFileSuffix(originalFileName);
-        logger.info("------------------------localFileName的值是:"+path);
-        int num=path.indexOf(".metadata");
-        logger.info("------------------------num的值是:"+path);
-        String basePath=path.substring(0,num)+request.getContextPath()+"/src/main/webapp"+storePath;
-        logger.info("------------------------basePath的值是:"+path);
+        logger.info("------------------------localFileName的值是:"+localFileName);
+       // int num=path.indexOf(".metadata");
+       // logger.info("------------------------num的值是:"+path);
+        String basePath=path;
+        logger.info("------------------------basePath的值是:"+basePath);
         //新建本地文件
         File localFile = new File(basePath,localFileName);
         //创建目录

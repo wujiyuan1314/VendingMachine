@@ -184,10 +184,6 @@ public class VendMachineController{
 		if(vendMachine1!=null){
 			br.rejectValue("machineId", "MACHINEIDREPPEAT", "该机器ID已被绑定");
 		}
-		VendMachine vendMachine2=vendMachineService.selectByMachineCode(vendMachine.getMachineCode());
-		if(vendMachine2!=null){
-			br.rejectValue("machineId", "MACHINECODEREPPEAT", "该机器码已被绑定");
-		}
     	if(br.hasErrors()){
     		return "manage/machine/machine_add";
     	}
@@ -517,6 +513,7 @@ public class VendMachineController{
 		    	vendMachineInt.setWareName(vendMachineIntMap.get("wareName").toString());
 		    	vendMachineInt.setWaterOutTime(Function.getInt(vendMachineIntMap.get("waterOutTime").toString(),0));
 		    	vendMachineInt.setGrainOutTime(Function.getInt(vendMachineIntMap.get("grainOutTime").toString(),0));
+		    	vendMachineInt.setExtend1("1");
 		    	int isOk=vendMachineIntService.editVendMachineInt(vendMachineInt);
 		    	if(isOk==1){
 		    		success="1";

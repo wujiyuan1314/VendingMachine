@@ -49,17 +49,10 @@
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">机器id</label>
+	                <label class="control-label">绑定机器id</label>
 	                <div class="controls">
 	                  <sf:input path="machineId"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="machineId" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
-	                </div>
-	              </div>
-	              <div class="control-group">
-	                <label class="control-label">绑定机器码</label>
-	                <div class="controls">
-	                  <sf:input path="machineCode"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="machineCode" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="form-actions">

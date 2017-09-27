@@ -1,4 +1,5 @@
 package base.util;
+import java.io.File;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -7,6 +8,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+
+import org.apache.commons.lang.StringUtils;
 /**
  * 处理字符串相关工具类
  * @author ylsoft
@@ -366,8 +369,29 @@ public static String getYuanByFens(Long fen){
 		f1=f1.substring(0,f1.indexOf("."));
 	}
 	return f1;
-}	
-
+}
+/**
+ * 根据文件路径得到文件名字
+ */
+public static String getPicName(String filePath){
+	File file=new File(filePath);
+	String filename="";
+	if (file.exists() && file.isFile()){  
+		filename=file.getName(); 
+    }
+	return filename;
+}
+/**
+ * 根据文件路径得到文件大小
+ */
+public static long getPicSize(String filePath){
+	File file=new File(filePath);
+	long filesize=0;
+	if (file.exists() && file.isFile()){  
+		filesize=file.length(); 
+    }
+	return filesize;
+}
 }
 
 

@@ -53,7 +53,7 @@
 	                <div class="controls">
 	                  <sf:select path="shopQrcode" items="${vendShopQrcodes}" itemLabel="extend1" itemValue="id">
 	                  </sf:select>
-	                  <a href="javascript:adPuton('${vendMachine.id}');" class="btn btn-success btn-mini">投放</a>
+	                  <a href="javascript:qrcodePuton('${vendMachine.id}');" class="btn btn-success btn-mini">投放</a>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="shopQrcode" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
