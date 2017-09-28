@@ -1,0 +1,39 @@
+body { width:100%; height:100%;  font-family: "Microsoft YaHei", Helvetica, Arial, sans-serif;color:#373737;background-color: #F2F2F2;}
+html{  font-size:62.5%;  }/*rem是一个相对大小的值，它是相对于根元素<html>; 62.5%实际为10px; 87.5%为14px;*/
+.viewport {width:100%; margin:0 auto;}
+a{ -webkit-tap-highlight-color:rgba(0,0,0,0);}
+
+/*公用遮挡*/
+.zw{ width:100%; height:53px; clear:both;overflow:hidden;display:block; }/*底部遮挡*/
+
+/*公用横线*/
+.bdr{ border-top:1px solid #DDDDDD; width:100%; height:0.5px; border-top:1px solid #DDDDDD;}
+
+
+/*底部样式*/
+
+footer{  height:53px; width:100%; background-color:#111111;  display:flex; -webkit-box-pack:justify; justify-content:space-between; align-content:center;  z-index:11; box-sizing:border-box;  position:fixed; bottom:0; left:0; padding-top:5px; }/*-webkit-box-pack:justify;在每个子元素之间分割多余的空间（首个子元素前和最后一个子元素后没有多余的空间）。*/
+footer a{float:left; width:25%;  text-align:center; color:#888888; font-size:1.4rem; font-family:"微软雅黑";}
+footer:after{display: block; content: ""; clear: both;}
+
+footer .home_icon{ background:url(../img/home_ico.jpg) top center no-repeat; background-size:25px 25px; padding-top:25px;}
+footer .home_choose_icon{ background:url(../img/home_choose_ico.jpg) top center no-repeat; background-size:25px 25px;  padding-top:25px; color:#FF9326;}
+
+footer .cart_icon{ background:url(../img/cart_ico.jpg) top center no-repeat; background-size:25px 25px; padding-top:25px;}
+footer .cart_choose_icon{ background:url(../img/cart_choose_ico.jpg) top center no-repeat; background-size:25px 25px;  padding-top:25px; color:#FF9326;}
+
+
+footer .hh_icon{ background:url(../img/hh_ico.jpg) top center no-repeat; background-size:25px 25px; padding-top:25px;}
+footer .hh_choose_icon{ background:url(../img/hh_choose_ico.jpg) top center no-repeat; background-size:25px 25px;  padding-top:25px; color:#FF9326;}
+
+footer .my_icon{ background:url(../img/my_ico.jpg) top center no-repeat; background-size:25px 25px; padding-top:25px;}
+footer .my_choose_icon{ background:url(../img/my_choose_ico.jpg) top center no-repeat; background-size:25px 25px;  padding-top:25px; color:#FF9326;}
+
+/*加载更多*/
+.load_more{ width:100%; box-sizing:border-box; padding:6px 8px;}
+.load_more a{display:block; background-color:#E0E0E0; border-radius:5px; text-align:center; font: 16px "微软雅黑";
+    padding: 8px 0 10px 0; color:#FF9326;}
+    
+    
+    
+    

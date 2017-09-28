@@ -165,11 +165,16 @@ public class UploadController extends LogoutFilter{
 		String storePath="/userfiles/file";
 		String originalFileName = file.getOriginalFilename();
         
-        String path =request.getSession().getServletContext().getRealPath(storePath);
+		String path =request.getSession().getServletContext().getRealPath(storePath);
+        logger.info("------------------------path的值是:"+path);
         //得到存储到本地的文件名
         String localFileName=DateUtil.getCurrentDateTimeKeyStr()+FileUploadUtils.getFileSuffix(originalFileName);
-        int num=path.indexOf(".metadata");
-        String basePath=path.substring(0,num)+request.getContextPath()+"/src/main/webapp"+storePath;
+        logger.info("------------------------localFileName的值是:"+localFileName);
+       // int num=path.indexOf(".metadata");
+       // logger.info("------------------------num的值是:"+path);
+        String basePath=path;
+        logger.info("------------------------basePath的值是:"+basePath);
+        
         //新建本地文件
         File localFile = new File(basePath,localFileName);
         //创建目录
@@ -237,11 +242,16 @@ public class UploadController extends LogoutFilter{
 		String storePath="/userfiles/video";
 		String originalFileName = file.getOriginalFilename();
         
-        String path =request.getSession().getServletContext().getRealPath(storePath);
+		String path =request.getSession().getServletContext().getRealPath(storePath);
+        logger.info("------------------------path的值是:"+path);
         //得到存储到本地的文件名
         String localFileName=DateUtil.getCurrentDateTimeKeyStr()+FileUploadUtils.getFileSuffix(originalFileName);
-        int num=path.indexOf(".metadata");
-        String basePath=path.substring(0,num)+request.getContextPath()+"/src/main/webapp"+storePath;
+        logger.info("------------------------localFileName的值是:"+localFileName);
+       // int num=path.indexOf(".metadata");
+       // logger.info("------------------------num的值是:"+path);
+        String basePath=path;
+        logger.info("------------------------basePath的值是:"+basePath);
+        
         //新建本地文件
         File localFile = new File(basePath,localFileName);
         //创建目录

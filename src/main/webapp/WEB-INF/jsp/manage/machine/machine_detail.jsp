@@ -160,5 +160,6 @@
 
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
+<script src="<%=basePath2 %>resources/js/back/machine_list.js"></script>
 </body>
 </html>

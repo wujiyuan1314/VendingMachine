@@ -135,14 +135,13 @@
 			if(success==0){
 				$(".errormsg").html(msg);
 			}else{
-				alert(msg,function(){
-					window.location.reload();
-				});
+				alert(msg);
+				window.location.reload();
 			}
 		},
 	    error:function(){
            alert("错误");
-           }
+        }
 	});
 }
 </script>

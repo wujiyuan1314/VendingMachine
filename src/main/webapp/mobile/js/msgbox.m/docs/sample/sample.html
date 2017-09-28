@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset = "utf-8"/>
+	<meta name = "viewport" content = "user-scalable = no, initial-scale = 1, maximum-scale = 1, minimum-scale = 1, width = device-width" />
+	
+	<link rel = "stylesheet" href = "../../msgbox.m.theme-a.min.css"/>
+	<style type = "text/css">
+	html, body{
+		margin: 0;
+		padding: 0;
+		font-family: "Microsoft Yahei", sans-serif, serif;
+	}
+	</style>
+</head>
+<body>
+	<input type = "button" value = "alert" onclick = "window.sample.alert();"/>
+	<input type = "button" value = "confirm1" onclick = "window.sample.confirm1();"/>
+	<input type = "button" value = "confirm2" onclick = "window.sample.confirm2();"/>
+	<input type = "button" value = "prompt1" onclick = "window.sample.prompt1();"/>
+	<input type = "button" value = "prompt2" onclick = "window.sample.prompt2();"/>
+	<input type = "button" value = "custom1" onclick = "window.sample.custom1();"/>
+	
+	<script type = "text/javascript" src = "../../msgbox.m.min.js"></script>
+	<script type = "text/javascript">
+	window.sample = {
+		alert: function(){
+			MsgBox({content: "content"}).show();
+		},
+		confirm1: function(){
+			MsgBox({content: "content", type: MsgBox.CONFIRM}).show();
+		},
+		confirm2: function(){
+			MsgBox({title: "tip", content: "content", cancelButtonText: "no", confirmButtonText: "yes", cancelCallback: function(){
+				alert("clicked no");
+				this.close();
+			}, confirmCallback: function(){
+				alert("clicked yes");
+				this.close();
+			}, type: MsgBox.CONFIRM}).show();
+		},
+		prompt1: function(){
+			MsgBox({inputDefaultValue: "default", type: MsgBox.PROMPT}).show();
+		},
+		prompt2: function(){
+			MsgBox({inputPlaceholder: "请输入密码", cancelable: false, type: MsgBox.PROMPT}).show();
+		},
+		custom1: function(){
+			var nameInputObj = document.createElement("input");
+			nameInputObj.placeholder = "请输入账号";
+			var pwdInputObj = document.createElement("input");
+			pwdInputObj.type = "password";
+			pwdInputObj.placeholder = "请输入密码";
+			nameInputObj.style.cssText = pwdInputObj.style.cssText = "padding: 0; font-size: 13px; line-height: 13px; font-family: inherit; color: #535353; border: none; outline: none; max-width: 100%;";
+			var nameInputWrapperObj = document.createElement("div");
+			var pwdInputWrapperObj = document.createElement("div");
+			nameInputWrapperObj.style.cssText = pwdInputWrapperObj.style.cssText = "padding: 5px; border: solid 1px #CACACA; border-radius: 3px; background: white;";
+			pwdInputWrapperObj.style.marginTop = "5px";
+			
+			var wrapperObj = document.createElement("div");
+			wrapperObj.style.cssText = "padding: 0 10px;";
+			nameInputWrapperObj.appendChild(nameInputObj);
+			pwdInputWrapperObj.appendChild(pwdInputObj);
+			wrapperObj.appendChild(nameInputWrapperObj);
+			wrapperObj.appendChild(pwdInputWrapperObj);
+		
+			var tipBox = MsgBox({type: MsgBox.CONFIRM, title: "请登录", content: wrapperObj, confirmCallback: function(){
+				/** 数据校验 */
+				if(nameInputObj.value == ""){
+					alert("账号不能为空，请重新输入");
+					return;
+				}
+				if(pwdInputObj.value == ""){
+					alert("密码不能为空，请重新输入");
+					return;
+				}
+				
+				this.close();
+				}
+			});
+			tipBox.show();
+		}
+	};
+	</script>
+</body>
+</html>

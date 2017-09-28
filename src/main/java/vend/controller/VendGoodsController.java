@@ -105,8 +105,6 @@ public class VendGoodsController{
     	if(br.hasErrors()){
     		return "manage/goods/goods_add";
     	}
-    	String filepath=FileUploadUtils.tranferFile(request, "/userfiles/pic");
-    	vendGoods.setPic(filepath);
     	vendGoodsService.insertVendGoods(vendGoods);
     	return "redirect:goodss";
 	}
@@ -135,12 +133,6 @@ public class VendGoodsController{
 	public String edit(HttpServletRequest request,Model model,@Validated VendGoods vendGoods,BindingResult br){
     	if(br.hasErrors()){
     		return "manage/goods/goods_edit";
-    	}
-    	VendGoods prevendGoods=vendGoodsService.getOne(vendGoods.getId());
-    	String filepath="";
-    	if(prevendGoods.getPic()!=null&&!prevendGoods.getPic().equals(vendGoods.getPic())){
-    		filepath=FileUploadUtils.tranferFile(request, "/userfiles/pic");
-        	vendGoods.setPic(filepath);
     	}
     	vendGoodsService.editVendGoods(vendGoods);
 		return "redirect:goodss";

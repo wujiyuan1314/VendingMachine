@@ -1,0 +1,199 @@
+/*导入com.less*/
+/*弹性布局*/
+/*超过3行，以省略号形式显示*/
+/*清除浮动*/
+/*居中对齐*/
+.autocenter {
+  margin-left: auto;
+  margin-right: auto;
+}
+/*上边框*/
+
+/*头部导航*/
+..nav_w {
+	width: 1000px;
+	float: right;
+	height: 40px;
+}
+.nav_w ul {
+	display: inline-block;
+}
+.nav_w ul li {
+	float: left;
+}
+.nav_w ul li a {
+	display: block;
+	width: 125px;
+	color: #333;
+	text-align: center;
+	font-size: 16px;
+	line-height: 40px;
+}
+.nav_w ul li a:hover,.nav .nav_w ul li a.hover {
+	color: #b66d4a;
+}
+
+/*首页*/
+.zh_index {
+  padding-bottom: 45px;
+}
+.zh_index .index_banner {
+  width: 100%;
+  margin-bottom: 8px;
+}
+.zh_index .index_banner img {
+  width: 100%;
+}
+.zh_index .searchbox {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  box-sizing: border-box;
+  height: 31px;
+  margin-bottom: 8px;
+  padding: 0px 7px;
+}
+.zh_index .searchbox .inputbox{
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  box-sizing: border-box;
+  height: 31px;
+}
+.zh_index .searchbox input {
+  box-sizing: border-box;
+  width:100%;
+  height:100%;
+  padding-left: 34px;
+  border-radius: 5px;
+  background: #fff url(../img/icon_1.fw.png) 10px center no-repeat;
+  background-size: 16px 16px;
+  border: 1px solid #c1c1c1;
+}
+.zh_index .searchbox .btn {
+    display:inline-block;
+    width:65px;
+    height:31px;
+    background:#2BB085;
+    color:#fff;
+    text-align:center;
+    line-height:31px;
+    border-radius:5px;
+    margin-left:5px;
+    font-size: 1.4rem;
+}
+/*导航*/
+.zh_index .nav {
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 8px;
+  background: #fff;
+  *zoom: 1;
+}
+.zh_index .nav:before,
+.zh_index .nav:after {
+  content: '';
+  display: table;
+}
+.zh_index .nav:after {
+  clear: both;
+}
+.zh_index .nav .item {
+  display: block;
+  box-sizing: border-box;
+  width: 33.3%;
+  height: 82px;
+  float: left;
+  padding-top: 7px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  font-size: 1.4rem;
+  color: #626262;
+}
+.zh_index .nav .item .icon {
+  width: 100%;
+  height: 43px;
+  margin-bottom: 6px;
+}
+.zh_index .nav .item .icon img {
+  width: 43px;
+  height: 43px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.zh_index .nav .item:active {
+  background: #EBFAF4;
+}
+.zh_index .nav .noborderbottom {
+  border-bottom: none;
+}
+/*通栏banner*/
+.zh_index .bannerwrap {
+  margin-bottom: 8px;
+}
+.zh_index .bannerwrap img {
+  width: 100%;
+}
+
+/*导航2*/
+.zh_index .nav2 {
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 8px;
+  background: #fff;
+  *zoom: 1;
+}
+.zh_index .nav2:before,
+.zh_index .nav2:after {
+  content: '';
+  display: table;
+}
+.zh_index .nav2:after {
+  clear: both;
+}
+.zh_index .nav2 .item {
+  display: block;
+  box-sizing: border-box;
+  width: 25%;
+  float: left;
+  padding: 7px 0;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  font-size: 1.4rem;
+  color: #626262;
+}
+.zh_index .nav2 .item .icon img {
+  width: 70px;
+  height: 70px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.zh_index .nav2 .item:active {
+  background: #EBFAF4;
+}
+.zh_index .nav2 .noborderbottom {
+  border-bottom: none;
+}
+
+
+.down_002 { background:url(../img/down002.png)0px center no-repeat;background-size:24px 24px; padding-left:30px; height:30px; margin-top:0px; float:right;}
+
+/*焦点图*/  
+.slideBox{ position:relative; overflow:hidden; margin:0 auto;  max-width:640px;/* 设置焦点图最大宽度 */ }
+.slideBox .hd{ position:absolute; height:28px; line-height:28px; bottom:0; right:0; z-index:1; }
+.slideBox .hd li{ display:inline-block; width:8px; height:8px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; background:#C6C6C6; text-indent:-9999px; overflow:hidden; margin:0 6px;   }
+.slideBox .hd li.on{ background:#FF4000;  }
+.slideBox .bd{ position:relative; z-index:0; }
+.slideBox .bd li{ position:relative; text-align:center;  }
+.slideBox .bd li img{ background:url(../img/loading.gif) center center no-repeat;   vertical-align:top; width:100%;}/* 图片宽度100%，达到自适应效果 */
+.slideBox .bd li a{ -webkit-tap-highlight-color:rgba(0,0,0,0);  }  /* 去掉链接触摸高亮 */
+.slideBox .bd li .tit{ display:block; width:100%;  position:absolute; bottom:0; text-indent:10px; height:28px; line-height:28px; background:url(images/focusBg.png) repeat-x; color:#fff;  text-align:left;  }
+

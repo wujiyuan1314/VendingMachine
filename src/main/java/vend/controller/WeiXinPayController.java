@@ -287,6 +287,15 @@ public class WeiXinPayController {
 			String usercode=map.get("usercode");
 			//1,订单操作
 			VendOrder vendOrder=new VendOrder();
+			/**售卖指令*/
+			if(vendOrder.getMachineCode()!=null){
+				VendGoods vendGoods=vendGoodsService.getOne(vendOrder.getGoodsId());
+				if(vendMachine!=null&&vendGoods!=null){
+					vendGoodsService.sellGoods(vendMachine, vendGoods, vendOrder);
+				}
+			}
+			/**售卖指令*/
+			
 			Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 			vendOrder.setAmount(BigDecimal.valueOf(0.00));
 			String orderId=Function.getOrderId();
@@ -349,6 +358,15 @@ public class WeiXinPayController {
 		double price=Function.getDouble(request.getParameter("price"), 0.00);
 		//1,订单操作
 		VendOrder vendOrder=new VendOrder();
+		/**售卖指令*/
+		if(vendOrder.getMachineCode()!=null){
+			VendGoods vendGoods=vendGoodsService.getOne(vendOrder.getGoodsId());
+			if(vendMachine!=null&&vendGoods!=null){
+				vendGoodsService.sellGoods(vendMachine, vendGoods, vendOrder);
+			}
+		}
+		/**售卖指令*/
+		
 		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 		vendOrder.setAmount(BigDecimal.valueOf(price));
 		String orderId=Function.getOrderId();

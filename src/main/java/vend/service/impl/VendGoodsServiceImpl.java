@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ import vend.service.VendGoodsService;
 
 @Service
 public class VendGoodsServiceImpl implements VendGoodsService {
+	public static Logger logger = Logger.getLogger(VendGoodsServiceImpl.class);
 	@Autowired
 	VendGoodsMapper vendGoodsMapper;
 	/**
@@ -148,13 +150,18 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 		dataMap.put("payload", payload);
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
+			logger.info("------------------retMsg的值---------------"+retMsg);
 			if(StringUtils.isNotBlank(retMsg)){
 				JSONObject retJson = JSONObject.fromObject(retMsg);	
+				logger.info("------------------retJson的值---------------"+retJson);
 				String retCode = retJson.getString("errCode");
+				logger.info("------------------retCode的值---------------"+retCode);
 				if(retCode.equals("0")){
 					System.out.println("售卖成功:" + retJson.getString("msg"));
+					logger.info("------------------售卖成功---------------"+retJson.getString("msg"));
 				}else{
 					System.out.println("售卖失败:" + retJson.getString("msg"));
+					logger.info("------------------售卖失败---------------"+retJson.getString("msg"));
 				}
 			}
 	    }catch (UnsupportedEncodingException e) {

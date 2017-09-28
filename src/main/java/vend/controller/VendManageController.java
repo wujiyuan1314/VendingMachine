@@ -103,7 +103,7 @@ public class VendManageController{
 		response.setCharacterEncoding("UTF-8");
 		JSONObject json = new JSONObject();
 		json.put("success","0");
-		json.put("msg", "登陆失败");
+		json.put("msg", "获取机器信息失败");
 		
 		VendMachine vendMachine=vendMachineService.getOne(id);
 		if(vendMachine==null){
@@ -123,19 +123,23 @@ public class VendManageController{
 		dataMap.put("id", vendMachine.getMachineId());
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midQueryUrl,dataMap);
+			logger.info("------------------retMsg的值---------------"+retMsg);
 			if(StringUtils.isNotBlank(retMsg)){
 				JSONObject retJson = JSONObject.fromObject(retMsg);	
+				logger.info("------------------retJson的值---------------"+retJson);
 				String retCode = retJson.getString("result");
+				logger.info("------------------retCode的值---------------"+retCode);
 				if(retCode.equals("0")){
 					vendMachine.setUseStatus("1");
 					int isOk=vendMachineService.editVendMachine(vendMachine);
 					if(isOk==1){
 						json.put("success","1");
-						json.put("msg", "登陆成功");
+						json.put("msg", "获取机器信息成功");
+						logger.info("------------------获取机器信息成功---------------");
 					}
 				}				
 			}else{
-				System.out.println("登陆失败");
+				System.out.println("获取机器信息失败");
 			}
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
@@ -184,15 +188,19 @@ public class VendManageController{
 		dataMap.put("payload", payload);
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
+			logger.info("------------------retMsg的值---------------"+retMsg);
 			if(StringUtils.isNotBlank(retMsg)){
 				JSONObject retJson = JSONObject.fromObject(retMsg);	
+				logger.info("------------------retJson的值---------------"+retJson);
 				String retCode = retJson.getString("result");
+				logger.info("------------------retCode的值---------------"+retCode);
 				if(retCode.equals("0")){
 					vendMachine.setUseStatus("1");
 					int isOk=vendMachineService.editVendMachine(vendMachine);
 					if(isOk==1){
 						json.put("success","1");
 						json.put("msg", "登陆成功");
+						logger.info("------------------登陆成功---------------");
 					}
 				}				
 			}else{
@@ -243,15 +251,19 @@ public class VendManageController{
 		dataMap.put("payload", payload);
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
+			logger.info("------------------retMsg的值---------------"+retMsg);
 			if(StringUtils.isNotBlank(retMsg)){
 				JSONObject retJson = JSONObject.fromObject(retMsg);	
+				logger.info("------------------retJson的值---------------"+retJson);
 				String retCode = retJson.getString("error_code");
+				logger.info("------------------retCode的值---------------"+retCode);
 				if(retCode.equals("0")){
 					vendMachine.setCleanStatus("1");;
 					int isOk=vendMachineService.editVendMachine(vendMachine);
 					if(isOk==1){
 						json.put("success","1");
 						json.put("msg", "自清洗成功");
+						logger.info("------------------自清洗成功---------------");
 					}
 				}				
 			}else{
@@ -302,9 +314,12 @@ public class VendManageController{
 		dataMap.put("payload", payload);
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
+			logger.info("------------------retMsg的值---------------"+retMsg);
 			if(StringUtils.isNotBlank(retMsg)){
 				JSONObject retJson = JSONObject.fromObject(retMsg);	
+				logger.info("------------------retJson的值---------------"+retJson);
 				String retCode = retJson.getString("result");
+				logger.info("------------------retCode的值---------------"+retCode);
 				if(retCode.equals("0")){
 					if(vendMachine!=null){
 						vendMachine.setUseStatus("1");
@@ -312,6 +327,7 @@ public class VendManageController{
 						if(isOk==1){
 							json.put("success","1");
 							json.put("msg", "重启成功");
+							logger.info("------------------重启成功---------------");
 						}
 					}
 				}else{
@@ -364,9 +380,12 @@ public class VendManageController{
 		dataMap.put("payload", payload);
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
+			logger.info("------------------retMsg的值---------------"+retMsg);
 			if(StringUtils.isNotBlank(retMsg)){
 				JSONObject retJson = JSONObject.fromObject(retMsg);	
+				logger.info("------------------retJson的值---------------"+retJson);
 				String retCode = retJson.getString("result");
+				logger.info("------------------retCode的值---------------"+retJson);
 				if(retCode.equals("0")){
 					if(vendMachine!=null){
 						vendMachine.setUseStatus("2");
@@ -374,6 +393,7 @@ public class VendManageController{
 						if(isOk==1){
 							json.put("success","1");
 							json.put("msg", "关机成功");
+							logger.info("------------------关机成功---------------");
 						}
 					}
 				}else{
@@ -427,12 +447,16 @@ public class VendManageController{
 		dataMap.put("payload", payload);
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
+			logger.info("------------------retMsg的值---------------"+retMsg);
 			if(StringUtils.isNotBlank(retMsg)){
-				JSONObject retJson = JSONObject.fromObject(retMsg);	
+				JSONObject retJson = JSONObject.fromObject(retMsg);
+				logger.info("------------------retJson的值---------------"+retJson);
 				String retCode = retJson.getString("result");
+				logger.info("------------------retCode的值---------------"+retCode);
 				if(retCode.equals("0")){
 					json.put("success","1");
 					json.put("msg", "自检成功");
+					logger.info("------------------自检成功---------------");
 				}else{
 					System.out.println("自检失败:" + retJson.getString("msg"));
 				}				
@@ -481,12 +505,18 @@ public class VendManageController{
 		dataMap.put("payload", payload);
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
+			logger.info("------------------retMsg的值---------------"+retMsg);
 			if(StringUtils.isNotBlank(retMsg)){
 				JSONObject retJson = JSONObject.fromObject(retMsg);	
+				logger.info("------------------retJson的值---------------"+retJson);
 				String retCode = retJson.getString("result");
+				logger.info("------------------retCode的值---------------"+retCode);
 				if(retCode.equals("0")){
 					json.put("success","1");
 					json.put("msg", "获取设备参数成功");
+					logger.info("------------------获取设备参数成功---------------");
+				}else{
+					System.out.println("获取设备参数失败:" + retJson.getString("msg"));
 				}
 			}else{
 				System.out.println("获取设备参数失败");
@@ -579,13 +609,22 @@ public class VendManageController{
 		dataMap.put("payload", payload);
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
-			JSONObject retJson = JSONObject.fromObject(retMsg);	
-			String retCode = retJson.getString("result");
-			if(retCode.equals("0")){
-				json.put("success","1");
-				json.put("msg", "设置设备参数成功");
+			logger.info("------------------retMsg的值---------------"+retMsg);
+			if(StringUtils.isNotBlank(retMsg)){
+				JSONObject retJson = JSONObject.fromObject(retMsg);	
+				logger.info("------------------retJson的值---------------"+retJson);
+				String retCode = retJson.getString("result");
+				logger.info("------------------retCode的值---------------"+retCode);
+				if(retCode.equals("0")){
+					json.put("success","1");
+					json.put("msg", "设置设备参数成功");
+					logger.info("------------------设置设备参数成功---------------");
+				}else{
+					System.out.println("设置设备参数失败:" + retJson.getString("msg"));
+				}
+			}else{
+				System.out.println("设置设备参数失败");
 			}
-			
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -649,14 +688,22 @@ public class VendManageController{
 		dataMap.put("payload", payload);
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
-			JSONObject retJson = JSONObject.fromObject(retMsg);	
-			String retCode = retJson.getString("result");
-			if(retCode.equals("0")){
-				json.put("success","1");
-				json.put("msg", "设置商户二维码成功");
+			logger.info("------------------retMsg的值---------------"+retMsg);
+			if(StringUtils.isNotBlank(retMsg)){
+				JSONObject retJson = JSONObject.fromObject(retMsg);	
+				logger.info("------------------retJson的值---------------"+retJson);
+				String retCode = retJson.getString("result");
+				logger.info("------------------retCode的值---------------"+retCode);
+				if(retCode.equals("0")){
+					json.put("success","1");
+					json.put("msg", "设置商户二维码成功");
+					logger.info("------------------设置商户二维码成功---------------");
+				}else{
+					System.out.println("设置商户二维码失败:" + retJson.getString("msg"));
+				}
 			}else{
-				System.out.println("更新显示的二维码:" + retJson.getString("msg"));
-			}	
+				System.out.println("设置商户二维码失败");
+			}
 		} catch (UnsupportedEncodingException e) {
 			// TODO 更新显示的二维码异常处理
 			e.printStackTrace();
@@ -714,14 +761,22 @@ public class VendManageController{
 		dataMap.put("payload", payload);
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
-			JSONObject retJson = JSONObject.fromObject(retMsg);	
-			String retCode = retJson.getString("result");
-			if(retCode.equals("0")){
-				json.put("success","1");
-				json.put("msg", "设置/更新机器识别码失败");
+			logger.info("------------------retMsg的值---------------"+retMsg);
+			if(StringUtils.isNotBlank(retMsg)){
+				JSONObject retJson = JSONObject.fromObject(retMsg);	
+				logger.info("------------------retJson的值---------------"+retJson);
+				String retCode = retJson.getString("result");
+				logger.info("------------------retCode的值---------------"+retCode);
+				if(retCode.equals("0")){
+					json.put("success","1");
+					json.put("msg", "设置/更新机器识别码成功");
+					logger.info("------------------设置/更新机器识别码成功---------------");
+				}else{
+					System.out.println("设置/更新机器识别码失败:" + retJson.getString("msg"));
+				}
 			}else{
-				System.out.println("设置/更新机器识别码失败:" + retJson.getString("msg"));
-			}	
+				System.out.println("设置/更新机器识别码失败");
+			}
 		} catch (UnsupportedEncodingException e) {
 			// TODO 更新机器码异常处理
 			e.printStackTrace();
@@ -767,12 +822,15 @@ public class VendManageController{
 	 */
 	@RequestMapping(value="/{id}/{adId}/setAdItemList",method=RequestMethod.POST)
 	public String setAdItemList(@PathVariable int id,@PathVariable int adId,HttpServletResponse response) throws IOException{
+		logger.info("------------------1：进入广告设置---------------");
 		String absolutePath=vendParaService.selectByParaCode("absolutePath");//项目绝对路径
 		String bathPath=vendParaService.selectByParaCode("basePath");//项目相对路径
+		logger.info("------------------2：项目路径absolutePath和bathPath---------------"+absolutePath+bathPath);
 		response.setCharacterEncoding("UTF-8");
 		JSONObject json = new JSONObject();
 		json.put("success","0");
 		json.put("msg", "投放广告失败");
+		logger.info("------------------3：投放广告失败---------------");
 		
 		VendMachine vendMachine=vendMachineService.getOne(id);
 		if(vendMachine==null){
@@ -781,6 +839,7 @@ public class VendManageController{
 			response.getWriter().append(json.toString());
 			return null;
 		}
+		
 		if(vendMachine.getMachineId()==null){
 			json.put("success","0");
 			json.put("msg", "未绑定机器ID");
@@ -820,14 +879,20 @@ public class VendManageController{
 		payload.accumulate("qrPic", "1234567890abcdef");
 		payload.accumulate("csrCode", vendMachine.getMachineCode());
 		payload.accumulate("styleDoc", "http://device.xxx.com/adstyle1.htm");
+		logger.info("------------------4：payload值---------------"+payload);
 		
 		JSONArray picArray = new JSONArray();
 		if(vendAd.getPic1()!=null&&!"".equals(vendAd.getPic1())){
+			logger.info("------------------5：pic1值---------------"+vendAd.getPic1());
 			String filePath=absolutePath+vendAd.getPic1();
 			String picName=Function.getPicName(filePath);//图片名
+			logger.info("------------------5：pic1的picName值---------------"+picName);
 			String picMd5=MD5Util.getMD5(filePath);//图片MD5
+			logger.info("------------------5：pic1的picMd5值---------------"+picMd5);
 			long picSize=Function.getPicSize(filePath);//图片大小
+			logger.info("------------------5：pic1的picSize值---------------"+picSize);
 			String picpath=bathPath+filePath;//图片相对路径
+			logger.info("------------------5：pic1的picpath值---------------"+picpath);
 			JSONObject pic = new JSONObject();
 			pic.accumulate("fileName", picName);
 			pic.accumulate("fileMd5", picMd5);
@@ -836,11 +901,16 @@ public class VendManageController{
 			picArray.add(pic);
 		}
 		if(vendAd.getPic2()!=null&&!"".equals(vendAd.getPic2())){
-			String filePath=absolutePath+vendAd.getPic1();
+			logger.info("------------------6：pic2值---------------"+vendAd.getPic2());
+			String filePath=absolutePath+vendAd.getPic2();
 			String picName=Function.getPicName(filePath);//图片名
+			logger.info("------------------6：pic2的picName值---------------"+picName);
 			String picMd5=MD5Util.getMD5(filePath);//图片MD5
+			logger.info("------------------6：pic2的picMd5值---------------"+picMd5);
 			long picSize=Function.getPicSize(filePath);//图片大小
+			logger.info("------------------6：pic2的picSize值---------------"+picSize);
 			String picpath=bathPath+filePath;//图片相对路径
+			logger.info("------------------6：pic2的picpath值---------------"+picpath);
 			JSONObject pic = new JSONObject();
 			pic.accumulate("fileName", picName);
 			pic.accumulate("fileMd5", picMd5);
@@ -903,15 +973,21 @@ public class VendManageController{
 		payload.accumulate("picList", picArray);
 		
 		if(vendAd.getVideo()!=null){
+			logger.info("------------------7：video值---------------"+vendAd.getVideo());
 			String filePath=absolutePath+vendAd.getVideo();
 			String videoName=Function.getPicName(filePath);//视频名
-			String picMd5=MD5Util.getMD5(filePath);//视频MD5
+			logger.info("------------------7：video的videoName值---------------"+videoName);
+			String videoMd5=MD5Util.getMD5(filePath);//视频MD5
+			logger.info("------------------6：video的videoMd5值---------------"+videoMd5);
 			long videoSize=Function.getPicSize(filePath);//视频大小
+			logger.info("------------------6：video的videoSize值---------------"+videoSize);
 			String videopath=bathPath+filePath;//视频相对路径
+			logger.info("------------------6：video的videopath值---------------"+videopath);
+			
 			JSONObject mov = new JSONObject();
 			JSONArray movArray = new JSONArray();
 			mov.accumulate("fileName", videoName);
-			mov.accumulate("fileMd5", picMd5);
+			mov.accumulate("fileMd5", videoMd5);
 			mov.accumulate("fileSize", videoSize);
 			mov.accumulate("fileUrl", videopath);
 			movArray.add(mov);
@@ -923,12 +999,16 @@ public class VendManageController{
 		dataMap.put("payload", payload);
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
+			logger.info("------------------retMsg的值---------------"+retMsg);
 			if(StringUtils.isNotBlank(retMsg)){
 				JSONObject retJson = JSONObject.fromObject(retMsg);	
+				logger.info("------------------retJson的值---------------"+retJson);
 				String retCode = retJson.getString("result");
+				logger.info("------------------retCode的值---------------"+retCode);
 				if(retCode.equals("0")){
 					json.put("success","1");
 					json.put("msg", "投放广告成功");
+					logger.info("------------------投放广告成功---------------");
 				}else{
 					System.out.println("投放广告失败:" + retJson.getString("msg"));
 				}				

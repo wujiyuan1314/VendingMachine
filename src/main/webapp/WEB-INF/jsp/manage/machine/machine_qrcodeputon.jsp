@@ -44,7 +44,7 @@
 	              <div class="control-group">
 	                <label class="control-label">机器名</label>
 	                <div class="controls">
-	                  <sf:input path="machineName"/>
+	                  <sf:input path="machineName" readonly="true" />
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="machineName" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
@@ -56,9 +56,6 @@
 	                  <a href="javascript:qrcodePuton('${vendMachine.id}');" class="btn btn-success btn-mini">投放</a>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="shopQrcode" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
-	              </div>
-	              <div class="form-actions">
-	                <input type="submit" value="修改" class="btn btn-success">
 	              </div>
 	            </sf:form>
 			  </div>
