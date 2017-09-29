@@ -55,6 +55,8 @@
          <!-- 拦截顺序是按照写的顺序从上到下,拦截后就不再往下执行 -->
             <value>
                 <!-- 手机端访问 -->
+                /MP_verify_s8OTjyBp1BmK7e8P.txt=anon
+                /index.jsp =anon
                 /mobile/* =anon
                 <!-- 某个方法的访问权限-->
                 /wxlogin = anon

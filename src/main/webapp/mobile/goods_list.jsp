@@ -34,16 +34,16 @@
      <c:forEach items="${vendGoodss}" var="vendGoods" varStatus="st">
         <div class="item">
           <div class="con">
-             <a href="${pageContext.request.contextPath}/mobile/${vendGoods.id}/detail">
+             <a href="${pageContext.request.contextPath}/mobile/${vendGoods.id}/${usercode}/detail">
                  <div class="pic">
                    <img name="newpic1" src="${vendGoods.pic}" height="174">
                  </div>
              </a>
              <div class="detail">
-	             <a href="${pageContext.request.contextPath}/mobile/${vendGoods.id}/detail"></a>
+	             <a href="${pageContext.request.contextPath}/mobile/${vendGoods.id}/${usercode}/detail"></a>
 	             <a href="#">${vendGoods.goodsName}</a>
              </div>
-             <a href="${pageContext.request.contextPath}/mobile/${vendGoods.id}/detail">
+             <a href="${pageContext.request.contextPath}/mobile/${vendGoods.id}/${usercode}/detail">
                  <div class="sale_price">
                      <div class="price">￥${vendGoods.price}</div>
                  </div>

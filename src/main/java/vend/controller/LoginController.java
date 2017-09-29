@@ -240,8 +240,6 @@ public class LoginController extends LogoutFilter{
     		user.setAddress(map.get("address"));
     		user.setMobile(map.get("mobile"));
     		user.setRoleId(5);
-    		user.setCreateTime(createtime);
-    		user.setUpdateTime(createtime);
     		int isOk=vendUserService.insertVendUser(user);
     		if(isOk==1){
     			map.put("success", "1");

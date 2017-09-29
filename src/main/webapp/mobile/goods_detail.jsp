@@ -46,6 +46,7 @@
          
          <div class="detail">
            <span>请输入机器码:</span>
+           <input name="usercode" style="width:60px;" type="hidden" value="${usercode }" class="btn_input" id="usercode">
            <input name="machinecode" style="width:60px;" type="text" class="btn_input" id="machinecode">
          </div>
          

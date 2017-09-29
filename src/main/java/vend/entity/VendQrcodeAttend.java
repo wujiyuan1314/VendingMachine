@@ -11,7 +11,7 @@ public class VendQrcodeAttend {
 
     private Date attendTime;
 
-    private String exend1;
+    private String extend1;
 
     private String extend2;
 
@@ -49,15 +49,17 @@ public class VendQrcodeAttend {
         this.attendTime = attendTime;
     }
 
-    public String getExend1() {
-        return exend1;
-    }
+   
 
-    public void setExend1(String exend1) {
-        this.exend1 = exend1 == null ? null : exend1.trim();
-    }
+    public String getExtend1() {
+		return extend1;
+	}
 
-    public String getExtend2() {
+	public void setExtend1(String extend1) {
+		this.extend1 = extend1;
+	}
+
+	public String getExtend2() {
         return extend2;
     }
 

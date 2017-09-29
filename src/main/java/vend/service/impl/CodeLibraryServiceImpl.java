@@ -84,5 +84,14 @@ public class CodeLibraryServiceImpl implements CodeLibraryService {
 		}
 		return codeLibrary;
 	}
+	/**
+	 * 根据codeno和itemno获取信息
+	 * @param codeno
+	 * @param itemno
+	 * @return
+	 */
+	public CodeLibrary selectByItemno(String codeno,String itemno){
+		return codeLibraryMapper.selectByItemno(codeno, itemno);
+	}
 
 }

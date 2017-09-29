@@ -1,6 +1,8 @@
 package vend.service;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import vend.entity.CodeLibrary;
 
 public interface CodeLibraryService {
@@ -46,4 +48,11 @@ public interface CodeLibraryService {
 	 * @return
 	 */
 	CodeLibrary getCodeLibraryByID(String id);
+	/**
+	 * 根据codeno和itemno获取信息
+	 * @param codeno
+	 * @param itemno
+	 * @return
+	 */
+	CodeLibrary selectByItemno(String codeno,String itemno);
 }

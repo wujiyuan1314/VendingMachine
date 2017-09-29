@@ -2,6 +2,7 @@ package vend.service.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import vend.entity.VendQrcodeAttend;
 import vend.service.VendQrcodeAttendService;
 @Service
 public class VendQrcodeAttendServiceImpl implements VendQrcodeAttendService {
+	private static Logger logger = Logger.getLogger(VendQrcodeAttendServiceImpl.class.getName());
 	@Autowired
 	VendQrcodeAttendMapper vendQrcodeAttendMapper;
 	@Override
@@ -37,10 +39,14 @@ public class VendQrcodeAttendServiceImpl implements VendQrcodeAttendService {
 	@Override
 	public int insertVendQrcodeAttend(VendQrcodeAttend vendQrcodeAttend) {
 		// TODO Auto-generated method stub
+		logger.info("---------开始添加添加用户关注商户二维码信息:----------");
 		int isOk= vendQrcodeAttendMapper.insertSelective(vendQrcodeAttend);
+		logger.info("---------1:开始添加添加用户关注商户二维码信息isOk:----------"+isOk);
 		if(isOk==1){
+			logger.info("---------2:开始添加添加用户关注商户二维码信息isOk:----------"+isOk);
 			CacheUtils.clear();
 		}
+		logger.info("---------结束添加添加用户关注商户二维码信息:----------");
 		return isOk;
 	}
 

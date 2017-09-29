@@ -11,9 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,20 +18,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
-import base.util.Const;
 import base.util.DateUtil;
+import base.util.EncodeUtils;
 import base.util.Function;
+import vend.entity.CodeLibrary;
 import vend.entity.VendGoods;
 import vend.entity.VendMachine;
 import vend.entity.VendOrder;
 import vend.entity.VendQrcodeAttend;
-import vend.entity.VendRole;
-import vend.entity.VendSyslog;
 import vend.entity.VendUser;
+import vend.service.CodeLibraryService;
+import vend.service.GetWeiXinUserInfoService;
 import vend.service.VendGoodsService;
 import vend.service.VendMachineService;
 import vend.service.VendOrderService;
@@ -58,81 +57,153 @@ public class MobileController {
 	@Autowired
 	VendMachineService vendMachineService;
 	@Autowired
+	CodeLibraryService codeLibraryService;
+	@Autowired
 	VendOrderService vendOrderService;
 	@Autowired
 	VendQrcodeAttendService vendQrcodeAttendService;
+	@Autowired
+	GetWeiXinUserInfoService getWeiXinUserInfoService;
+	
 	/**
-	 * 跳转消费用户手机登录
+	 * 获取微信公众号关注用户的code
+	 * @param code
+	 * @param state
+	 * @param request
+	 * @param model
 	 * @return
 	 */
-    @RequestMapping(value="/login",method=RequestMethod.GET)
-    public String mobileLogin(){
-        return "../../mobile/login";
-    }
-    /**
-     * 消费用户手机登录
-     * @param model
-     * @param request
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value="/login",method=RequestMethod.POST)
-	public String login(Model model, HttpServletRequest request) throws Exception{
-		Subject subject=SecurityUtils.getSubject();
-		String username = request.getParameter("userName");
-		String password =Function.getEncrypt(request.getParameter("password"));
+	@RequestMapping(value="/getcode")
+	public String getCode(HttpServletRequest request,Model model){
+		String code=request.getParameter("code");
+		String state=request.getParameter("state");
+		logger.info("---------微信公众号关注用户的code:----------"+code);
+		logger.info("---------微信公众号关注用户的state:----------"+state);
+		HttpSession session=request.getSession();
+		String wechatpubNo=(String)session.getAttribute("wechatpubNo");
+		logger.info("---------2:微信公众号的为微信号:----------"+wechatpubNo);
+		Map<String,String> map1=getWeiXinUserInfoService.getAccessToken(wechatpubNo, code);//获取微信用户的access_token和openid
+		logger.info("---------map1是否为空----------"+map1.isEmpty());
+		VendUser ShVendUser=vendUserService.selectByWechatpubNo(wechatpubNo);//商户信息
+		if(ShVendUser==null){
+			logger.info("---------ShVendUser为空----------");
+		}
 		
-		if("".equals(username)){
-			 model.addAttribute("erroruserName", "请填写用户名");
-			 return "login";
-		}
-		if("".equals(password)){
-			 model.addAttribute("errorpassword", "请填写密码");
-			 return "login";
-		}
-		VendUser user=vendUserService.selectByUsername(username);
-		if(user==null){
-			model.addAttribute("erroruserName", "用户名不正确");
-			return "login";
-		}
-		if(!user.getPassword().equals(password)){
-			model.addAttribute("errorpassword", "密码不正确");
-			return "login";
-		}
-		if (subject.isAuthenticated()) {  
-            return "../../mobile/goods_list";  
-        }  
-		//logger.info(userService.getByUserName(username).getUserName() + "+" + password);
-		
-		UsernamePasswordToken token=new UsernamePasswordToken(username, password);
-		
-		subject.login(token);
-		//try{
-			//subject.login(token);
-		//}catch(Exception e){
-		 //   model.addAttribute("errorMsg", "用户名或密码错误");
-		 //   return "login";
-		//}
-		VendUser vendUser = vendUserService.selectByUsername(username);
-		/**
-		 * 登录日志
-		 */
-		VendSyslog vendSyslog=new VendSyslog();
-		vendSyslog.setUsercode(vendUser.getUsercode());
-		vendSyslog.setUsername(username);
-		vendSyslog.setExtend1("");
-		vendSyslog.setOperIp(request.getRemoteAddr());
-		if(vendUser.getRoleId()!=null){
-			VendRole vendRole=vendRoleService.getOne(vendUser.getRoleId());
-			if(vendRole!=null&&vendRole.getRoleName()!=null){
-				vendSyslog.setExtend1(vendRole.getRoleName());
+		if(ShVendUser!=null){
+			if(!map1.isEmpty()){
+				String access_token = map1.get("access_token");
+				String openid = map1.get("openid");
+				logger.info("---------mobile/getcode:微信公众号关注用户的access_token:----------"+access_token);
+				logger.info("---------mobile/getcode:微信公众号关注用户的openid:----------"+openid);
+				
+				Map<String,String> map2=getWeiXinUserInfoService.getWxUserInfo(wechatpubNo, access_token, openid);
+				logger.info("---------map2是否为空----------"+map1.isEmpty());
+				if(!map2.isEmpty()){
+					String nickname = map2.get("nickname");
+					String city = map2.get("city");
+					logger.info("---------mobile/getcode:微信公众号关注用户的nickname:----------"+nickname);
+					logger.info("---------mobile/getcode:微信公众号关注用户的city:----------"+city);
+					
+					VendUser vendUser =vendUserService.selectByUsername(nickname);
+					logger.info("---------mobile/getcode:vendUser用户信息nickname:----------"+vendUser);
+					Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+					logger.info("---------mobile/getcode:vendUser用户信息createTime:----------"+createTime);
+					logger.info("---------mobile/getcode:vendUser用户信息vendUser:----------"+vendUser);
+					if(vendUser==null){
+						logger.info("---------11:添加用户信息:----------");
+						vendUser=new VendUser();
+						String usercode=Function.getUsercode();
+						vendUser.setUsercode(usercode);
+						vendUser.setUsername(nickname);
+						vendUser.setAddress(city);
+						String password=Function.getEncrypt("123456");
+						vendUser.setPassword(password);
+						vendUser.setRoleId(5);
+						int isOk=vendUserService.insertVendUser(vendUser);
+						logger.info("---------11:添加用户信息isOk:----------"+isOk);
+						if(isOk==1){
+							model.addAttribute("usercode", usercode);
+						}
+						logger.info("---------12:添加用户信息:----------");
+						//二维码关注操作
+						logger.info("---------11:添加用户关注商户二维码信息:----------");
+						VendQrcodeAttend vendQrcodeAttend=new VendQrcodeAttend();
+						vendQrcodeAttend.setAttendTime(createTime);
+						vendQrcodeAttend.setUsercode(vendUser.getUsercode());
+						vendQrcodeAttend.setExtend1(ShVendUser.getUsercode());
+						vendQrcodeAttendService.insertVendQrcodeAttend(vendQrcodeAttend);
+						logger.info("---------12:添加用户关注商户二维码信息:----------");
+					}else{
+						logger.info("---------21:添加用户关注商户二维码信息:----------");
+						logger.info("---------22:添加用户关注商户二维码信息usercode:----------"+vendUser.getUsercode());
+						model.addAttribute("usercode", vendUser.getUsercode());
+						//二维码关注操作
+						VendQrcodeAttend vendQrcodeAttend=new VendQrcodeAttend();
+						logger.info("---------23:添加用户关注商户二维码信息createTime:----------"+createTime);
+						vendQrcodeAttend.setAttendTime(createTime);
+						vendQrcodeAttend.setUsercode(vendUser.getUsercode());
+						logger.info("---------24:添加用户关注商户二维码信息Shusercode:----------"+ShVendUser.getUsercode());
+						vendQrcodeAttend.setExtend1(ShVendUser.getUsercode());
+						int isOk=vendQrcodeAttendService.insertVendQrcodeAttend(vendQrcodeAttend);
+						logger.info("---------24:添加用户关注商户二维码信息是否成功:----------"+isOk);
+						logger.info("---------25:添加用户关注商户二维码信息:----------");
+					}
+				}
 			}
 		}
-		vendSyslog.setOperDescription("登录成功");
-		vendSyslogService.insertVendSyslog(vendSyslog);
 		
-		subject.getSession().setAttribute("vendUser", vendUser);
+		logger.info("---------开始返回:----------");
+		List<VendGoods> vendGoodss=vendGoodsService.findAll();
+    	model.addAttribute("vendGoodss", vendGoodss);
 		return "../../mobile/goods_list";
+	}
+	/**
+	 * 消费用户手机登录
+	 * @param wechatpubNo
+	 */
+    @RequestMapping(value="/mobilelogin",method=RequestMethod.GET)
+    @ResponseBody
+    public void mobileLogin(@RequestParam String wechatpubNo){
+    	logger.info("---------1:微信公众号的为微信号:----------"+wechatpubNo);
+    }
+    /**
+     * 微信公众号关注用户跳转页面
+     * @param model
+     * @param request
+     * @param wechatpubNo
+     * @throws Exception
+     */
+    @RequestMapping(value="/{wechatpubNo}/login",method=RequestMethod.GET)
+    @ResponseBody
+	public 	String login(Model model, HttpServletRequest request,HttpServletResponse response,@PathVariable String wechatpubNo) throws Exception{
+    	CodeLibrary codeLibrary=codeLibraryService.selectByItemno("WECHATPUBNO", wechatpubNo);
+    	if(codeLibrary==null){
+    		logger.info("该公众号未绑定自助饮品系统");
+    		return null;
+    	}
+    	if(codeLibrary.getItemname()==null){
+    		logger.info("该公众号开发者ID未填写");
+    		return null;
+    	}
+    	if(codeLibrary.getExtend1()==null){
+    		logger.info("该公众号开发者密钥未填写");
+    		return null;
+    	}
+    	
+    	String url="";
+		String redirect_uri=EncodeUtils.urlEncode("http://zdypx.benbenniaokeji.com/mobile/getcode");
+		if(codeLibrary!=null){
+			url="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+codeLibrary.getItemname()+""
+					+ "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
+		}
+    	
+    	HttpSession session=request.getSession();
+    	session.setAttribute("wechatpubNo", wechatpubNo);
+    	
+    	response.setCharacterEncoding("UTF-8");
+    	response.getWriter().print("<script>window.location.href='"+url+"'</script>");
+    	return null;
+		//return "../../mobile/goods_list";
 	}
     /**
      * 免费商品列表
@@ -140,10 +211,10 @@ public class MobileController {
      * @param wechatpubNo
      * @return
      */
-    @RequestMapping(value="/{wechatpubNo}/goodss",method=RequestMethod.GET)
-    public String freeGoodss(Model model,@PathVariable String wechatpubNo){
+    @RequestMapping(value="/goodss",method=RequestMethod.GET)
+    public String freeGoodss(Model model){
     	List<VendGoods> vendGoodss=vendGoodsService.findAll();
-    	model.addAttribute("wechatpubNo", wechatpubNo);
+    	//model.addAttribute("wechatpubNo", wechatpubNo);
     	model.addAttribute("vendGoodss", vendGoodss);
     	return "../../mobile/goods_list";
     }
@@ -152,9 +223,10 @@ public class MobileController {
      * @param model
      * @return
      */
-    @RequestMapping(value="/{id}/detail",method=RequestMethod.GET)
-    public String goodsDetail(Model model,@PathVariable int id){
+    @RequestMapping(value="/{id}/{usercode}/detail",method=RequestMethod.GET)
+    public String goodsDetail(Model model,@PathVariable int id,@PathVariable String usercode){
     	VendGoods vendGoods=vendGoodsService.getOne(id);
+    	model.addAttribute("usercode", usercode);
     	model.addAttribute("vendGoods", vendGoods);
     	return "../../mobile/goods_detail";
     }
@@ -174,13 +246,6 @@ public class MobileController {
 		
 		int id=Function.getInt(map.get("id"),0);//商品ID
 		String machinecode=map.get("machinecode");//机器码
-		
-		String wechatpubNo=map.get("wechatpubNo");//微信公众号的号码
-		VendUser vendUser=vendUserService.selectByWechatpubNo(wechatpubNo);
-		String wechatusercode="";
-		if(vendUser!=null){
-			wechatusercode=vendUser.getUsercode();//被关注二维码的商家
-		}
 		
 		VendMachine vendMachine=vendMachineService.selectByMachineCode(machinecode);
 		String shopusercode="";//购买的商品所属的商家
@@ -218,14 +283,6 @@ public class MobileController {
 			json.put("success", 1);
 			json.put("msg", "购买成功");
 		}
-		
-		//2,二维码关注操作
-		VendQrcodeAttend vendQrcodeAttend=new VendQrcodeAttend();
-		vendQrcodeAttend.setAttendTime(createTime);
-		vendQrcodeAttend.setUsercode(usercode);
-		vendQrcodeAttend.setExend1(wechatusercode);
-		vendQrcodeAttendService.insertVendQrcodeAttend(vendQrcodeAttend);
-		
 		try {
 			response.getWriter().append(json.toJSONString());
 		} catch (IOException e) {

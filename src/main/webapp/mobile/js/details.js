@@ -14,10 +14,10 @@ function gotoMyPage(){
  */
 function quickAddorder(id){
 	var machinecode=$("#machinecode").val();
+	var usercode=$("#usercode").val();
 	var map={};
 	map['id']=id;
 	map['machinecode']=machinecode;
-	map['wechatpubNo']=wechatpubNo;
 	map['usercode']=usercode;
 	var jsonMap=JSON.stringify(map);
 	

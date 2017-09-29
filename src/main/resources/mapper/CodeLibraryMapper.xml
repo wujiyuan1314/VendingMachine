@@ -145,4 +145,10 @@
     from code_library
     where codeno = #{codeno,jdbcType=VARCHAR} order by itemno asc
   </select>
+  <select id="selectByItemno" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from code_library
+    where codeno = #{codeno} and itemno= #{itemno}
+  </select>
 </mapper>

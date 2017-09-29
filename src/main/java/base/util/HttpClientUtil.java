@@ -1,7 +1,8 @@
 package base.util;
 
 import java.io.IOException;  
-import java.io.UnsupportedEncodingException;  
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URISyntaxException;  
 import java.util.ArrayList;  
 import java.util.Map;  
@@ -57,6 +58,15 @@ public class HttpClientUtil {
      */  
     public static String httpGetRequest(String url) {  
         HttpGet httpGet = new HttpGet(url);  
+        return getResult(httpGet);  
+    }  
+    /** 
+     *   
+     * @param uri
+     * @return
+     */
+    public static String httpGetRequest(URI uri) {  
+        HttpGet httpGet = new HttpGet(uri);  
         return getResult(httpGet);  
     }  
   

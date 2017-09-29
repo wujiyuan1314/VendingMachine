@@ -230,7 +230,7 @@ public class WeiXinPayController {
 		VendQrcodeAttend vendQrcodeAttend=new VendQrcodeAttend();
 		vendQrcodeAttend.setAttendTime(createTime);
 		vendQrcodeAttend.setUsercode(usercode);
-		vendQrcodeAttend.setExend1(wechatusercode);
+		vendQrcodeAttend.setExtend1(wechatusercode);
 		vendQrcodeAttendService.insertVendQrcodeAttend(vendQrcodeAttend);
 		
 		try {

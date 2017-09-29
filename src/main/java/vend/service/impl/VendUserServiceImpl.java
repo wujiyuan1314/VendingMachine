@@ -71,8 +71,11 @@ public class VendUserServiceImpl implements VendUserService {
 	 */
 	public int insertVendUser(VendUser vendUser){
 		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
-		String usercode=Function.getUsercode();
-		vendUser.setUsercode(usercode);
+		String usercode=vendUser.getUsercode();
+		if(usercode==null||"".equals(usercode)){
+			usercode=Function.getUsercode();
+			vendUser.setUsercode(usercode);
+		}
 		vendUser.setCreateTime(createTime);
 		vendUser.setUpdateTime(createTime);
 		
