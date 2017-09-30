@@ -23,12 +23,19 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <c:choose>
-        <c:when test="${codeno=='ADSCREEN'}">
-           <a href="<%=basePath1%>codeLibrary/adscreen" class="current">广告屏样式列表</a>
+          <c:choose>
+        <c:when test="${codeno=='WECHATPUBNO'}">
+           <a href="<%=basePath1%>codeLibrary/weixinset" class="current">商户微信设置</a>
         </c:when>
         <c:otherwise>
-           <a href="<%=basePath1%>codeCatalog/${codeno }/codelibrarylist" class="current">参数类别列表</a>
+          <c:choose>
+	        <c:when test="${codeno=='ADSCREEN'}">
+	           <a href="<%=basePath1%>codeLibrary/adscreen" class="current">广告屏样式列表</a>
+	        </c:when>
+	        <c:otherwise>
+	           <a href="<%=basePath1%>codeCatalog/${codeno }/codelibrarylist" class="current">参数类别列表</a>
+	        </c:otherwise>
+	      </c:choose>
         </c:otherwise>
       </c:choose>
     </div>

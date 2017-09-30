@@ -1,5 +1,15 @@
 package vend.controller;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,17 +49,6 @@ import vend.service.VendOrderService;
 import vend.service.VendParaService;
 import vend.service.VendQrcodeAttendService;
 import vend.service.VendUserService;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.log4j.Logger;
 
 @Controller
 @RequestMapping("/wxpay")
@@ -260,6 +259,7 @@ public class WeiXinPayController {
 		String startTime=map.get("startTime");//优惠券开始时间
 		String endTime=map.get("endTime");//优惠券结束时间
 		Date nowDate=DateUtil.getCurrentDate();//当前日期
+		int heat = Function.getInt(map.get("heat"),0);//加热情况，0不加热，1加热
 		if(DateUtil.daysBetweenForDay(DateUtil.parseDate(startTime), nowDate)<0){
 			json.put("success", "0");
 			json.put("msg", "还没到优惠开始日期");
@@ -287,15 +287,6 @@ public class WeiXinPayController {
 			String usercode=map.get("usercode");
 			//1,订单操作
 			VendOrder vendOrder=new VendOrder();
-			/**售卖指令*/
-			if(vendOrder.getMachineCode()!=null){
-				VendGoods vendGoods=vendGoodsService.getOne(vendOrder.getGoodsId());
-				if(vendMachine!=null&&vendGoods!=null){
-					vendGoodsService.sellGoods(vendMachine, vendGoods, vendOrder);
-				}
-			}
-			/**售卖指令*/
-			
 			Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 			vendOrder.setAmount(BigDecimal.valueOf(0.00));
 			String orderId=Function.getOrderId();
@@ -314,6 +305,16 @@ public class WeiXinPayController {
 			if(isOk==1){
 				json.put("success", 1);
 				json.put("msg", "购买成功");
+				
+				/**售卖指令*/
+				if(machinecode!=null){
+					VendGoods vendGoods=vendGoodsService.getOne(id);
+					if(vendMachine!=null&&vendGoods!=null){
+						vendGoodsService.sellGoods(vendMachine, vendGoods, vendOrder,heat);
+					}
+				}
+				/**售卖指令*/
+				
 				UserCoupon userCoupon=userCouponService.getOne(usercouponId);
 				userCoupon.setExtend1("0");//优惠券使用后设置为无效
 				userCouponService.editUserCoupon(userCoupon);
@@ -350,6 +351,7 @@ public class WeiXinPayController {
 		String usercouponId=request.getParameter("usercouponId");//用户所拥有的优惠券ID
 		String machinecode=request.getParameter("machinecode");
 		VendMachine vendMachine=vendMachineService.selectByMachineCode(machinecode);
+		int heat = Function.getInt(request.getParameter("heat"),0);//加热情况，0不加热，1加热
 		String shopusercode="";
 		if(vendMachine!=null){
 			shopusercode=vendMachine.getUsercode();
@@ -358,14 +360,6 @@ public class WeiXinPayController {
 		double price=Function.getDouble(request.getParameter("price"), 0.00);
 		//1,订单操作
 		VendOrder vendOrder=new VendOrder();
-		/**售卖指令*/
-		if(vendOrder.getMachineCode()!=null){
-			VendGoods vendGoods=vendGoodsService.getOne(vendOrder.getGoodsId());
-			if(vendMachine!=null&&vendGoods!=null){
-				vendGoodsService.sellGoods(vendMachine, vendGoods, vendOrder);
-			}
-		}
-		/**售卖指令*/
 		
 		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 		vendOrder.setAmount(BigDecimal.valueOf(price));
@@ -381,7 +375,17 @@ public class WeiXinPayController {
 		vendOrder.setFreeStatus("0");//2优惠券代替支付免费，1关注二维码免费，0不免费支付
 		vendOrder.setExtend1("1");//购买
 		vendOrder.setPayType("余额支付");
-		vendOrderService.insertVendOrder(vendOrder);
+		int isOk=vendOrderService.insertVendOrder(vendOrder);
+		if(isOk==1){
+			/**售卖指令*/
+			if(machinecode!=null){
+				VendGoods vendGoods=vendGoodsService.getOne(id);
+				if(vendMachine!=null&&vendGoods!=null){
+					vendGoodsService.sellGoods(vendMachine, vendGoods, vendOrder,heat);
+				}
+			}
+			/**售卖指令*/
+		}
 		
 		//2,修改账户
 		Date updateTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
@@ -551,6 +555,7 @@ public class WeiXinPayController {
 		String usercouponId=request.getParameter("usercouponId");//用户所拥有的优惠券ID
 		String requestPayment = request.getParameter("requestPayment");
 		String orderId = request.getParameter("orderId");
+		int heat = Function.getInt(request.getParameter("heat"),0);//加热情况，0不加热，1加热
 		logger.info("-------支付结果:"+requestPayment);
 		if(requestPayment.equals("requestPayment:ok")){
 			VendOrder vendOrder=vendOrderService.getOne(orderId);
@@ -559,7 +564,7 @@ public class WeiXinPayController {
 				VendMachine vendMachine=vendMachineService.selectByMachineCode(vendOrder.getMachineCode());
 				VendGoods vendGoods=vendGoodsService.getOne(vendOrder.getGoodsId());
 				if(vendMachine!=null&&vendGoods!=null){
-					vendGoodsService.sellGoods(vendMachine, vendGoods, vendOrder);
+					vendGoodsService.sellGoods(vendMachine, vendGoods, vendOrder,heat);
 				}
 			}
 			/**售卖指令*/

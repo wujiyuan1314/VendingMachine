@@ -272,7 +272,7 @@ public class LoginController extends LogoutFilter{
     	
     	String username=map.get("nickName");
     	VendUser venduser=vendUserService.selectByUsername(username);
-    	if(venduser==null){
+    	if(venduser==null||venduser.getRoleId()!=5){
     		resultMap.put("usercode", "");
     		resultMap.put("success", "0");
     		resultMap.put("msg", "您还没注册,请先进行注册");

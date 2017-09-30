@@ -54,6 +54,6 @@ public interface VendGoodsService {
 	 * @param vendGoods
 	 * @param vendOrder
 	 */
-	void sellGoods(VendMachine vendMachine,VendGoods vendGoods,VendOrder vendOrder);
+	void sellGoods(VendMachine vendMachine,VendGoods vendGoods,VendOrder vendOrder,int heat);
 	
 }

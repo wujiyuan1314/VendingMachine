@@ -21,9 +21,19 @@ public class VendGoods {
 
     private String goodsInfo;
 
+    private Integer heatChno;
+
+    private Integer coldChno;
+
     private Date createTime;
 
     private Date updateTime;
+
+    private String pic1;
+
+    private String pic2;
+
+    private String pic3;
 
     private String extend1;
 
@@ -72,6 +82,24 @@ public class VendGoods {
     public void setGoodsInfo(String goodsInfo) {
         this.goodsInfo = goodsInfo == null ? null : goodsInfo.trim();
     }
+    @NotNull(message="热饮通道号不能为空")
+    @Range(min=1,max=3,message="值必须在1到3之间")
+    public Integer getHeatChno() {
+        return heatChno;
+    }
+
+    public void setHeatChno(Integer heatChno) {
+        this.heatChno = heatChno;
+    }
+    @NotNull(message="冷饮通道号不能为空")
+    @Range(min=17,max=19,message="值必须在17到19之间")
+    public Integer getColdChno() {
+        return coldChno;
+    }
+
+    public void setColdChno(Integer coldChno) {
+        this.coldChno = coldChno;
+    }
 
     public Date getCreateTime() {
         return createTime;
@@ -87,6 +115,30 @@ public class VendGoods {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getPic1() {
+        return pic1;
+    }
+
+    public void setPic1(String pic1) {
+        this.pic1 = pic1 == null ? null : pic1.trim();
+    }
+
+    public String getPic2() {
+        return pic2;
+    }
+
+    public void setPic2(String pic2) {
+        this.pic2 = pic2 == null ? null : pic2.trim();
+    }
+
+    public String getPic3() {
+        return pic3;
+    }
+
+    public void setPic3(String pic3) {
+        this.pic3 = pic3 == null ? null : pic3.trim();
     }
 
     public String getExtend1() {

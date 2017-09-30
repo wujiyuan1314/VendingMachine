@@ -2,6 +2,7 @@
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,7 +24,7 @@ public class Test {
         System.out.println(request.getPathTranslated());
         System.out.println(request.getServletPath());
     }
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnsupportedEncodingException {
 		// TODO Auto-generated method stub
 		/*HttpServletRequest request = null;
 		String ids="";
@@ -57,9 +58,13 @@ public class Test {
 		String redirect_uri=EncodeUtils.urlEncode("http://zdypx.benbenniaokeji.com");
 		System.out.println(redirect_uri);
 		
-		String urlStr="https://api.weixin.qq.com/sns/userinfo?access_token=T5Q0yZU-2NMq0IxfU8ZVQmd65cp4qGydXIFbqA-12yqHrm00xMoxcNfhlx6LCaOpWhcbOCnZCYduLjdvVDFztg&openid=oz3YAuOV9V-lEkVZAUn8KrzPpcOY&lang=zh_CN";
+		String urlStr="https://api.weixin.qq.com/sns/userinfo?access_token=OgsnGHzqNrJn6pyhFrA-c7NsfEgZD25EPGw3Jtn2S5Evsfkmpf51HisoiHqRC9whmygRZ2pwTPkNikeOoWi8NA&openid=oz3YAuOV9V-lEkVZAUn8KrzPpcOY&lang=zh_CN";
 		
 		String retMsg=HttpClientUtil.httpGetRequest(urlStr);
+		System.out.println(retMsg);
+		StringBuffer sb = new StringBuffer();  
+		sb.append(retMsg);
+		retMsg=new String(sb.toString().getBytes("UTF-8"));
 		System.out.println(retMsg);
 		
 		URL url;

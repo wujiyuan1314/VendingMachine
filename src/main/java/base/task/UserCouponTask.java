@@ -50,8 +50,8 @@ public class UserCouponTask {
 	/**
 	 * 获取公众号的access_token用户调取微信用户信息
 	 */
-	@Scheduled(cron="0 0 */2 * * ?") //每两个小时执行一次
-	public void getAccessToken(){
+	//@Scheduled(cron="0 0 */2 * * ?") //每两个小时执行一次
+	/**public void getAccessToken(){
 		System.out.println(DateUtil.getCurrentDateTimeStr()+"是多少");
 		List<CodeLibrary> codeLibrarys=codeLibraryService.selectByCodeNo("WECHATPUBNO");
 		for(CodeLibrary codeLibrary:codeLibrarys){
@@ -79,7 +79,7 @@ public class UserCouponTask {
 			}
 		}
 		//String url="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxcf691127925c056b&secret=172485d2efdff5b1662e643ce361b636";
-	}
+	}**/
 	
 	
 }

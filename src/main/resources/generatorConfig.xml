@@ -40,7 +40,7 @@
     </javaClientGenerator> 
         
     <!-- 用户表 -->  
-    <table schema="t" tableName="vend_machine_int" domainObjectName="VendMachineInt"  
+    <table schema="t" tableName="vend_goods" domainObjectName="VendGoods"  
         enableCountByExample="false"  
         enableUpdateByExample="false" 
         enableDeleteByExample="false" 

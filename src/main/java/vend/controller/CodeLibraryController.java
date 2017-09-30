@@ -61,6 +61,18 @@ public class CodeLibraryController {
 		return "manage/codelibrary/codelibrary_areaset";
 	}
 	/**
+	 * 微信商户信息
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/weixinset")
+	public String weixinSet(Model model){
+		List<CodeLibrary> wechatpubnos=codeLibraryService.selectByCodeNo("WECHATPUBNO");
+		model.addAttribute("codeno", "WECHATPUBNO");
+		model.addAttribute("wechatpubnos", wechatpubnos);
+		return "manage/codelibrary/codelibrary_weixinset";
+	}
+	/**
 	 * 跳转参数类别信息添加界面
 	 * @param model
 	 * @return

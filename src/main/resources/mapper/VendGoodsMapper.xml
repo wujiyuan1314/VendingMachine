@@ -7,15 +7,20 @@
     <result column="pic" property="pic" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="goods_info" property="goodsInfo" jdbcType="VARCHAR" />
+    <result column="heat_chNo" property="heatChno" jdbcType="INTEGER" />
+    <result column="cold_chNo" property="coldChno" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="pic1" property="pic1" jdbcType="VARCHAR" />
+    <result column="pic2" property="pic2" jdbcType="VARCHAR" />
+    <result column="pic3" property="pic3" jdbcType="VARCHAR" />
     <result column="extend1" property="extend1" jdbcType="VARCHAR" />
     <result column="extend2" property="extend2" jdbcType="VARCHAR" />
     <result column="extend3" property="extend3" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, goods_name, pic, price, goods_info, create_time, update_time, extend1, extend2, 
-    extend3
+    id, goods_name, pic, price, goods_info, heat_chNo, cold_chNo, create_time, update_time, 
+    pic1, pic2, pic3, extend1, extend2, extend3
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -29,13 +34,15 @@
   </delete>
   <insert id="insert" parameterType="vend.entity.VendGoods" >
     insert into vend_goods (id, goods_name, pic, 
-      price, goods_info, create_time, 
-      update_time, extend1, extend2, 
-      extend3)
+      price, goods_info, heat_chNo, 
+      cold_chNo, create_time, update_time, 
+      pic1, pic2, pic3, extend1, 
+      extend2, extend3)
     values (#{id,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, 
-      #{price,jdbcType=DECIMAL}, #{goodsInfo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
-      #{extend3,jdbcType=VARCHAR})
+      #{price,jdbcType=DECIMAL}, #{goodsInfo,jdbcType=VARCHAR}, #{heatChno,jdbcType=INTEGER}, 
+      #{coldChno,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{pic1,jdbcType=VARCHAR}, #{pic2,jdbcType=VARCHAR}, #{pic3,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, 
+      #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="vend.entity.VendGoods" >
     insert into vend_goods
@@ -55,11 +62,26 @@
       <if test="goodsInfo != null" >
         goods_info,
       </if>
+      <if test="heatChno != null" >
+        heat_chNo,
+      </if>
+      <if test="coldChno != null" >
+        cold_chNo,
+      </if>
       <if test="createTime != null" >
         create_time,
       </if>
       <if test="updateTime != null" >
         update_time,
+      </if>
+      <if test="pic1 != null" >
+        pic1,
+      </if>
+      <if test="pic2 != null" >
+        pic2,
+      </if>
+      <if test="pic3 != null" >
+        pic3,
       </if>
       <if test="extend1 != null" >
         extend1,
@@ -87,11 +109,26 @@
       <if test="goodsInfo != null" >
         #{goodsInfo,jdbcType=VARCHAR},
       </if>
+      <if test="heatChno != null" >
+        #{heatChno,jdbcType=INTEGER},
+      </if>
+      <if test="coldChno != null" >
+        #{coldChno,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pic1 != null" >
+        #{pic1,jdbcType=VARCHAR},
+      </if>
+      <if test="pic2 != null" >
+        #{pic2,jdbcType=VARCHAR},
+      </if>
+      <if test="pic3 != null" >
+        #{pic3,jdbcType=VARCHAR},
       </if>
       <if test="extend1 != null" >
         #{extend1,jdbcType=VARCHAR},
@@ -119,11 +156,26 @@
       <if test="goodsInfo != null" >
         goods_info = #{goodsInfo,jdbcType=VARCHAR},
       </if>
+      <if test="heatChno != null" >
+        heat_chNo = #{heatChno,jdbcType=INTEGER},
+      </if>
+      <if test="coldChno != null" >
+        cold_chNo = #{coldChno,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
         update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pic1 != null" >
+        pic1 = #{pic1,jdbcType=VARCHAR},
+      </if>
+      <if test="pic2 != null" >
+        pic2 = #{pic2,jdbcType=VARCHAR},
+      </if>
+      <if test="pic3 != null" >
+        pic3 = #{pic3,jdbcType=VARCHAR},
       </if>
       <if test="extend1 != null" >
         extend1 = #{extend1,jdbcType=VARCHAR},
@@ -143,14 +195,19 @@
       pic = #{pic,jdbcType=VARCHAR},
       price = #{price,jdbcType=DECIMAL},
       goods_info = #{goodsInfo,jdbcType=VARCHAR},
+      heat_chNo = #{heatChno,jdbcType=INTEGER},
+      cold_chNo = #{coldChno,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
+      pic1 = #{pic1,jdbcType=VARCHAR},
+      pic2 = #{pic2,jdbcType=VARCHAR},
+      pic3 = #{pic3,jdbcType=VARCHAR},
       extend1 = #{extend1,jdbcType=VARCHAR},
       extend2 = #{extend2,jdbcType=VARCHAR},
       extend3 = #{extend3,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <!-- 一下为自定义方法 -->
+   <!-- 一下为自定义方法 -->
   <select id="listVendGoods" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List" />

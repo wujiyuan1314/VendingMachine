@@ -130,18 +130,24 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 	 * @param vendGoods
 	 * @param orderId
 	 */
-	public void sellGoods(VendMachine vendMachine,VendGoods vendGoods,VendOrder vendOrder){
+	public void sellGoods(VendMachine vendMachine,VendGoods vendGoods,VendOrder vendOrder,int heat){
 		JSONObject payload = new JSONObject();
 		payload.accumulate("device_id", vendMachine.getMachineId());
 		payload.accumulate("operation", "sell");
 		payload.accumulate("order", vendOrder.getOrderId());
 		//商品详情
 		JSONObject orderGoods = new JSONObject();
-		orderGoods.accumulate("chNo", vendGoods.getId());
+		if(heat==0){
+			orderGoods.accumulate("chNo", vendGoods.getHeatChno());	
+		}else if(heat==1){
+			orderGoods.accumulate("chNo", vendGoods.getColdChno());	
+		}else{
+			orderGoods.accumulate("chNo", vendGoods.getColdChno());	
+		}
 		orderGoods.accumulate("count", vendOrder.getNum());
 		//商品参数详情
 		JSONObject params = new JSONObject();
-		params.accumulate("selfCup", 1);
+		params.accumulate("selfCup", 0);
 		orderGoods.accumulate("params", params);
 		
 		payload.accumulate("orderGoods", orderGoods);
@@ -154,7 +160,7 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 			if(StringUtils.isNotBlank(retMsg)){
 				JSONObject retJson = JSONObject.fromObject(retMsg);	
 				logger.info("------------------retJson的值---------------"+retJson);
-				String retCode = retJson.getString("errCode");
+				String retCode = retJson.getString("result");
 				logger.info("------------------retCode的值---------------"+retCode);
 				if(retCode.equals("0")){
 					System.out.println("售卖成功:" + retJson.getString("msg"));

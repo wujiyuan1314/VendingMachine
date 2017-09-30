@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.junit.runners.Parameterized.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,7 @@ import com.alibaba.fastjson.JSONObject;
 import base.util.DateUtil;
 import base.util.EncodeUtils;
 import base.util.Function;
+import base.util.JsonUtil;
 import vend.entity.CodeLibrary;
 import vend.entity.VendGoods;
 import vend.entity.VendMachine;
@@ -37,6 +39,7 @@ import vend.service.GetWeiXinUserInfoService;
 import vend.service.VendGoodsService;
 import vend.service.VendMachineService;
 import vend.service.VendOrderService;
+import vend.service.VendParaService;
 import vend.service.VendQrcodeAttendService;
 import vend.service.VendRoleService;
 import vend.service.VendSyslogService;
@@ -60,6 +63,8 @@ public class MobileController {
 	CodeLibraryService codeLibraryService;
 	@Autowired
 	VendOrderService vendOrderService;
+	@Autowired
+	VendParaService vendParaService;
 	@Autowired
 	VendQrcodeAttendService vendQrcodeAttendService;
 	@Autowired
@@ -89,6 +94,7 @@ public class MobileController {
 			logger.info("---------ShVendUser为空----------");
 		}
 		
+		String usercode=Function.getUsercode();
 		if(ShVendUser!=null){
 			if(!map1.isEmpty()){
 				String access_token = map1.get("access_token");
@@ -112,7 +118,6 @@ public class MobileController {
 					if(vendUser==null){
 						logger.info("---------11:添加用户信息:----------");
 						vendUser=new VendUser();
-						String usercode=Function.getUsercode();
 						vendUser.setUsercode(usercode);
 						vendUser.setUsername(nickname);
 						vendUser.setAddress(city);
@@ -136,7 +141,7 @@ public class MobileController {
 					}else{
 						logger.info("---------21:添加用户关注商户二维码信息:----------");
 						logger.info("---------22:添加用户关注商户二维码信息usercode:----------"+vendUser.getUsercode());
-						model.addAttribute("usercode", vendUser.getUsercode());
+						usercode=vendUser.getUsercode();
 						//二维码关注操作
 						VendQrcodeAttend vendQrcodeAttend=new VendQrcodeAttend();
 						logger.info("---------23:添加用户关注商户二维码信息createTime:----------"+createTime);
@@ -155,7 +160,7 @@ public class MobileController {
 		logger.info("---------开始返回:----------");
 		List<VendGoods> vendGoodss=vendGoodsService.findAll();
     	model.addAttribute("vendGoodss", vendGoodss);
-		return "../../mobile/goods_list";
+    	return "redirect:"+usercode+"/goodss";
 	}
 	/**
 	 * 消费用户手机登录
@@ -191,7 +196,8 @@ public class MobileController {
     	}
     	
     	String url="";
-		String redirect_uri=EncodeUtils.urlEncode("http://zdypx.benbenniaokeji.com/mobile/getcode");
+    	String redirect_url=vendParaService.selectByParaCode("redirect_uri");
+		String redirect_uri=EncodeUtils.urlEncode(redirect_url);
 		if(codeLibrary!=null){
 			url="https://open.weixin.qq.com/connect/oauth2/authorize?appid="+codeLibrary.getItemname()+""
 					+ "&redirect_uri="+redirect_uri+"&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect";
@@ -211,10 +217,10 @@ public class MobileController {
      * @param wechatpubNo
      * @return
      */
-    @RequestMapping(value="/goodss",method=RequestMethod.GET)
-    public String freeGoodss(Model model){
+    @RequestMapping(value="/{usercode}/goodss",method=RequestMethod.GET)
+    public String freeGoodss(Model model,@PathVariable String usercode){
     	List<VendGoods> vendGoodss=vendGoodsService.findAll();
-    	//model.addAttribute("wechatpubNo", wechatpubNo);
+    	model.addAttribute("usercode", usercode);
     	model.addAttribute("vendGoodss", vendGoodss);
     	return "../../mobile/goods_list";
     }
@@ -238,31 +244,47 @@ public class MobileController {
      * @throws IOException
      */
 	@RequestMapping(value="/freePay",method=RequestMethod.POST)
-	public String freePay(HttpServletResponse response,@RequestBody Map<String, String> map) throws IOException{
+	public String freePay(HttpServletResponse response,@RequestParam String jsonMap) throws IOException{
 		response.setCharacterEncoding("UTF-8");
 		JSONObject json = new JSONObject();
 		json.put("success", "0");
 		json.put("msg", "购买失败");
 		
+		Map<String,Object> map=JsonUtil.getMap4Json(jsonMap);
 		int id=Function.getInt(map.get("id"),0);//商品ID
-		String machinecode=map.get("machinecode");//机器码
+		String machinecode=map.get("machinecode").toString();//机器码
+		if(machinecode==null||"".equals(machinecode)){
+			json.put("success", "0");
+			json.put("msg", "请输入机器码");
+			response.getWriter().append(json.toJSONString());
+			return null;
+		}
 		
 		VendMachine vendMachine=vendMachineService.selectByMachineCode(machinecode);
-		String shopusercode="";//购买的商品所属的商家
-		if(vendMachine!=null){
-			shopusercode=vendMachine.getUsercode();
+		if(vendMachine==null){
+			json.put("success", "0");
+			json.put("msg", "该机器码不存在");
+			response.getWriter().append(json.toJSONString());
+			return null;
 		}
-		String usercode=map.get("usercode");
+		
+		String shopusercode=vendMachine.getUsercode();;//购买的商品所属的商家
+		if(shopusercode==null||"".equals(shopusercode)){
+			json.put("success", "0");
+			json.put("msg", "该商家不存在");
+			response.getWriter().append(json.toJSONString());
+			return null;
+		}
+		
+		String usercode=map.get("usercode").toString();
+		if(usercode==null||"".equals(usercode)){
+			json.put("success", "0");
+			json.put("msg", "请先进行注册");
+			response.getWriter().append(json.toJSONString());
+			return null;
+		}
 		//1,订单操作
 		VendOrder vendOrder=new VendOrder();
-		/**售卖指令*/
-		if(vendOrder.getMachineCode()!=null){
-			VendGoods vendGoods=vendGoodsService.getOne(vendOrder.getGoodsId());
-			if(vendMachine!=null&&vendGoods!=null){
-				vendGoodsService.sellGoods(vendMachine, vendGoods, vendOrder);
-			}
-		}
-		/**售卖指令*/
 		
 		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 		vendOrder.setAmount(BigDecimal.valueOf(0.00));
@@ -280,6 +302,13 @@ public class MobileController {
 		vendOrder.setPayType("扫描二维码免费领取");
 		int isOk=vendOrderService.insertVendOrder(vendOrder);
 		if(isOk==1){
+			/**售卖指令*/
+			int heat=Function.getInt(map.get("heat"), 0);
+			VendGoods vendGoods=vendGoodsService.getOne(id);
+			if(vendMachine!=null&&vendGoods!=null){
+				vendGoodsService.sellGoods(vendMachine, vendGoods, vendOrder,heat);
+			}
+			/**售卖指令*/
 			json.put("success", 1);
 			json.put("msg", "购买成功");
 		}

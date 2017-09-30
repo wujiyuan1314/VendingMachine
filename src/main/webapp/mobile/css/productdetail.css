@@ -471,6 +471,6 @@ header .go_home{ width:30px; height:30px; background:url(../img/home.jpg) right 
 /*鏁伴噺*/
 .detail .mid_infor .oper{  height:30px; width:35px; text-align:center; font-size:2rem;  line-height:30px;  background-color:#2BB085; border:1px solid #2BB085;}
 .detail .mid_infor .oper a{ display:block; color:#fff; }
-.detail .mid_infor .btn_input{ width:100px; height:30px; border:1px solid #4D9A3F; border-left:none; border-right:none;text-align:center; font-size:1.5rem; line-height:30px; cursor:pointer;}
+.detail .mid_infor .btn_input{ height:30px; border:1px solid #4D9A3F; text-align:center; font-size:1.5rem; line-height:30px; cursor:pointer;}
 
 .detail .mid_infor .common_font{ font-size:1.5rem; color:#333;  }/*涓�埇淇℃伅鏍峰紡*/

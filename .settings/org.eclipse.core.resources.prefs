@@ -24,7 +24,6 @@ encoding//src/main/java/vend/controller/VendSyslogController.java=UTF-8
 encoding//src/main/java/vend/controller/VendUserController.java=UTF-8
 encoding//src/main/java/vend/controller/WeiXinChargeController.java=UTF-8
 encoding//src/main/java/vend/controller/WeiXinPayController.java=UTF-8
-encoding//src/main/java/vend/dao/VendGoodsMapper.java=UTF-8
 encoding//src/main/java/vend/dao/VendPermissionMapper.java=UTF-8
 encoding//src/main/java/vend/dao/VendRoleMapper.java=UTF-8
 encoding//src/main/java/vend/entity/VendAccount.java=UTF-8

@@ -1,6 +1,6 @@
 //跳转到我的页面
-function gotoMyPage(){
-    var backUrl=basePath6+"/mobile/goodss";
+function gotoMyPage(usercode){
+    var backUrl=basePath6+"mobile/"+usercode+"/goodss";
 	if (backUrl ==""){
 		history.back();
 	} else{
@@ -15,16 +15,21 @@ function gotoMyPage(){
 function quickAddorder(id){
 	var machinecode=$("#machinecode").val();
 	var usercode=$("#usercode").val();
+	var heat=0;
+	if(machinecode==''){
+		alert("请输入机器码");
+		return;
+	}
 	var map={};
 	map['id']=id;
 	map['machinecode']=machinecode;
 	map['usercode']=usercode;
+	map['heat']=heat;
 	var jsonMap=JSON.stringify(map);
-	
-	 var params={
-		jsonMap:jsonMap
+	var params={
+			jsonMap:jsonMap
     }
-	var url=basePath+"manage/freePay";
+	var url=basePath6+"mobile/freePay";
 	$.ajax({url:url,
 		type:'post',
 		async: false,      //ajax同步
@@ -36,9 +41,12 @@ function quickAddorder(id){
 			var success=data.success;
 			var msg=data.msg;
 			if(success==0){
+				alert(msg);
 			}else{
 				alert(msg);
-				window.location.reload();
+				window.opener=null;
+				window.open('','_self');
+				window.close();
 			}
 		},
 	    error:function(){
