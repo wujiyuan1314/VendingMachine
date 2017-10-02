@@ -95,7 +95,12 @@ public class CodeLibraryController {
 	@RequiresPermissions({"codeLibrary:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
 	public String addcodeLibrary(HttpServletRequest request,Model model,@Validated CodeLibrary codeLibrary,BindingResult br){
-    	if(br.hasErrors()){
+    	if(codeLibrary.getCodeno().equals("ADSCREEN")){
+    		if(codeLibrary.getExtend2()==null||codeLibrary.getExtend2().equals("")){
+    			br.rejectValue("extend2", "NOTEMPTY", "广告屏页web面地址不能为空");
+    		}
+    	}
+		if(br.hasErrors()){
     		return "manage/codelibrary/codelibrary_add";
     	}
     	String path = request.getContextPath();
@@ -138,6 +143,11 @@ public class CodeLibraryController {
     @RequiresPermissions({"codeLibrary:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String editCodeLibrary(Model model,@Validated CodeLibrary codeLibrary,BindingResult br){
+    	if(codeLibrary.getCodeno().equals("ADSCREEN")){
+    		if(codeLibrary.getExtend2()==null||codeLibrary.getExtend2().equals("")){
+    			br.rejectValue("extend2", "NOTEMPTY", "广告屏页web面地址不能为空");
+    		}
+    	}
     	if(br.hasErrors()){
     		return "manage/codelibrary/codelibrary_edit";
     	}

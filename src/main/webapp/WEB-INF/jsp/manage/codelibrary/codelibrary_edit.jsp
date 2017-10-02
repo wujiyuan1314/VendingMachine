@@ -77,6 +77,19 @@
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend1" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
+	              
+	              <c:choose>
+			        <c:when test="${codeno=='ADSCREEN'}">
+			           <div class="control-group">
+		                <label class="control-label">广告屏页web面地址</label>
+		                <div class="controls">
+		                  <sf:textarea path="extend2"/>
+		                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend2" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+		                </div>
+		              </div>
+			        </c:when>
+	              </c:choose>
+	              
 	              <div class="form-actions">
 	                <input type="submit" value="修改" class="btn btn-success">
 	              </div>

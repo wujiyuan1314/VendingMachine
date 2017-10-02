@@ -1,0 +1,65 @@
+@charset "utf-8";
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldser,input,textarea,p,blockquote,th,td{margin:0; padding:0;}
+table{border-collapse:collapse; border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,th,var{font-style:normal; font-weight:normal;}
+code, kbd, pre, samp, tt {font-family:"Courier New", Courier, monospace;}
+small{font-size:12px;}
+ol,ul,li{list-style:none;}
+a{text-decoration:none; }
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{ content:'';}
+abbr[title], acronym[title] { border-bottom:1px dotted; cursor:help; }
+hr{border:none; height:1px; *color:#fff;}
+
+/*针对html5元素初始化*/
+article, aside, footer, header, hgroup, nav, section, figcaption, details, summary {display:block;}
+menu{list-style:none; margin:0; padding:0; }
+figure {display:block; margin:0; }
+output, time{display:inline; }
+mark {display:inline; background:yellow; color:#000; }
+address{padding:0; }
+
+.content { width:1000px; margin:0 auto; overflow:hidden; clear:both;}
+.video { width:100%; height:400px;}
+.use_info { background:url(../img/pic.jpg) no-repeat bottom center #a2ced1; padding:40px; overflow:hidden; clear:both;}
+.use_info .wcode { width:240px; float:left;}
+.use_info .wcode .qrcode { width:200px;margin:0 auto;}
+.use_info .wcode .qrcode img { width:200px; height:200px; border:10px solid #fff; border-radius:6px;}
+.use_info .wcode p { line-height:40px; color:#fff; font-size:24px; text-align:center;  font-weight:bold;font-family:"Microsoft YaHei";}
+.use_info .consume { width:200px; margin-top:40px; float:left; margin-left:130px;}
+.use_info .consume h2 { font-size:24px; font-weight:bold; color:#fff; text-align:center;font-family:"Microsoft YaHei";}
+.use_info .consume input { width:100%; margin-top:20px; background:#fff; height:50px; line-height:50px; border-radius:6px; border:0; outline:0;}
+.use_info .step { width:180px; float:right; position:relative; padding:20px; color:#fff;font-family:"Microsoft YaHei";}
+.use_info .step h2 { font-size:18px; text-align:center; padding-bottom:20px;}
+.use_info .step p { line-height:30px; font-size:16px; padding-left:15px;}
+.use_info .step .lt { position:absolute; top:10px ; left:10px; background:url(../img/left_t.png) no-repeat left top; width:16px; height:21px;}
+.use_info .step .rb { position:absolute; bottom:10px ; right:10px; background:url(../img/bottom_r.png) no-repeat right bottom; width:16px; height:21px;}
+.adv_pic { width:100%;}
+.adv_pic img { width:100%; height:400px;}
+
+/* css 重置 */
+*{margin:0; padding:0; list-style:none; }
+body{ background:#fff; font:normal 12px/22px 宋体;  }
+img{ border:0;  }
+a{ text-decoration:none; color:#333;  }
+a:hover{ color:#1974A1;  }
+body{ padding-top:10px;}
+.js{ width:90%; padding:20px; border:1px solid #ddd; border-width:2px 1px 1px 2px; border-color:#aaa #ddd #ddd #aaa; margin:auto; margin-top:10px; font-family: "Courier New", Courier, monospace; font-size:12px; background:#f8f8f8; color: #555}.js:hover{ background:#f1f1f1; cursor:pointer;border-color: #ff7f00;color: #ff7f00}
+/* 本例子css */
+.adv_pic { position: relative; width:100%; overflow: hidden; }
+.adv_pic .pic{ position:relative; z-index:0; }
+.adv_pic .pic img { width:100%;  display: block; }
+.adv_pic .hd { width:100%; position: absolute; bottom: 10px; text-align: center; font-size:0; z-index:1; }
+.adv_pic .hd li{margin: 0 5px; background: url(../images/dot.png) no-repeat 0 -16px; height: 16px; overflow: hidden; width: 16px; cursor: pointer;
+	display:inline-block; *display:inline; zoom:1;  _background: url(../images/dot8.png) no-repeat 0 -16px;
+}
+.adv_pic .hd .on{ background-position:0 0; }
+
+.adv_pic .prev,
+.adv_pic .next { width: 60px; height: 90px; margin: -60px 0 0; display: none; background: url(../images/ad_ctr.png) no-repeat 0 0; position: absolute; top: 50%; z-index: 10; cursor: pointer; text-indent: -9999px; filter:alpha(opacity=20);opacity:0.2;  }
+.adv_pic .prev { left: 0; }
+.adv_pic .next { background-position: 0 -90px; right: 0; }
+.adv_pic .prev:hover,
+.adv_pic .next:hover { filter:alpha(opacity=50) !important;opacity:0.5 !important;  }

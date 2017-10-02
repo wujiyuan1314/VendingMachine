@@ -85,7 +85,7 @@
 	           </div> 
 			   <div class="form-actions">
 	                <input type="button" value="保存" class="btn btn-success" onclick="initalize();">
-	                <input type="button" value="设备参数设置" class="btn btn-success" onclick="initalize();">
+	                <input type="button" value="设备参数设置" class="btn btn-success" onclick="setDevParam('${id}');">
 	           </div>
 			  
 		  </div>

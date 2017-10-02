@@ -138,9 +138,9 @@ public class VendGoodsServiceImpl implements VendGoodsService {
 		//商品详情
 		JSONObject orderGoods = new JSONObject();
 		if(heat==0){
-			orderGoods.accumulate("chNo", vendGoods.getHeatChno());	
-		}else if(heat==1){
 			orderGoods.accumulate("chNo", vendGoods.getColdChno());	
+		}else if(heat==1){
+			orderGoods.accumulate("chNo", vendGoods.getHeatChno());	
 		}else{
 			orderGoods.accumulate("chNo", vendGoods.getColdChno());	
 		}

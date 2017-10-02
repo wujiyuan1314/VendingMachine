@@ -178,7 +178,7 @@
 											      <c:forEach items="${adscreens}" var="adscreen" varStatus="st">
 													<li class="span2">
 														<div class="thumbnail">
-															<img src="${pageContext.request.contextPath}/resources/img/adscreen/fg${st.index+1}.jpg" style="width:120px;height:150px;">
+															<img src="${pageContext.request.contextPath}/resources/img/adscreen/fg${adscreen.itemno}.jpg" style="width:120px;height:150px;">
 															<div class="caption">
 																<p>
 																    ${adscreen.itemname}
@@ -259,7 +259,7 @@ $(".add-on").click(function(){
 //选择广告屏
 var length=${adscreens.size()};
 function checkitemno(j){
-	for(var i=0;i<length;i++){
+	for(var i=1;i<length+1;i++){
 		$("#thumbBox"+i).removeClass("checked");
 	}
 	$("#thumbBox"+j).addClass("checked");

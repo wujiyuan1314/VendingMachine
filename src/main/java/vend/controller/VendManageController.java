@@ -33,12 +33,14 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import vend.entity.CodeLibrary;
 import vend.entity.VendAd;
+import vend.entity.VendGoods;
 import vend.entity.VendMachine;
 import vend.entity.VendMachineInt;
 import vend.entity.VendShopQrcode;
 import vend.entity.VendUser;
 import vend.service.CodeLibraryService;
 import vend.service.VendAdService;
+import vend.service.VendGoodsService;
 import vend.service.VendMachineIntService;
 import vend.service.VendMachineService;
 import vend.service.VendParaService;
@@ -57,6 +59,8 @@ public class VendManageController{
 	VendParaService vendParaService;
 	@Autowired
 	VendAdService vendAdService;
+	@Autowired
+	VendGoodsService vendGoodsService;
 	@Autowired
 	VendShopQrcodeService vendShopQrcodeService;
 	@Autowired
@@ -129,14 +133,11 @@ public class VendManageController{
 				logger.info("------------------retJson的值---------------"+retJson);
 				String retCode = retJson.getString("result");
 				logger.info("------------------retCode的值---------------"+retCode);
+				String devlist = retJson.getString("devlist");
+				logger.info("------------------devlist的值---------------"+devlist);
 				if(retCode.equals("0")){
-					vendMachine.setUseStatus("1");
-					int isOk=vendMachineService.editVendMachine(vendMachine);
-					if(isOk==1){
-						json.put("success","1");
-						json.put("msg", "获取机器信息成功");
-						logger.info("------------------获取机器信息成功---------------");
-					}
+					json.put("success","1");
+					json.put("msg", "获取机器信息成功");
 				}				
 			}else{
 				System.out.println("获取机器信息失败");
@@ -481,7 +482,7 @@ public class VendManageController{
 		response.setCharacterEncoding("UTF-8");
 		JSONObject json = new JSONObject();
 		json.put("success","0");
-		json.put("msg", "自检失败");
+		json.put("msg", "获取设备参数失败");
 
 		VendMachine vendMachine=vendMachineService.getOne(id);
 		if(vendMachine==null){
@@ -571,7 +572,7 @@ public class VendManageController{
 		for(VendMachineInt vendMachineInt:vendMachineInts){
 			if(vendMachineInt!=null){
 		    	String hot=vendMachineInt.getHotStatus().equals("0")?"冷":"热";
-		    	if(vendMachineInt.getExtend1()!=null&&vendMachineInt.getExtend1().equals("1")){
+		    	if(vendMachineInt.getExtend1()==null||!vendMachineInt.getExtend1().equals("1")){
 		    		json.put("success","0");
 					json.put("msg", "商品"+vendMachineInt.getGoodsName()+"（"+hot+"）的参数未设置保存");
 					isparamset=1;
@@ -596,11 +597,20 @@ public class VendManageController{
 		for(int i=0;i<vendMachineInts.size();i++){
 			VendMachineInt vendMachineInt1=vendMachineInts.get(i);
 			if(vendMachineInt1!=null){
-				JSONObject chParam = new JSONObject();
-				chParam.accumulate("chNo", (i+1));
-				chParam.accumulate("water", vendMachineInt1.getWaterOutTime());
-				chParam.accumulate("mater", vendMachineInt1.getGrainOutTime());
-				params.accumulate("chParam", chParam);
+				VendGoods vendGoods=vendGoodsService.getOne(vendMachineInt1.getGoodsId());
+				if(vendGoods!=null){
+					JSONObject chParam = new JSONObject();
+					chParam.accumulate("chNo", vendGoods.getColdChno());
+					if(vendMachineInt1.getHotStatus().equals("0")){
+						chParam.accumulate("chNo", vendGoods.getColdChno());
+					}
+					if(vendMachineInt1.getHotStatus().equals("1")){
+						chParam.accumulate("chNo", vendGoods.getHeatChno());
+					}
+					chParam.accumulate("water", vendMachineInt1.getWaterOutTime());
+					chParam.accumulate("mater", vendMachineInt1.getGrainOutTime());
+					params.accumulate("chParam", chParam);
+				}
 			}
 		}
 		payload.accumulate("params", "params");
@@ -695,9 +705,13 @@ public class VendManageController{
 				String retCode = retJson.getString("result");
 				logger.info("------------------retCode的值---------------"+retCode);
 				if(retCode.equals("0")){
-					json.put("success","1");
-					json.put("msg", "设置商户二维码成功");
-					logger.info("------------------设置商户二维码成功---------------");
+					vendMachine.setShopQrcode(vendShopQrcode.getId());
+					int isOk=vendMachineService.editVendMachine(vendMachine);
+					if(isOk==1){
+						json.put("success","1");
+						json.put("msg", "设置商户二维码成功");
+						logger.info("------------------设置商户二维码成功---------------");
+					}
 				}else{
 					System.out.println("设置商户二维码失败:" + retJson.getString("msg"));
 				}
@@ -768,8 +782,12 @@ public class VendManageController{
 				String retCode = retJson.getString("result");
 				logger.info("------------------retCode的值---------------"+retCode);
 				if(retCode.equals("0")){
-					json.put("success","1");
-					json.put("msg", "设置/更新机器识别码成功");
+					vendMachine.setMachineCode(csrCode);
+					int isOk=vendMachineService.editVendMachine(vendMachine);
+					if(isOk==1){
+						json.put("success","1");
+						json.put("msg", "设置/更新机器识别码成功");
+					}
 					logger.info("------------------设置/更新机器识别码成功---------------");
 				}else{
 					System.out.println("设置/更新机器识别码失败:" + retJson.getString("msg"));
@@ -873,12 +891,40 @@ public class VendManageController{
 			return null;
 		}
 		
+		if(vendMachine.getShopQrcode()==null){
+			json.put("success","0");
+			json.put("msg", "请先设置商户二维码");
+			response.getWriter().append(json.toString());
+			return null;
+		}
+		
+		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
+		if(vendShopQrcode==null){
+			json.put("success","0");
+			json.put("msg", "该二维码信息不存在");
+			response.getWriter().append(json.toString());
+			return null;
+		}
+		
+		CodeLibrary codeLibrary=codeLibraryService.selectByItemno("ADSCREEN", vendAd.getExtend2());
+		if(codeLibrary==null){
+			json.put("success","0");
+			json.put("msg", "所选广告屏样式不存在");
+			response.getWriter().append(json.toString());
+			return null;	
+		}
+		
+		String weburl=codeLibrary.getExtend2();
+		if(weburl==null){
+			weburl="adscreen/screen1";
+		}
+		
 		JSONObject payload = new JSONObject();
 		payload.accumulate("device_id", vendMachine.getMachineId());
 		payload.accumulate("operation", "setAdItemList");
-		payload.accumulate("qrPic", "1234567890abcdef");
+		payload.accumulate("qrPic", bathPath+"/"+vendShopQrcode.getQrcode());
 		payload.accumulate("csrCode", vendMachine.getMachineCode());
-		payload.accumulate("styleDoc", "http://device.xxx.com/adstyle1.htm");
+		payload.accumulate("styleDoc", bathPath+weburl);
 		logger.info("------------------4：payload值---------------"+payload);
 		
 		JSONArray picArray = new JSONArray();
@@ -1033,7 +1079,7 @@ public class VendManageController{
 	public String reportAlarm(@PathVariable int id){
 		JSONObject payload = new JSONObject();
 		payload.accumulate("device_id", id);
-		payload.accumulate("operation", "login");
+		payload.accumulate("operation", "reportAlarm");
 		payload.accumulate("alarmLv", 1);	
 		JSONObject alarms = new JSONObject();
 		payload.accumulate("item1", "a1");
@@ -1052,11 +1098,12 @@ public class VendManageController{
 						vendMachine.setUseStatus("2");
 						vendMachineService.editVendMachine(vendMachine);
 					}*/
+					System.out.println("上传设备告警信息成功");
 				}else{
-					System.out.println("自检失败:" + retJson.getString("msg"));
+					System.out.println("上传设备告警信息失败:" + retJson.getString("msg"));
 				}				
 			}else{
-				System.out.println("自检失败");
+				System.out.println("上传设备告警信息失败");
 			}
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
@@ -1149,6 +1196,8 @@ public class VendManageController{
 		System.out.println("-------回调结果payload----------------:" + payload);
 		logger.info("-------回调结果id:" + id);
 		System.out.println("-------回调结果id----------------:" + id);
+		JSONObject retJson = JSONObject.fromObject(payload);	
+		System.out.println("-------回调结果retJson----------------:" + retJson);
 		return payload.toString();
 	}
 	/**

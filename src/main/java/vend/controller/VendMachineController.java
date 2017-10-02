@@ -457,6 +457,7 @@ public class VendMachineController{
 				vendMachineInts.add(vendMachineInt);
 			}
 		}
+		model.addAttribute("id", id);
 		model.addAttribute("vendMachineInts", vendMachineInts);
 		return "manage/machine/machine_initialize"; 
 	}

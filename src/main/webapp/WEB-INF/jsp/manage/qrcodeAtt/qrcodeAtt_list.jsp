@@ -69,7 +69,7 @@ width:100%;
 			            <tr>
 			              <th><input type="checkbox" onclick="selectAll('Id');" id="all" name="title-table-checkbox" /></th>
 		                  <th style="width:25px;">序号</th>
-		                  <th>关注的二维码</th>
+		                  <th>被关注的商户</th>
 		                  <th>关注人</th>
 		                  <th>关注世间</th>
 		                  <th>操作</th>
@@ -80,7 +80,7 @@ width:100%;
 				           <tr class="grqrcodeAtteX">
 					          <th><input type="checkbox" name="Id" id="Id" value="${vendQrcodeAttend.id}"/></th>
 					          <td style="text-align:center;">${st.index+1}</td>
-			                  <td>${vendQrcodeAttend.qrcodeId}</td>
+			                  <td>${vendQrcodeAttend.extend1}</td>
 			                  <td>${vendQrcodeAttend.usercode}</td>
 			                  <td><fmt:formatDate value="${vendQrcodeAttend.attendTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td class="center">
