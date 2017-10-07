@@ -1,6 +1,5 @@
 package vend.controller;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -74,6 +73,32 @@ public class VendCouponController{
 		return "manage/coupon/coupon_list";
 	}
 	/**
+	 * 充值优惠活动列表
+	 * @param model
+	 * @param VendCoupon
+	 * @param page
+	 * @param request
+	 * @return
+	 */
+	@RequiresPermissions({"coupon:chargecoupons"})
+	@RequestMapping(value="/chargecoupons")
+	public String listReChargeCoupon(Model model,@ModelAttribute VendCoupon vendCoupon, @ModelAttribute Page page,HttpServletRequest request) {
+		String currentPageStr = request.getParameter("currentPage");
+		logger.info(currentPageStr + "===========");
+		if(currentPageStr != null){
+			int currentPage = Integer.parseInt(currentPageStr);
+			page.setCurrentPage(currentPage);
+		}
+		logger.info(page.toString());
+		logger.info(vendCoupon.toString());
+		List<CodeLibrary> coupons=codeLibraryService.selectByCodeNo("COUPONTYPE");
+		model.addAttribute("coupons", coupons);
+		vendCoupon.setExtend1("3");
+		List<VendCoupon> vendCoupons = vendCouponService.listVendCoupon(vendCoupon, page);
+		model.addAttribute("vendCoupons",vendCoupons);
+		return "manage/coupon/coupon_recharge";
+	}
+	/**
 	 * 得到消费用户的优惠券信息
 	 * @param response
 	 * @throws IOException
@@ -105,7 +130,7 @@ public class VendCouponController{
 	 */
 	@RequiresPermissions({"coupon:add"})
 	@RequestMapping(value="/add",method=RequestMethod.GET)
-	public String coupond(Model model){
+	public String add(Model model){
 		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
 		model.addAttribute("couponareas", couponareas);
 		model.addAttribute(new VendCoupon());
@@ -121,7 +146,7 @@ public class VendCouponController{
     */
 	@RequiresPermissions({"coupon:add"})
     @RequestMapping(value="/add",method=RequestMethod.POST)
-	public String coupond(HttpServletRequest request,Model model,@Validated VendCoupon vendCoupon,BindingResult br){
+	public String add(HttpServletRequest request,Model model,@Validated VendCoupon vendCoupon,BindingResult br){
 		double couponPrice=Function.getDouble(vendParaService.selectByParaCode("coupon_price"),0.00);
 		if(vendCoupon.getCouponScale().doubleValue()>couponPrice){
 			br.rejectValue("couponScale", "NOTBELOGNGOODSPRICE", "优惠券金额不能高于商品最高金额");
@@ -195,15 +220,18 @@ public class VendCouponController{
 		}
 		
 		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
-		/**String areaId="";
+		String areaId="";
 		if(vendCoupon!=null){
 			areaId=vendCoupon.getAreaId();
+			if(areaId==null){
+				areaId="";
+			}
 		}
 		for(CodeLibrary couponarea:couponareas){
 			if(areaId.indexOf(couponarea.getItemname()+",")!=-1){
 				couponarea.setExtend2("1");
 			}
-		}**/
+		}
 		model.addAttribute("couponareas", couponareas);
     	if(br.hasErrors()){
     		return "manage/coupon/coupon_edit";
@@ -217,6 +245,132 @@ public class VendCouponController{
     	vendCouponService.editVendCoupon(vendCoupon);
 		return "redirect:coupons";
 	}
+	
+	/**
+	 * 跳转充值活动添加界面
+	 * @param model
+	 * @return
+	 */
+	@RequiresPermissions({"coupon:rechargeadd"})
+	@RequestMapping(value="/rechargeadd",method=RequestMethod.GET)
+	public String rechargeadd(Model model){
+		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
+		model.addAttribute("couponareas", couponareas);
+		model.addAttribute(new VendCoupon());
+		return "manage/coupon/recharge_add";
+	}
+   /**
+    * 添加充值活动
+    * @param request
+    * @param model
+    * @param vendCoupon
+    * @param br
+    * @return
+    */
+	@RequiresPermissions({"coupon:rechargeadd"})
+    @RequestMapping(value="/rechargeadd",method=RequestMethod.POST)
+	public String rechargeadd(HttpServletRequest request,Model model,@Validated VendCoupon vendCoupon,BindingResult br){
+		double couponPrice=Function.getDouble(vendParaService.selectByParaCode("coupon_price"),0.00);
+		if(vendCoupon.getCouponScale().doubleValue()>couponPrice){
+			br.rejectValue("couponScale", "NOTBELOGNGOODSPRICE", "优惠券金额不能高于商品最高金额");
+		}
+		String newareaId[]=request.getParameterValues("areaId");
+		if(newareaId==null||newareaId.length==0){
+			br.rejectValue("areaId", "NOCHOOSEAREA", "请选择地区");
+		}
+		
+		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
+		model.addAttribute("couponareas", couponareas);
+    	if(br.hasErrors()){
+    		return "manage/coupon/recharge_add";
+    	}
+    	String newareaIds="";
+    	for(String str:newareaId){
+    		newareaIds+=str+",";
+    	}
+    	vendCoupon.setAreaId(newareaIds);
+    	vendCoupon.setValid("0");
+    	vendCoupon.setExtend1("3");
+    	vendCouponService.insertVendCoupon(vendCoupon);
+    	return "redirect:chargecoupons";
+	}
+    /**
+     * 跳转优惠券修改界面
+     * @param model
+     * @param id
+     * @return
+     */
+	@RequiresPermissions({"coupon:rechargeedit"})
+	@RequestMapping(value="/{id}/rechargeedit",method=RequestMethod.GET)
+	public String rechargeedit(Model model,@PathVariable int id){
+		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
+		VendCoupon vendCoupon=vendCouponService.getOne(id);
+		String areaId="";
+		if(vendCoupon!=null){
+			areaId=vendCoupon.getAreaId();
+		}
+		if(areaId==null){
+			areaId="";
+		}
+		for(CodeLibrary couponarea:couponareas){
+			if(areaId.indexOf(couponarea.getItemname()+",")!=-1){
+				couponarea.setExtend2("1");
+			}else{
+				couponarea.setExtend2("0");
+			}
+		}
+		model.addAttribute("couponareas", couponareas);
+		model.addAttribute(vendCoupon);
+		return "manage/coupon/recharge_edit";
+	}
+	/**
+	 * 修改充值活动
+	 * @param request
+	 * @param model
+	 * @param vendCoupon
+	 * @param br
+	 * @return
+	 */
+	@RequiresPermissions({"coupon:rechargeedit"})
+    @RequestMapping(value="/rechargeedit",method=RequestMethod.POST)
+	public String rechargeedit(HttpServletRequest request,Model model,@Validated VendCoupon vendCoupon,BindingResult br){
+		double couponPrice=Function.getDouble(vendParaService.selectByParaCode("coupon_price"),0.00);
+		if(vendCoupon.getCouponScale().doubleValue()>couponPrice){
+			br.rejectValue("couponScale", "NOTBELOGNGOODSPRICE", "优惠券金额不能高于商品最高金额");
+		}
+		String newareaId[]=request.getParameterValues("areaId");
+		if(newareaId==null||newareaId.length==0){
+			br.rejectValue("areaId", "NOCHOOSEAREA", "请选择地区");
+		}
+		
+		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
+		String areaId="";
+		if(vendCoupon!=null){
+			areaId=vendCoupon.getAreaId();
+			if(areaId==null){
+				areaId="";
+			}
+		}
+		for(CodeLibrary couponarea:couponareas){
+			if(areaId.indexOf(couponarea.getItemname()+",")!=-1){
+				couponarea.setExtend2("1");
+			}
+		}
+		model.addAttribute("couponareas", couponareas);
+    	if(br.hasErrors()){
+    		return "manage/coupon/recharge_edit";
+    	}
+    	String newareaIds="";
+    	for(String str:newareaId){
+    		newareaIds+=str+",";
+    	}
+    	vendCoupon.setAreaId(newareaIds);
+        vendCoupon.setValid("0");
+        vendCoupon.setExtend1("3");
+    	vendCouponService.editVendCoupon(vendCoupon);
+		return "redirect:chargecoupons";
+	}
+	
 	/**
 	 * 投放优惠券
 	 * @param id

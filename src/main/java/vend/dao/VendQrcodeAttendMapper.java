@@ -19,7 +19,7 @@ public interface VendQrcodeAttendMapper {
     int updateByPrimaryKeySelective(VendQrcodeAttend record);
 
     int updateByPrimaryKey(VendQrcodeAttend record);
-    /**下面是自定义方法*/
+    /**涓嬮潰鏄嚜瀹氫箟鏂规硶*/
     List<VendQrcodeAttend> listVendQrcodeAttend(@Param("vendQrcodeAttend") VendQrcodeAttend vendQrcodeAttend, @Param("page") Page page);
     
     int countVendQrcodeAttend(VendQrcodeAttend vendQrcodeAttend);

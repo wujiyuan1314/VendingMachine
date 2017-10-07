@@ -137,9 +137,15 @@ public class MobileController {
 						//二维码关注操作
 						logger.info("---------11:添加用户关注商户二维码信息:----------");
 						VendQrcodeAttend vendQrcodeAttend=new VendQrcodeAttend();
-						vendQrcodeAttend.setAttendTime(createTime);
 						vendQrcodeAttend.setUsercode(vendUser.getUsercode());
 						vendQrcodeAttend.setExtend1(ShVendUser.getUsercode());
+						List<VendQrcodeAttend> list=vendQrcodeAttendService.selectByParams(vendQrcodeAttend);
+						if(list.size()==0){
+							vendQrcodeAttend.setAttendTime(createTime);
+							vendQrcodeAttendService.insertVendQrcodeAttend(vendQrcodeAttend);
+							logger.info("---------24:添加用户关注商户二维码信息是否成功:----------");
+							logger.info("---------25:添加用户关注商户二维码信息:----------");
+						}
 						vendQrcodeAttendService.insertVendQrcodeAttend(vendQrcodeAttend);
 						
 						logger.info("---------12:添加用户关注商户二维码信息:----------");
@@ -150,13 +156,16 @@ public class MobileController {
 						//二维码关注操作
 						VendQrcodeAttend vendQrcodeAttend=new VendQrcodeAttend();
 						logger.info("---------23:添加用户关注商户二维码信息createTime:----------"+createTime);
-						vendQrcodeAttend.setAttendTime(createTime);
 						vendQrcodeAttend.setUsercode(vendUser.getUsercode());
 						logger.info("---------24:添加用户关注商户二维码信息Shusercode:----------"+ShVendUser.getUsercode());
 						vendQrcodeAttend.setExtend1(ShVendUser.getUsercode());
-						int isOk=vendQrcodeAttendService.insertVendQrcodeAttend(vendQrcodeAttend);
-						logger.info("---------24:添加用户关注商户二维码信息是否成功:----------"+isOk);
-						logger.info("---------25:添加用户关注商户二维码信息:----------");
+						List<VendQrcodeAttend> list=vendQrcodeAttendService.selectByParams(vendQrcodeAttend);
+						if(list.size()==0){
+							vendQrcodeAttend.setAttendTime(createTime);
+							int isOk=vendQrcodeAttendService.insertVendQrcodeAttend(vendQrcodeAttend);
+							logger.info("---------24:添加用户关注商户二维码信息是否成功:----------"+isOk);
+							logger.info("---------25:添加用户关注商户二维码信息:----------");
+						}
 					}
 				}
 			}
@@ -288,6 +297,18 @@ public class MobileController {
 			response.getWriter().append(json.toJSONString());
 			return null;
 		}
+		
+		VendQrcodeAttend vendQrcodeAttend=new VendQrcodeAttend();
+		vendQrcodeAttend.setUsercode(usercode);
+		vendQrcodeAttend.setExtend1(shopusercode);
+		List<VendQrcodeAttend> list=vendQrcodeAttendService.selectByParams(vendQrcodeAttend);
+		if(list.size()>1){
+			json.put("success", "0");
+			json.put("msg", "您已经免费领取过一瓶");
+			response.getWriter().append(json.toJSONString());
+			return null;
+		}
+		
 		//1,订单操作
 		VendOrder vendOrder=new VendOrder();
 		
