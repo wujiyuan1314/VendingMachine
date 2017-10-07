@@ -101,16 +101,29 @@ public class WeiXinPayController {
 	 * @return
 	 */
 	@RequestMapping(value="/getorder",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
-	public @ResponseBody void getOrder(HttpServletRequest request,HttpServletResponse response){
+	public @ResponseBody String getOrder(HttpServletRequest request,HttpServletResponse response){
+		response.setCharacterEncoding("UTF-8");
+		JSONObject json = new JSONObject();
 		String openid=request.getParameter("openid");
 		String name=request.getParameter("name");
 		int id=Function.getInt(request.getParameter("id"),0);
 		String machinecode=request.getParameter("machinecode");
 		VendMachine vendMachine=vendMachineService.selectByMachineCode(machinecode);
-		String shopusercode="";
-		if(vendMachine!=null){
-			shopusercode=vendMachine.getUsercode();
+		if(vendMachine==null){
+			json.put("success", "0");
+			json.put("msg", "机器码不存在");
+			json.put("prepay_id", "");
+			json.put("orderId", "");
+			try {
+				response.getWriter().append(json.toJSONString());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
 		}
+		String shopusercode=vendMachine.getUsercode();
+		
 		String usercode=request.getParameter("usercode");
 		double price=Function.getDouble(request.getParameter("price"), 0.00);
 		
@@ -164,7 +177,8 @@ public class WeiXinPayController {
 			xStream.alias("xml", OrderReturnInfo.class); 
 
 			OrderReturnInfo returnInfo = (OrderReturnInfo)xStream.fromXML(result);
-			JSONObject json = new JSONObject();
+			json.put("success", "1");
+			json.put("msg", "成功");
 			json.put("prepay_id", returnInfo.getPrepay_id());
 			json.put("orderId", orderId);
 			response.getWriter().append(json.toJSONString());
@@ -172,6 +186,7 @@ public class WeiXinPayController {
 			e.printStackTrace();
 			logger.error("-------", e);
 		}
+		return null;
 	}
 	/**
 	 * 免费获取商品
@@ -260,6 +275,17 @@ public class WeiXinPayController {
 		String endTime=map.get("endTime");//优惠券结束时间
 		Date nowDate=DateUtil.getCurrentDate();//当前日期
 		int heat = Function.getInt(map.get("heat"),0);//加热情况，0不加热，1加热
+		
+		String machinecode=map.get("machinecode");
+		VendMachine vendMachine=vendMachineService.selectByMachineCode(machinecode);
+		if(vendMachine==null){
+			json.put("success", "0");
+			json.put("msg", "机器码不存在");
+			response.getWriter().append(json.toJSONString());
+			return null;
+		}
+		String shopusercode=vendMachine.getUsercode();
+		
 		if(DateUtil.daysBetweenForDay(DateUtil.parseDate(startTime), nowDate)<0){
 			json.put("success", "0");
 			json.put("msg", "还没到优惠开始日期");
@@ -274,16 +300,12 @@ public class WeiXinPayController {
 			return null;
 		}
 		
+		
+		
 		double couponAmount=Function.getDouble(map.get("couponAmount"),0.0);//优惠券金额
 		double price=Function.getDouble(map.get("price"),0.0);//商品金额
 		
 		if(couponAmount>=price){//优惠券金额大于商品金额
-			String machinecode=map.get("machinecode");
-			VendMachine vendMachine=vendMachineService.selectByMachineCode(machinecode);
-			String shopusercode="";
-			if(vendMachine!=null){
-				shopusercode=vendMachine.getUsercode();
-			}
 			String usercode=map.get("usercode");
 			//1,订单操作
 			VendOrder vendOrder=new VendOrder();
@@ -344,18 +366,28 @@ public class WeiXinPayController {
 	 * 使用余额支付
 	 * @param map
 	 * @return
+	 * @throws IOException 
 	 */
 	@RequestMapping(value="/banacePay",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
-	public @ResponseBody void banacePay(HttpServletRequest request,HttpServletResponse response){
+	public @ResponseBody String banacePay(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		response.setCharacterEncoding("UTF-8");
+		JSONObject json = new JSONObject();
+		json.put("success", "0");
+		json.put("msg", "购买失败");
+		
 		int id=Function.getInt(request.getParameter("id"),0);
 		String usercouponId=request.getParameter("usercouponId");//用户所拥有的优惠券ID
 		String machinecode=request.getParameter("machinecode");
 		VendMachine vendMachine=vendMachineService.selectByMachineCode(machinecode);
-		int heat = Function.getInt(request.getParameter("heat"),0);//加热情况，0不加热，1加热
-		String shopusercode="";
-		if(vendMachine!=null){
-			shopusercode=vendMachine.getUsercode();
+		if(vendMachine==null){
+			json.put("success", "0");
+			json.put("msg", "机器码不存在");
+			response.getWriter().append(json.toJSONString());
+			return null;
 		}
+		String shopusercode=vendMachine.getUsercode();
+		
+		int heat = Function.getInt(request.getParameter("heat"),0);//加热情况，0不加热，1加热
 		String usercode=request.getParameter("usercode");
 		double price=Function.getDouble(request.getParameter("price"), 0.00);
 		//1,订单操作
@@ -412,8 +444,6 @@ public class WeiXinPayController {
 			userCouponService.editUserCoupon(userCoupon);
 		}
 		
-		response.setCharacterEncoding("UTF-8");
-		JSONObject json = new JSONObject();
 		/**商家账户*/
 		VendAccount vendAccount=vendAccountService.getOne(shopusercode);//商户账户
 		if(vendAccount!=null){
@@ -488,15 +518,13 @@ public class WeiXinPayController {
 			vendAccountDetail3.setCreateTime(updateTime);
 			vendAccountDetailService.insertVendAccountDetail(vendAccountDetail3);
 			json.put("success", "1");
+			json.put("msg", "购买成功");
 		}else{
 			json.put("success", "0");
+			json.put("msg", "购买失败");
 		}	
-		try {
-			response.getWriter().append(json.toJSONString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		response.getWriter().append(json.toJSONString());
+		return null;
 	}
 	/**
 	 * 微信小程序支付获取签名

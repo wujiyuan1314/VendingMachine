@@ -47,7 +47,7 @@ public class VendUserServiceImpl implements VendUserService {
 			int totalNumber = vendUserMapper.countVendUser1(vendUser);
 			page.setTotalNumber(totalNumber);
 		}
-		String title=vendUser.getUsercode()+usersArray.length;
+		String title=vendUser.getUsercode()+vendUser.getUsername()+usersArray.length;
 		String currentPage=Integer.toString(page.getCurrentPage());
 		if(title==null){
 			title="";
@@ -59,6 +59,37 @@ public class VendUserServiceImpl implements VendUserService {
 				vendUsers= vendUserMapper.listVendUser(vendUser,usersArray, page);
 			}else{
 				vendUsers= vendUserMapper.listVendUser1(vendUser,page);
+			}
+			CacheUtils.put("userCache",key, vendUsers);
+		}
+		return vendUsers;
+	}
+	/**
+	 * 根据输入信息条件查询用户列表（包括消费用户），并分页显示
+	 * @param vendUser
+	 * @param page
+	 * @return
+	 */
+	public List<VendUser> listVendUserXF(VendUser vendUser,String usersArray[],Page page){
+		if(usersArray.length!=0){
+			int totalNumber = vendUserMapper.countVendUser(vendUser,usersArray);
+			page.setTotalNumber(totalNumber);
+		}else{
+			int totalNumber = vendUserMapper.countVendUser1(vendUser);
+			page.setTotalNumber(totalNumber);
+		}
+		String title=vendUser.getUsercode()+vendUser.getUsername()+usersArray.length;
+		String currentPage=Integer.toString(page.getCurrentPage());
+		if(title==null){
+			title="";
+		}
+		String key="key_listVendUserXF"+title+currentPage;
+		List<VendUser> vendUsers=(List<VendUser>)CacheUtils.get("userCache", key);
+		if(vendUsers==null){
+			if(usersArray.length!=0){
+				vendUsers= vendUserMapper.listVendUserXF(vendUser,usersArray, page);
+			}else{
+				vendUsers= vendUserMapper.listVendUser1XF(vendUser,page);
 			}
 			CacheUtils.put("userCache",key, vendUsers);
 		}
@@ -160,6 +191,20 @@ public class VendUserServiceImpl implements VendUserService {
 	 */
 	public VendUser selectByUsername(String username){
 		String key="key_selectByUsername"+username;
+		VendUser vendUser=(VendUser)CacheUtils.get("userCache", key);
+		if(vendUser==null){
+			vendUser=vendUserMapper.selectByUsername(username);
+			CacheUtils.put("userCache", key, vendUser);
+		}
+		return vendUser;
+	}
+	/**
+	 * 按照username查找消费用户 
+	 * @param username
+	 * @return
+	 */
+	public VendUser selectByUsernameXF(String username){
+		String key="key_selectByUsernameXF"+username;
 		VendUser vendUser=(VendUser)CacheUtils.get("userCache", key);
 		if(vendUser==null){
 			vendUser=vendUserMapper.selectByUsername(username);

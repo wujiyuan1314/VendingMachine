@@ -75,7 +75,6 @@ width:80%;
 		                  <th style="width:25px;">序号</th>
 		                  <th>二维码名</th>
 		                  <th>二维码</th>
-		                  <th>关注人数</th>
 		                  <th>操作</th>
 		                </tr>
 			         </thead>
@@ -86,7 +85,6 @@ width:80%;
 					          <td style="text-align:center;">${st.index+1}</td>
 			                  <td>${vendShopQrcode.extend1}</td>
 			                  <td><a href="<%=basePath1%>${vendShopQrcode.qrcode}" target="_blank" class="icon-picture" style="color:green;">查看</a></td>
-			                  <td>${vendShopQrcode.attenNum}</td>
 			                  <td class="center">
 			                     <shiro:hasPermission name="qrcode:edit">
 			                     <a href="${vendShopQrcode.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
@@ -106,7 +104,7 @@ width:80%;
 	                <li><a href="javascript:changeCurrentPage('${page.currentPage -1}')">上一页</a></li>
 	                <li class="active"> <a href="#">${page.currentPage}/${page.totalPage}</a> </li>
 	                <li><a href="javascript:changeCurrentPage('${page.currentPage+1}')">下一页</a></li>
-	                <li><a href="javascript:changeCurrentPage('${page.totalPage}">尾页</a></li>
+	                 <li><a href="javascript:changeCurrentPage('${page.totalPage}')">尾页</a></li>
 	                <li>&nbsp;&nbsp;&nbsp;&nbsp;跳至第&nbsp; 
 	                   <input id="currentPageText" type='text' value='${page.currentPage}' style="width:27px;height:15px;" />&nbsp;页&nbsp;
 	                   <a href="javascript:changeCurrentPage2()" style="float:right;">GO</a>

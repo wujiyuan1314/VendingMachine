@@ -238,7 +238,7 @@
 	from vend_coupon
 	<where>
 		<if test="vendCoupon.couponName != null and !&quot;&quot;.equals(vendCoupon.couponName.trim())">
-			and coupon_name = #{VendCoupon.couponName}
+			and coupon_name = #{vendCoupon.couponName}
 		</if>
 	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
   </select>

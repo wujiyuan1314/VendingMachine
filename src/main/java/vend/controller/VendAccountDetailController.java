@@ -73,7 +73,7 @@ public class VendAccountDetailController{
 		for(VendAccountDetail vendAccountDetail1:vendAccountDetails){
 			VendUser vendUser=vendUserService.getOne(vendAccountDetail1.getUsercode());
 			if(vendUser!=null&&vendUser.getUsername()!=null){
-				vendAccountDetail1.setUsercode(vendUser.getUsername());
+				vendAccountDetail1.setExtend3(vendUser.getUsername());
 			}
 			VendRole vendRole=vendRoleService.getOne(vendUser.getRoleId());
 			if(vendRole!=null&&vendRole.getRoleName()!=null){

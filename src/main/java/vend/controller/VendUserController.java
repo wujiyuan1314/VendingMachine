@@ -78,7 +78,14 @@ public class VendUserController{
 			userlist=vendUserService.getNextUsersOwnSelf(user.getUsercode());
 		}
 		String usersArray[]=Function.stringSpilit(userlist, ",");
-		List<VendUser> vendUsers = vendUserService.listVendUser(vendUser,usersArray,page);
+		List<VendUser> vendUsers=new ArrayList<VendUser>();
+		if(user.getUsercode()!=null){
+			if(!user.getUsercode().equals("VM000")&&!user.getUsercode().equals("VM001")){
+				vendUsers = vendUserService.listVendUser(vendUser,usersArray,page);
+			}else{
+				vendUsers = vendUserService.listVendUserXF(vendUser,usersArray,page);
+			}
+		}
 		model.addAttribute("vendUsers",vendUsers);
 		return "manage/user/user_list";
 	}

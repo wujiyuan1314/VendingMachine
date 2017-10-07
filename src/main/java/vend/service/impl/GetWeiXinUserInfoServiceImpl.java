@@ -132,7 +132,7 @@ public class GetWeiXinUserInfoServiceImpl implements GetWeiXinUserInfoService{
 		}
 		if(codeLibrary!=null){
 			String urlStr=" https://api.weixin.qq.com/sns/userinfo?"
-					+ "access_token="+access_token+"&openid="+openid+"&lang=zh_CN";
+					+ "access_token="+access_token+"&openid="+openid+"&lang=en";
 			logger.info("-----------------------开始获取微信用户信息url是-----------------------"+urlStr);
 			
 			//处理url地址,避免Illegal character in scheme name at index 0错误

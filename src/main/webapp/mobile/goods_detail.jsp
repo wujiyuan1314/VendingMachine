@@ -15,13 +15,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/mobile/css/base.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/mobile/css/main_zhcc.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/mobile/css/productdetail.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/mobile/css/jquery-labelauty.css" />
-<style>
-ul { list-style-type: none;}
-li { display: inline-block;}
-li { margin: 10px 0;}
-input.labelauty + label { font: 12px "Microsoft Yahei";}
-</style>
 </head>
 <body>
 <div class="viewport">
@@ -34,7 +27,7 @@ input.labelauty + label { font: 12px "Microsoft Yahei";}
    <div class="product_detail">
 	   <!--banner开始-->
         <div class="banner">
-            <img src="${pageContext.request.contextPath}/${vendGoods.pic}" style="height:281px;"/>
+            <img src="${pageContext.request.contextPath}${vendGoods.pic}" style="height:281px;"/>
         </div>
         <!--banner结束-->
 	   <div class="textintor">
@@ -64,19 +57,17 @@ input.labelauty + label { font: 12px "Microsoft Yahei";}
             	<button class="buybtn" id="buyButtonId" onclick="quickAddorder(${vendGoods.id });">免费购买</button>
             </div>
          </div>
-         <ul class="dowebok" style="padding-bottom: 55px;">
-		  <li><input type="radio" name="heat" id="heat" data-labelauty="冷饮"></li>
-		  <li><input type="radio" name="heat" id="heat" data-labelauty="热饮"/></li>
-	   </ul>
+         
+        <div class="tag">
+			<div class="button-holder">
+				<input type="radio" id="radio-1-1" name="radio-1-set" value="0" class="regular-radio" checked=""><label for="radio-1-1"></label>冷饮
+				<input type="radio" id="radio-1-2" name="radio-1-set" value="1" class="regular-radio"><label for="radio-1-2"></label>热饮
+			</div>
+	    </div>
+	
 	   </div>
    </div>
 </div>
 <script src="${pageContext.request.contextPath}/mobile/js/details.js"></script>
-<script src="${pageContext.request.contextPath}/mobile/js/jquery-labelauty.js"></script>
-<script>
-$(function(){
-	$(':input').labelauty();
-});
-</script> 
 </body>
 </html>

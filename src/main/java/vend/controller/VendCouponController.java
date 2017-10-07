@@ -127,14 +127,14 @@ public class VendCouponController{
 			br.rejectValue("couponScale", "NOTBELOGNGOODSPRICE", "优惠券金额不能高于商品最高金额");
 		}
 		String newareaId[]=request.getParameterValues("areaId");
-		if(newareaId.length==0){
-			br.rejectValue("roleId", "NOCHOOSEAREA", "请选择地区");
+		if(newareaId==null||newareaId.length==0){
+			br.rejectValue("areaId", "NOCHOOSEAREA", "请选择地区");
 		}
 		
 		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
 		model.addAttribute("couponareas", couponareas);
     	if(br.hasErrors()){
-    		return "manage/coupon/coupon_coupond";
+    		return "manage/coupon/coupon_add";
     	}
     	String newareaIds="";
     	for(String str:newareaId){
@@ -185,12 +185,17 @@ public class VendCouponController{
 	@RequiresPermissions({"coupon:edit"})
     @RequestMapping(value="/edit",method=RequestMethod.POST)
 	public String edit(HttpServletRequest request,Model model,@Validated VendCoupon vendCoupon,BindingResult br){
-		String newareaId[]=request.getParameterValues("areaId");
-		if(newareaId.length==0){
-			br.rejectValue("roleId", "NOCHOOSEAREA", "请选择地区");
+		double couponPrice=Function.getDouble(vendParaService.selectByParaCode("coupon_price"),0.00);
+		if(vendCoupon.getCouponScale().doubleValue()>couponPrice){
+			br.rejectValue("couponScale", "NOTBELOGNGOODSPRICE", "优惠券金额不能高于商品最高金额");
 		}
+		String newareaId[]=request.getParameterValues("areaId");
+		if(newareaId==null||newareaId.length==0){
+			br.rejectValue("areaId", "NOCHOOSEAREA", "请选择地区");
+		}
+		
 		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
-		String areaId="";
+		/**String areaId="";
 		if(vendCoupon!=null){
 			areaId=vendCoupon.getAreaId();
 		}
@@ -198,7 +203,7 @@ public class VendCouponController{
 			if(areaId.indexOf(couponarea.getItemname()+",")!=-1){
 				couponarea.setExtend2("1");
 			}
-		}
+		}**/
 		model.addAttribute("couponareas", couponareas);
     	if(br.hasErrors()){
     		return "manage/coupon/coupon_edit";

@@ -70,7 +70,7 @@
 	                  <c:forEach items="${ couponareas}" var="couponarea">
 	                   <input type="checkbox" name="areaId" value="${couponarea.itemname }">${couponarea.extend1 }
 	                  </c:forEach>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponInfo" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="areaId" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">

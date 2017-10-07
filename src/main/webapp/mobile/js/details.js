@@ -15,7 +15,7 @@ function gotoMyPage(usercode){
 function quickAddorder(id){
 	var machinecode=$("#machinecode").val();
 	var usercode=$("#usercode").val();
-	var heat=0;
+	var heat=$('input:radio:checked').val();
 	if(machinecode==''){
 		alert("请输入机器码");
 		return;

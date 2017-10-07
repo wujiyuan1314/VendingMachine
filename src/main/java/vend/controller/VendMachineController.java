@@ -187,6 +187,7 @@ public class VendMachineController{
     	if(br.hasErrors()){
     		return "manage/machine/machine_add";
     	}
+    	vendMachine.setMachineType("gyp206");
     	vendMachineService.insertVendMachine(vendMachine);
     	return "redirect:machines";
 	}

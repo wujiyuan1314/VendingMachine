@@ -65,7 +65,6 @@
 	                                              图片1： <input type="file" name="file" id="file_pic1"/>
 	                  <a href="javascript:doUpload('pic1')" class="btn btn-success">上传</a>  
 	                  <span class="infopic1" style="color:#b94a48;"></span>
-	                  <a href="<%=basePath1%>${vendAd.pic1}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
 	                  <sf:hidden path="pic1" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic1" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
                     </div>

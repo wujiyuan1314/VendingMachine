@@ -189,7 +189,7 @@
   		<if test="vendSyslog.operDescription != null and !&quot;&quot;.equals(vendSyslog.operDescription.trim())">
   			and oper_description = #{vendSyslog.operDescription}
   		</if>
-  	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
+  	</where>order by oper_time desc limit #{page.dbIndex},#{page.dbNumber}
   </select>
   
   <select id="countVendSyslog" resultType="int" parameterType="vend.entity.VendSyslog">

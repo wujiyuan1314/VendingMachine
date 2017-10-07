@@ -33,6 +33,7 @@ import vend.entity.VendGoods;
 import vend.entity.VendMachine;
 import vend.entity.VendOrder;
 import vend.entity.VendQrcodeAttend;
+import vend.entity.VendShopQrcode;
 import vend.entity.VendUser;
 import vend.service.CodeLibraryService;
 import vend.service.GetWeiXinUserInfoService;
@@ -42,6 +43,7 @@ import vend.service.VendOrderService;
 import vend.service.VendParaService;
 import vend.service.VendQrcodeAttendService;
 import vend.service.VendRoleService;
+import vend.service.VendShopQrcodeService;
 import vend.service.VendSyslogService;
 import vend.service.VendUserService;
 
@@ -67,6 +69,8 @@ public class MobileController {
 	VendParaService vendParaService;
 	@Autowired
 	VendQrcodeAttendService vendQrcodeAttendService;
+	@Autowired
+	VendShopQrcodeService vendShopQrcodeService;
 	@Autowired
 	GetWeiXinUserInfoService getWeiXinUserInfoService;
 	
@@ -137,6 +141,7 @@ public class MobileController {
 						vendQrcodeAttend.setUsercode(vendUser.getUsercode());
 						vendQrcodeAttend.setExtend1(ShVendUser.getUsercode());
 						vendQrcodeAttendService.insertVendQrcodeAttend(vendQrcodeAttend);
+						
 						logger.info("---------12:添加用户关注商户二维码信息:----------");
 					}else{
 						logger.info("---------21:添加用户关注商户二维码信息:----------");

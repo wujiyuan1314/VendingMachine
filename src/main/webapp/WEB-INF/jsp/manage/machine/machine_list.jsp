@@ -32,7 +32,7 @@
     <div class="row fluid">
       <sf:form action="machines" method="post" id="Paramform" class="form-horizontal">
       <input type="hidden" name="currentPage" id="currentPage" value="1" />
-		<div class="span14">
+		<div class="span15">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
                  <h5>机器列表</h5>
@@ -133,7 +133,7 @@
 		                  <th>使用状态</th>
 		                  <th>咖啡机状态</th>
 		                  <th>创建时间</th>
-		                  <th style="width:32%;">操作</th>
+		                  <th style="width:34%;">操作</th>
 		                </tr>
 			         </thead>
 			         <tbody>
@@ -168,11 +168,7 @@
 			                         </shiro:hasPermission>
 			                       </c:when>
 			                     </c:choose>
-			                     <c:choose>
-			                       <c:when test="${vendMachine.useStatus==2||vendMachine.useStatus==3}">
-			                         <!--<a href="javascript:void(0);" onclick="delconfirm('${vendMachine.id}');" class="btn btn-danger btn-mini"/>删除</a>  -->
-			                       </c:when>
-			                     </c:choose>
+			                     <a href="javascript:void(0);" onclick="delconfirm('${vendMachine.id}');" class="btn btn-danger btn-mini"/>删除</a>
 			                  </td>
 			                </tr>
 			           </c:forEach>
@@ -185,7 +181,7 @@
 	                <li><a href="javascript:changeCurrentPage('${page.currentPage -1}')">上一页</a></li>
 	                <li class="active"> <a href="#">${page.currentPage}/${page.totalPage}</a> </li>
 	                <li><a href="javascript:changeCurrentPage('${page.currentPage+1}')">下一页</a></li>
-	                <li><a href="javascript:changeCurrentPage('${page.totalPage}">尾页</a></li>
+	                 <li><a href="javascript:changeCurrentPage('${page.totalPage}')">尾页</a></li>
 	                <li>&nbsp;&nbsp;&nbsp;&nbsp;跳至第&nbsp; 
 	                   <input id="currentPageText" type='text' value='${page.currentPage}' style="width:27px;height:15px;" />&nbsp;页&nbsp;
 	                   <a href="javascript:changeCurrentPage2()" style="float:right;">GO</a>

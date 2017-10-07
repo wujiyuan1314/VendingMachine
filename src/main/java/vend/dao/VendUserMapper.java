@@ -23,9 +23,13 @@ public interface VendUserMapper {
     /**下为自定义方法 */
     List<VendUser> listVendUser(@Param("vendUser") VendUser vendUser,@Param("usersArray") String usersArray[],@Param("page") Page page);
     
+    List<VendUser> listVendUserXF(@Param("vendUser") VendUser vendUser,@Param("usersArray") String usersArray[],@Param("page") Page page);
+    
     int countVendUser(@Param("vendUser") VendUser vendUser,@Param("usersArray") String usersArray[]);
     
     List<VendUser> listVendUser1(@Param("vendUser") VendUser vendUser,@Param("page") Page page);
+    
+    List<VendUser> listVendUser1XF(@Param("vendUser") VendUser vendUser,@Param("page") Page page);
     
     int countVendUser1(@Param("vendUser") VendUser vendUser);
     
@@ -40,6 +44,8 @@ public interface VendUserMapper {
     List<VendUser> selectByArealist1();
     
     VendUser selectByUsername(String username);
+    
+    VendUser selectByUsernameXF(String username);
     
     List<VendUser> selectByParentUsercode(String parentUsercode);
     

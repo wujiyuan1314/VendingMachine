@@ -15,6 +15,13 @@ public interface VendUserService {
 	 */
 	List<VendUser> listVendUser(VendUser vendUser,String usersArray[],Page page);
 	/**
+	 * 根据输入信息条件查询用户列表（包括消费用户），并分页显示
+	 * @param vendUser
+	 * @param page
+	 * @return
+	 */
+	public List<VendUser> listVendUserXF(VendUser vendUser,String usersArray[],Page page);
+	/**
 	 * 添加用户
 	 * @param vendUser
 	 * @return
@@ -59,6 +66,12 @@ public interface VendUserService {
 	 * @return
 	 */
 	VendUser selectByUsername(String username);
+	/**
+	 * 按照username查找消费用户 
+	 * @param username
+	 * @return
+	 */
+	VendUser selectByUsernameXF(String username);
 	/**
 	 * 按照地区查找用户
 	 * @param arealist

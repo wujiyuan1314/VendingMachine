@@ -71,8 +71,8 @@ width:100%;
 		                  <th style="width:25px;">序号</th>
 		                  <th>被关注的商户</th>
 		                  <th>关注人</th>
-		                  <th>关注世间</th>
-		                  <th>操作</th>
+		                  <th>关注时间</th>
+		                  <!--  <th>操作</th>-->
 		                </tr>
 			         </thead>
 			         <tbody>
@@ -83,14 +83,14 @@ width:100%;
 			                  <td>${vendQrcodeAttend.extend1}</td>
 			                  <td>${vendQrcodeAttend.usercode}</td>
 			                  <td><fmt:formatDate value="${vendQrcodeAttend.attendTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-			                  <td class="center">
+			                 <!-- <td class="center">
 			                     <shiro:hasPermission name="qrcodeattend:edit">
 			                     <a href="${vendShopQrcode.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
 			                     </shiro:hasPermission>
 			                     <shiro:hasPermission name="qrcodeattend:del">
 			                     <a href="javascript:void(0);" onclick="delconfirm(${vendShopQrcode.id});" class="btn btn-danger  icon-trash"/></a>
 			                     </shiro:hasPermission>
-			                  </td>
+			                  </td>-->
 			                </tr>
 			           </c:forEach>
 			         </tbody>
@@ -102,7 +102,7 @@ width:100%;
 	                <li><a href="javascript:changeCurrentPage('${page.currentPage -1}')">上一页</a></li>
 	                <li class="active"> <a href="#">${page.currentPage}/${page.totalPage}</a> </li>
 	                <li><a href="javascript:changeCurrentPage('${page.currentPage+1}')">下一页</a></li>
-	                <li><a href="javascript:changeCurrentPage('${page.totalPage}">尾页</a></li>
+	                 <li><a href="javascript:changeCurrentPage('${page.totalPage}')">尾页</a></li>
 	                <li>&nbsp;&nbsp;&nbsp;&nbsp;跳至第&nbsp; 
 	                   <input id="currentPageText" type='text' value='${page.currentPage}' style="width:27px;height:15px;" />&nbsp;页&nbsp;
 	                   <a href="javascript:changeCurrentPage2()" style="float:right;">GO</a>

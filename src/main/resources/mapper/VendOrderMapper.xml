@@ -234,12 +234,12 @@
 			and machine_code = #{vendOrder.machineCode}
 		</if>
 		<if test="beginTime!=null and !&quot;&quot;.equals(beginTime.trim())">
-          <![CDATA[   and DATE_FORMAT(vendOrder.create_time, '%Y-%m-%d %H:%i:%S')>=  DATE_FORMAT(#{beginTime}, '%Y-%m-%d %H:%i:%S')   ]]>
+          <![CDATA[   and DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%S')>=  DATE_FORMAT(#{beginTime}, '%Y-%m-%d %H:%i:%S')   ]]>
         </if>
         <if test="endTime!=null and !&quot;&quot;.equals(endTime.trim())">
-          <![CDATA[   and DATE_FORMAT(vendOrder.create_time, '%Y-%m-%d %H:%i:%S')<=  DATE_FORMAT(#{endTime}, '%Y-%m-%d %H:%i:%S')   ]]>
+          <![CDATA[   and DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%S')<=  DATE_FORMAT(#{endTime}, '%Y-%m-%d %H:%i:%S')   ]]>
         </if>
-	</where>order by order_id limit #{page.dbIndex},#{page.dbNumber}
+	</where>order by create_time desc limit #{page.dbIndex},#{page.dbNumber}
   </select>
   
    <select id="selectByParams" resultMap="BaseResultMap">
@@ -333,10 +333,10 @@
 			and machine_code = #{vendOrder.machineCode}
 		</if>
 		<if test="beginTime!=null and !&quot;&quot;.equals(beginTime.trim())">
-          <![CDATA[   and DATE_FORMAT(vendOrder.create_time, '%Y-%m-%d %H:%i:%S')>=  DATE_FORMAT(#{beginTime}, '%Y-%m-%d %H:%i:%S')   ]]>
+          <![CDATA[   and DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%S')>=  DATE_FORMAT(#{beginTime}, '%Y-%m-%d %H:%i:%S')   ]]>
         </if>
         <if test="endTime!=null and !&quot;&quot;.equals(endTime.trim())">
-          <![CDATA[   and DATE_FORMAT(vendOrder.create_time, '%Y-%m-%d %H:%i:%S')<=  DATE_FORMAT(#{endTime}, '%Y-%m-%d %H:%i:%S')   ]]>
+          <![CDATA[   and DATE_FORMAT(create_time, '%Y-%m-%d %H:%i:%S')<=  DATE_FORMAT(#{endTime}, '%Y-%m-%d %H:%i:%S')   ]]>
         </if>
  	</where>
   </select>

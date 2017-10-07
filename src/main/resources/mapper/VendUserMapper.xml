@@ -40,6 +40,13 @@
     where username = #{username,jdbcType=VARCHAR}
   </select>
   
+   <select id="selectByUsernameXF" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_user
+    where username = #{username,jdbcType=VARCHAR} and role_id=5
+  </select>
+  
   <select id="getRoles" parameterType="String" resultType="String">
     select r.role_name from vend_user u,vend_role r where u.role_id=r.id and u.username=#{username}
   </select>
@@ -286,6 +293,31 @@
 	</where>order by usercode limit #{page.dbIndex},#{page.dbNumber}
   </select>
   
+  <select id="listVendUserXF" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_user 
+	<where>
+	        usercode in
+	    <foreach item="item" collection="usersArray" open="(" separator="," close=")">  
+		    #{item}
+		</foreach>
+		<if test="vendUser.username != null and !&quot;&quot;.equals(vendUser.username.trim())">
+			and username = #{vendUser.username}
+		</if>
+		<if test="vendUser.mobile != null and !&quot;&quot;.equals(vendUser.mobile.trim())">
+			and mobile = #{vendUser.mobile}
+		</if>
+		<if test="vendUser.parentUsercode != null and !&quot;&quot;.equals(vendUser.parentUsercode.trim())">
+			and parent_usercode = #{vendUser.parentUsercode}
+		</if>
+		<if test="vendUser.roleId != null and !&quot;&quot;.equals(vendUser.roleId.trim())">
+			and role_id = #{vendUser.roleId}
+		</if>
+		 or role_id=5  
+	</where>order by usercode limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
   <select id="listVendUser1" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List" />
@@ -304,6 +336,28 @@
 		<if test="vendUser.roleId != null and !&quot;&quot;.equals(vendUser.roleId.trim())">
 			and role_id = #{vendUser.roleId}
 		</if>  
+	</where>order by usercode limit #{page.dbIndex},#{page.dbNumber}
+  </select>
+  
+  <select id="listVendUser1XF" resultMap="BaseResultMap">
+	select
+	<include refid="Base_Column_List" />
+	from vend_user 
+	<where>
+	     usercode in ('')
+		<if test="vendUser.username != null and !&quot;&quot;.equals(vendUser.username.trim())">
+			and username = #{vendUser.username}
+		</if>
+		<if test="vendUser.mobile != null and !&quot;&quot;.equals(vendUser.mobile.trim())">
+			and mobile = #{vendUser.mobile}
+		</if>
+		<if test="vendUser.parentUsercode != null and !&quot;&quot;.equals(vendUser.parentUsercode.trim())">
+			and parent_usercode = #{vendUser.parentUsercode}
+		</if>
+		<if test="vendUser.roleId != null and !&quot;&quot;.equals(vendUser.roleId.trim())">
+			and role_id = #{vendUser.roleId}
+		</if>
+		or role_id=5  
 	</where>order by usercode limit #{page.dbIndex},#{page.dbNumber}
   </select>
   
