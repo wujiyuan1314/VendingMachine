@@ -55,7 +55,12 @@ public interface UserCouponService {
 	 * 按照usercode查找
 	 * @return
 	 */
-	List<UserCoupon> findByUsercode(String usercode);
+	List<UserCoupon> findByUsercode(String usercode,String currentDate);
+	/**
+	 * 按照usercode查找extend1为null的
+	 * @return
+	 */
+	List<UserCoupon> findByUsercodeNull(String usercode,String currentDate);
 	/**
 	 * 按照usercode和优惠券ID查找
 	 * @param usercode

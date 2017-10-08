@@ -240,6 +240,9 @@
 		<if test="vendCoupon.couponName != null and !&quot;&quot;.equals(vendCoupon.couponName.trim())">
 			and coupon_name = #{vendCoupon.couponName}
 		</if>
+		<if test="vendCoupon.extend1 != null and !&quot;&quot;.equals(vendCoupon.extend1.trim())">
+			and extend1 = #{vendCoupon.extend1}
+		</if>
 	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
   </select>
   
@@ -249,11 +252,26 @@
  		<if test="couponName != null and !&quot;&quot;.equals(couponName.trim())">
 		and coupon_name = #{couponName}
 	</if>
+	<if test="extend1 != null and !&quot;&quot;.equals(extend1.trim())">
+			and extend1 = #{extend1}
+		</if>
  	</where>
   </select>
   
+  <select id="selectRecharge" resultMap="BaseResultMap" parameterType="java.lang.String">
+	select
+	<include refid="Base_Column_List" />
+	from vend_coupon
+	<where>
+		<if test="currentDate!=null and !&quot;&quot;.equals(currentDate.trim())">
+          <![CDATA[   and DATE_FORMAT(start_time, '%Y-%m-%d %H:%i:%S')<=  DATE_FORMAT(#{currentDate}, '%Y-%m-%d %H:%i:%S')  
+              and DATE_FORMAT(end_time, '%Y-%m-%d %H:%i:%S')>=  DATE_FORMAT(#{currentDate}, '%Y-%m-%d %H:%i:%S')]]>
+        </if>
+	</where>
+  </select>
+  
    <select id="findAll" resultMap="BaseResultMap">
- 	select * from vend_coupon
+ 	select * from vend_coupon where valid=1 and extend1 !=3
   </select>
   <!-- 批量删除 -->
     <delete id="deleteBatch" parameterType="int">

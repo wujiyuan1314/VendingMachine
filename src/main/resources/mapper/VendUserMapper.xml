@@ -20,11 +20,12 @@
     <result column="extend4" property="extend4" jdbcType="VARCHAR" />
     <result column="extend5" property="extend5" jdbcType="VARCHAR" />
     <result column="extend6" property="extend6" jdbcType="VARCHAR" />
+    <result column="attend_num" property="attendNum" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     usercode, parent_usercode, username, password, role_id, mobile, address, linkman, 
     wechatpub_no, create_time, update_time, permission_list, extend1, extend2, extend3, 
-    extend4, extend5, extend6
+    extend4, extend5, extend6, attend_num
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -32,7 +33,6 @@
     from vend_user
     where usercode = #{usercode,jdbcType=VARCHAR}
   </select>
-  
    <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -50,8 +50,8 @@
   <select id="getRoles" parameterType="String" resultType="String">
     select r.role_name from vend_user u,vend_role r where u.role_id=r.id and u.username=#{username}
   </select>
-	
-  <select id="getPermissions" parameterType="String" resultType="String">
+  
+   <select id="getPermissions" parameterType="String" resultType="String">
 	select p.permission_id from vend_user u,vend_role r,vend_role_permission p where u.role_id=r.id and p.role_id=r.id and u.username=#{username}
   </select>
   
@@ -65,15 +65,15 @@
       address, linkman, wechatpub_no, 
       create_time, update_time, permission_list, 
       extend1, extend2, extend3, 
-      extend4, extend5, extend6
-      )
+      extend4, extend5, extend6, 
+      attend_num)
     values (#{usercode,jdbcType=VARCHAR}, #{parentUsercode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, #{linkman,jdbcType=VARCHAR}, #{wechatpubNo,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{permissionList,jdbcType=VARCHAR}, 
       #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, 
-      #{extend4,jdbcType=VARCHAR}, #{extend5,jdbcType=VARCHAR}, #{extend6,jdbcType=VARCHAR}
-      )
+      #{extend4,jdbcType=VARCHAR}, #{extend5,jdbcType=VARCHAR}, #{extend6,jdbcType=VARCHAR}, 
+      #{attendNum,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="vend.entity.VendUser" >
     insert into vend_user
@@ -132,6 +132,9 @@
       <if test="extend6 != null" >
         extend6,
       </if>
+      <if test="attendNum != null" >
+        attend_num,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="usercode != null" >
@@ -187,6 +190,9 @@
       </if>
       <if test="extend6 != null" >
         #{extend6,jdbcType=VARCHAR},
+      </if>
+      <if test="attendNum != null" >
+        #{attendNum,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -244,6 +250,9 @@
       <if test="extend6 != null" >
         extend6 = #{extend6,jdbcType=VARCHAR},
       </if>
+      <if test="attendNum != null" >
+        attend_num = #{attendNum,jdbcType=INTEGER},
+      </if>
     </set>
     where usercode = #{usercode,jdbcType=VARCHAR}
   </update>
@@ -265,10 +274,11 @@
       extend3 = #{extend3,jdbcType=VARCHAR},
       extend4 = #{extend4,jdbcType=VARCHAR},
       extend5 = #{extend5,jdbcType=VARCHAR},
-      extend6 = #{extend6,jdbcType=VARCHAR}
+      extend6 = #{extend6,jdbcType=VARCHAR},
+      attend_num = #{attendNum,jdbcType=INTEGER}
     where usercode = #{usercode,jdbcType=VARCHAR}
   </update>
-   <!-- 一下为自定义方法 -->
+  <!-- 一下为自定义方法 -->
   <select id="listVendUser" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List" />

@@ -24,9 +24,11 @@ import base.weixinpay.model.OrderReturnInfo;
 import base.weixinpay.model.SignInfo;
 import vend.entity.VendAccount;
 import vend.entity.VendAccountDetail;
+import vend.entity.VendCoupon;
 import vend.entity.VendOrder;
 import vend.service.VendAccountDetailService;
 import vend.service.VendAccountService;
+import vend.service.VendCouponService;
 import vend.service.VendMachineService;
 import vend.service.VendOrderService;
 import vend.service.VendParaService;
@@ -36,6 +38,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,14 +61,17 @@ public class WeiXinChargeController {
 	@Autowired
 	VendAccountService vendAccountService;
 	@Autowired
+	VendCouponService vendCouponService;
+	@Autowired
 	VendAccountDetailService vendAccountDetailService;
 	/**
-	 * 得到本次支付的openid
+	 * 得到本次充值的openid
 	 * @param map
 	 * @return
 	 */
 	@RequestMapping(value="/getsessionkey",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
 	public @ResponseBody Map<String, String> getSessionKey(@RequestBody Map<String, String> map){
+		logger.info("----------------------进入getsessionkey------------------------");
 		Configure.setAppID(vendParaService.selectByParaCode("appid"));
 		Configure.setMch_id(vendParaService.selectByParaCode("mch_id"));
 		Configure.setKey(vendParaService.selectByParaCode("key"));
@@ -74,8 +80,10 @@ public class WeiXinChargeController {
 				+ "appid="+Configure.getAppID()+"&secret="+Configure.getSecret()+""
 				+ "&js_code="+map.get("code")+""
 				+ "&grant_type=authorization_code";
+		logger.info("----------------------getsessionkey方法uri------------------------"+uri);
 		String json=HttpClientUtil.httpPostRequest(uri);
 		Map<String, Object> resultMap=JsonUtil.getMap4Json(json);
+		logger.info("----------------------getsessionkey方法resultMap------------------------"+resultMap);
 		Map<String, String> returnMap=new HashMap<String, String>();
 		returnMap.put("session_key", (String)resultMap.get("session_key"));
 		returnMap.put("expires_in", resultMap.get("expires_in").toString());
@@ -112,7 +120,7 @@ public class WeiXinChargeController {
 		int fee=(int)(chargeamount*100);
 		try {
 			OrderInfo order = new OrderInfo();
-			//设置微信支付的参数
+			//设置微信充值的参数
 			Configure.setAppID(vendParaService.selectByParaCode("appid"));
 			Configure.setMch_id(vendParaService.selectByParaCode("mch_id"));
 			Configure.setKey(vendParaService.selectByParaCode("key"));
@@ -124,8 +132,8 @@ public class WeiXinChargeController {
 			order.setBody("微信充值");
 			order.setOut_trade_no(orderId);
 			order.setTotal_fee(fee);
-			order.setSpbill_create_ip("1.192.121.236");
-			order.setNotify_url("http://www.vm.com/VendingMachine/wxcharge/payresult");
+			order.setSpbill_create_ip("47.93.149.91");
+			order.setNotify_url("https://zdypx.benbenniaokeji.com/wxcharge/payresult");
 			order.setTrade_type("JSAPI");
 			order.setOpenid(openid);
 			order.setSign_type("MD5");
@@ -151,7 +159,7 @@ public class WeiXinChargeController {
 		}
 	}
 	/**
-	 * 微信小程序支付获取签名
+	 * 微信小程序充值获取签名
 	 * @param map
 	 * @return
 	 */
@@ -184,7 +192,7 @@ public class WeiXinChargeController {
 		}
 	}
 	/**
-	 * 支付返回结果
+	 * 充值返回结果
 	 * @param map
 	 * @return
 	 * @throws IOException 
@@ -192,12 +200,12 @@ public class WeiXinChargeController {
 	@RequestMapping(value="/payresult",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
 	public @ResponseBody void PayResult(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		String reqParams = StreamUtil.read(request.getInputStream());
-		logger.info("-------支付结果:"+reqParams);
+		logger.info("-------充值结果:"+reqParams);
 		StringBuffer sb = new StringBuffer("<xml><return_code>SUCCESS</return_code><return_msg>OK</return_msg></xml>");
 		response.getWriter().append(sb.toString());
 	}
 	/**
-	 * 支付成功处理
+	 * 充值成功处理
 	 * @param map
 	 * @return
 	 * @throws IOException 
@@ -215,12 +223,20 @@ public class WeiXinChargeController {
 				vendOrderService.editVendOrder(vendOrder);
 			}
 			//2,修改账户
+			/**充值活动查询*/
+			String currentDate=DateUtil.getCurrentDateStr();
+			List<VendCoupon> rechargecoupons=vendCouponService.selectRecharge(currentDate);
+			double rechargrbl=0;//充值优惠比例
+			if(rechargecoupons.size()>0){
+				rechargrbl=rechargecoupons.get(0).getCouponScale().doubleValue();
+			}
 			/**消费用户账户*/
 			Date updateTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
 			VendAccount vendAccount=vendAccountService.getOne(vendOrder.getUsercode());//商户账户
 			double orderamount=vendOrder.getAmount().doubleValue();//订单金额
+			double yuamount=orderamount+orderamount*rechargrbl;//充值优惠后的金额
 			double amountpre1=vendAccount.getOwnAmount().doubleValue();
-			BigDecimal totalamount=BigDecimal.valueOf(orderamount+amountpre1);
+			BigDecimal totalamount=BigDecimal.valueOf(yuamount+amountpre1);
 			vendAccount.setOwnAmount(totalamount);
 			String moneyencrypt=Function.getEncrypt(BigDecimal.valueOf(orderamount+amountpre1).toString());
 			vendAccount.setMoneyencrypt(Function.getEncrypt(moneyencrypt));

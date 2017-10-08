@@ -43,6 +43,8 @@ public class VendUser {
 
     private String extend6;
 
+    private Integer attendNum;
+
     public String getUsercode() {
         return usercode;
     }
@@ -186,5 +188,13 @@ public class VendUser {
 
     public void setExtend6(String extend6) {
         this.extend6 = extend6 == null ? null : extend6.trim();
+    }
+
+    public Integer getAttendNum() {
+        return attendNum;
+    }
+
+    public void setAttendNum(Integer attendNum) {
+        this.attendNum = attendNum;
     }
 }

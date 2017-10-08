@@ -3,15 +3,21 @@
 <mapper namespace="vend.dao.VendQrcodeAttendMapper" >
   <resultMap id="BaseResultMap" type="vend.entity.VendQrcodeAttend" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="qrcode_id" property="qrcodeId" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
     <result column="usercode" property="usercode" jdbcType="VARCHAR" />
     <result column="attend_time" property="attendTime" jdbcType="TIMESTAMP" />
+    <result column="shusercode" property="shusercode" jdbcType="VARCHAR" />
     <result column="extend1" property="extend1" jdbcType="VARCHAR" />
     <result column="extend2" property="extend2" jdbcType="VARCHAR" />
     <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+    <result column="extend4" property="extend4" jdbcType="VARCHAR" />
+    <result column="extend5" property="extend5" jdbcType="VARCHAR" />
+    <result column="extend6" property="extend6" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, qrcode_id, usercode, attend_time, extend1, extend2, extend3
+    id, goods_id, goods_name, usercode, attend_time, shusercode, extend1, extend2, extend3, 
+    extend4, extend5, extend6
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -24,12 +30,16 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="vend.entity.VendQrcodeAttend" >
-    insert into vend_qrcode_attend (id, qrcode_id, usercode, 
-      attend_time, extend1, extend2, 
-      extend3)
-    values (#{id,jdbcType=INTEGER}, #{qrcodeId,jdbcType=INTEGER}, #{usercode,jdbcType=VARCHAR}, 
-      #{attendTime,jdbcType=TIMESTAMP}, #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, 
-      #{extend3,jdbcType=VARCHAR})
+    insert into vend_qrcode_attend (id, goods_id, goods_name, 
+      usercode, attend_time, shusercode, 
+      extend1, extend2, extend3, 
+      extend4, extend5, extend6
+      )
+    values (#{id,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, 
+      #{usercode,jdbcType=VARCHAR}, #{attendTime,jdbcType=TIMESTAMP}, #{shusercode,jdbcType=VARCHAR}, 
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, 
+      #{extend4,jdbcType=VARCHAR}, #{extend5,jdbcType=VARCHAR}, #{extend6,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="vend.entity.VendQrcodeAttend" >
     insert into vend_qrcode_attend
@@ -37,14 +47,20 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="qrcodeId != null" >
-        qrcode_id,
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
       </if>
       <if test="usercode != null" >
         usercode,
       </if>
       <if test="attendTime != null" >
         attend_time,
+      </if>
+      <if test="shusercode != null" >
+        shusercode,
       </if>
       <if test="extend1 != null" >
         extend1,
@@ -55,19 +71,34 @@
       <if test="extend3 != null" >
         extend3,
       </if>
+      <if test="extend4 != null" >
+        extend4,
+      </if>
+      <if test="extend5 != null" >
+        extend5,
+      </if>
+      <if test="extend6 != null" >
+        extend6,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="qrcodeId != null" >
-        #{qrcodeId,jdbcType=INTEGER},
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
       </if>
       <if test="usercode != null" >
         #{usercode,jdbcType=VARCHAR},
       </if>
       <if test="attendTime != null" >
         #{attendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shusercode != null" >
+        #{shusercode,jdbcType=VARCHAR},
       </if>
       <if test="extend1 != null" >
         #{extend1,jdbcType=VARCHAR},
@@ -78,19 +109,34 @@
       <if test="extend3 != null" >
         #{extend3,jdbcType=VARCHAR},
       </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        #{extend5,jdbcType=VARCHAR},
+      </if>
+      <if test="extend6 != null" >
+        #{extend6,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="vend.entity.VendQrcodeAttend" >
     update vend_qrcode_attend
     <set >
-      <if test="qrcodeId != null" >
-        qrcode_id = #{qrcodeId,jdbcType=INTEGER},
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
       </if>
       <if test="usercode != null" >
         usercode = #{usercode,jdbcType=VARCHAR},
       </if>
       <if test="attendTime != null" >
         attend_time = #{attendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shusercode != null" >
+        shusercode = #{shusercode,jdbcType=VARCHAR},
       </if>
       <if test="extend1 != null" >
         extend1 = #{extend1,jdbcType=VARCHAR},
@@ -101,20 +147,34 @@
       <if test="extend3 != null" >
         extend3 = #{extend3,jdbcType=VARCHAR},
       </if>
+      <if test="extend4 != null" >
+        extend4 = #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        extend5 = #{extend5,jdbcType=VARCHAR},
+      </if>
+      <if test="extend6 != null" >
+        extend6 = #{extend6,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="vend.entity.VendQrcodeAttend" >
     update vend_qrcode_attend
-    set qrcode_id = #{qrcodeId,jdbcType=INTEGER},
+    set goods_id = #{goodsId,jdbcType=INTEGER},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
       usercode = #{usercode,jdbcType=VARCHAR},
       attend_time = #{attendTime,jdbcType=TIMESTAMP},
+      shusercode = #{shusercode,jdbcType=VARCHAR},
       extend1 = #{extend1,jdbcType=VARCHAR},
       extend2 = #{extend2,jdbcType=VARCHAR},
-      extend3 = #{extend3,jdbcType=VARCHAR}
+      extend3 = #{extend3,jdbcType=VARCHAR},
+      extend4 = #{extend4,jdbcType=VARCHAR},
+      extend5 = #{extend5,jdbcType=VARCHAR},
+      extend6 = #{extend6,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-     <!-- 一下为自定义方法 -->
+      <!-- 一下为自定义方法 -->
   <select id="listVendQrcodeAttend" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List" />

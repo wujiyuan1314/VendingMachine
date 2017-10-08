@@ -31,7 +31,7 @@ public class VendCouponServiceImpl implements VendCouponService {
 		if(title==null){
 			title="";
 		}
-		String key="key_listVendCoupon"+title+currentPage;
+		String key="key_listVendCoupon"+title+currentPage+vendCoupon.getExtend1();
 		List<VendCoupon> vendCoupons=(List<VendCoupon>)CacheUtils.get("couponCache", key);
 		if(vendCoupons==null){
 			vendCoupons=vendCouponMapper.listVendCoupon(vendCoupon, page);
@@ -100,6 +100,20 @@ public class VendCouponServiceImpl implements VendCouponService {
 			CacheUtils.put("couponCache", key, vendCoupon);
 		}
 		return vendCoupon;
+	}
+	/**
+	 * 查找优惠活动
+	 * @param currentDate
+	 * @return
+	 */
+	public List<VendCoupon> selectRecharge(String currentDate){
+		String key="key_selectRecharge";
+		List<VendCoupon> vendCoupons=(List<VendCoupon>)CacheUtils.get("couponCache", key);
+		if(vendCoupons==null){
+			vendCoupons= vendCouponMapper.selectRecharge(currentDate);
+			CacheUtils.put("couponCache", key, vendCoupons);
+		}
+		return vendCoupons;
 	}
 
 	public List<VendCoupon> findAll() {

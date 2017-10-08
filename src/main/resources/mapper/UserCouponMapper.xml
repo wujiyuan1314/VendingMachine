@@ -154,7 +154,7 @@
   <select id="listUserCoupon" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List" />
-	from vend_coupon
+	from user_coupon
 	<where>
 		<if test="userCoupon.usercode != null and !&quot;&quot;.equals(userCoupon.usercode.trim())">
 			and usercode = #{userCoupon.usercode}
@@ -163,7 +163,7 @@
   </select>
   
   <select id="countUserCoupon" resultType="int" parameterType="vend.entity.UserCoupon">
- 	select count(*) from vend_coupon
+ 	select count(*) from user_coupon
  	<where>
  		<if test="usercode != null and !&quot;&quot;.equals(usercode.trim())">
 			and usercode = #{usercode}
@@ -172,13 +172,21 @@
   </select>
   
    <select id="findAll" resultMap="BaseResultMap">
- 	select * from vend_coupon
+ 	select * from user_coupon
   </select>
   <select id="findByUsercode" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from user_coupon
-    where extend1=1  and usercode = #{usercode,jdbcType=VARCHAR}
+    where extend1=1  and usercode = #{usercode,jdbcType=VARCHAR} and extend2 <![CDATA[<=]]>#{currentDate,jdbcType=VARCHAR}
+    and extend3 <![CDATA[>=]]>#{currentDate,jdbcType=VARCHAR}
+  </select>
+   <select id="findByUsercodeNull" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_coupon
+    where extend1 is null  and usercode = #{usercode,jdbcType=VARCHAR} and extend2 <![CDATA[<=]]>#{currentDate,jdbcType=VARCHAR}
+    and extend3 <![CDATA[>=]]>#{currentDate,jdbcType=VARCHAR}
   </select>
   <select id="findByUsercodeLimitCouponId" resultMap="BaseResultMap" parameterType="java.lang.String">
     select 

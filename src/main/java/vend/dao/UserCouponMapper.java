@@ -30,7 +30,9 @@ public interface UserCouponMapper {
     
     List<UserCoupon> findAll();
     
-    List<UserCoupon> findByUsercode(String usercode);
+    List<UserCoupon> findByUsercode(@Param("usercode") String usercode,@Param("currentDate") String currentDate);
+    
+    List<UserCoupon> findByUsercodeNull(@Param("usercode") String usercode,@Param("currentDate") String currentDate);
     
     UserCoupon findByUsercodeLimitCouponId(@Param("usercode") String usercode,@Param("couponId") Integer couponId);
     

@@ -145,7 +145,13 @@ public class LoginController extends LogoutFilter{
 	public String login(Model model, HttpServletRequest request) throws Exception{
 		Subject subject=SecurityUtils.getSubject();
 		String username = request.getParameter("userName");
-		String password =Function.getEncrypt(request.getParameter("password"));
+		String wjmpassword=request.getParameter("password");
+		if(wjmpassword==null){
+			wjmpassword="000000";
+		}
+		logger.info("---------------未加密的密码wjmpassword----------------------"+wjmpassword);
+		String password =Function.getEncrypt(wjmpassword);
+		logger.info("---------------加密的密码password----------------------"+password);
 		String verificode=request.getParameter("verificode");//验证码
 		HttpSession session=request.getSession();
 		String maskcode=(String)session.getAttribute(Const.SESSION_SECURITY_CODE);
@@ -285,7 +291,7 @@ public class LoginController extends LogoutFilter{
     		resultMap.put("msg", "您还没注册,请先进行注册");
     	}else{
     		logger.info("小程序venduser不是null");
-    		List<UserCoupon> userCoupons=userCouponService.findByUsercode(venduser.getUsercode());
+    		List<UserCoupon> userCoupons=userCouponService.findByUsercode(venduser.getUsercode(),DateUtil.getCurrentDateStr());
     		logger.info("小程序userCoupons"+userCoupons);
     		VendAccount vendAccount = vendAccountService.getOne(venduser.getUsercode());
     		logger.info("小程序vendAccount"+vendAccount);

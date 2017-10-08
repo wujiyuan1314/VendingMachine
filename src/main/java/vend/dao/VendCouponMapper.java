@@ -24,6 +24,8 @@ public interface VendCouponMapper {
     
     int countVendCoupon(VendCoupon vendCoupon);
     
+    List<VendCoupon> selectRecharge(String currentDate);
+    
     int deleteBatch(int ids[]);
     
     List<VendCoupon> findAll();

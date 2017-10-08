@@ -36,17 +36,17 @@
 		<div class="span12">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-                 <h5>优惠券列表</h5>
+                 <h5>充值优惠活动</h5>
               </div>
               
 			  <div class="widget-content">
 			      <table style="margin-bottom:5px;">
 			            <tr>
-			              <th>优惠券名:</th>
-			              <th><input type="text" name="couponName" id="couponName" placeholder="按优惠券名搜索"/>&nbsp;&nbsp;</th>
+			              <th>活动名:</th>
+			              <th><input type="text" name="couponName" id="couponName" placeholder="按活动名搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                  <shiro:hasPermission name="coupon:add">
-		                  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>
+		                  <td><a href="rechargeadd" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>
 		                  </shiro:hasPermission>
 		                  <shiro:hasPermission name="coupon:dels">
 		                  <td><input type="button" onclick="dels('coupon');" value="批量删除" class="btn btn-danger"/></td>
@@ -59,11 +59,11 @@
 			            <tr>
 			              <th><input type="checkbox" onclick="selectAll('Id');" id="all" name="title-table-checkbox" /></th>
 		                  <th style="width:25px;">序号</th>
-		                  <th>优惠券名</th>
-		                  <th>优惠券金额(元)</th>
-		                  <th>优惠券介绍</th>
-		                  <th>优惠券开始日期</th>
-		                  <th>优惠券结束日期</th>
+		                  <th>活动名</th>
+		                  <th>优惠比例</th>
+		                  <th>活动介绍</th>
+		                  <th>活动开始日期</th>
+		                  <th>活动结束日期</th>
 		                  <th>是否有效</th>
 		                  <th>操作</th>
 		                </tr>
@@ -90,7 +90,7 @@
 			                  </td>
 			                  <td class="center">
 			                     <shiro:hasPermission name="coupon:edit">
-			                     <a href="${vendCoupon.id}/edit" class="btn btn-success btn-mini"/>修改</a>&nbsp;&nbsp;
+			                     <a href="${vendCoupon.id}/rechargeedit" class="btn btn-success btn-mini"/>修改</a>&nbsp;&nbsp;
 			                     </shiro:hasPermission>
 			                     <shiro:hasPermission name="coupon:del">
 			                     <a href="javascript:void(0);" onclick="delconfirm(${vendCoupon.id});" class="btn btn-danger btn-mini"/>删除</a>

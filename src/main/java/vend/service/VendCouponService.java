@@ -42,6 +42,12 @@ public interface VendCouponService {
 	 */
 	VendCoupon getOne(int id);
 	/**
+	 * 查找优惠活动
+	 * @param currentDate
+	 * @return
+	 */
+	List<VendCoupon> selectRecharge(String currentDate);
+	/**
 	 * 查找全部
 	 * @return
 	 */

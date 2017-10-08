@@ -79,6 +79,7 @@ public class WeiXinPayController {
 	 */
 	@RequestMapping(value="/getsessionkey",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
 	public @ResponseBody Map<String, String> getSessionKey(@RequestBody Map<String, String> map){
+		logger.info("----------------------进入getsessionkey------------------------");
 		Configure.setAppID(vendParaService.selectByParaCode("appid"));
 		Configure.setMch_id(vendParaService.selectByParaCode("mch_id"));
 		Configure.setKey(vendParaService.selectByParaCode("key"));
@@ -87,12 +88,15 @@ public class WeiXinPayController {
 				+ "appid="+Configure.getAppID()+"&secret="+Configure.getSecret()+""
 				+ "&js_code="+map.get("code")+""
 				+ "&grant_type=authorization_code";
+		logger.info("----------------------getsessionkey方法uri------------------------"+uri);
 		String json=HttpClientUtil.httpPostRequest(uri);
 		Map<String, Object> resultMap=JsonUtil.getMap4Json(json);
+		logger.info("----------------------getsessionkey方法resultMap------------------------"+resultMap);
 		Map<String, String> returnMap=new HashMap<String, String>();
 		returnMap.put("session_key", (String)resultMap.get("session_key"));
 		returnMap.put("expires_in", resultMap.get("expires_in").toString());
 		returnMap.put("openid", (String)resultMap.get("openid"));
+		logger.info("----------------------结束getsessionkey------------------------");
 		return returnMap;
 	}
 	/**
@@ -102,6 +106,7 @@ public class WeiXinPayController {
 	 */
 	@RequestMapping(value="/getorder",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
 	public @ResponseBody String getOrder(HttpServletRequest request,HttpServletResponse response){
+		logger.info("----------------------进入getOrder------------------------");
 		response.setCharacterEncoding("UTF-8");
 		JSONObject json = new JSONObject();
 		String openid=request.getParameter("openid");
@@ -160,8 +165,8 @@ public class WeiXinPayController {
 			order.setBody(name);
 			order.setOut_trade_no(orderId);
 			order.setTotal_fee(fee);
-			order.setSpbill_create_ip("1.192.121.236");
-			order.setNotify_url("http://www.vm.com/VendingMachine/wxpay/payresult");
+			order.setSpbill_create_ip("47.93.149.91");
+			order.setNotify_url("https://zdypx.benbenniaokeji.com/wxpay/payresult");
 			order.setTrade_type("JSAPI");
 			order.setOpenid(openid);
 			order.setSign_type("MD5");
@@ -171,6 +176,7 @@ public class WeiXinPayController {
 			
 			
 			String result = HttpRequest.sendPost("https://api.mch.weixin.qq.com/pay/unifiedorder", order);
+			logger.info("----------------------getOrder方法------------------------"+result);
 			System.out.println(result);
 			logger.info("---------下单返回:"+result);
 			XStream xStream = new XStream();
@@ -186,6 +192,7 @@ public class WeiXinPayController {
 			e.printStackTrace();
 			logger.error("-------", e);
 		}
+		logger.info("----------------------结束getOrder------------------------");
 		return null;
 	}
 	/**
@@ -533,6 +540,7 @@ public class WeiXinPayController {
 	 */
 	@RequestMapping(value="/sign",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
 	public @ResponseBody void getSign(HttpServletRequest request,HttpServletResponse response){
+		logger.info("----------------------开始getSign------------------------");
 		try {
 			String repay_id = request.getParameter("repay_id");
 			SignInfo signInfo = new SignInfo();
@@ -542,8 +550,10 @@ public class WeiXinPayController {
 			signInfo.setNonceStr(RandomStringGenerator.getRandomStringByLength(32));
 			signInfo.setRepay_id("prepay_id="+repay_id);
 			signInfo.setSignType("MD5");
+			logger.info("----------------------getSign方法signInfo------------------------"+signInfo);
 			//生成签名
 			String sign = Signature.getSign(signInfo);
+			logger.info("----------------------getSign方法sign------------------------"+sign);
 			
 			JSONObject json = new JSONObject();
 			json.put("timeStamp", signInfo.getTimeStamp());
@@ -551,6 +561,7 @@ public class WeiXinPayController {
 			json.put("package", signInfo.getRepay_id());
 			json.put("signType", signInfo.getSignType());
 			json.put("paySign", sign);
+			logger.info("----------------------getSign方法json------------------------"+json.toJSONString());
 			logger.info("-------再签名:"+json.toJSONString());
 			response.getWriter().append(json.toJSONString());
 		} catch (Exception e) {
@@ -558,6 +569,7 @@ public class WeiXinPayController {
 			e.printStackTrace();
 			logger.error("-------", e);
 		}
+		logger.info("----------------------结束getSign------------------------");
 	}
 	/**
 	 * 支付返回结果

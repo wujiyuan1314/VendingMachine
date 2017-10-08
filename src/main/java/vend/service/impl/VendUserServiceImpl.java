@@ -124,6 +124,7 @@ public class VendUserServiceImpl implements VendUserService {
 		UserCoupon userCoupon=new UserCoupon();
 		userCoupon.setUsercode(usercode);
 		userCoupon.setCouponId(1);
+		userCoupon.setExtend1("1");
 		userCoupon.setCreateTime(createTime);
 		userCouponMapper.insert(userCoupon);
 		

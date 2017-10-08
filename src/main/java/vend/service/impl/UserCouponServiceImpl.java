@@ -117,14 +117,15 @@ public class UserCouponServiceImpl implements UserCouponService {
 	 * 按照usercode查找
 	 * @return
 	 */
-	public List<UserCoupon> findByUsercode(String usercode){
-		String key="key_UserCoupon_findByUsercode"+usercode;
-		List<UserCoupon> userCoupons=(List<UserCoupon>)CacheUtils.get("couponCache", key);
-		if(userCoupons==null){
-			userCoupons=userCouponMapper.findByUsercode(usercode);
-			CacheUtils.put("couponCache", key, userCoupons);
-		}
-		return userCoupons;
+	public List<UserCoupon> findByUsercode(String usercode,String currentDate){
+		return userCouponMapper.findByUsercode(usercode,currentDate);
+	}
+	/**
+	 * 按照usercode查找extend1为null的
+	 * @return
+	 */
+	public List<UserCoupon> findByUsercodeNull(String usercode,String currentDate){
+		return userCouponMapper.findByUsercodeNull(usercode,currentDate);
 	}
 	/**
 	 * 按照usercode和优惠券ID查找
