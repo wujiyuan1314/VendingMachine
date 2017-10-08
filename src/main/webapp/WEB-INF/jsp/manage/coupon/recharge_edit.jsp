@@ -43,57 +43,31 @@
 			    <sf:form class="form-horizontal" method="post" action="rechargeedit" enctype="multipart/form-data" commandName="vendCoupon" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="id"/>
 	              <div class="control-group">
-	                <label class="control-label">活动名</label>
+	                    <label class="control-label">活动名</label>
 	                <div class="controls">
 	                  <sf:input path="couponName"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponName" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">充值优惠比例</label>
+	                <label class="control-label">充</label>
 	                <div class="controls">
-	                <div class="input-append">
-	                     <sf:input path="couponScale" class="span2"/><span class="add-on">$</span>
+	                   <div class="input-append">
+	                     <sf:input path="extend3" class="span2"/><span class="add-on">$</span>
 	                  </div>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponScale" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend3" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
-	              </div>
-	              <div class="control-group">
-	                <label class="control-label">活动描述</label>
+	                <label class="control-label">送</label>
 	                <div class="controls">
-	                  <sf:input path="couponInfo"/>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="couponInfo" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                   <div class="input-append">
+	                     <sf:input path="extend4" class="span2"/><span class="add-on">$</span>
+	                  </div>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend4" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
-	              <div class="control-group">
-	                <label class="control-label">活动适用地区</label>
-	                <div class="controls">
-	                  <c:forEach items="${ couponareas}" var="couponarea">
-	                   <input type="checkbox" name="areaId" value="${couponarea.itemname }">${couponarea.extend1 }
-	                  </c:forEach>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="areaId" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
-	                </div>
-	              </div>
-	              <div class="control-group">
-	                <label class="control-label">活动开始日期</label>
-	                <div class="controls">
-	                  <div class="input-append date datepicker">
-	                      <sf:input path="startTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true" class="span2" />
-		                  <span class="add-on"><i class="icon-th"></i></span>
-		              </div>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="startTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
-	                </div>
-	              </div>
-	              <div class="control-group">
-	                <label class="control-label">活动结束日期</label>
-	                <div class="controls">
-	                 <div class="input-append date datepicker">
-	                      <sf:input path="endTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true" class="span2" />
-		                  <span class="add-on"><i class="icon-th"></i></span>
-		              </div>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="endTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
-	                </div>
-	              </div>
+	              <sf:hidden path="couponScale" value="1"/>
+	              <sf:hidden path="startTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true" class="span2" />
+	              <sf:hidden path="endTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true" class="span2" />
 	              <div class="form-actions">
 	                <input type="submit" value="添加" class="btn btn-success">
 	              </div>

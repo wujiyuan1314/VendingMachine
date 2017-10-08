@@ -21,10 +21,18 @@
     <result column="extend1" property="extend1" jdbcType="VARCHAR" />
     <result column="extend2" property="extend2" jdbcType="VARCHAR" />
     <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="machine_id" property="machineId" jdbcType="VARCHAR" />
+    <result column="usercode" property="usercode" jdbcType="VARCHAR" />
+    <result column="ismachineuse" property="ismachineuse" jdbcType="VARCHAR" />
+    <result column="extend4" property="extend4" jdbcType="VARCHAR" />
+    <result column="extend5" property="extend5" jdbcType="VARCHAR" />
+    <result column="extend6" property="extend6" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, ad_name, pic_interval, pic1, pic2, pic3, pic4, pic5, pic6, video, height, width, 
-    start_time, end_time, create_time, update_time, extend1, extend2, extend3
+    start_time, end_time, create_time, update_time, extend1, extend2, extend3, type, 
+    machine_id, usercode, ismachineuse, extend4, extend5, extend6
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -42,15 +50,19 @@
       pic5, pic6, video, 
       height, width, start_time, 
       end_time, create_time, update_time, 
-      extend1, extend2, extend3
-      )
+      extend1, extend2, extend3, 
+      type, machine_id, usercode, 
+      ismachineuse, extend4, extend5, 
+      extend6)
     values (#{id,jdbcType=INTEGER}, #{adName,jdbcType=VARCHAR}, #{picInterval,jdbcType=INTEGER}, 
       #{pic1,jdbcType=VARCHAR}, #{pic2,jdbcType=VARCHAR}, #{pic3,jdbcType=VARCHAR}, #{pic4,jdbcType=VARCHAR}, 
       #{pic5,jdbcType=VARCHAR}, #{pic6,jdbcType=VARCHAR}, #{video,jdbcType=VARCHAR}, 
       #{height,jdbcType=VARCHAR}, #{width,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
       #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}
-      )
+      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{machineId,jdbcType=VARCHAR}, #{usercode,jdbcType=VARCHAR}, 
+      #{ismachineuse,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}, #{extend5,jdbcType=VARCHAR}, 
+      #{extend6,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="vend.entity.VendAd" >
     insert into vend_ad
@@ -112,6 +124,27 @@
       <if test="extend3 != null" >
         extend3,
       </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="machineId != null" >
+        machine_id,
+      </if>
+      <if test="usercode != null" >
+        usercode,
+      </if>
+      <if test="ismachineuse != null" >
+        ismachineuse,
+      </if>
+      <if test="extend4 != null" >
+        extend4,
+      </if>
+      <if test="extend5 != null" >
+        extend5,
+      </if>
+      <if test="extend6 != null" >
+        extend6,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -170,6 +203,27 @@
       </if>
       <if test="extend3 != null" >
         #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="machineId != null" >
+        #{machineId,jdbcType=VARCHAR},
+      </if>
+      <if test="usercode != null" >
+        #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="ismachineuse != null" >
+        #{ismachineuse,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        #{extend5,jdbcType=VARCHAR},
+      </if>
+      <if test="extend6 != null" >
+        #{extend6,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -230,6 +284,27 @@
       <if test="extend3 != null" >
         extend3 = #{extend3,jdbcType=VARCHAR},
       </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="machineId != null" >
+        machine_id = #{machineId,jdbcType=VARCHAR},
+      </if>
+      <if test="usercode != null" >
+        usercode = #{usercode,jdbcType=VARCHAR},
+      </if>
+      <if test="ismachineuse != null" >
+        ismachineuse = #{ismachineuse,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        extend4 = #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        extend5 = #{extend5,jdbcType=VARCHAR},
+      </if>
+      <if test="extend6 != null" >
+        extend6 = #{extend6,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -252,7 +327,14 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       extend1 = #{extend1,jdbcType=VARCHAR},
       extend2 = #{extend2,jdbcType=VARCHAR},
-      extend3 = #{extend3,jdbcType=VARCHAR}
+      extend3 = #{extend3,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      machine_id = #{machineId,jdbcType=VARCHAR},
+      usercode = #{usercode,jdbcType=VARCHAR},
+      ismachineuse = #{ismachineuse,jdbcType=VARCHAR},
+      extend4 = #{extend4,jdbcType=VARCHAR},
+      extend5 = #{extend5,jdbcType=VARCHAR},
+      extend6 = #{extend6,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <!-- 一下为自定义方法 -->
@@ -264,6 +346,9 @@
 		<if test="vendAd.adName != null and !&quot;&quot;.equals(vendAd.adName.trim())">
 			and ad_name = #{vendAd.adName}
 		</if>
+		<if test="vendAd.usercode != null and !&quot;&quot;.equals(vendAd.usercode.trim())">
+			and usercode = #{vendAd.usercode}
+		</if>
 	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
   </select>
   
@@ -273,7 +358,17 @@
  		<if test="adName != null and !&quot;&quot;.equals(adName.trim())">
 		and ad_name = #{adName}
 	</if>
+	<if test="usercode != null and !&quot;&quot;.equals(usercode.trim())">
+			and usercode = #{usercode}
+		</if>
  	</where>
+  </select>
+  
+  <select id="selectByMachineId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from vend_ad
+    where machine_id = #{machineId,jdbcType=INTEGER}
   </select>
   
    <select id="findAll" resultMap="BaseResultMap">

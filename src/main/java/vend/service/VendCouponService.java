@@ -46,7 +46,7 @@ public interface VendCouponService {
 	 * @param currentDate
 	 * @return
 	 */
-	List<VendCoupon> selectRecharge(String currentDate);
+	List<VendCoupon> selectRecharge();
 	/**
 	 * 查找全部
 	 * @return

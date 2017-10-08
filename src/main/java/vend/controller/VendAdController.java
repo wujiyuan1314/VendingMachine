@@ -2,6 +2,7 @@ package vend.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -19,8 +20,10 @@ import base.util.Function;
 import base.util.Page;
 import vend.entity.CodeLibrary;
 import vend.entity.VendAd;
+import vend.entity.VendUser;
 import vend.service.CodeLibraryService;
 import vend.service.VendAdService;
+import vend.service.VendParaService;
 
 @Controller
 @RequestMapping("/ad")
@@ -31,6 +34,8 @@ public class VendAdController{
 	VendAdService vendAdService;
 	@Autowired
 	CodeLibraryService codeLibraryService;
+	@Autowired
+	VendParaService vendParaService;
 	/**
 	 * 根据输入信息条件查询广告列表，并分页显示
 	 * @param model
@@ -50,6 +55,11 @@ public class VendAdController{
 		}
 		logger.info(page.toString());
 		logger.info(vendAd.toString());
+		HttpSession session=request.getSession();
+    	VendUser user=(VendUser)session.getAttribute("vendUser");
+    	if(user!=null&&user.getUsercode()!=null){
+    		vendAd.setUsercode(user.getUsercode());
+    	}
 		List<CodeLibrary> adscreens=codeLibraryService.selectByCodeNo("ADSCREEN");
 		model.addAttribute("adscreens", adscreens);
 		List<VendAd> vendAds = vendAdService.listVendAd(vendAd, page);
@@ -92,6 +102,20 @@ public class VendAdController{
 		model.addAttribute("upvideotypes", upvideotypes);
     	if(br.hasErrors()){
     		return "manage/ad/ad_add";
+    	}
+    	HttpSession session=request.getSession();
+    	VendUser user=(VendUser)session.getAttribute("vendUser");
+    	if(user!=null&&user.getUsercode()!=null){
+    		vendAd.setUsercode(user.getUsercode());
+    	}
+    	if(user.getRoleId()==1){
+    		vendAd.setType("1");
+    	}
+    	if(user.getRoleId()==2){
+    		vendAd.setType("2");
+    	}
+    	if(user.getRoleId()==3){
+    		vendAd.setType("3");
     	}
     	vendAdService.insertVendAd(vendAd);
     	return "redirect:ads";
@@ -141,7 +165,19 @@ public class VendAdController{
     	if(br.hasErrors()){
     		return "manage/ad/ad_edit";
     	}
+    	if(vendAd.getType().equals("4")){
+    		vendAd.setIsmachineuse("1");
+    		vendAd.setExtend3("1");
+    	}
     	vendAdService.editVendAd(vendAd);
+    	String returnStr="";
+    	if(vendAd.getType().equals("4")){
+    		int extend4=Function.getInt(vendAd.getExtend4(),0);
+    		String bathPath=vendParaService.selectByParaCode("basePath");
+    		returnStr="redirect:"+bathPath+"/machine/"+extend4+"/adputon";
+    	}else{
+    		returnStr="redirect:ads";
+    	}
 		return "redirect:ads";
 	}
     /**

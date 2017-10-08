@@ -60,6 +60,18 @@ public class VendOrderController{
 		}
 		logger.info(page.toString());
 		logger.info(vendOrder.toString());
+		if(vendOrder.getUsercode()!=null){
+			model.addAttribute("usercode",vendOrder.getUsercode());
+		}
+		if(vendOrder.getShopusercode()!=null){
+			model.addAttribute("shopusercode",vendOrder.getShopusercode());
+		}
+		if(beginTime!=null){
+			model.addAttribute("beginTime",beginTime);
+		}
+		if(endTime!=null){
+			model.addAttribute("beginTime",endTime);
+		}
 		List<VendOrder> vendOrders = vendOrderService.listVendOrder(vendOrder,beginTime,endTime, page);
 		model.addAttribute("vendOrders",vendOrders);
 		return "manage/order/order_list";

@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import base.util.CacheUtils;
 import base.util.DateUtil;
 import base.util.Page;
+import vend.dao.VendAdMapper;
 import vend.dao.VendMachineMapper;
+import vend.entity.VendAd;
 import vend.entity.VendMachine;
 import vend.service.VendMachineService;
 
@@ -17,6 +19,8 @@ import vend.service.VendMachineService;
 public class VendMachineServiceImpl implements VendMachineService {
 	@Autowired
 	VendMachineMapper vendMachineMapper;
+	@Autowired
+	VendAdMapper vendAdMapper;
 	/**
 	 * 根据输入信息条件查询机器列表，并分页显示
 	 * @param vendMachine
@@ -54,6 +58,20 @@ public class VendMachineServiceImpl implements VendMachineService {
 		vendMachine.setUseStatus("0");
 		vendMachine.setWaterStatus("0");
 		int isOk=vendMachineMapper.insertSelective(vendMachine);
+		
+		//添加该机器广告
+		if(vendMachine.getMachineId()!=null){
+			VendAd vendAd=vendAdMapper.selectByMachineId(vendMachine.getMachineId());
+			if(vendAd==null){
+				vendAd=new VendAd();
+				vendAd.setMachineId(vendMachine.getMachineId());
+				vendAd.setType("4");//机器广告
+				vendAd.setUsercode(vendMachine.getUsercode());
+				vendAd.setExtend3("0");//是否有效
+				vendAd.setIsmachineuse("0");//是否单独投放改机器,0否，1是
+				vendAdMapper.insert(vendAd);
+			}
+		}
 		if(isOk==1){
 			CacheUtils.clear();
 		}

@@ -214,6 +214,7 @@ public class WeiXinChargeController {
 	public @ResponseBody void PaySuccess(HttpServletRequest request){
 		String requestPayment = request.getParameter("requestPayment");
 		String orderId = request.getParameter("orderId");
+		int yhid = Function.getInt(request.getParameter("yhid"),0);//优惠券ID
 		logger.info("-------充值结果:"+requestPayment);
 		if(requestPayment.equals("requestPayment:ok")){
 			//1,修改订单
@@ -223,18 +224,18 @@ public class WeiXinChargeController {
 				vendOrderService.editVendOrder(vendOrder);
 			}
 			//2,修改账户
-			/**充值活动查询*/
-			String currentDate=DateUtil.getCurrentDateStr();
-			List<VendCoupon> rechargecoupons=vendCouponService.selectRecharge(currentDate);
-			double rechargrbl=0;//充值优惠比例
-			if(rechargecoupons.size()>0){
-				rechargrbl=rechargecoupons.get(0).getCouponScale().doubleValue();
+			/**优惠券*/
+			VendCoupon vendCoupon=vendCouponService.getOne(yhid);
+			double orderamount=vendOrder.getAmount().doubleValue();//订单金额
+			double yuamount=orderamount;
+			if(vendCoupon!=null){
+				if(orderamount>=Double.valueOf(vendCoupon.getExtend3())){
+					yuamount=yuamount+Double.valueOf(vendCoupon.getExtend4());
+				}
 			}
 			/**消费用户账户*/
 			Date updateTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
 			VendAccount vendAccount=vendAccountService.getOne(vendOrder.getUsercode());//商户账户
-			double orderamount=vendOrder.getAmount().doubleValue();//订单金额
-			double yuamount=orderamount+orderamount*rechargrbl;//充值优惠后的金额
 			double amountpre1=vendAccount.getOwnAmount().doubleValue();
 			BigDecimal totalamount=BigDecimal.valueOf(yuamount+amountpre1);
 			vendAccount.setOwnAmount(totalamount);

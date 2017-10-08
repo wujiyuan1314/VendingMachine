@@ -44,14 +44,14 @@
 			      <table style="margin-bottom:5px;">
 			            <tr>
 			              <th>用户名:</th>
-			              <th><input type="text" name="usercode" id="usercode" placeholder="按用户名搜索"/>&nbsp;&nbsp;</th>
+			              <th><input type="text" value="${usercode }" name="usercode" id="usercode" placeholder="按用户名搜索"/>&nbsp;&nbsp;</th>
 			              <th>商家名:</th>
-			              <th><input type="text" name="shopusercode" id="shopusercode" placeholder="按商家名搜索"/>&nbsp;&nbsp;</th>
+			              <th><input type="text" value="${shopusercode }" name="shopusercode" id="shopusercode" placeholder="按商家名搜索"/>&nbsp;&nbsp;</th>
 		                  <td>
-		                  从<input type="text" name="beginTime" id="beginTime"  placeholder="开始时间" class="span2"/>
+		                  从<input type="text" value="${beginTime }" name="beginTime" id="beginTime"  placeholder="开始时间" class="span2"/>
 		                  </td>
 		                  <td>
-		                  到<input type="text" name="endTime" id="endTime"  placeholder="结束时间" class="span2"/>
+		                  到<input type="text" value="${endTime }" name="endTime" id="endTime"  placeholder="结束时间" class="span2"/>
 		                  </td>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                  <!--<td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>  -->

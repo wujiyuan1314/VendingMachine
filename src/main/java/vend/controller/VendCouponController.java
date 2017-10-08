@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 
 import base.util.DateUtil;
@@ -112,6 +113,16 @@ public class VendCouponController{
 		String usercode=request.getParameter("usercode");
 		List<UserCoupon> userCoupons = userCouponService.findByUsercode(usercode,currentDate);
 		return userCoupons;
+	}
+	/**
+	 * 充值活动
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/rechargecoupons",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
+	public @ResponseBody List<VendCoupon> rechargecoupons() throws IOException {
+		List<VendCoupon> vendCoupons = vendCouponService.selectRecharge();
+		return vendCoupons;
 	}
 	/**
 	 * 用户领取优惠券
@@ -311,25 +322,21 @@ public class VendCouponController{
 	@RequiresPermissions({"coupon:rechargeadd"})
     @RequestMapping(value="/rechargeadd",method=RequestMethod.POST)
 	public String rechargeadd(HttpServletRequest request,Model model,@Validated VendCoupon vendCoupon,BindingResult br){
-		double couponPrice=Function.getDouble(vendParaService.selectByParaCode("coupon_price"),0.00);
-		if(vendCoupon.getCouponScale().doubleValue()>couponPrice){
-			br.rejectValue("couponScale", "NOTBELOGNGOODSPRICE", "优惠券金额不能高于商品最高金额");
+		if(vendCoupon.getExtend3().equals("")){
+			br.rejectValue("extend3", "NOTEMPTY", "充多少不能为空");
 		}
-		String newareaId[]=request.getParameterValues("areaId");
-		if(newareaId==null||newareaId.length==0){
-			br.rejectValue("areaId", "NOCHOOSEAREA", "请选择地区");
+		if(!StringUtils.isNumber(vendCoupon.getExtend3())){
+			br.rejectValue("extend3", "NOTSHUZI", "充多少必须是数字");
 		}
-		
-		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
-		model.addAttribute("couponareas", couponareas);
+		if(vendCoupon.getExtend4().equals("")){
+			br.rejectValue("extend4", "NOTEMPTY", "送多少不能为空");
+		}
+		if(!StringUtils.isNumber(vendCoupon.getExtend4())){
+			br.rejectValue("extend4", "NOTSHUZI", "送多少必须是数字");
+		}
     	if(br.hasErrors()){
     		return "manage/coupon/recharge_add";
     	}
-    	String newareaIds="";
-    	for(String str:newareaId){
-    		newareaIds+=str+",";
-    	}
-    	vendCoupon.setAreaId(newareaIds);
     	vendCoupon.setValid("0");
     	vendCoupon.setExtend1("3");
     	vendCouponService.insertVendCoupon(vendCoupon);
@@ -375,37 +382,21 @@ public class VendCouponController{
 	@RequiresPermissions({"coupon:rechargeedit"})
     @RequestMapping(value="/rechargeedit",method=RequestMethod.POST)
 	public String rechargeedit(HttpServletRequest request,Model model,@Validated VendCoupon vendCoupon,BindingResult br){
-		double couponPrice=Function.getDouble(vendParaService.selectByParaCode("coupon_price"),0.00);
-		if(vendCoupon.getCouponScale().doubleValue()>couponPrice){
-			br.rejectValue("couponScale", "NOTBELOGNGOODSPRICE", "优惠券金额不能高于商品最高金额");
+		if(vendCoupon.getExtend3().equals("")){
+			br.rejectValue("extend3", "NOTEMPTY", "充多少不能为空");
 		}
-		String newareaId[]=request.getParameterValues("areaId");
-		if(newareaId==null||newareaId.length==0){
-			br.rejectValue("areaId", "NOCHOOSEAREA", "请选择地区");
+		if(!StringUtils.isNumber(vendCoupon.getExtend3())){
+			br.rejectValue("extend3", "NOTSHUZI", "充多少必须是数字");
 		}
-		
-		List<CodeLibrary> couponareas=codeLibraryService.selectByCodeNo("COUPONAREA");
-		String areaId="";
-		if(vendCoupon!=null){
-			areaId=vendCoupon.getAreaId();
-			if(areaId==null){
-				areaId="";
-			}
+		if(vendCoupon.getExtend4().equals("")){
+			br.rejectValue("extend4", "NOTEMPTY", "送多少不能为空");
 		}
-		for(CodeLibrary couponarea:couponareas){
-			if(areaId.indexOf(couponarea.getItemname()+",")!=-1){
-				couponarea.setExtend2("1");
-			}
+		if(!StringUtils.isNumber(vendCoupon.getExtend4())){
+			br.rejectValue("extend4", "NOTSHUZI", "送多少必须是数字");
 		}
-		model.addAttribute("couponareas", couponareas);
     	if(br.hasErrors()){
     		return "manage/coupon/recharge_edit";
     	}
-    	String newareaIds="";
-    	for(String str:newareaId){
-    		newareaIds+=str+",";
-    	}
-    	vendCoupon.setAreaId(newareaIds);
         vendCoupon.setValid("0");
         vendCoupon.setExtend1("3");
     	vendCouponService.editVendCoupon(vendCoupon);
@@ -497,8 +488,15 @@ public class VendCouponController{
 	@RequiresPermissions({"coupon:del"})
     @RequestMapping(value="/{id}/del")
  	public String del(@PathVariable Integer id){
-    	vendCouponService.delVendCoupon(id);;
- 		return "redirect:/coupon/coupons";
+		VendCoupon vendCoupon=vendCouponService.getOne(id);
+    	vendCouponService.delVendCoupon(id);
+    	String returnStr="";
+    	if(!vendCoupon.getExtend1().equals("3")){
+    		returnStr="redirect:/coupon/coupons";
+    	}else{
+    		returnStr="redirect:/coupon/chargecoupons";
+    	}
+ 		return returnStr;
  	}
     /**
      * 批量删除优惠券信息
@@ -508,13 +506,26 @@ public class VendCouponController{
 	@RequiresPermissions({"coupon:dels"})
     @RequestMapping(value="/dels")
   	public String dels(HttpServletRequest request){
+		int ishd=0;
     	String ids=request.getParameter("ids");
     	String idArray[]=ids.split(",");
     	int[] idArray1=new int[idArray.length];
     	for(int i=0;i<idArray.length;i++){
     		idArray1[i]=Function.getInt(idArray[i], 0);
+    		if(i==0){
+    			VendCoupon vendCoupon=vendCouponService.getOne(idArray1[0]);
+    			if(vendCoupon.getExtend1().equals("3")){
+    				ishd=1;	
+    			}
+    		}
     	}
     	vendCouponService.delVendCoupons(idArray1);
-  		return "redirect:/coupon/coupons";
+    	String returnStr="";
+    	if(ishd==0){
+    		returnStr="redirect:/coupon/coupons";
+    	}else{
+    		returnStr="redirect:/coupon/chargecoupons";
+    	}
+ 		return returnStr;
   	}
 }

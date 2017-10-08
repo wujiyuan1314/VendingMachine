@@ -24,7 +24,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-      <a href="<%=basePath1%>goods/goodss" class="current">商品列表</a>
+      <a href="<%=basePath1%>coupon/coupons" class="current">优惠券列表</a>
     </div>
   </div>
 <!--End-breadcrumbs-->
@@ -83,7 +83,7 @@
 	                <label class="control-label">优惠券开始日期</label>
 	                <div class="controls">
 	                  <div class="input-append date datepicker">
-	                      <sf:input path="startTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true" class="span2" />
+	                      <sf:input path="startTime"  readonly="true" class="span2" />
 		                  <span class="add-on"><i class="icon-th"></i></span>
 		              </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="startTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
@@ -93,7 +93,7 @@
 	                <label class="control-label">优惠券结束日期</label>
 	                <div class="controls">
 	                 <div class="input-append date datepicker">
-	                      <sf:input path="endTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true" class="span2" />
+	                      <sf:input path="endTime" readonly="true" class="span2" />
 		                  <span class="add-on"><i class="icon-th"></i></span>
 		              </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="endTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>

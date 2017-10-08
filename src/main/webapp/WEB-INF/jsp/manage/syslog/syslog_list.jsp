@@ -42,12 +42,13 @@
 			  <div class="widget-content">
 			      <table style="margin-bottom:5px;">
 			            <tr>
+			            <th>用户code:</th>
+			              <th><input type="text" name="usercode" id="usercode" value="${usercode }" placeholder="按用户code搜索"/>&nbsp;&nbsp;</th>
 			              <th>用户名:</th>
-			              <th><input type="text" name="username" id="usercode" placeholder="按用户名搜索"/>&nbsp;&nbsp;</th>
-			              <th>用户code:</th>
-			              <th><input type="text" name="usercode" id="usercode" placeholder="按用户code搜索"/>&nbsp;&nbsp;</th>
+			              <th><input type="text" name="username" id="username"  value="${username }" placeholder="按用户名搜索"/>&nbsp;&nbsp;</th>
+			              
 		                  <th>描述:</th>
-			              <th><input type="text" name="operDescription" id="operDescription" placeholder="按描述搜索"/>&nbsp;&nbsp;</th>
+			              <th><input type="text" name="operDescription" id="operDescription" value="${operDescription }" placeholder="按描述搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                </tr>
 			      </table>

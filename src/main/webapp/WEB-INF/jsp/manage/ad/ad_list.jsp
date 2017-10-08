@@ -62,6 +62,7 @@
 		                  <th>广告名</th>
 		                  <th>广告开始时间</th>
 		                  <th>广告结束时间</th>
+		                  <th>是否有效</th>
 		                  <th>操作</th>
 		                </tr>
 			         </thead>
@@ -73,12 +74,32 @@
 			                  <td>${vendAd.adName}</td>
 			                  <td><fmt:formatDate value="${vendAd.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td><fmt:formatDate value="${vendAd.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+			                  <c:choose>
+			                     <c:when test="${vendAd.extend3==1}">
+			                       <button class="btn btn-success btn-mini">有效</button>
+			                     </c:when>
+			                     <c:otherwise>
+			                       <button class="btn btn-danger btn-mini">无效</button>
+			                     </c:otherwise>
+			                    </c:choose>
 			                  <td class="center">
 			                    <shiro:hasPermission name="ad:edit">
-			                     <a href="${vendAd.id}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                     <a href="${vendAd.id}/edit" class="btn btn-success"/>修改</a>&nbsp;&nbsp;
 			                    </shiro:hasPermission>
 			                    <shiro:hasPermission name="ad:del">
-			                     <a href="javascript:void(0);" onclick="delconfirm(${vendAd.id});" class="btn btn-danger  icon-trash"/></a>
+			                     <a href="javascript:void(0);" onclick="delconfirm(${vendAd.id});" class="btn btn-danger"/>删除</a>
+			                    </shiro:hasPermission>
+			                    <shiro:hasPermission name="ad:tf">
+			                    <c:choose>
+			                       <c:when test="${vendAd.extend3==0}">
+			                          &nbsp;&nbsp;<a href="javascript:void(0);" onclick="tfconfirm(${vendAd.id});" class="btn btn-success"/>投放</a>
+			                       </c:when>
+			                     </c:choose>
+			                     <c:choose>
+			                       <c:when test="${vendAd.extend3==1}">
+			                       &nbsp;&nbsp; <a href="javascript:void(0);" onclick="shconfirm(${vendAd.id});" class="btn btn-success"/>回收</a>
+			                       </c:when>
+			                     </c:choose>
 			                    </shiro:hasPermission>
 			                  </td>
 			                </tr>

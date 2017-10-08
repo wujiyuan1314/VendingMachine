@@ -261,13 +261,7 @@
   <select id="selectRecharge" resultMap="BaseResultMap" parameterType="java.lang.String">
 	select
 	<include refid="Base_Column_List" />
-	from vend_coupon
-	<where>
-		<if test="currentDate!=null and !&quot;&quot;.equals(currentDate.trim())">
-          <![CDATA[   and DATE_FORMAT(start_time, '%Y-%m-%d %H:%i:%S')<=  DATE_FORMAT(#{currentDate}, '%Y-%m-%d %H:%i:%S')  
-              and DATE_FORMAT(end_time, '%Y-%m-%d %H:%i:%S')>=  DATE_FORMAT(#{currentDate}, '%Y-%m-%d %H:%i:%S')]]>
-        </if>
-	</where>
+	from vend_coupon where extend1=3
   </select>
   
    <select id="findAll" resultMap="BaseResultMap">

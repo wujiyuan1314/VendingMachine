@@ -23,7 +23,7 @@ public class VendOrderServiceImpl implements VendOrderService {
 	 * @return
 	 */
 	public List<VendOrder> listVendOrder(VendOrder vendOrder,String beginTime,String endTime,Page page){
-		int totalNumber = vendOrderMapper.countVendOrder(vendOrder,beginTime,endTime);
+		/*int totalNumber = vendOrderMapper.countVendOrder(vendOrder,beginTime,endTime);
 		page.setTotalNumber(totalNumber);
 		String title=vendOrder.getUsercode()+beginTime+endTime;
 		String currentPage=Integer.toString(page.getCurrentPage());
@@ -36,6 +36,10 @@ public class VendOrderServiceImpl implements VendOrderService {
 			vendOrders=vendOrderMapper.listVendOrder(vendOrder,beginTime,endTime,page);
 			CacheUtils.put("orderCache",key, vendOrders);
 		}
+		return vendOrders;*/
+		int totalNumber = vendOrderMapper.countVendOrder(vendOrder,beginTime,endTime);
+		page.setTotalNumber(totalNumber);
+		List<VendOrder> vendOrders=vendOrderMapper.listVendOrder(vendOrder,beginTime,endTime,page);
 		return vendOrders;
 	}
 	/**

@@ -106,11 +106,11 @@ public class VendCouponServiceImpl implements VendCouponService {
 	 * @param currentDate
 	 * @return
 	 */
-	public List<VendCoupon> selectRecharge(String currentDate){
+	public List<VendCoupon> selectRecharge(){
 		String key="key_selectRecharge";
 		List<VendCoupon> vendCoupons=(List<VendCoupon>)CacheUtils.get("couponCache", key);
 		if(vendCoupons==null){
-			vendCoupons= vendCouponMapper.selectRecharge(currentDate);
+			vendCoupons= vendCouponMapper.selectRecharge();
 			CacheUtils.put("couponCache", key, vendCoupons);
 		}
 		return vendCoupons;

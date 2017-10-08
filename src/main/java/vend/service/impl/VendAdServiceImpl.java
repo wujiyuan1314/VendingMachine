@@ -102,6 +102,13 @@ public class VendAdServiceImpl implements VendAdService {
 		return vendAd;
 	}
 	/**
+	 * 根据机器ID查找广告
+	 * @return
+	 */
+	public VendAd selectByMachineId(String machineId){
+		return vendAdMapper.selectByMachineId(machineId);
+	}
+	/**
 	 * 查找全部
 	 */
 	public List<VendAd> findAll() {

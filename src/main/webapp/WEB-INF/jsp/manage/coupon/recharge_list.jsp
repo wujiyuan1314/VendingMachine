@@ -60,10 +60,8 @@
 			              <th><input type="checkbox" onclick="selectAll('Id');" id="all" name="title-table-checkbox" /></th>
 		                  <th style="width:25px;">序号</th>
 		                  <th>活动名</th>
-		                  <th>优惠比例</th>
-		                  <th>活动介绍</th>
-		                  <th>活动开始日期</th>
-		                  <th>活动结束日期</th>
+		                  <th>充值</th>
+		                  <th>送出</th>
 		                  <th>是否有效</th>
 		                  <th>操作</th>
 		                </tr>
@@ -74,10 +72,8 @@
 					          <th><input type="checkbox" name="Id" id="Id" value="${vendCoupon.id}"/></th>
 					          <td style="text-align:center;">${st.index+1}</td>
 			                  <td>${vendCoupon.couponName}</td>
-			                  <td>${vendCoupon.couponScale}</td>
-			                  <td>${vendCoupon.couponInfo}</td>
-			                  <td><fmt:formatDate value="${vendCoupon.startTime}" pattern="yyyy-MM-dd"/></td>
-			                  <td><fmt:formatDate value="${vendCoupon.endTime}" pattern="yyyy-MM-dd"/></td>
+			                  <td>${vendCoupon.extend3}</td>
+			                  <td>${vendCoupon.extend4}</td>
 			                  <td>
 			                   <c:choose>
 			                     <c:when test="${vendCoupon.valid==1}">

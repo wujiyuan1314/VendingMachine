@@ -36,6 +36,15 @@ public class VendSyslogController {
 		}
 		logger.info(page.toString());
 		logger.info(vendSyslog.toString());
+		if(vendSyslog.getUsercode()!=null){
+			model.addAttribute("usercode",vendSyslog.getUsercode());
+		}
+		if(vendSyslog.getUsername()!=null){
+			model.addAttribute("username",vendSyslog.getUsername());
+		}
+		if(vendSyslog.getOperDescription()!=null){
+			model.addAttribute("operDescription",vendSyslog.getOperDescription());
+		}
 		List<VendSyslog> vendSyslogs = vendSyslogService.listVendSyslog(vendSyslog, page);
 		model.addAttribute("vendSyslogs",vendSyslogs);
 		return "manage/syslog/syslog_list";

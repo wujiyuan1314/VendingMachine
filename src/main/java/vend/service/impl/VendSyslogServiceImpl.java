@@ -29,18 +29,7 @@ public class VendSyslogServiceImpl implements VendSyslogService {
 		int totalNumber = vendSyslogMapper.countVendSyslog(vendSyslog);
 		page.setTotalNumber(totalNumber);
 		page.setPageNumber(20);
-		String title=vendSyslog.getUsercode();
-		String currentPage=Integer.toString(page.getCurrentPage());
-		if(title==null){
-			title="";
-		}
-		String key="key_listVendSyslog"+title+currentPage;
-		List<VendSyslog> vendSyslogs=(List<VendSyslog>)CacheUtils.get("codeCache", key);
-		if(vendSyslogs==null){
-			vendSyslogs = vendSyslogMapper.listVendSyslog(vendSyslog, page);
-			CacheUtils.put("codeCache",key, vendSyslogs);
-		}
-		return vendSyslogs;
+		return vendSyslogMapper.listVendSyslog(vendSyslog, page);
 	}
 	
 	/**

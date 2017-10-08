@@ -14,6 +14,8 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.alibaba.druid.util.StringUtils;
+
 import base.util.EncodeUtils;
 import base.util.Function;
 import base.util.HttpClientUtil;
@@ -82,6 +84,8 @@ public class Test {
 				
 		retMsg=HttpClientUtil.httpGetRequest(uri);
 		System.out.println(retMsg);
+		String mm="334µØ·½35";
+		System.out.println(StringUtils.isNumber(mm));
 		//System.out.println(m.indexOf("ghjgj,"));
 		
 	}

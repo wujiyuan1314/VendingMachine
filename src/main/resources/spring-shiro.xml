@@ -71,6 +71,7 @@
                 /goods/jgoodss = anon
                 /coupon/jcoupons = anon
                 /coupon/jusecoupons = anon
+                /coupon/rechargecoupons = anon
                 /coupon/lqcoupon = anon
                 /order/jorders = anon
                 /account/jaccount= anon

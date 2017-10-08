@@ -199,10 +199,15 @@ public class VendMachineController{
 	@RequiresPermissions({"machine:adputon"})
 	@RequestMapping(value="/{id}/adputon",method=RequestMethod.GET)
 	public String adPuton(Model model,@PathVariable int id){
-		List<VendAd> ads=vendAdService.findAll();
-		model.addAttribute("ads", ads);
 		VendMachine vendMachine=vendMachineService.getOne(id);
-		model.addAttribute(vendMachine);
+		if(vendMachine!=null&&vendMachine.getMachineId()!=null){
+			VendAd vendAd=vendAdService.selectByMachineId(vendMachine.getMachineId());
+			if(vendAd!=null){
+				vendAd=new VendAd();
+				model.addAttribute(vendAd);
+			}
+		}
+		model.addAttribute("id",id);
 		return "manage/machine/machine_adputon";
 	}
 	/**

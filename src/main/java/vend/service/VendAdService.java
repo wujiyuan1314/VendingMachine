@@ -42,6 +42,11 @@ public interface VendAdService {
 	 */
 	VendAd getOne(int id);
 	/**
+	 * 根据机器ID查找广告
+	 * @return
+	 */
+	VendAd selectByMachineId(String machineId);
+	/**
 	 * 查找全部
 	 * @return
 	 */

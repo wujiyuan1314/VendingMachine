@@ -3,7 +3,6 @@ package vend.entity;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -32,10 +31,8 @@ public class VendAd {
     private String height;
 
     private String width;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
-    
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
 
@@ -49,6 +46,20 @@ public class VendAd {
 
     private String extend3;
 
+    private String type;
+
+    private String machineId;
+
+    private String usercode;
+
+    private String ismachineuse;
+
+    private String extend4;
+
+    private String extend5;
+
+    private String extend6;
+
     public Integer getId() {
         return id;
     }
@@ -56,7 +67,7 @@ public class VendAd {
     public void setId(Integer id) {
         this.id = id;
     }
-    @NotEmpty(message="广告名不能为空")
+    @NotEmpty(message="���������Ϊ��")
     public String getAdName() {
         return adName;
     }
@@ -64,7 +75,15 @@ public class VendAd {
     public void setAdName(String adName) {
         this.adName = adName == null ? null : adName.trim();
     }
-    @NotEmpty(message="图片1不能为空")
+
+    public Integer getPicInterval() {
+        return picInterval;
+    }
+
+    public void setPicInterval(Integer picInterval) {
+        this.picInterval = picInterval;
+    }
+    @NotEmpty(message="ͼƬ1����Ϊ��")
     public String getPic1() {
         return pic1;
     }
@@ -72,7 +91,7 @@ public class VendAd {
     public void setPic1(String pic1) {
         this.pic1 = pic1 == null ? null : pic1.trim();
     }
-    @NotEmpty(message="图片2不能为空")
+    @NotEmpty(message="ͼƬ2����Ϊ��")
     public String getPic2() {
         return pic2;
     }
@@ -112,7 +131,7 @@ public class VendAd {
     public void setPic6(String pic6) {
         this.pic6 = pic6 == null ? null : pic6.trim();
     }
-    @NotEmpty(message="视频不能为空")
+    @NotEmpty(message="��Ƶ����Ϊ��")
     public String getVideo() {
         return video;
     }
@@ -120,15 +139,31 @@ public class VendAd {
     public void setVideo(String video) {
         this.video = video == null ? null : video.trim();
     }
-    @NotNull(message="广告名开始时间不能为空")
+
+    public String getHeight() {
+        return height;
+    }
+
+    public void setHeight(String height) {
+        this.height = height == null ? null : height.trim();
+    }
+
+    public String getWidth() {
+        return width;
+    }
+
+    public void setWidth(String width) {
+        this.width = width == null ? null : width.trim();
+    }
+    @NotNull(message="��濪ʼʱ�䲻��Ϊ��")
     public Date getStartTime() {
         return startTime;
     }
-    
+
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
-    @NotNull(message="广告名结束时间不能为空")
+    @NotNull(message="������ʱ�䲻��Ϊ��")
     public Date getEndTime() {
         return endTime;
     }
@@ -152,7 +187,7 @@ public class VendAd {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-    @NotEmpty(message="视频名不能为空")
+    @NotEmpty(message="��Ƶ������Ϊ��")
     public String getExtend1() {
         return extend1;
     }
@@ -160,7 +195,7 @@ public class VendAd {
     public void setExtend1(String extend1) {
         this.extend1 = extend1 == null ? null : extend1.trim();
     }
-    @NotEmpty(message="广告屏样式不能为空")
+    @NotEmpty(message="�������ʽ����Ϊ��")
     public String getExtend2() {
         return extend2;
     }
@@ -176,31 +211,60 @@ public class VendAd {
     public void setExtend3(String extend3) {
         this.extend3 = extend3 == null ? null : extend3.trim();
     }
-	@NotEmpty(message="高度不能为空")
-	@Pattern(regexp="^[0-9]+(.[0-9]{0,2})?$",message="只能输入正整数或最多小数点后两位的小数")
-	public String getHeight() {
-		return height;
-	}
-	@NotNull(message="视频轮播间隔时间不能为空")
-    //@Pattern(regexp="^\\+?[1-9][0-9]*$",message="只能输入正整数")
-	public Integer getPicInterval() {
-		return picInterval;
-	}
 
-	public void setPicInterval(Integer picInterval) {
-		this.picInterval = picInterval;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setHeight(String height) {
-		this.height = height;
-	}
-	@NotEmpty(message="宽度不能为空")
-	@Pattern(regexp="^[0-9]+(.[0-9]{0,2})?$",message="只能输入正整数或最多小数点后两位的小数")
-	public String getWidth() {
-		return width;
-	}
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
+    }
 
-	public void setWidth(String width) {
-		this.width = width;
-	}
+    public String getMachineId() {
+        return machineId;
+    }
+
+    public void setMachineId(String machineId) {
+        this.machineId = machineId == null ? null : machineId.trim();
+    }
+
+    public String getUsercode() {
+        return usercode;
+    }
+
+    public void setUsercode(String usercode) {
+        this.usercode = usercode == null ? null : usercode.trim();
+    }
+
+    public String getIsmachineuse() {
+        return ismachineuse;
+    }
+
+    public void setIsmachineuse(String ismachineuse) {
+        this.ismachineuse = ismachineuse == null ? null : ismachineuse.trim();
+    }
+
+    public String getExtend4() {
+        return extend4;
+    }
+
+    public void setExtend4(String extend4) {
+        this.extend4 = extend4 == null ? null : extend4.trim();
+    }
+
+    public String getExtend5() {
+        return extend5;
+    }
+
+    public void setExtend5(String extend5) {
+        this.extend5 = extend5 == null ? null : extend5.trim();
+    }
+
+    public String getExtend6() {
+        return extend6;
+    }
+
+    public void setExtend6(String extend6) {
+        this.extend6 = extend6 == null ? null : extend6.trim();
+    }
 }

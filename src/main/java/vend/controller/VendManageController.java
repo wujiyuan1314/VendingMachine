@@ -871,10 +871,16 @@ public class VendManageController{
 			return null;
 		}
 		
-		VendAd vendAd=vendAdService.getOne(adId);
+		VendAd vendAd=vendAdService.selectByMachineId(vendMachine.getMachineId());
 		if(vendAd==null){
 			json.put("success","0");
-			json.put("msg", "该广告不存在");
+			json.put("msg", "该机器广告不存在");
+			response.getWriter().append(json.toString());
+			return null;
+		}
+		if(vendAd.getAdName()==null){
+			json.put("success","0");
+			json.put("msg", "请先进行保存");
 			response.getWriter().append(json.toString());
 			return null;
 		}
