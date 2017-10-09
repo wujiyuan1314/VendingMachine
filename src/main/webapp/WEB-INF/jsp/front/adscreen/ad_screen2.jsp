@@ -21,20 +21,71 @@
 	<!-- 图片开始 -->
 	<div class="adv_pic" style="margin:0 auto">
 	    <ul class="pic">
-			<li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/1.jpg"/></a></li>
-			<li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/2.jpg"/></a></li>
-			<li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/3.jpg"/></a></li>
-			<li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/4.jpg"/></a></li>
-			<li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/5.jpg"/></a></li>
+	      <c:choose>
+	        <c:when test="${vendAd.pic1!='' }">
+	         <li><a href="#"><img src="${pageContext.request.contextPath}/${vendAd.pic1}"/></a></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic2!='' }">
+	         <li><a href="#"><img src="${pageContext.request.contextPath}/${vendAd.pic2}"/></a></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic3!='' }">
+	         <li><a href="#"><img src="${pageContext.request.contextPath}/${vendAd.pic3}"/></a></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic4!='' }">
+	         <li><a href="#"><img src="${pageContext.request.contextPath}/${vendAd.pic4}"/></a></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic5!='' }">
+	         <li><a href="#"><img src="${pageContext.request.contextPath}/${vendAd.pic5}"/></a></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic6!='' }">
+	         <li><a href="#"><img src="${pageContext.request.contextPath}/${vendAd.pic6}"/></a></li>
+	        </c:when>
+	      </c:choose>
 		</ul>
 		<a class="prev" href="javascript:void(0)"></a>
 		<a class="next" href="javascript:void(0)"></a>
 		<ul class="hd">
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
+		<c:choose>
+	        <c:when test="${vendAd.pic1!='' }">
+	         <li></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic2!='' }">
+	        <li></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic3!='' }">
+	         <li></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic4!='' }">
+	         <li></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic5!='' }">
+	        <li></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic6!='' }">
+	        <li></li>
+	        </c:when>
+	      </c:choose>
+			
 		</ul>
 	</div>
 	<!-- 图片结束 -->
@@ -42,10 +93,10 @@
 	<!-- 机器信息开始 -->
 	<div class="use_info">
 		<div class="wcode">
-	    	<div class="qrcode"><img src="${pageContext.request.contextPath}/resources/img/vcode.jpg" alt="" /></div>
+	    	<div class="qrcode"><img src="${pageContext.request.contextPath}/${vendShopQrcode.qrcode}" alt="" /></div>
 	        <p>扫码享受热饮</p>
 	    </div>
-	    <div class="consume"><h2>消费码</h2><input /></div>
+	    <div class="consume"><h2>消费码</h2><input style="font-size:24px;" value="${vendMachine.machineId }" disabled/></div>
 	    <div class="step">
 	    <i class="lt"></i>
 	    <i class="rb"></i>

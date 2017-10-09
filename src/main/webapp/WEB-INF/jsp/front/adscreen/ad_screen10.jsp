@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,19 +13,19 @@
 <body>
 <div class="content">
 
-    <!-- 视频开始 -->
+   <!-- 视频开始 -->
 	<div class="video">
-	    <embed src="https://imgcache.qq.com/tencentvideo_v1/playerv3/TPout.swf?max_age=86400&v=20161117&vid=f0554dqt786&auto=0" allowFullScreen="true" quality="high" width="100%" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+	    <embed src="${pageContext.request.contextPath}/${vendAd.video}" allowFullScreen="true" quality="high" width="100%" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
 	</div>
 	<!-- 视频结束 -->
 	
 	<!-- 机器信息开始 -->
 	<div class="use_info">
 		<div class="wcode">
-	    	<div class="qrcode"><img src="${pageContext.request.contextPath}/resources/img/vcode.jpg" alt="" /></div>
+	    	<div class="qrcode"><img src="${pageContext.request.contextPath}/${vendShopQrcode.qrcode}" alt="" /></div>
 	        <p>扫码享受热饮</p>
 	    </div>
-	    <div class="consume"><h2>消费码</h2><input disabled/></div>
+	    <div class="consume"><h2>消费码</h2><input style="font-size:24px;" value="${vendMachine.machineId }" disabled/></div>
 	    <div class="step">
 	    <i class="lt"></i>
 	    <i class="rb"></i>
