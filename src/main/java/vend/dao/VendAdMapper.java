@@ -19,7 +19,7 @@ public interface VendAdMapper {
     int updateByPrimaryKeySelective(VendAd record);
 
     int updateByPrimaryKey(VendAd record);
-    /**ÏÂÎª×Ô¶¨Òå·½·¨ */
+    /**è‡ªå®šä¹‰æ–¹æ³• */
     List<VendAd> listVendAd(@Param("vendAd") VendAd vendAd, @Param("page") Page page);
     
     int countVendAd(VendAd vendAd);

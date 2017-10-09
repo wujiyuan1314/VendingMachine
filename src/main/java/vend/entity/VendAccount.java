@@ -64,7 +64,7 @@ public class VendAccount {
         this.updateTime = updateTime;
     }
     @NotEmpty(message="不能为空")
-    @Pattern(regexp="/^[1-9]*[1-9][0-9]*$/",message="只能是整数")
+    @Pattern(regexp="^[0-9]*$",message="只能是整数")
     public String getExtend1() {
         return extend1;
     }

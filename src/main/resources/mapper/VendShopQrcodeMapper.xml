@@ -181,6 +181,13 @@
     from vend_shop_qrcode
     where extend2 = #{extend2,jdbcType=VARCHAR}
   </select>
+   <!-- 按类型查找 -->
+   <select id="selectByUsercode" resultMap="BaseResultMap" parameterType="java.lang.String">
+ 	 select 
+    <include refid="Base_Column_List" />
+    from vend_shop_qrcode
+    where usercode = #{usercode,jdbcType=VARCHAR}
+  </select>
   <!-- 批量删除 -->
     <delete id="deleteBatch" parameterType="int">
         delete from vend_shop_qrcode where id in

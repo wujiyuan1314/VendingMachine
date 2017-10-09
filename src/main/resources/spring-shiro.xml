@@ -59,7 +59,7 @@
                 /index.jsp =anon
                 /mobile/* =anon
                 <!-- 机器端访问 -->
-                /adscreen/* =anon
+                /adscreen/*/* =anon
                 <!-- 某个方法的访问权限-->
                 /wxlogin = anon
                 /wxreg = anon
@@ -69,6 +69,7 @@
                 /clickcode = anon
                 /manage/* = anon
                 /goods/jgoodss = anon
+                /accountdetail/jaccountdetails = anon
                 /coupon/jcoupons = anon
                 /coupon/jusecoupons = anon
                 /coupon/rechargecoupons = anon

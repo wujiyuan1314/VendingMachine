@@ -47,6 +47,12 @@ public interface VendShopQrcodeService {
 	 */
 	List<VendShopQrcode> findAll();
 	/**
+	 * 按用户名查找
+	 * @param usercode
+	 * @return
+	 */
+	List<VendShopQrcode> selectByUsercode(String usercode);
+	/**
 	 * 按照类型查找
 	 * @param extend2
 	 * @return

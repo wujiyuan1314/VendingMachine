@@ -42,6 +42,9 @@
 			  <div class="widget-content nopadding">
 			    <sf:form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/ad/edit" enctype="multipart/form-data" commandName="vendAd" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="id"/>
+	              <sf:hidden path="type"/>
+	              <sf:hidden path="machineId"/>
+	              <sf:hidden path="usercode"/>
 	               <sf:hidden path="extend4" value="${id }"/>
 	              <sf:hidden path="adName" value="${vendAd.machineId }"/>
 	              <div class="control-group">
@@ -58,7 +61,7 @@
 	                  </c:forEach>)
 	                </label>
 	                <div class="controls">
-	                                              图片1： <input type="file" name="file" id="file_pic1"/>
+	                                              图片1： <input type="file" name="file" id="file_pic1" value="${vendAd.pic1 }"/>
 	                  <a href="javascript:doUpload('pic1')" class="btn btn-success">上传</a>  
 	                  <span class="infopic1" style="color:#b94a48;"></span>
 	                  <a href="<%=basePath1%>${vendAd.pic1}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
@@ -66,7 +69,7 @@
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic1" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
                     </div>
                     <div class="controls">                          
-	                                              图片2： <input type="file" name="file" id="file_pic2"/>
+	                                              图片2： <input type="file" name="file" id="file_pic2" value="${vendAd.pic2 }"/>
 	                  <a href="javascript:doUpload('pic2')" class="btn btn-success">上传</a>            
 	                  <span class="infopic2" style="color:#b94a48;"></span>
 	                  <a href="<%=basePath1%>${vendAd.pic2}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
@@ -74,7 +77,7 @@
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic2" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	                 <div class="controls">
-	                                              图片3：<input type="file" name="file" id="file_pic3"/>
+	                                              图片3：<input type="file" name="file" id="file_pic3" value="${vendAd.pic3 }"/>
 	                  <a href="javascript:doUpload('pic3')" class="btn btn-success">上传</a>  
 	                  <span class="infopic3" style="color:#b94a48;"></span>
 	                  <a href="<%=basePath1%>${vendAd.pic3}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
@@ -82,7 +85,7 @@
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic3" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
                     <div class="controls">                           
-	                                            图片4：<input type="file" name="file" id="file_pic4"/>
+	                                            图片4：<input type="file" name="file" id="file_pic4" value="${vendAd.pic4}"/>
 	                  <a href="javascript:doUpload('pic4')" class="btn btn-success">上传</a>  
 	                  <span class="infopic4" style="color:#b94a48;"></span>
 	                  <a href="<%=basePath1%>${vendAd.pic4}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
@@ -90,7 +93,7 @@
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic4" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	                 <div class="controls">
-	                                            图片5：<input type="file" name="file" id="file_pic5"/>
+	                                            图片5：<input type="file" name="file" id="file_pic5" value="${vendAd.pic5 }"/>
 	                  <a href="javascript:doUpload('pic5')" class="btn btn-success">上传</a>  
 	                  <span class="infopic5" style="color:#b94a48;"></span>
 	                  <a href="<%=basePath1%>${vendAd.pic5}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
@@ -98,7 +101,7 @@
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic5" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
 	                </div>
                     <div class="controls">                           
-	                                            图片6：<input type="file" name="file" id="file_pic6"/>
+	                                            图片6：<input type="file" name="file" id="file_pic6" value="${vendAd.pic6 }"/>
 	                  <a href="javascript:doUpload('pic6')" class="btn btn-success">上传</a>  
 	                  <span class="infopic6" style="color:#b94a48;"></span>
 	                  <a href="<%=basePath1%>${vendAd.pic6}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
@@ -120,7 +123,7 @@
 	                  </c:forEach>)
 	                  </label>
 	                <div class="controls">
-	                  <input type="file" name="file" id="file_video"/>
+	                  <input type="file" name="file" id="file_video" value="${vendAd.video }"/>
 	                  <a href="javascript:doUploadVideo('video')" class="btn btn-success">上传</a>  
 	                  <span class="infovideo" style="color:#b94a48;"></span>
 	                  <sf:hidden path="video" class="filepath"/>
@@ -242,6 +245,7 @@
 
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
+<script src="<%=basePath2 %>resources/js/back/machine_list.js"></script>
 <script type="text/javascript">
 //模拟框正中
 $("#adtypename").click(function(){

@@ -130,11 +130,7 @@ function setDevParam(id){
  * @returns
  */
 function adPuton(id){
-	var adId=$("#adId").val();
-	if(adId==''){ 
-		alert("请选择一个广告"); 
-        return;
-	} 
+	var adId=$("#id").val();
 	if(confirm("确定要投放吗?")){
 		var url=basePath+"manage/"+id+"/"+adId+"/setAdItemList";
 		 $.post(url,'',function(res){

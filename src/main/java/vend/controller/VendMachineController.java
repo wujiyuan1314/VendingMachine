@@ -203,11 +203,26 @@ public class VendMachineController{
 		if(vendMachine!=null&&vendMachine.getMachineId()!=null){
 			VendAd vendAd=vendAdService.selectByMachineId(vendMachine.getMachineId());
 			if(vendAd!=null){
+				model.addAttribute(vendAd);
+			}else{
 				vendAd=new VendAd();
 				model.addAttribute(vendAd);
 			}
+			List<CodeLibrary> adscreens=codeLibraryService.selectByCodeNo("ADSCREEN");
+			String adtypename="";
+			for(CodeLibrary codeLibrary:adscreens){
+				if(vendAd.getExtend2()!=null&&codeLibrary.getItemno().equals(vendAd.getExtend2())){
+					adtypename=codeLibrary.getItemname();
+				}
+			}
+			model.addAttribute("adtypename", adtypename);
+			model.addAttribute("adscreens", adscreens);
 		}
 		model.addAttribute("id",id);
+    	List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
+		model.addAttribute("uppictypes", uppictypes);
+		List<CodeLibrary> upvideotypes=codeLibraryService.selectByCodeNo("UPVIDEOTYPE");
+		model.addAttribute("upvideotypes", upvideotypes);
 		return "manage/machine/machine_adputon";
 	}
 	/**

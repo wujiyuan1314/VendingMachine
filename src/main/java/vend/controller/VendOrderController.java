@@ -97,6 +97,7 @@ public class VendOrderController{
 		}
 		VendOrder vendOrder=new VendOrder();
 		vendOrder.setUsercode(map.get("usercode"));
+		logger.info("得到消费用户订单数据"+map.get("usercode"));
 		if(!"".equals(ordertype)){
 			vendOrder.setExtend1(ordertype);
 		}
@@ -113,6 +114,7 @@ public class VendOrderController{
 			vendOrder1.setExtend3(DateUtil.formatTime(vendOrder1.getCreateTime()));
 		}
 		//List<CodeLibrary> ordertypes =codeLibraryService.selectByCodeNo("ORDERTYPE");
+		logger.info("得到消费用户订单数据vendOrders"+vendOrders.size());
 		resultmap.put("vendOrders", vendOrders);
 		resultmap.put("page", page);
 		return resultmap;

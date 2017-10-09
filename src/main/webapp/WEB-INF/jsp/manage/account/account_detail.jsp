@@ -58,7 +58,7 @@ width:100%;
 						     </select>&nbsp;&nbsp;
                           </th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
-		                  <td><input type="button" onclick="dels('account');" value="批量删除" class="btn btn-danger"/></td>
+		                  <!--  <td><input type="button" onclick="dels('account');" value="批量删除" class="btn btn-danger"/></td>-->
 		                </tr>
 			      </table>
 			
@@ -86,7 +86,7 @@ width:100%;
 			                  <td>${vendAccountDetail.amount}</td>
 			                  <td><fmt:formatDate value="${vendAccountDetail.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td class="center">
-			                     <a href="${vendAccountDetail.usercode}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp;
+			                    <!--  <a href="${vendAccountDetail.usercode}/edit" class="btn btn-success icon-edit"/></a>&nbsp;&nbsp; -->
 			                     <a href="javascript:void(0);" onclick="delconfirm('${vendAccountDetail.usercode}');" class="btn btn-danger  icon-trash"/></a>
 			                  </td>
 			                </tr>

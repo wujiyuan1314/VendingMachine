@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,17 +15,17 @@
 
     <!-- 视频开始 -->
 	<div class="video">
-	    <embed src="http://zdyp.benbenniaokeji.com//userfiles/video/201504161458370195.FLV" allowFullScreen="true" quality="high" width="100%" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+	    <embed src="${pageContext.request.contextPath}/${vendAd.video}" allowFullScreen="true" quality="high" width="100%" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
 	</div>
 	<!-- 视频结束 -->
 	
 	<!-- 机器信息开始 -->
 	<div class="use_info">
 		<div class="wcode">
-	    	<div class="qrcode"><img src="${pageContext.request.contextPath}/resources/img/vcode.jpg" alt="" /></div>
+	    	<div class="qrcode"><img src="${pageContext.request.contextPath}/${vendShopQrcode.qrcode}" alt="" /></div>
 	        <p>扫码享受热饮</p>
 	    </div>
-	    <div class="consume"><h2>消费码</h2><input /></div>
+	    <div class="consume"><h2>消费码</h2><input style="font-size:24px;" value="${vendMachine.machineId }" disabled/></div>
 	    <div class="step">
 	    <i class="lt"></i>
 	    <i class="rb"></i>
@@ -40,20 +41,71 @@
 	<!-- 图片开始 -->
 	<div class="adv_pic" style="margin:0 auto">
 	    <ul class="pic">
-			<li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/1.jpg"/></a></li>
-			<li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/2.jpg"/></a></li>
-			<li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/3.jpg"/></a></li>
-			<li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/4.jpg"/></a></li>
-			<li><a href="#"><img src="${pageContext.request.contextPath}/resources/images/5.jpg"/></a></li>
+	      <c:choose>
+	        <c:when test="${vendAd.pic1!='' }">
+	         <li><a href="#"><img src="${pageContext.request.contextPath}/${vendAd.pic1}"/></a></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic2!='' }">
+	         <li><a href="#"><img src="${pageContext.request.contextPath}/${vendAd.pic2}"/></a></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic3!='' }">
+	         <li><a href="#"><img src="${pageContext.request.contextPath}/${vendAd.pic3}"/></a></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic4!='' }">
+	         <li><a href="#"><img src="${pageContext.request.contextPath}/${vendAd.pic4}"/></a></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic5!='' }">
+	         <li><a href="#"><img src="${pageContext.request.contextPath}/${vendAd.pic5}"/></a></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic6!='' }">
+	         <li><a href="#"><img src="${pageContext.request.contextPath}/${vendAd.pic6}"/></a></li>
+	        </c:when>
+	      </c:choose>
 		</ul>
 		<a class="prev" href="javascript:void(0)"></a>
 		<a class="next" href="javascript:void(0)"></a>
 		<ul class="hd">
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
-			<li></li>
+		<c:choose>
+	        <c:when test="${vendAd.pic1!='' }">
+	         <li></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic2!='' }">
+	        <li></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic3!='' }">
+	         <li></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic4!='' }">
+	         <li></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic5!='' }">
+	        <li></li>
+	        </c:when>
+	      </c:choose>
+	       <c:choose>
+	        <c:when test="${vendAd.pic6!='' }">
+	        <li></li>
+	        </c:when>
+	      </c:choose>
+			
 		</ul>
 	</div>
 	<!-- 图片结束 -->
@@ -61,9 +113,10 @@
 </div>
 </body>
 	<script type="text/javascript">
+	var delayTime=${vendAd.picInterval}*100;
 		/*鼠标移过，左右按钮显示*/
 		jQuery(".adv_pic").hover(function(){ jQuery(this).find(".prev,.next").stop(true,true).fadeTo("show",0.2) },function(){ jQuery(this).find(".prev,.next").fadeOut() });
 		/*SuperSlide图片切换*/
-		jQuery(".adv_pic").slide({ mainCell:".pic",effect:"fold", autoPlay:true, delayTime:600, trigger:"click"});
+		jQuery(".adv_pic").slide({ mainCell:".pic",effect:"fold", autoPlay:true, delayTime:delayTime, trigger:"click"});
 	</script>
 </html>

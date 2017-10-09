@@ -442,6 +442,10 @@ public class WeiXinPayController {
 		xvendAccountDetail.setUsercode(usercode);
 		xvendAccountDetail.setAmount(BigDecimal.valueOf(price));
 		xvendAccountDetail.setType("3");//购买
+		VendGoods vendGoods=vendGoodsService.getOne(id);
+		if(vendGoods!=null){
+			xvendAccountDetail.setExtend1(vendGoods.getGoodsName());//购买商品名	
+		}
 		xvendAccountDetail.setCreateTime(updateTime);
 		vendAccountDetailService.insertVendAccountDetail(xvendAccountDetail);
 		

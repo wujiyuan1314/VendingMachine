@@ -1,9 +1,12 @@
 package vend.controller;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,11 +22,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import base.util.DateUtil;
 import base.util.Function;
 import base.util.Page;
 import vend.entity.CodeLibrary;
+import vend.entity.UserCoupon;
 import vend.entity.VendAccount;
 import vend.entity.VendAccountDetail;
 import vend.entity.VendRole;
@@ -82,6 +87,41 @@ public class VendAccountDetailController{
 		}
 		model.addAttribute("vendAccountDetails",vendAccountDetails);
 		return "manage/account/account_detail";
+	}
+	/**
+	 * 得到消费用户的账户操作纪录
+	 * @param request
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/jaccountdetails",method=RequestMethod.POST,produces = "application/json;charset=UTF-8")
+	public @ResponseBody List<VendAccountDetail> getuseJson(HttpServletRequest request) throws IOException {
+		String usercode=request.getParameter("usercode");
+		logger.info("得到消费用户的账户操作纪录usercode"+usercode);
+		int n=Function.getInt(request.getParameter("n"), 0);
+		int number=(n+1)*9;
+		List<VendAccountDetail> vendAccountDetails = vendAccountDetailService.selectLimit(usercode, number);
+		for(VendAccountDetail vendAccountDetail:vendAccountDetails){
+			if(vendAccountDetail.getCreateTime()!=null){
+				String currenttime2=DateUtil.formatTime(vendAccountDetail.getCreateTime());
+				vendAccountDetail.setExtend2(currenttime2);
+			}
+			if(vendAccountDetail.getType().equals("1")){
+				vendAccountDetail.setExtend3("充值");
+			}
+			if(vendAccountDetail.getType().equals("2")){
+				vendAccountDetail.setExtend3("提现");
+			}
+			if(vendAccountDetail.getType().equals("3")){
+				vendAccountDetail.setExtend3("购买");
+			}
+			
+		}
+		//Map<String,Object> resultMap=new HashMap<String,Object>();
+		//resultMap.put("vendAccountDetails", vendAccountDetails);
+		//resultMap.put("length", vendAccountDetails.size());
+		logger.info("得到消费用户的账户操作纪录vendAccountDetails"+vendAccountDetails.size());
+		return vendAccountDetails;
 	}
 	/**
 	 * 提现记录
@@ -228,7 +268,7 @@ public class VendAccountDetailController{
 				vendAccountService.editVendAccount(vendAccount);
 			}
     	}
- 		return "redirect:/accountdetail/draw";
+    	return "redirect:/account/account_draw";
  	}
     /**
      * 拒绝提现
@@ -242,6 +282,6 @@ public class VendAccountDetailController{
     		vendAccountDetail.setExtend1("已拒绝提现");
         	vendAccountDetailService.editVendAccountDetail(vendAccountDetail);
     	}
- 		return "redirect:/accountdetail/draw";
+ 		return "redirect:/account/account_draw";
  	}
 }

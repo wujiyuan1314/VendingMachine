@@ -1,19 +1,54 @@
 package vend.controller;
 
+import java.util.Date;
+
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import base.util.DateUtil;
+import vend.entity.VendAd;
+import vend.entity.VendMachine;
+import vend.entity.VendShopQrcode;
+import vend.service.VendAdService;
+import vend.service.VendGoodsService;
+import vend.service.VendMachineService;
+import vend.service.VendParaService;
+import vend.service.VendShopQrcodeService;
 
 @Controller
 @RequestMapping("/adscreen")
 public class AdScreenController{
 	public static Logger logger = Logger.getLogger(AdScreenController.class);
+	@Autowired
+	VendParaService vendParaService;
+	@Autowired
+	VendMachineService vendMachineService;
+	@Autowired
+	VendAdService vendAdService;
+	@Autowired
+	VendShopQrcodeService vendShopQrcodeService;
 	/**
 	 * 广告屏样式1
+	 * @param machineId
 	 * @return
 	 */
-	@RequestMapping(value="/screen1")
-	public String adScreen1(){
+	@RequestMapping(value="/{machineId}/screen1")
+	public String adScreen1(@PathVariable String machineId,Model model){
+		VendMachine vendMachine=vendMachineService.selectByMachineId(machineId);
+		VendAd vendAd=vendAdService.selectByMachineId(machineId);
+		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
+		Date currentDate=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+		if(DateUtil.daysBetween(currentDate, vendAd.getStartTime())>0||DateUtil.daysBetween(currentDate, vendAd.getEndTime())<0){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
+		model.addAttribute("vendMachine",vendMachine);
+		model.addAttribute("vendAd",vendAd);
+		model.addAttribute("vendShopQrcode",vendShopQrcode);
 		return "front/adscreen/ad_screen1";
 	}
 	/**

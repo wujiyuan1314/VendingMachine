@@ -67,7 +67,7 @@ public class VendAd {
     public void setId(Integer id) {
         this.id = id;
     }
-    @NotEmpty(message="¹ã¸æÃû²»ÄÜÎª¿Õ")
+    @NotEmpty(message="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½")
     public String getAdName() {
         return adName;
     }
@@ -83,7 +83,7 @@ public class VendAd {
     public void setPicInterval(Integer picInterval) {
         this.picInterval = picInterval;
     }
-    @NotEmpty(message="Í¼Æ¬1²»ÄÜÎª¿Õ")
+    @NotEmpty(message="å›¾ç‰‡1ä¸èƒ½ä¸ºç©º")
     public String getPic1() {
         return pic1;
     }
@@ -91,7 +91,7 @@ public class VendAd {
     public void setPic1(String pic1) {
         this.pic1 = pic1 == null ? null : pic1.trim();
     }
-    @NotEmpty(message="Í¼Æ¬2²»ÄÜÎª¿Õ")
+    @NotEmpty(message="å›¾ç‰‡2ä¸èƒ½ä¸ºç©º")
     public String getPic2() {
         return pic2;
     }
@@ -131,7 +131,7 @@ public class VendAd {
     public void setPic6(String pic6) {
         this.pic6 = pic6 == null ? null : pic6.trim();
     }
-    @NotEmpty(message="ÊÓÆµ²»ÄÜÎª¿Õ")
+    @NotEmpty(message="è§†é¢‘ä¸èƒ½ä¸ºç©º")
     public String getVideo() {
         return video;
     }
@@ -155,7 +155,7 @@ public class VendAd {
     public void setWidth(String width) {
         this.width = width == null ? null : width.trim();
     }
-    @NotNull(message="¹ã¸æ¿ªÊ¼Ê±¼ä²»ÄÜÎª¿Õ")
+    @NotNull(message="å¼€å§‹æ—¶é—´ä¸èƒ½ä¸ºç©º")
     public Date getStartTime() {
         return startTime;
     }
@@ -163,7 +163,7 @@ public class VendAd {
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
-    @NotNull(message="¹ã¸æ½áÊøÊ±¼ä²»ÄÜÎª¿Õ")
+    @NotNull(message="ç»“æŸæ—¶é—´ä¸èƒ½ä¸ºç©º")
     public Date getEndTime() {
         return endTime;
     }
@@ -187,7 +187,7 @@ public class VendAd {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
-    @NotEmpty(message="ÊÓÆµÃû²»ÄÜÎª¿Õ")
+    @NotEmpty(message="è§†é¢‘åä¸èƒ½ä¸ºç©º")
     public String getExtend1() {
         return extend1;
     }
@@ -195,7 +195,7 @@ public class VendAd {
     public void setExtend1(String extend1) {
         this.extend1 = extend1 == null ? null : extend1.trim();
     }
-    @NotEmpty(message="¹ã¸æÆÁÑùÊ½²»ÄÜÎª¿Õ")
+    @NotEmpty(message="å¹¿å‘Šå±æ ·å¼ä¸èƒ½ä¸ºç©º")
     public String getExtend2() {
         return extend2;
     }

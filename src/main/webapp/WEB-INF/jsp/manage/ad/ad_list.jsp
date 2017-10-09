@@ -74,7 +74,7 @@
 			                  <td>${vendAd.adName}</td>
 			                  <td><fmt:formatDate value="${vendAd.startTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                  <td><fmt:formatDate value="${vendAd.endTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-			                  <c:choose>
+			                  <td><c:choose>
 			                     <c:when test="${vendAd.extend3==1}">
 			                       <button class="btn btn-success btn-mini">有效</button>
 			                     </c:when>
@@ -82,6 +82,7 @@
 			                       <button class="btn btn-danger btn-mini">无效</button>
 			                     </c:otherwise>
 			                    </c:choose>
+			                    </td>
 			                  <td class="center">
 			                    <shiro:hasPermission name="ad:edit">
 			                     <a href="${vendAd.id}/edit" class="btn btn-success"/>修改</a>&nbsp;&nbsp;
@@ -138,6 +139,22 @@
 function delconfirm(id){
 	 if(confirm("确定要删除吗?")){
 		window.location.href=basePath+"ad/"+id+"/del";
+	 }
+}
+function tfconfirm(id){
+	 if(confirm("确定要投放吗?")){
+		var url=basePath+"manage/"+id+"/setShAdItemList";
+		 $.post(url,'',function(res){
+			var data=eval("("+res+")");
+			var success=data.success;
+			var msg=data.msg;
+			if(success==0){
+				alert(msg);
+			}else if(success==1){
+				alert(msg);
+				window.location.reload();
+			}
+		 })
 	 }
 }
 </script>

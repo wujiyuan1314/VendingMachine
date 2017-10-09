@@ -65,7 +65,7 @@ public class VendMachineServiceImpl implements VendMachineService {
 			if(vendAd==null){
 				vendAd=new VendAd();
 				vendAd.setMachineId(vendMachine.getMachineId());
-				vendAd.setType("4");//机器广告
+				vendAd.setType("5");//机器广告
 				vendAd.setUsercode(vendMachine.getUsercode());
 				vendAd.setExtend3("0");//是否有效
 				vendAd.setIsmachineuse("0");//是否单独投放改机器,0否，1是

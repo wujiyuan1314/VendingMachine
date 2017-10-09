@@ -31,7 +31,7 @@
 <!--Action boxes-->
   <div class="container-fluid">
     <div class="row fluid">
-      <sf:form action="coupons" method="post" id="Paramform" class="form-horizontal">
+      <sf:form action="chargecoupons" method="post" id="Paramform" class="form-horizontal">
       <input type="hidden" name="currentPage" id="currentPage" value="1" />
 		<div class="span12">
 		  <div class="widget-box">

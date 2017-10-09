@@ -215,6 +215,7 @@ public class WeiXinChargeController {
 		String requestPayment = request.getParameter("requestPayment");
 		String orderId = request.getParameter("orderId");
 		int yhid = Function.getInt(request.getParameter("yhid"),0);//优惠券ID
+		int hdid = Function.getInt(request.getParameter("hdid"),0);//活动ID
 		logger.info("-------充值结果:"+requestPayment);
 		if(requestPayment.equals("requestPayment:ok")){
 			//1,修改订单
@@ -225,7 +226,7 @@ public class WeiXinChargeController {
 			}
 			//2,修改账户
 			/**优惠券*/
-			VendCoupon vendCoupon=vendCouponService.getOne(yhid);
+			VendCoupon vendCoupon=vendCouponService.getOne(hdid);
 			double orderamount=vendOrder.getAmount().doubleValue();//订单金额
 			double yuamount=orderamount;
 			if(vendCoupon!=null){
@@ -248,6 +249,9 @@ public class WeiXinChargeController {
 			vendAccountDetail1.setUsercode(vendOrder.getUsercode());
 			vendAccountDetail1.setAmount(BigDecimal.valueOf(orderamount));
 			vendAccountDetail1.setType("1");//充值
+			if(vendCoupon.getCouponName()!=null){
+				vendAccountDetail1.setExtend1(vendCoupon.getCouponName());
+			}
 			vendAccountDetail1.setCreateTime(updateTime);
 			vendAccountDetailService.insertVendAccountDetail(vendAccountDetail1);
 			

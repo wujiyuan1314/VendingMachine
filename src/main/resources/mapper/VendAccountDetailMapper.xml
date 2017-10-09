@@ -173,6 +173,15 @@
 	    </if>
  	</where>
   </select>
+   
+  <select id="selectLimit" resultMap="BaseResultMap">
+ 	select * from vend_accountdetail
+ 	<where>
+ 		<if test="usercode != null and !&quot;&quot;.equals(usercode.trim())">
+		  and usercode = #{usercode}
+	    </if>order by create_time desc limit 0, #{number}
+ 	</where>	
+  </select>
   
    <select id="findAll" resultMap="BaseResultMap">
  	select * from vend_accountdetail

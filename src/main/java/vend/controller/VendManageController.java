@@ -688,6 +688,9 @@ public class VendManageController{
 			return null;
 		}
 		
+		vendMachine.setShopQrcode(shopQrcode);
+		vendMachineService.insertVendMachine(vendMachine);
+		
 		JSONObject payload = new JSONObject();
 		payload.accumulate("device_id", vendMachine.getMachineId());
 		payload.accumulate("operation", "setQR");
@@ -921,8 +924,8 @@ public class VendManageController{
 		}
 		
 		String weburl=codeLibrary.getExtend2();
-		if(weburl==null){
-			weburl="adscreen/screen1";
+		if(codeLibrary.getItemno()==null){
+			weburl="adscreen/"+vendMachine.getMachineId()+"/screen"+codeLibrary.getItemno();
 		}
 		
 		JSONObject payload = new JSONObject();
@@ -1047,7 +1050,7 @@ public class VendManageController{
 		}
 		
 		Map<String,Object> dataMap = new HashMap<String,Object>();
-		dataMap.put("id", id);
+		dataMap.put("id", vendMachine.getMachineId());
 		dataMap.put("payload", payload);
 		try {
 			String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
@@ -1070,6 +1073,277 @@ public class VendManageController{
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		response.getWriter().append(json.toString());
+		return null;  
+	}
+	
+	/**
+	 * 商户设置名下机器广告节目信息
+	 * @param id
+	 * @param adId
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/{adId}/setShAdItemList",method=RequestMethod.POST)
+	public String setShAdItemList(@PathVariable int adId,HttpServletResponse response) throws IOException{
+		logger.info("------------------1：进入广告设置---------------");
+		String absolutePath=vendParaService.selectByParaCode("absolutePath");//项目绝对路径
+		String bathPath=vendParaService.selectByParaCode("basePath");//项目相对路径
+		logger.info("------------------2：项目路径absolutePath和bathPath---------------"+absolutePath+bathPath);
+		response.setCharacterEncoding("UTF-8");
+		JSONObject json = new JSONObject();
+		json.put("success","0");
+		json.put("msg", "投放广告失败");
+		logger.info("------------------3：投放广告失败---------------");
+		
+		VendAd vendAd=vendAdService.getOne(adId);
+		if(vendAd==null){
+			json.put("success","0");
+			json.put("msg", "该机器广告不存在");
+			response.getWriter().append(json.toString());
+			return null;
+		}
+		if(vendAd.getExtend2()==null){
+			json.put("success","0");
+			json.put("msg", "该广告未选择广告屏样式");
+			response.getWriter().append(json.toString());
+			return null;
+		}
+		if(vendAd.getVideo()==null){
+			json.put("success","0");
+			json.put("msg", "该广告未选择视频");
+			response.getWriter().append(json.toString());
+			return null;
+		}
+		
+		List<VendShopQrcode> vendShopQrcodes=vendShopQrcodeService.selectByUsercode(vendAd.getUsercode());
+		if(vendShopQrcodes.size()==0){
+			json.put("success","0");
+			json.put("msg", "该商户二维码信息不存在");
+			response.getWriter().append(json.toString());
+			return null;
+		}
+		
+		VendShopQrcode vendShopQrcode=vendShopQrcodes.get(0);
+		
+		if(vendShopQrcode==null){
+			json.put("success","0");
+			json.put("msg", "该商户二维码信息不存在");
+			response.getWriter().append(json.toString());
+			return null;
+		}
+		
+		CodeLibrary codeLibrary=codeLibraryService.selectByItemno("ADSCREEN", vendAd.getExtend2());
+		if(codeLibrary==null){
+			json.put("success","0");
+			json.put("msg", "所选广告屏样式不存在");
+			response.getWriter().append(json.toString());
+			return null;	
+		}
+		
+		String usercodelist[]={vendAd.getUsercode()};
+		List<VendMachine> vendMachines=vendMachineService.selectByUsercode(usercodelist);
+		for(VendMachine vendMachine:vendMachines){
+			if(vendMachine==null){
+				json.put("success","0");
+				json.put("msg", "机器不存在");
+				response.getWriter().append(json.toString());
+				return null;
+			}
+			
+			if(vendMachine.getMachineId()==null){
+				json.put("success","0");
+				json.put("msg", "未绑定机器ID");
+				response.getWriter().append(json.toString());
+				return null;
+			}
+			if(vendMachine.getMachineCode()==null){
+				json.put("success","0");
+				json.put("msg", "未设置机器识别码");
+				response.getWriter().append(json.toString());
+				return null;
+			}
+			
+			VendAd vendAd1=vendAdService.selectByMachineId(vendMachine.getMachineId());
+			if(vendAd==null){
+				json.put("success","0");
+				json.put("msg", "该机器广告不存在");
+				response.getWriter().append(json.toString());
+				return null;
+			}
+			if(vendAd.getExtend2()==null){
+				json.put("success","0");
+				json.put("msg", "该广告未选择广告屏样式");
+				response.getWriter().append(json.toString());
+				return null;
+			}
+			if(vendAd.getVideo()==null){
+				json.put("success","0");
+				json.put("msg", "该广告未选择视频");
+				response.getWriter().append(json.toString());
+				return null;
+			}
+			vendAd.setExtend3("1");
+			vendAdService.editVendAd(vendAd);
+			
+			if(vendAd1.getIsmachineuse().equals("1")){
+				vendAd=vendAd1;
+			}
+			
+			String weburl=codeLibrary.getExtend2();
+			if(codeLibrary.getItemno()==null){
+				weburl="adscreen/"+vendMachine.getMachineId()+"/screen"+codeLibrary.getItemno();
+			}
+			
+			JSONObject payload = new JSONObject();
+			payload.accumulate("device_id", vendMachine.getMachineId());
+			payload.accumulate("operation", "setAdItemList");
+			payload.accumulate("qrPic", bathPath+"/"+vendShopQrcode.getQrcode());
+			payload.accumulate("csrCode", vendMachine.getMachineCode());
+			payload.accumulate("styleDoc", bathPath+weburl);
+			logger.info("------------------4：payload值---------------"+payload);
+			
+			JSONArray picArray = new JSONArray();
+			if(vendAd.getPic1()!=null&&!"".equals(vendAd.getPic1())){
+				logger.info("------------------5：pic1值---------------"+vendAd.getPic1());
+				String filePath=absolutePath+vendAd.getPic1();
+				String picName=Function.getPicName(filePath);//图片名
+				logger.info("------------------5：pic1的picName值---------------"+picName);
+				String picMd5=MD5Util.getMD5(filePath);//图片MD5
+				logger.info("------------------5：pic1的picMd5值---------------"+picMd5);
+				long picSize=Function.getPicSize(filePath);//图片大小
+				logger.info("------------------5：pic1的picSize值---------------"+picSize);
+				String picpath=bathPath+filePath;//图片相对路径
+				logger.info("------------------5：pic1的picpath值---------------"+picpath);
+				JSONObject pic = new JSONObject();
+				pic.accumulate("fileName", picName);
+				pic.accumulate("fileMd5", picMd5);
+				pic.accumulate("fileSize", picSize);
+				pic.accumulate("fileUrl", picpath);
+				picArray.add(pic);
+			}
+			if(vendAd.getPic2()!=null&&!"".equals(vendAd.getPic2())){
+				logger.info("------------------6：pic2值---------------"+vendAd.getPic2());
+				String filePath=absolutePath+vendAd.getPic2();
+				String picName=Function.getPicName(filePath);//图片名
+				logger.info("------------------6：pic2的picName值---------------"+picName);
+				String picMd5=MD5Util.getMD5(filePath);//图片MD5
+				logger.info("------------------6：pic2的picMd5值---------------"+picMd5);
+				long picSize=Function.getPicSize(filePath);//图片大小
+				logger.info("------------------6：pic2的picSize值---------------"+picSize);
+				String picpath=bathPath+filePath;//图片相对路径
+				logger.info("------------------6：pic2的picpath值---------------"+picpath);
+				JSONObject pic = new JSONObject();
+				pic.accumulate("fileName", picName);
+				pic.accumulate("fileMd5", picMd5);
+				pic.accumulate("fileSize", picSize);
+				pic.accumulate("fileUrl", picpath);
+				picArray.add(pic);
+			}
+			if(vendAd.getPic3()!=null&&!"".equals(vendAd.getPic3())){
+				String filePath=absolutePath+vendAd.getPic1();
+				String picName=Function.getPicName(filePath);//图片名
+				String picMd5=MD5Util.getMD5(filePath);//图片MD5
+				long picSize=Function.getPicSize(filePath);//图片大小
+				String picpath=bathPath+filePath;//图片相对路径
+				JSONObject pic = new JSONObject();
+				pic.accumulate("fileName", picName);
+				pic.accumulate("fileMd5", picMd5);
+				pic.accumulate("fileSize", picSize);
+				pic.accumulate("fileUrl", picpath);
+				picArray.add(pic);
+			}
+			if(vendAd.getPic4()!=null&&!"".equals(vendAd.getPic4())){
+				String filePath=absolutePath+vendAd.getPic1();
+				String picName=Function.getPicName(filePath);//图片名
+				String picMd5=MD5Util.getMD5(filePath);//图片MD5
+				long picSize=Function.getPicSize(filePath);//图片大小
+				String picpath=bathPath+filePath;//图片相对路径
+				JSONObject pic = new JSONObject();
+				pic.accumulate("fileName", picName);
+				pic.accumulate("fileMd5", picMd5);
+				pic.accumulate("fileSize", picSize);
+				pic.accumulate("fileUrl", picpath);
+				picArray.add(pic);
+			}
+			if(vendAd.getPic5()!=null&&!"".equals(vendAd.getPic5())){
+				String filePath=absolutePath+vendAd.getPic1();
+				String picName=Function.getPicName(filePath);//图片名
+				String picMd5=MD5Util.getMD5(filePath);//图片MD5
+				long picSize=Function.getPicSize(filePath);//图片大小
+				String picpath=bathPath+filePath;//图片相对路径
+				JSONObject pic = new JSONObject();
+				pic.accumulate("fileName", picName);
+				pic.accumulate("fileMd5", picMd5);
+				pic.accumulate("fileSize", picSize);
+				pic.accumulate("fileUrl", picpath);
+				picArray.add(pic);
+			}
+			if(vendAd.getPic6()!=null&&!"".equals(vendAd.getPic6())){
+				String filePath=absolutePath+vendAd.getPic1();
+				String picName=Function.getPicName(filePath);//图片名
+				String picMd5=MD5Util.getMD5(filePath);//图片MD5
+				long picSize=Function.getPicSize(filePath);//图片大小
+				String picpath=bathPath+filePath;//图片相对路径
+				JSONObject pic = new JSONObject();
+				pic.accumulate("fileName", picName);
+				pic.accumulate("fileMd5", picMd5);
+				pic.accumulate("fileSize", picSize);
+				pic.accumulate("fileUrl", picpath);
+				picArray.add(pic);
+			}
+			payload.accumulate("picList", picArray);
+			
+			if(vendAd.getVideo()!=null){
+				logger.info("------------------7：video值---------------"+vendAd.getVideo());
+				String filePath=absolutePath+vendAd.getVideo();
+				String videoName=Function.getPicName(filePath);//视频名
+				logger.info("------------------7：video的videoName值---------------"+videoName);
+				String videoMd5=MD5Util.getMD5(filePath);//视频MD5
+				logger.info("------------------6：video的videoMd5值---------------"+videoMd5);
+				long videoSize=Function.getPicSize(filePath);//视频大小
+				logger.info("------------------6：video的videoSize值---------------"+videoSize);
+				String videopath=bathPath+filePath;//视频相对路径
+				logger.info("------------------6：video的videopath值---------------"+videopath);
+				
+				JSONObject mov = new JSONObject();
+				JSONArray movArray = new JSONArray();
+				mov.accumulate("fileName", videoName);
+				mov.accumulate("fileMd5", videoMd5);
+				mov.accumulate("fileSize", videoSize);
+				mov.accumulate("fileUrl", videopath);
+				movArray.add(mov);
+				payload.accumulate("movList", movArray);
+			}
+			
+			Map<String,Object> dataMap = new HashMap<String,Object>();
+			dataMap.put("id", vendMachine.getMachineId());
+			dataMap.put("payload", payload);
+			try {
+				String retMsg = HttpClientUtil.httpPostRequest(SysPara.midPublishUrl,dataMap);
+				logger.info("------------------retMsg的值---------------"+retMsg);
+				if(StringUtils.isNotBlank(retMsg)){
+					JSONObject retJson = JSONObject.fromObject(retMsg);	
+					logger.info("------------------retJson的值---------------"+retJson);
+					String retCode = retJson.getString("result");
+					logger.info("------------------retCode的值---------------"+retCode);
+					if(retCode.equals("0")){
+						json.put("success","1");
+						json.put("msg", "投放广告成功");
+						logger.info("------------------投放广告成功---------------");
+					}else{
+						System.out.println("投放广告失败:" + retJson.getString("msg"));
+					}				
+				}else{
+					System.out.println("投放广告失败");
+				}
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		response.getWriter().append(json.toString());

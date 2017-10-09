@@ -185,10 +185,10 @@
     select 
     <include refid="Base_Column_List" />
     from user_coupon
-    where extend1 is null  and usercode = #{usercode,jdbcType=VARCHAR} and extend2 <![CDATA[<=]]>#{currentDate,jdbcType=VARCHAR}
+    where extend1 !=1  and usercode = #{usercode,jdbcType=VARCHAR} and extend2 <![CDATA[<=]]>#{currentDate,jdbcType=VARCHAR}
     and extend3 <![CDATA[>=]]>#{currentDate,jdbcType=VARCHAR}
   </select>
-  <select id="findByUsercodeLimitCouponId" resultMap="BaseResultMap" parameterType="java.lang.String">
+  <select id="findByUsercodeLimitCouponId" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user_coupon

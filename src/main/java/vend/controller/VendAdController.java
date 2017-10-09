@@ -1,4 +1,5 @@
 package vend.controller;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,7 +64,12 @@ public class VendAdController{
 		List<CodeLibrary> adscreens=codeLibraryService.selectByCodeNo("ADSCREEN");
 		model.addAttribute("adscreens", adscreens);
 		List<VendAd> vendAds = vendAdService.listVendAd(vendAd, page);
-		model.addAttribute("vendAds",vendAds);
+		List<VendAd> list=new ArrayList<VendAd>();
+		for(VendAd vendAd1:vendAds){
+			if(!vendAd1.getType().equals("5"))
+			list.add(vendAd1);
+		}
+		model.addAttribute("vendAds",list);
 		return "manage/ad/ad_list";
 	}
 	/**
@@ -117,6 +123,10 @@ public class VendAdController{
     	if(user.getRoleId()==3){
     		vendAd.setType("3");
     	}
+    	if(user.getRoleId()==4){
+    		vendAd.setType("4");
+    	}
+    	vendAd.setExtend3("0");
     	vendAdService.insertVendAd(vendAd);
     	return "redirect:ads";
 	}
@@ -178,7 +188,7 @@ public class VendAdController{
     	}else{
     		returnStr="redirect:ads";
     	}
-		return "redirect:ads";
+		return returnStr;
 	}
     /**
      * 删除广告信息

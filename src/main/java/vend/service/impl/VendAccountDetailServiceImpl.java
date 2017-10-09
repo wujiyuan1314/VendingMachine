@@ -111,6 +111,12 @@ public class VendAccountDetailServiceImpl implements VendAccountDetailService {
 		return vendAccountDetail;
 	}
 	/**
+	 * 每次查询10条
+	 */
+	public List<VendAccountDetail> selectLimit(String usercode,int number){
+		return vendAccountDetailMapper.selectLimit(usercode, number);
+	}
+	/**
 	 * 查找全部
 	 * @return
 	 */

@@ -27,7 +27,7 @@ public interface VendAccountDetailMapper {
     List<VendAccountDetail> listVendAccountDetailTx(@Param("vendAccountDetail") VendAccountDetail vendAccountDetail, @Param("page") Page page);
     
     int countVendAccountDetailTx(VendAccountDetail vendAccountDetail);
-    
+    List<VendAccountDetail> selectLimit(@Param("usercode") String usercode,@Param("number") Integer number);
     int deleteBatch(int ids[]);
     
     List<VendAccountDetail> findAll();

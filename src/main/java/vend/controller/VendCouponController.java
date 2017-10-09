@@ -111,7 +111,9 @@ public class VendCouponController{
 	public @ResponseBody List<UserCoupon> getuseJson(HttpServletRequest request) throws IOException {
 		String currentDate=DateUtil.getCurrentDateStr();
 		String usercode=request.getParameter("usercode");
+		logger.info("消费用户的已领取的优惠券信息usercode"+usercode);
 		List<UserCoupon> userCoupons = userCouponService.findByUsercode(usercode,currentDate);
+		logger.info("消费用户的已领取的优惠券信息"+userCoupons.size());
 		return userCoupons;
 	}
 	/**
@@ -171,7 +173,9 @@ public class VendCouponController{
 	public @ResponseBody List<UserCoupon> getJson(HttpServletRequest request) throws IOException {
 		String currentDate=DateUtil.getCurrentDateStr();
 		String usercode=request.getParameter("usercode");
+		logger.info("消费用户未领取的优惠券数据usercode"+usercode);
 		List<UserCoupon> userCoupons = userCouponService.findByUsercodeNull(usercode,currentDate);
+		logger.info("消费用户未领取的优惠券数据"+userCoupons.size());
 		return userCoupons;
 	}
 	/**
@@ -419,13 +423,17 @@ public class VendCouponController{
         	if(isOk==1){
         		Date createTime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
         		String arealist=vendCoupon.getAreaId();
+        		logger.info("-------------投放优惠券arealist----------"+arealist);
         		if(arealist!=null){
         			String arealistArray[]=Function.stringSpilit(arealist, ",");
+        			logger.info("-------------投放优惠券arealistArray----------"+arealistArray);
         			List<VendUser> vendUsers=vendUserService.selectByArealist(arealistArray);
+        			logger.info("-------------投放优惠券vendUsers----------"+vendUsers.size());
         			for(VendUser vendUser:vendUsers){
         				if(vendUser!=null){
         					if(vendUser.getUsercode()!=null){
         						UserCoupon userCoupon=userCouponService.findByUsercodeLimitCouponId(vendUser.getUsercode(), id);
+        						logger.info("-------------投放优惠券userCoupon----------"+userCoupon);
         						if(userCoupon!=null){
                 					userCoupon.setCouponId(id);
                 					userCoupon.setCreateTime(createTime);
@@ -435,6 +443,7 @@ public class VendCouponController{
                 					userCoupon.setExtend5(vendCoupon.getCouponName());//优惠券名
                 					userCoupon.setExtend6(vendCoupon.getCouponInfo());//优惠券信息
                 					userCouponService.editUserCoupon(userCoupon);
+                					logger.info("-------------投放优惠券成功1----------");
         						}else{
         							userCoupon=new UserCoupon();
         							userCoupon.setUsercode(vendUser.getUsercode());
@@ -446,6 +455,7 @@ public class VendCouponController{
                 					userCoupon.setExtend5(vendCoupon.getCouponName());//优惠券名
                 					userCoupon.setExtend6(vendCoupon.getCouponInfo());//优惠券信息
                 					userCouponService.insertUserCoupon(userCoupon);
+                					logger.info("-------------投放优惠券成功2----------");
         						}
         					}
         				}

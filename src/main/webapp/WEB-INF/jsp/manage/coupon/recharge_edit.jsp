@@ -40,7 +40,7 @@
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="rechargeedit" enctype="multipart/form-data" commandName="vendCoupon" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			    <sf:form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/coupon/rechargeedit" enctype="multipart/form-data" commandName="vendCoupon" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="id"/>
 	              <div class="control-group">
 	                    <label class="control-label">活动名</label>
@@ -69,7 +69,7 @@
 	              <sf:hidden path="startTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true" class="span2" />
 	              <sf:hidden path="endTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true" class="span2" />
 	              <div class="form-actions">
-	                <input type="submit" value="添加" class="btn btn-success">
+	                <input type="submit" value="修改" class="btn btn-success">
 	              </div>
 	            </sf:form>
 			  </div>

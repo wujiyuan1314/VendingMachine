@@ -175,7 +175,7 @@ public class VendAccountController{
     public String toDraw(Model model,@PathVariable String usercode){
     	VendAccount vendAccount=vendAccountService.getOne(usercode);
 		model.addAttribute(vendAccount);
-    	return "manage/account/account_draw";
+    	return "manage/account/account_shdraw";
     }
     /**
      * 商户和代理后台用户提现
@@ -200,7 +200,7 @@ public class VendAccountController{
 				br.rejectValue("extend1", "NotRepeat", "提现金额大于账户余额");
 			}
 			if(br.hasErrors()){
-	    		return "manage/account/account_draw";
+	    		return "manage/account/account_shdraw";
 	    	}
 			VendAccountDetail vendAccountDetail1=new VendAccountDetail();
 			vendAccountDetail1.setUsercode(vendAccount.getUsercode());

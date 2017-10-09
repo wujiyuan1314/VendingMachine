@@ -180,8 +180,11 @@
 	<include refid="Base_Column_List" />
 	from vend_qrcode_attend
 	<where>
-		<if test="vendQrcodeAttend.qrcodeId != null and !&quot;&quot;.equals(vendQrcodeAttend.qrcodeId.trim())">
-			and qrcode_id = #{vendQrcodeAttend.qrcodeId}
+		<if test="vendQrcodeAttend.shusercode != null and !&quot;&quot;.equals(vendQrcodeAttend.shusercode.trim())">
+			and shusercode = #{vendQrcodeAttend.shusercode}
+		</if>
+		<if test="vendQrcodeAttend.usercode != null and !&quot;&quot;.equals(vendQrcodeAttend.usercode.trim())">
+			and usercode = #{vendQrcodeAttend.usercode}
 		</if>
 	</where>order by id limit #{page.dbIndex},#{page.dbNumber}
   </select>
@@ -191,8 +194,8 @@
 	<include refid="Base_Column_List" />
 	from vend_qrcode_attend
 	<where>
-		<if test="vendQrcodeAttend.qrcodeId != null and !&quot;&quot;.equals(vendQrcodeAttend.qrcodeId.trim())">
-			and qrcode_id = #{vendQrcodeAttend.qrcodeId}
+		<if test="vendQrcodeAttend.shusercode != null and !&quot;&quot;.equals(vendQrcodeAttend.shusercode.trim())">
+			and shusercode = #{vendQrcodeAttend.shusercode}
 		</if>
 		<if test="vendQrcodeAttend.usercode != null and !&quot;&quot;.equals(vendQrcodeAttend.usercode.trim())">
 			and usercode = #{vendQrcodeAttend.usercode}
@@ -203,9 +206,12 @@
   <select id="countVendQrcodeAttend" resultType="int" parameterType="vend.entity.VendQrcodeAttend">
  	select count(*) from vend_qrcode_attend
  	<where>
- 		<if test="qrcodeId != null and !&quot;&quot;.equals(qrcodeId.trim())">
-		and qrcode_id = #{qrcodeId}
-	    </if>
+ 		<if test="shusercode != null and !&quot;&quot;.equals(shusercode.trim())">
+			and shusercode = #{shusercode}
+		</if>
+		<if test="usercode != null and !&quot;&quot;.equals(usercode.trim())">
+			and usercode = #{usercode}
+		</if>
  	</where>
   </select>
   <!-- 批量删除 -->

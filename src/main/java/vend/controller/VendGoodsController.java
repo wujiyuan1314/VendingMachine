@@ -24,6 +24,7 @@ import base.util.Function;
 import base.util.Page;
 import vend.entity.VendGoods;
 import vend.service.VendGoodsService;
+import vend.service.VendParaService;
 
 @Controller
 @RequestMapping("/goods")
@@ -32,6 +33,8 @@ public class VendGoodsController{
 	
 	@Autowired
 	VendGoodsService vendGoodsService;
+	@Autowired
+	VendParaService vendParaService;
 	/**
 	 * 根据输入信息条件查询商品列表，并分页显示
 	 * @param model
@@ -66,13 +69,12 @@ public class VendGoodsController{
 	//@RequestMapping(value="/jgoodss",method=RequestMethod.GET)
 	public @ResponseBody List<VendGoods> getJson(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		List<VendGoods> vendGoodss = vendGoodsService.findAll();
-		String path = request.getContextPath();
-		String basePath1 = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
+		String path = vendParaService.selectByParaCode("basePath");
 		if(vendGoodss.size()>3){
 			vendGoodss=vendGoodss.subList(0, 3);
 		}
 		for(VendGoods vendGoods:vendGoodss){
-			vendGoods.setPic(basePath1+vendGoods.getPic());
+			vendGoods.setPic(path+vendGoods.getPic());
 		}
 		return vendGoodss;
 		//JSONArray json = JSONArray.fromObject(vendGoodss);

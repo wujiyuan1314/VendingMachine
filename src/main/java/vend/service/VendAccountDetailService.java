@@ -2,6 +2,8 @@ package vend.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import base.util.Page;
 import vend.entity.VendAccountDetail;
 
@@ -48,6 +50,13 @@ public interface VendAccountDetailService {
 	 * @return
 	 */
 	VendAccountDetail getOne(int id);
+	/**
+	 * 每次查询10条
+	 * @param usercode
+	 * @param number
+	 * @return
+	 */
+	List<VendAccountDetail> selectLimit(String usercode,int number);
 	/**
 	 * 查找全部
 	 * @return
