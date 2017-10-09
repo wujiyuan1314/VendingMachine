@@ -14,13 +14,19 @@
     <result column="orderstate" property="orderstate" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="heat" property="heat" jdbcType="VARCHAR" />
+    <result column="coupon_id" property="couponId" jdbcType="VARCHAR" />
     <result column="extend1" property="extend1" jdbcType="VARCHAR" />
     <result column="extend2" property="extend2" jdbcType="VARCHAR" />
     <result column="extend3" property="extend3" jdbcType="VARCHAR" />
+    <result column="extend4" property="extend4" jdbcType="VARCHAR" />
+    <result column="extend5" property="extend5" jdbcType="VARCHAR" />
+    <result column="extend6" property="extend6" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     order_id, machine_code, usercode, shopusercode, goods_id, pay_type, num, amount, 
-    free_status, orderstate, create_time, pay_time, extend1, extend2, extend3
+    free_status, orderstate, create_time, pay_time, heat, coupon_id, extend1, extend2, 
+    extend3, extend4, extend5, extend6
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -37,14 +43,16 @@
       shopusercode, goods_id, pay_type, 
       num, amount, free_status, 
       orderstate, create_time, pay_time, 
-      extend1, extend2, extend3
-      )
+      heat, coupon_id, extend1, 
+      extend2, extend3, extend4, 
+      extend5, extend6)
     values (#{orderId,jdbcType=VARCHAR}, #{machineCode,jdbcType=VARCHAR}, #{usercode,jdbcType=VARCHAR}, 
       #{shopusercode,jdbcType=VARCHAR}, #{goodsId,jdbcType=INTEGER}, #{payType,jdbcType=VARCHAR}, 
       #{num,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, #{freeStatus,jdbcType=VARCHAR}, 
       #{orderstate,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, 
-      #{extend1,jdbcType=VARCHAR}, #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}
-      )
+      #{heat,jdbcType=VARCHAR}, #{couponId,jdbcType=VARCHAR}, #{extend1,jdbcType=VARCHAR}, 
+      #{extend2,jdbcType=VARCHAR}, #{extend3,jdbcType=VARCHAR}, #{extend4,jdbcType=VARCHAR}, 
+      #{extend5,jdbcType=VARCHAR}, #{extend6,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="vend.entity.VendOrder" >
     insert into vend_order
@@ -85,6 +93,12 @@
       <if test="payTime != null" >
         pay_time,
       </if>
+      <if test="heat != null" >
+        heat,
+      </if>
+      <if test="couponId != null" >
+        coupon_id,
+      </if>
       <if test="extend1 != null" >
         extend1,
       </if>
@@ -93,6 +107,15 @@
       </if>
       <if test="extend3 != null" >
         extend3,
+      </if>
+      <if test="extend4 != null" >
+        extend4,
+      </if>
+      <if test="extend5 != null" >
+        extend5,
+      </if>
+      <if test="extend6 != null" >
+        extend6,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -132,6 +155,12 @@
       <if test="payTime != null" >
         #{payTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="heat != null" >
+        #{heat,jdbcType=VARCHAR},
+      </if>
+      <if test="couponId != null" >
+        #{couponId,jdbcType=VARCHAR},
+      </if>
       <if test="extend1 != null" >
         #{extend1,jdbcType=VARCHAR},
       </if>
@@ -140,6 +169,15 @@
       </if>
       <if test="extend3 != null" >
         #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        #{extend5,jdbcType=VARCHAR},
+      </if>
+      <if test="extend6 != null" >
+        #{extend6,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -179,6 +217,12 @@
       <if test="payTime != null" >
         pay_time = #{payTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="heat != null" >
+        heat = #{heat,jdbcType=VARCHAR},
+      </if>
+      <if test="couponId != null" >
+        coupon_id = #{couponId,jdbcType=VARCHAR},
+      </if>
       <if test="extend1 != null" >
         extend1 = #{extend1,jdbcType=VARCHAR},
       </if>
@@ -187,6 +231,15 @@
       </if>
       <if test="extend3 != null" >
         extend3 = #{extend3,jdbcType=VARCHAR},
+      </if>
+      <if test="extend4 != null" >
+        extend4 = #{extend4,jdbcType=VARCHAR},
+      </if>
+      <if test="extend5 != null" >
+        extend5 = #{extend5,jdbcType=VARCHAR},
+      </if>
+      <if test="extend6 != null" >
+        extend6 = #{extend6,jdbcType=VARCHAR},
       </if>
     </set>
     where order_id = #{orderId,jdbcType=VARCHAR}
@@ -204,12 +257,17 @@
       orderstate = #{orderstate,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       pay_time = #{payTime,jdbcType=TIMESTAMP},
+      heat = #{heat,jdbcType=VARCHAR},
+      coupon_id = #{couponId,jdbcType=VARCHAR},
       extend1 = #{extend1,jdbcType=VARCHAR},
       extend2 = #{extend2,jdbcType=VARCHAR},
-      extend3 = #{extend3,jdbcType=VARCHAR}
+      extend3 = #{extend3,jdbcType=VARCHAR},
+      extend4 = #{extend4,jdbcType=VARCHAR},
+      extend5 = #{extend5,jdbcType=VARCHAR},
+      extend6 = #{extend6,jdbcType=VARCHAR}
     where order_id = #{orderId,jdbcType=VARCHAR}
   </update>
-  <!-- 一下为自定义方法 -->
+   <!-- 一下为自定义方法 -->
   <select id="listVendOrder" resultMap="BaseResultMap">
 	select
 	<include refid="Base_Column_List" />

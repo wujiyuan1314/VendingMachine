@@ -202,7 +202,7 @@
   			and username = #{username}
   		</if>
   		<if test="operDescription != null and !&quot;&quot;.equals(operDescription.trim())">
-  			and oper_description = #{vendSyslog.operDescription}
+  			and oper_description = #{operDescription}
   		</if>
   	</where>
   </select>

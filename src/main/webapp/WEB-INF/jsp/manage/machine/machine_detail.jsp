@@ -116,7 +116,7 @@
 			  </div>
 		  </div>
 		</div>
-		<div class="span4">
+		<!--  <div class="span4">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-eye-open"></i></span>
                  <h5>咖啡机状态</h5>
@@ -135,7 +135,7 @@
 		         <tbody>
 	                <tr>
 	                  <td>固定二维码</td>
-	                  <td>
+	                  <td style="width:120px;">
 	                    <sf:select path="clientQrcode" items="${clientQrcodes}" itemLabel="extend1" itemValue="id">
 	                    </sf:select>
 	                  </td>
@@ -147,7 +147,7 @@
 			     </table>
 			  </sf:form>
 			  </div>
-		  </div>
+		  </div>-->
 		</div>
     </div>
   </div>

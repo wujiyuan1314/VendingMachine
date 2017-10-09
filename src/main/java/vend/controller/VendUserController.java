@@ -83,7 +83,11 @@ public class VendUserController{
 			if(!user.getUsercode().equals("VM000")&&!user.getUsercode().equals("VM001")){
 				vendUsers = vendUserService.listVendUser(vendUser,usersArray,page);
 			}else{
-				vendUsers = vendUserService.listVendUserXF(vendUser,usersArray,page);
+				if(vendUser.getUsername()!=null&&!"".equals(vendUser.getUsername())){
+					vendUsers = vendUserService.listVendUser(vendUser,usersArray,page);
+				}else{
+					vendUsers = vendUserService.listVendUserXF(vendUser,usersArray,page);
+				}
 			}
 		}
 		model.addAttribute("vendUsers",vendUsers);

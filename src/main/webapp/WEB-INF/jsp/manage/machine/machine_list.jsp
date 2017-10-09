@@ -42,9 +42,9 @@
 			      <table style="margin-bottom:5px;">
 			            <tr>
 			              <th>机器名:</th>
-			              <th><input type="text" name="machineName" id="machineName" placeholder="按机器名搜索"/>&nbsp;&nbsp;</th>
+			              <th><input type="text" name="machineName" id="machineName" value="${machineName }" placeholder="按机器名搜索"/>&nbsp;&nbsp;</th>
 		                  <th>机器码:</th>
-			              <th><input type="text" name="machineCode" id="machineCode" placeholder="按机器名搜索"/>&nbsp;&nbsp;</th>
+			              <th><input type="text" name="machineCode" id="machineCode" value="${machineCode }" placeholder="按机器名搜索"/>&nbsp;&nbsp;</th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                  <td><a href="add" class="btn btn-success"/>新增分机</a>&nbsp;&nbsp;</td>
 		                  <td><a class="btn btn-danger" data-toggle="modal" data-target="#myModal1" id="ubbind"/>解绑</a>&nbsp;&nbsp;</td>

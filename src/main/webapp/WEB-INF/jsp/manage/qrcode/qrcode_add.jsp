@@ -68,6 +68,7 @@
 	                  <span class="infoqrcode" style="color:#b94a48;"></span>    
 	                  <sf:hidden path="qrcode" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="qrcode" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                  <span><img src="" class="imgqrcode"/></span>
 	                </div>
 	              </div>
 	              </div>

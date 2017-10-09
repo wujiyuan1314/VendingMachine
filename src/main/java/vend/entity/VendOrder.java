@@ -28,11 +28,21 @@ public class VendOrder {
 
     private Date payTime;
 
+    private String heat;
+
+    private String couponId;
+
     private String extend1;//订单类型(1,支付。2，充值)
 
     private String extend2;
 
     private String extend3;
+
+    private String extend4;
+
+    private String extend5;
+
+    private String extend6;
 
     public String getOrderId() {
         return orderId;
@@ -130,6 +140,22 @@ public class VendOrder {
         this.payTime = payTime;
     }
 
+    public String getHeat() {
+        return heat;
+    }
+
+    public void setHeat(String heat) {
+        this.heat = heat == null ? null : heat.trim();
+    }
+
+    public String getCouponId() {
+        return couponId;
+    }
+
+    public void setCouponId(String couponId) {
+        this.couponId = couponId == null ? null : couponId.trim();
+    }
+
     public String getExtend1() {
         return extend1;
     }
@@ -152,5 +178,29 @@ public class VendOrder {
 
     public void setExtend3(String extend3) {
         this.extend3 = extend3 == null ? null : extend3.trim();
+    }
+
+    public String getExtend4() {
+        return extend4;
+    }
+
+    public void setExtend4(String extend4) {
+        this.extend4 = extend4 == null ? null : extend4.trim();
+    }
+
+    public String getExtend5() {
+        return extend5;
+    }
+
+    public void setExtend5(String extend5) {
+        this.extend5 = extend5 == null ? null : extend5.trim();
+    }
+
+    public String getExtend6() {
+        return extend6;
+    }
+
+    public void setExtend6(String extend6) {
+        this.extend6 = extend6 == null ? null : extend6.trim();
     }
 }

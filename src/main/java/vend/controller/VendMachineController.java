@@ -89,6 +89,14 @@ public class VendMachineController{
 		VendUser user=(VendUser)session.getAttribute("vendUser");
 		List<CodeLibrary> usestatus=codeLibraryService.selectByCodeNo("USESTATUS");
 		model.addAttribute("usestatus", usestatus);
+		
+		if(vendMachine.getMachineCode()!=null){
+			model.addAttribute("machineCode",vendMachine.getMachineCode());
+		}
+		if(vendMachine.getMachineName()!=null){
+			model.addAttribute("machineName",vendMachine.getMachineName());
+		}
+		
 		List<VendMachine> vendMachines = vendMachineService.listVendMachine(vendMachine, page);
 		String userlist="";
 		if(user!=null&&user.getUsercode()!=null){//上级账号
@@ -218,6 +226,7 @@ public class VendMachineController{
 			model.addAttribute("adtypename", adtypename);
 			model.addAttribute("adscreens", adscreens);
 		}
+		
 		model.addAttribute("id",id);
     	List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
 		model.addAttribute("uppictypes", uppictypes);

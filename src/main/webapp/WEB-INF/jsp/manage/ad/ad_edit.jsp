@@ -69,6 +69,7 @@
 	                  <a href="<%=basePath1%>${vendAd.pic1}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
 	                  <sf:hidden path="pic1" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic1" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+                      <span><img src="" class="imgpic1"/></span>
                     </div>
                     <div class="controls">                          
 	                                              图片2： <input type="file" name="file" id="file_pic2"/>
@@ -77,6 +78,7 @@
 	                  <a href="<%=basePath1%>${vendAd.pic2}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
 	                  <sf:hidden path="pic2" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic2" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                  <span><img src="" class="imgpic2"/></span>
 	                </div>
 	                 <div class="controls">
 	                                              图片3：<input type="file" name="file" id="file_pic3"/>
@@ -85,6 +87,7 @@
 	                  <a href="<%=basePath1%>${vendAd.pic3}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
 	                  <sf:hidden path="pic3" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic3" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                 <span><img src="" class="imgpic3"/></span>
 	                </div>
                     <div class="controls">                           
 	                                            图片4：<input type="file" name="file" id="file_pic4"/>
@@ -93,6 +96,7 @@
 	                  <a href="<%=basePath1%>${vendAd.pic4}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
 	                  <sf:hidden path="pic4" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic4" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                  <span><img src="" class="imgpic4"/></span>
 	                </div>
 	                 <div class="controls">
 	                                            图片5：<input type="file" name="file" id="file_pic5"/>
@@ -101,6 +105,7 @@
 	                  <a href="<%=basePath1%>${vendAd.pic5}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
 	                  <sf:hidden path="pic5" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic5" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                  <span><img src="" class="imgpic5"/></span>
 	                </div>
                     <div class="controls">                           
 	                                            图片6：<input type="file" name="file" id="file_pic6"/>
@@ -109,6 +114,7 @@
 	                  <a href="<%=basePath1%>${vendAd.pic6}" target="_blank" class="icon-picture" style="color:green;">查看</a>       
 	                  <sf:hidden path="pic6" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic6" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                  <span><img src="" class="imgpic6"/></span>
 	                </div>
 	              </div>
 	              <div class="control-group">

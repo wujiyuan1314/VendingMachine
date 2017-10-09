@@ -57,6 +57,7 @@
 	                  <sf:hidden path="pic" class="filepath"/>
 	                    <a href="<%=basePath1%>${vendGoods.pic}" target="_blank" class="icon-picture" style="color:green;">查看</a>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="pic" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                <span><img src="" class="imgpic"/></span>
 	                </div>
 	              </div>
 	             

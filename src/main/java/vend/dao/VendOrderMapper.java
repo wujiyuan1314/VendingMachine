@@ -19,7 +19,7 @@ public interface VendOrderMapper {
     int updateByPrimaryKeySelective(VendOrder record);
 
     int updateByPrimaryKey(VendOrder record);
-    /**ä¸‹ä¸ºè‡ªå®šä¹‰æ–¹æ³• */
+    /**ÏÂÎª×Ô¶¨Òå·½·¨ */
     List<VendOrder> listVendOrder(@Param("vendOrder") VendOrder vendOrder,@Param("beginTime") String beginTime,@Param("endTime") String endTime, @Param("page") Page page);
     
     List<VendOrder> selectByParams(@Param("vendOrder") VendOrder vendOrder,@Param("mochinecodeArray") String mochinecodeArray[], @Param("beginTime") String beginTime,@Param("endTime") String endTime);

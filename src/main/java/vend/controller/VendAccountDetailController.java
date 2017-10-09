@@ -36,6 +36,7 @@ import vend.entity.VendUser;
 import vend.service.CodeLibraryService;
 import vend.service.VendAccountDetailService;
 import vend.service.VendAccountService;
+import vend.service.VendParaService;
 import vend.service.VendRoleService;
 import vend.service.VendUserService;
 
@@ -48,6 +49,8 @@ public class VendAccountDetailController{
 	VendAccountDetailService vendAccountDetailService;
 	@Autowired
 	VendUserService vendUserService;
+	@Autowired
+	VendParaService vendParaService;
 	@Autowired
 	VendRoleService vendRoleService;
 	@Autowired
@@ -268,7 +271,8 @@ public class VendAccountDetailController{
 				vendAccountService.editVendAccount(vendAccount);
 			}
     	}
-    	return "redirect:/account/account_draw";
+    	String basePath=vendParaService.selectByParaCode("basePath");
+    	return "redirect:"+basePath+"/accountdetail/draw";
  	}
     /**
      * 拒绝提现
@@ -282,6 +286,7 @@ public class VendAccountDetailController{
     		vendAccountDetail.setExtend1("已拒绝提现");
         	vendAccountDetailService.editVendAccountDetail(vendAccountDetail);
     	}
- 		return "redirect:/account/account_draw";
+    	String basePath=vendParaService.selectByParaCode("basePath");
+    	return "redirect:"+basePath+"/accountdetail/draw";
  	}
 }

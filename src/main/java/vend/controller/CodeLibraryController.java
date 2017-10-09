@@ -110,7 +110,19 @@ public class CodeLibraryController {
     	Date addtime=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());//创建时间
     	codeLibrary.setAddtime(addtime);
     	codeLibraryService.insertCodeLibrary(codeLibrary);
-    	return "redirect:"+basePath+"/codeCatalog/"+codeLibrary.getCodeno()+"/codelibrarylist";
+    	
+    	String returnStr="redirect:"+basePath+"/codeCatalog/"+codeLibrary.getCodeno()+"/codelibrarylist";
+    	if(codeLibrary.getCodeno().equals("WECHATPUBNO")){
+    		returnStr="redirect:weixinset";
+    	}
+    	if(codeLibrary.getCodeno().equals("COUPONAREA")){
+    		returnStr="redirect:areaset";
+    	}
+    	if(codeLibrary.getCodeno().equals("ADSCREEN")){
+    		returnStr="redirect:adscreen";
+    	}
+    	
+    	return returnStr;
 	}
     /**
      * 跳转到批量添加参数类别页面
@@ -152,7 +164,19 @@ public class CodeLibraryController {
     		return "manage/codelibrary/codelibrary_edit";
     	}
     	codeLibraryService.editCodeLibrary(codeLibrary);
-		return "redirect:/codeCatalog/"+codeLibrary.getCodeno()+"/codelibrarylist";
+    	
+    	String returnStr="redirect:/codeCatalog/"+codeLibrary.getCodeno()+"/codelibrarylist";
+    	if(codeLibrary.getCodeno().equals("WECHATPUBNO")){
+    		returnStr="redirect:weixinset";
+    	}
+    	if(codeLibrary.getCodeno().equals("COUPONAREA")){
+    		returnStr="redirect:areaset";
+    	}
+    	if(codeLibrary.getCodeno().equals("ADSCREEN")){
+    		returnStr="redirect:adscreen";
+    	}
+    	
+    	return returnStr; 
 	}
     /**
      * 删除参数类别信息
@@ -163,8 +187,21 @@ public class CodeLibraryController {
     @RequiresPermissions({"codeLibrary:del"})
     @RequestMapping(value="/{codeno}/{id}/del")
  	public String delcodeLibrary(@PathVariable String id,@PathVariable String codeno){
-    	 codeLibraryService.deleteCodeLibrary(id);
- 		return "redirect:/codeCatalog/"+codeno+"/codelibrarylist";
+    	
+    	codeLibraryService.deleteCodeLibrary(id);
+    	 
+ 		String returnStr="redirect:/codeCatalog/"+codeno+"/codelibrarylist";
+    	if(codeno.equals("WECHATPUBNO")){
+    		returnStr="redirect:weixinset";
+    	}
+    	if(codeno.equals("COUPONAREA")){
+    		returnStr="redirect:areaset";
+    	}
+    	if(codeno.equals("ADSCREEN")){
+    		returnStr="redirect:adscreen";
+    	}
+    	
+    	return returnStr; 
  	}
      /**
       * 批量删除参数类别信息

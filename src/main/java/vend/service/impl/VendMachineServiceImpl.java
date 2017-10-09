@@ -31,7 +31,7 @@ public class VendMachineServiceImpl implements VendMachineService {
 		int totalNumber = vendMachineMapper.countVendMachine(vendMachine);
 		page.setTotalNumber(totalNumber);
 		
-		String title=vendMachine.getUsercode();
+		String title=vendMachine.getUsercode()+vendMachine.getMachineCode()+vendMachine.getMachineName();
 		String currentPage=Integer.toString(page.getCurrentPage());
 		if(title==null){
 			title="";

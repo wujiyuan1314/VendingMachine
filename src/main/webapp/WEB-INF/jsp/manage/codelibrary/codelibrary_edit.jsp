@@ -23,7 +23,7 @@
   <div id="content-header">
     <div id="breadcrumb"> 
       <a href="<%=basePath1%>welcome" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a>
-          <c:choose>
+           <c:choose>
         <c:when test="${codeno=='WECHATPUBNO'}">
            <a href="<%=basePath1%>codeLibrary/weixinset" class="current">商户微信设置</a>
         </c:when>
@@ -33,7 +33,14 @@
 	           <a href="<%=basePath1%>codeLibrary/adscreen" class="current">广告屏样式列表</a>
 	        </c:when>
 	        <c:otherwise>
-	           <a href="<%=basePath1%>codeCatalog/${codeno }/codelibrarylist" class="current">参数类别列表</a>
+	           <c:choose>
+		        <c:when test="${codeno=='COUPONAREA'}">
+		           <a href="<%=basePath1%>codeLibrary/areaset" class="current">地区添加</a>
+		        </c:when>
+		        <c:otherwise>
+		           <a href="<%=basePath1%>codeCatalog/${codeno }/codelibrarylist" class="current">参数类别列表</a>
+		        </c:otherwise>
+		      </c:choose>
 	        </c:otherwise>
 	      </c:choose>
         </c:otherwise>
@@ -49,7 +56,32 @@
 		<div class="span12">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-info-sign"></i></span>
-                 <h5>商品修改</h5>
+                 <h5>
+                 
+                 <c:choose>
+			        <c:when test="${codeno=='WECHATPUBNO'}">
+			                              商户微信设置
+			        </c:when>
+			        <c:otherwise>
+			          <c:choose>
+				        <c:when test="${codeno=='ADSCREEN'}">
+				                           广告屏样式列表添加
+				        </c:when>
+				        <c:otherwise>
+				           <c:choose>
+					        <c:when test="${codeno=='COUPONAREA'}">
+					                             地区添加
+					        </c:when>
+					        <c:otherwise>
+					                             参数类别添加
+					        </c:otherwise>
+					      </c:choose>
+				        </c:otherwise>
+				      </c:choose>
+			        </c:otherwise>
+			      </c:choose>
+                 
+                 </h5>
               </div>
               
 			  <div class="widget-content nopadding">
@@ -57,21 +89,95 @@
 	              <sf:hidden path="id"/>
 	              <sf:hidden path="codeno"/>
 	              <div class="control-group">
-	                <label class="control-label">参数类别编码</label>
+	                <label class="control-label">
+	               
+	                <c:choose>
+			        <c:when test="${codeno=='WECHATPUBNO'}">
+			                              微信公众号
+			        </c:when>
+			        <c:otherwise>
+			          <c:choose>
+				        <c:when test="${codeno=='ADSCREEN'}">
+				                           广告屏编号
+				        </c:when>
+				        <c:otherwise>
+				           <c:choose>
+					        <c:when test="${codeno=='COUPONAREA'}">
+					                             地区编号
+					        </c:when>
+					        <c:otherwise>
+					                             参数类别编码
+					        </c:otherwise>
+					      </c:choose>
+				        </c:otherwise>
+				      </c:choose>
+			        </c:otherwise>
+			      </c:choose>
+	                </label>
 	                <div class="controls">
 	                  <sf:input path="itemno"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="itemno" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">参数类别值</label>
+	                <label class="control-label">
+	
+	                  <c:choose>
+			        <c:when test="${codeno=='WECHATPUBNO'}">
+			                              微信公众号AppId
+			        </c:when>
+			        <c:otherwise>
+			          <c:choose>
+				        <c:when test="${codeno=='ADSCREEN'}">
+				                           广告屏名字
+				        </c:when>
+				        <c:otherwise>
+				           <c:choose>
+					        <c:when test="${codeno=='COUPONAREA'}">
+					                             地区拼音(首字母大写)
+					        </c:when>
+					        <c:otherwise>
+					                             参数类别值
+					        </c:otherwise>
+					      </c:choose>
+				        </c:otherwise>
+				      </c:choose>
+			        </c:otherwise>
+			      </c:choose>
+	                
+	                </label>
 	                <div class="controls">
 	                  <sf:input path="itemname"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="itemname" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
 	              </div>
 	               <div class="control-group">
-	                <label class="control-label">详细描述</label>
+	                <label class="control-label">
+	               
+	                  <c:choose>
+			        <c:when test="${codeno=='WECHATPUBNO'}">
+			                              微信公众号密钥AppSecret
+			        </c:when>
+			        <c:otherwise>
+			          <c:choose>
+				        <c:when test="${codeno=='ADSCREEN'}">
+				                           广告屏描述
+				        </c:when>
+				        <c:otherwise>
+				           <c:choose>
+					        <c:when test="${codeno=='COUPONAREA'}">
+					                             地区名字（汉字）
+					        </c:when>
+					        <c:otherwise>
+					                             详细描述
+					        </c:otherwise>
+					      </c:choose>
+				        </c:otherwise>
+				      </c:choose>
+			        </c:otherwise>
+			      </c:choose>
+	                
+	                </label>
 	                <div class="controls">
 	                  <sf:textarea path="extend1"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="extend1" cssClass="errors" style="color:#b94a48;"></sf:errors></span>

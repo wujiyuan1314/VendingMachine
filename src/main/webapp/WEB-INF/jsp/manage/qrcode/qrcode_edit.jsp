@@ -69,6 +69,7 @@
 	                  <a href="<%=basePath1%>${vendShopQrcode.qrcode}" target="_blank" class="icon-picture" style="color:green;">查看</a>      
 	                  <sf:hidden path="qrcode" class="filepath"/>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="qrcode" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                  <span><img src="" class="imgqrcode"/></span>
 	                </div>
 	              </div>
 	              <div class="form-actions">

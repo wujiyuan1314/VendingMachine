@@ -19,6 +19,9 @@ function doUpload(obj) {
     	    	}else if(success==1){
     	    		$(".info"+obj).html("上传成功");
     	    		$("#"+obj).val(msg);
+    	    		$(".img"+obj).attr("src",msg);
+    	    		$(".img"+obj).css("width","70px");
+    	    		$(".img"+obj).css("height","50px");
     	    	}
     		}
     	})

@@ -35,7 +35,7 @@
 		  <div class="widget-box">
 	          <div class="widget-title"> <span class="icon"> <i class="icon-file"></i> </span>
 	            <h5>广告屏幕样式类别列表</h5>
-	            <a href="${pageContext.request.contextPath}/codeLibrary/${codeno}/add" class="btn btn-success"/>添加参数类别</a>
+	            <a href="${pageContext.request.contextPath}/codeLibrary/${codeno}/add" class="btn btn-success"/>添加新的广告屏样式</a>
 	          </div>
 	          <div class="widget-content nopadding">
 	            <div class="container-fluid">

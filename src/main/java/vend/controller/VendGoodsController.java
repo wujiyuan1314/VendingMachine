@@ -74,7 +74,9 @@ public class VendGoodsController{
 			vendGoodss=vendGoodss.subList(0, 3);
 		}
 		for(VendGoods vendGoods:vendGoodss){
-			vendGoods.setPic(path+vendGoods.getPic());
+			if(vendGoods.getPic()!=null&&vendGoods.getPic().indexOf("http")==-1){
+				vendGoods.setPic(path+vendGoods.getPic());
+			}
 		}
 		return vendGoodss;
 		//JSONArray json = JSONArray.fromObject(vendGoodss);
