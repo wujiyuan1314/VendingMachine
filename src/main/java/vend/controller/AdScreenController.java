@@ -14,7 +14,6 @@ import vend.entity.VendAd;
 import vend.entity.VendMachine;
 import vend.entity.VendShopQrcode;
 import vend.service.VendAdService;
-import vend.service.VendGoodsService;
 import vend.service.VendMachineService;
 import vend.service.VendParaService;
 import vend.service.VendShopQrcodeService;
@@ -46,6 +45,10 @@ public class AdScreenController{
 			vendAd=new VendAd();
 			vendShopQrcode=new VendShopQrcode();
 		}
+		if(vendAd.getExtend3().equals("0")){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
 		model.addAttribute("vendMachine",vendMachine);
 		model.addAttribute("vendAd",vendAd);
 		model.addAttribute("vendShopQrcode",vendShopQrcode);
@@ -62,6 +65,10 @@ public class AdScreenController{
 		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
 		Date currentDate=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 		if(DateUtil.daysBetween(currentDate, vendAd.getStartTime())>0||DateUtil.daysBetween(currentDate, vendAd.getEndTime())<0){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
+		if(vendAd.getExtend3().equals("0")){
 			vendAd=new VendAd();
 			vendShopQrcode=new VendShopQrcode();
 		}
@@ -84,6 +91,10 @@ public class AdScreenController{
 			vendAd=new VendAd();
 			vendShopQrcode=new VendShopQrcode();
 		}
+		if(vendAd.getExtend3().equals("0")){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
 		model.addAttribute("vendMachine",vendMachine);
 		model.addAttribute("vendAd",vendAd);
 		model.addAttribute("vendShopQrcode",vendShopQrcode);
@@ -100,6 +111,10 @@ public class AdScreenController{
 		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
 		Date currentDate=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 		if(DateUtil.daysBetween(currentDate, vendAd.getStartTime())>0||DateUtil.daysBetween(currentDate, vendAd.getEndTime())<0){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
+		if(vendAd.getExtend3().equals("0")){
 			vendAd=new VendAd();
 			vendShopQrcode=new VendShopQrcode();
 		}
@@ -122,6 +137,10 @@ public class AdScreenController{
 			vendAd=new VendAd();
 			vendShopQrcode=new VendShopQrcode();
 		}
+		if(vendAd.getExtend3().equals("0")){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
 		model.addAttribute("vendMachine",vendMachine);
 		model.addAttribute("vendAd",vendAd);
 		model.addAttribute("vendShopQrcode",vendShopQrcode);
@@ -138,6 +157,10 @@ public class AdScreenController{
 		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
 		Date currentDate=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 		if(DateUtil.daysBetween(currentDate, vendAd.getStartTime())>0||DateUtil.daysBetween(currentDate, vendAd.getEndTime())<0){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
+		if(vendAd.getExtend3().equals("0")){
 			vendAd=new VendAd();
 			vendShopQrcode=new VendShopQrcode();
 		}
@@ -160,6 +183,10 @@ public class AdScreenController{
 			vendAd=new VendAd();
 			vendShopQrcode=new VendShopQrcode();
 		}
+		if(vendAd.getExtend3().equals("0")){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
 		model.addAttribute("vendMachine",vendMachine);
 		model.addAttribute("vendAd",vendAd);
 		model.addAttribute("vendShopQrcode",vendShopQrcode);
@@ -176,6 +203,10 @@ public class AdScreenController{
 		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
 		Date currentDate=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 		if(DateUtil.daysBetween(currentDate, vendAd.getStartTime())>0||DateUtil.daysBetween(currentDate, vendAd.getEndTime())<0){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
+		if(vendAd.getExtend3().equals("0")){
 			vendAd=new VendAd();
 			vendShopQrcode=new VendShopQrcode();
 		}
@@ -198,6 +229,10 @@ public class AdScreenController{
 			vendAd=new VendAd();
 			vendShopQrcode=new VendShopQrcode();
 		}
+		if(vendAd.getExtend3().equals("0")){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
 		model.addAttribute("vendMachine",vendMachine);
 		model.addAttribute("vendAd",vendAd);
 		model.addAttribute("vendShopQrcode",vendShopQrcode);
@@ -214,6 +249,10 @@ public class AdScreenController{
 		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
 		Date currentDate=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
 		if(DateUtil.daysBetween(currentDate, vendAd.getStartTime())>0||DateUtil.daysBetween(currentDate, vendAd.getEndTime())<0){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
+		if(vendAd.getExtend3().equals("0")){
 			vendAd=new VendAd();
 			vendShopQrcode=new VendShopQrcode();
 		}

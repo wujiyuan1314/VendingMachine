@@ -61,9 +61,9 @@
 		                  <th>用户名</th>
 		                  <th>账户余额</th>
 		                  <th>创建时间</th>
-		                  <shiro:hasPermission name="account:shdraw">
-			                   <th>提现</th>
-			               </shiro:hasPermission>
+		                  <shiro:hasRole name="代理后台">
+		                   <th>提现</th>
+		                  </shiro:hasRole>
 		                </tr>
 			         </thead>
 			         <tbody>
@@ -74,9 +74,9 @@
 					          <td>${vendAccount.usercode}</td>
 			                  <td>${vendAccount.ownAmount}</td>
 			                  <td><fmt:formatDate value="${vendAccount.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-			                  <shiro:hasPermission name="account:shdraw">
+			                 <shiro:hasRole name="代理后台">
 			                  <td><a href="javascript:void(0);" onclick="txfirm('${vendAccount.usercode}');" class="btn btn-danger"/>提现</a></td>
-			                  </shiro:hasPermission>
+			                  </shiro:hasRole>
 			                </tr>
 			           </c:forEach>
 			         </tbody>

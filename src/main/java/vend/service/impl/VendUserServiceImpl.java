@@ -16,10 +16,12 @@ import base.util.Page;
 import vend.dao.UserCouponMapper;
 import vend.dao.VendAccountMapper;
 import vend.dao.VendPermissionMapper;
+import vend.dao.VendRolePermissionMapper;
 import vend.dao.VendUserMapper;
 import vend.entity.UserCoupon;
 import vend.entity.VendAccount;
 import vend.entity.VendPermission;
+import vend.entity.VendRolePermission;
 import vend.entity.VendUser;
 import vend.service.VendUserService;
 
@@ -33,6 +35,9 @@ public class VendUserServiceImpl implements VendUserService {
 	VendAccountMapper vendAccountMapper;
 	@Autowired
 	UserCouponMapper userCouponMapper;
+	@Autowired
+	VendRolePermissionMapper vendRolePermissionMapper;
+	
 	/**
 	 * 根据输入信息条件查询用户列表，并分页显示
 	 * @param vendUser
@@ -120,14 +125,23 @@ public class VendUserServiceImpl implements VendUserService {
 		vendAccount.setUpdateTime(createTime);
 		vendAccountMapper.insert(vendAccount);
 		
-		//注册的新用户会获得一个优惠券
-		UserCoupon userCoupon=new UserCoupon();
-		userCoupon.setUsercode(usercode);
-		userCoupon.setCouponId(1);
-		userCoupon.setExtend1("1");
-		userCoupon.setCreateTime(createTime);
-		userCouponMapper.insert(userCoupon);
+		//注册的新消费用户会获得一个优惠券
+		if(vendUser.getRoleId()==5){
+			UserCoupon userCoupon=new UserCoupon();
+			userCoupon.setUsercode(usercode);
+			userCoupon.setCouponId(1);
+			userCoupon.setExtend1("1");
+			userCoupon.setCreateTime(createTime);
+			userCouponMapper.insert(userCoupon);
+		}
 		
+		//自动获得该角色所有权限
+		List<VendRolePermission> vendRolePermissions=vendRolePermissionMapper.selectByRoleId(vendUser.getRoleId());
+		String permissionlist=",";
+		for(VendRolePermission vendRolePermission:vendRolePermissions){
+			permissionlist+=vendRolePermission.getPermissionId()+",";
+		}
+		vendUser.setPermissionList(permissionlist);
 		int isOk=vendUserMapper.insertSelective(vendUser);
 		if(isOk==1){
 			CacheUtils.clear();
@@ -297,7 +311,7 @@ public class VendUserServiceImpl implements VendUserService {
 				}
 			}else{
 				for(String permissionid:set1){
-					if(permissionlist.indexOf(permissionid+",")!=-1){
+					if(permissionlist.indexOf(","+permissionid+",")!=-1){
 						VendPermission vendPermission=vendPermissionMapper.selectByPrimaryKey(Integer.parseInt(permissionid));
 						if(vendPermission!=null){
 							set2.add(vendPermission.getPermissionName());

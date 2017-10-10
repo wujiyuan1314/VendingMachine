@@ -10,7 +10,7 @@
 		      <div class="widget-title"> <span class="icon"><i class="icon-info-sign"></i></span>
                  <h5>权限添加</h5>
               </div>
-              
+              <shiro:user></shiro:user>
 			  <div class="widget-content nopadding">
 			    <sf:form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/permission/add" enctype="multipart/form-data" commandName="vendPermission" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="parentId"/>

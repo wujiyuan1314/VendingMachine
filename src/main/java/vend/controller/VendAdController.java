@@ -215,4 +215,16 @@ public class VendAdController{
     	vendAdService.delVendAds(idArray1);
   		return "redirect:/ad/ads";
   	}
+	/**
+	 * 收回广告投放
+	 * @param id
+	 * @return
+	 */
+    @RequestMapping(value="/${id}/shad")
+  	public String shad(@PathVariable int id){
+    	VendAd vendAd =vendAdService.getOne(id);
+    	vendAd.setExtend3("0");
+    	vendAdService.editVendAd(vendAd);
+  		return "redirect:/ad/ads";
+  	}
 }

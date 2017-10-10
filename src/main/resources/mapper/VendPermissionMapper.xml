@@ -172,6 +172,23 @@
  	</where>
   </select>
   
+    <select id="selectByParams" resultMap="BaseResultMap">
+	   select
+	<include refid="Base_Column_List" />
+	from vend_permission
+	<where>
+		<if test="vendPermission.parentId != null and !&quot;&quot;.equals(vendPermission.parentId.trim())">
+			and parent_id = #{VendPermission.parentId}
+		</if>
+		<if test="vendPermission.permissionName != null and !&quot;&quot;.equals(vendPermission.permissionName.trim())">
+			and permission_name = #{VendPermission.permissionName}
+		</if>
+		<if test="vendPermission.extend1 != null and !&quot;&quot;.equals(vendPermission.extend1.trim())">
+			and extend1 = #{VendPermission.extend1}
+		</if>
+	</where>
+  </select>
+  
    <select id="findAll" resultMap="BaseResultMap">
  	select * from vend_permission
   </select>

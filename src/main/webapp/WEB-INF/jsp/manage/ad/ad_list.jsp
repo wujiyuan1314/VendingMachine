@@ -90,7 +90,7 @@
 			                    <shiro:hasPermission name="ad:del">
 			                     <a href="javascript:void(0);" onclick="delconfirm(${vendAd.id});" class="btn btn-danger"/>删除</a>
 			                    </shiro:hasPermission>
-			                    <shiro:hasPermission name="ad:tf">
+			                    <shiro:hasPermission name="adputon">
 			                    <c:choose>
 			                       <c:when test="${vendAd.extend3==0}">
 			                          &nbsp;&nbsp;<a href="javascript:void(0);" onclick="tfconfirm(${vendAd.id});" class="btn btn-success"/>整体投放</a>
@@ -144,6 +144,22 @@ function delconfirm(id){
 function tfconfirm(id){
 	 if(confirm("确定要投放吗?")){
 		var url=basePath+"manage/"+id+"/setShAdItemList";
+		 $.post(url,'',function(res){
+			var data=eval("("+res+")");
+			var success=data.success;
+			var msg=data.msg;
+			if(success==0){
+				alert(msg);
+			}else if(success==1){
+				alert(msg);
+				window.location.reload();
+			}
+		 })
+	 }
+}
+function shconfirm(id){
+	 if(confirm("确定要收回吗?")){
+		var url=basePath+"ad/"+id+"/shad";
 		 $.post(url,'',function(res){
 			var data=eval("("+res+")");
 			var success=data.success;

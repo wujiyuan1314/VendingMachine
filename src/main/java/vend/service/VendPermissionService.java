@@ -2,6 +2,8 @@ package vend.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import base.util.Page;
 import vend.entity.VendPermission;
 
@@ -41,6 +43,12 @@ public interface VendPermissionService {
 	 * @return
 	 */
 	VendPermission getOne(int id);
+	/**
+	 * 按参数查找
+	 * @param vendPermission
+	 * @return
+	 */
+	List<VendPermission> selectByParams(VendPermission vendPermission);
 	/**
 	 * 查找全部
 	 * @return

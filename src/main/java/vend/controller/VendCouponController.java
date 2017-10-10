@@ -57,7 +57,7 @@ public class VendCouponController{
 	 * @param page
 	 * @param request
 	 * @return
-	 */
+	 */ 
 	@RequiresPermissions({"coupon:coupons"})
 	@RequestMapping(value="/coupons")
 	public String listVendCoupon(Model model,@ModelAttribute VendCoupon vendCoupon, @ModelAttribute Page page,HttpServletRequest request) {
@@ -111,7 +111,6 @@ public class VendCouponController{
 	public @ResponseBody List<UserCoupon> getuseJson(HttpServletRequest request) throws IOException {
 		String currentDate=DateUtil.getCurrentDateStr();
 		String usercode=request.getParameter("usercode");
-		logger.info("消费用户的已领取的优惠券信息usercode"+usercode);
 		List<UserCoupon> userCoupons = userCouponService.findByUsercode(usercode,currentDate);
 		logger.info("消费用户的已领取的优惠券信息"+userCoupons.size());
 		return userCoupons;

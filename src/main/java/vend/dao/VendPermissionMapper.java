@@ -22,6 +22,8 @@ public interface VendPermissionMapper {
     /**下为自定义方法 */
     List<VendPermission> listVendPermission(@Param("vendPermission") VendPermission vendPermission, @Param("page") Page page);
     
+    List<VendPermission> selectByParams(@Param("vendPermission") VendPermission vendPermission);
+    
     int countVendPermission(VendPermission vendPermission);
     
     void insertBatch(List<VendPermission> list);

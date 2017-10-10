@@ -59,7 +59,7 @@ width:80%;
 						     </select>&nbsp;&nbsp;
                           </th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
-		                  <shiro:hasPermission name="qrcode:add">
+		                  <shiro:hasPermission name="qrcodeputon">
 		                  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>
 		                  </shiro:hasPermission>
 		                  <shiro:hasPermission name="qrcode:dels">

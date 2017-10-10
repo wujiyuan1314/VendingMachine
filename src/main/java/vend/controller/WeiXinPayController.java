@@ -592,7 +592,7 @@ public class WeiXinPayController {
 	 * @return
 	 * @throws IOException 
 	 */
-	@RequestMapping(value="/payresult",method=RequestMethod.POST,produces = "application/x-www-form-urlencoded;charset=UTF-8")
+	@RequestMapping(value="/payresult",method=RequestMethod.GET,produces = "application/x-www-form-urlencoded;charset=UTF-8")
 	public @ResponseBody void PayResult(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		String reqParams = StreamUtil.read(request.getInputStream());
 		Map<String,Object> map=JsonUtil.getMap4Json(reqParams);

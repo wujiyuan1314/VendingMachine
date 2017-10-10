@@ -72,6 +72,14 @@ public class VendPermissionServiceImpl implements VendPermissionService {
 		return vendPermissionMapper.selectByPrimaryKey(id);
 	}
 	/**
+	 * 按参数查找
+	 * @param vendPermission
+	 * @return
+	 */
+	public List<VendPermission> selectByParams(VendPermission vendPermission){
+		return vendPermissionMapper.selectByParams(vendPermission);
+	}
+	/**
 	 * 查找全部
 	 * @return
 	 */
