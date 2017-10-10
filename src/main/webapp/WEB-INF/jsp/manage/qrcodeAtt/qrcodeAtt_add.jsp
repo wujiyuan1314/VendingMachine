@@ -89,13 +89,5 @@
 
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
-<script type="text/javascript">
-$('#startTime').datetimepicker({
-    format: 'yyyy-mm-dd'
-});
-$('#endTime').datetimepicker({
-    format: 'yyyy-mm-dd'
-});
-</script>
 </body>
 </html>

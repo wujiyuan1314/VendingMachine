@@ -58,9 +58,6 @@ width:100%;
                           </th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                  <!--  <td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>-->
-		                  <shiro:hasPermission name="qrcodeattend:dels">
-		                  <td><input type="button" onclick="dels('qrcodeAtt');" value="批量删除" class="btn btn-danger"/></td>
-		                  </shiro:hasPermission>
 		                </tr>
 			      </table>
 			
@@ -71,6 +68,7 @@ width:100%;
 		                  <th style="width:25px;">序号</th>
 		                  <th>被关注的商户</th>
 		                  <th>关注人</th>
+		                  <th>免费获取的商品</th>
 		                  <th>关注时间</th>
 		                  <!--  <th>操作</th>-->
 		                </tr>
@@ -82,6 +80,7 @@ width:100%;
 					          <td style="text-align:center;">${st.index+1}</td>
 			                  <td>${vendQrcodeAttend.extend1}</td>
 			                  <td>${vendQrcodeAttend.usercode}</td>
+			                   <td>${vendQrcodeAttend.goodsname}</td>
 			                  <td><fmt:formatDate value="${vendQrcodeAttend.attendTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                 <!-- <td class="center">
 			                     <shiro:hasPermission name="qrcodeattend:edit">

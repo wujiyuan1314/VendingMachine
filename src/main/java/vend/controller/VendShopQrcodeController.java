@@ -22,6 +22,7 @@ import vend.entity.CodeLibrary;
 import vend.entity.VendShopQrcode;
 import vend.entity.VendUser;
 import vend.service.CodeLibraryService;
+import vend.service.VendParaService;
 import vend.service.VendShopQrcodeService;
 
 @Controller
@@ -33,6 +34,8 @@ public class VendShopQrcodeController{
 	VendShopQrcodeService vendShopQrcodeService;
 	@Autowired
 	CodeLibraryService codeLibraryService;
+	@Autowired
+	VendParaService vendParaService;
 	/**
 	 * 根据输入信息条件查询二维码列表，并分页显示
 	 * @param model
@@ -101,6 +104,19 @@ public class VendShopQrcodeController{
 		if(user!=null){
 			vendShopQrcode.setUsercode(user.getUsercode());	
 		}
+	    //二维码信息所属的用户级别
+		if(user.getRoleId()==1){
+			vendShopQrcode.setExtend4("1");
+    	}
+    	if(user.getRoleId()==2){
+    		vendShopQrcode.setExtend4("2");
+    	}
+    	if(user.getRoleId()==3){
+    		vendShopQrcode.setExtend4("3");
+    	}
+    	if(user.getRoleId()==4){
+    		vendShopQrcode.setExtend4("4");
+    	}
     	vendShopQrcodeService.insertVendShopQrcode(vendShopQrcode);
     	return "redirect:qrcodes";
 	}
@@ -139,7 +155,15 @@ public class VendShopQrcodeController{
     		return "manage/qrcode/qrcode_edit";
     	}
     	vendShopQrcodeService.editVendShopQrcode(vendShopQrcode);
-		return "redirect:qrcodes";
+    	String returnStr="";
+    	if(vendShopQrcode.getExtend4().equals("5")){
+    		int extend5=Function.getInt(vendShopQrcode.getExtend5(),0);
+    		String bathPath=vendParaService.selectByParaCode("basePath");
+    		returnStr="redirect:"+bathPath+"/machine/"+extend5+"/qrcodeputon";
+    	}else{
+    		returnStr="redirect:qrcodes";
+    	}
+		return returnStr;
 	}
     /**
      * 删除二维码信息

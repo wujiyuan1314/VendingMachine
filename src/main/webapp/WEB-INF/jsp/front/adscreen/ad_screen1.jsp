@@ -29,11 +29,12 @@
 	    <div class="step">
 	    <i class="lt"></i>
 	    <i class="rb"></i>
-	    	<h2>使用步骤</h2>
+	    <p>${vendShopQrcode.intro}</p>
+	    	<!--  <h2>使用步骤</h2>
 	        <p>1、扫码进入小程序</p>
 	        <p>2、选择喜爱的产品</p>
 	        <p>3、选择机器消费码</p>
-	        <p>4、等待出杯</p>
+	        <p>4、等待出杯</p>-->
 	    </div>
 	</div>
 	<!-- 机器信息结束 -->

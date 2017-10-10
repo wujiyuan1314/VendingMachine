@@ -242,10 +242,19 @@ public class VendMachineController{
 	@RequiresPermissions({"machine:qrcodeputon"})
 	@RequestMapping(value="/{id}/qrcodeputon",method=RequestMethod.GET)
 	public String qrcodePuton(Model model,@PathVariable int id){
-		List<VendShopQrcode> vendShopQrcodes=vendShopQrcodeService.selectByType("1");
-		model.addAttribute("vendShopQrcodes", vendShopQrcodes);
 		VendMachine vendMachine=vendMachineService.getOne(id);
-		model.addAttribute(vendMachine);
+		if(vendMachine!=null&&vendMachine.getMachineId()!=null){
+			VendShopQrcode vendShopQrcode=vendShopQrcodeService.selectByMachineId(vendMachine.getMachineId());
+			if(vendShopQrcode!=null){
+				model.addAttribute(vendShopQrcode);
+			}else{
+				vendShopQrcode=new VendShopQrcode();
+				model.addAttribute(vendShopQrcode);
+			}
+		}
+		List<CodeLibrary> uppictypes=codeLibraryService.selectByCodeNo("UPPICTYPE");
+		model.addAttribute("uppictypes", uppictypes);
+		model.addAttribute("id",id);
 		return "manage/machine/machine_qrcodeputon";
 	}
 	/**

@@ -45,10 +45,10 @@
 		                  <th>机器码:</th>
 			              <th><input type="text" name="machineCode" id="machineCode" placeholder="按机器销售统计名搜索"/>&nbsp;&nbsp;</th>
 		                  <th>
-		                  <input type="text" name="beginTime" id="beginTime" value="<%=DateUtil.getCurrentDateStr()%>" placeholder="开始时间" class="span2"/>
+		                  <input type="text" name="beginTime" id="beginTime" class="Wdate span2" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" value="<%=DateUtil.getCurrentDateStr()%>" placeholder="开始时间"/>
 		                  </th>
 		                  <th>
-		                  <input type="text" name="endTime" id="endTime" value="<%=DateUtil.format(DateUtil.addDays(DateUtil.parseDate(DateUtil.getCurrentDateStr()),1))%>" placeholder="结束时间" class="span2"/>
+		                  <input type="text" name="endTime" id="endTime" class="Wdate span2" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" value="<%=DateUtil.format(DateUtil.addDays(DateUtil.parseDate(DateUtil.getCurrentDateStr()),1))%>" placeholder="结束时间"/>
 		                  </th>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                </tr>
@@ -112,13 +112,8 @@ function delconfirm(id){
 		window.location.href=basePath+"machine/"+id+"/del";
 	 }
 }
-$('#beginTime').datetimepicker({
-    format: 'yyyy-mm-dd'
-});
-$('#endTime').datetimepicker({
-    format: 'yyyy-mm-dd'
-})
 </script>
 <script src="<%=basePath2 %>resources/js/back/machine_list.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/DatePicker/WdatePicker.js"></script>
 </body>
 </html>

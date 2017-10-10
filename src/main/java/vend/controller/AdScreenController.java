@@ -55,72 +55,171 @@ public class AdScreenController{
 	 * 广告屏样式2
 	 * @return
 	 */
-	@RequestMapping(value="/screen2")
-	public String adScreen2(){
+	@RequestMapping(value="/{machineId}/screen2")
+	public String adScreen2(@PathVariable String machineId,Model model){
+		VendMachine vendMachine=vendMachineService.selectByMachineId(machineId);
+		VendAd vendAd=vendAdService.selectByMachineId(machineId);
+		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
+		Date currentDate=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+		if(DateUtil.daysBetween(currentDate, vendAd.getStartTime())>0||DateUtil.daysBetween(currentDate, vendAd.getEndTime())<0){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
+		model.addAttribute("vendMachine",vendMachine);
+		model.addAttribute("vendAd",vendAd);
+		model.addAttribute("vendShopQrcode",vendShopQrcode);
 		return "front/adscreen/ad_screen2";
 	}
 	/**
 	 * 广告屏样式3
 	 * @return
 	 */
-	@RequestMapping(value="/screen3")
-	public String adScreen3(){
+	@RequestMapping(value="/{machineId}/screen3")
+	public String adScreen3(@PathVariable String machineId,Model model){
+		VendMachine vendMachine=vendMachineService.selectByMachineId(machineId);
+		VendAd vendAd=vendAdService.selectByMachineId(machineId);
+		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
+		Date currentDate=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+		if(DateUtil.daysBetween(currentDate, vendAd.getStartTime())>0||DateUtil.daysBetween(currentDate, vendAd.getEndTime())<0){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
+		model.addAttribute("vendMachine",vendMachine);
+		model.addAttribute("vendAd",vendAd);
+		model.addAttribute("vendShopQrcode",vendShopQrcode);
 		return "front/adscreen/ad_screen3";
 	}
 	/**
 	 * 广告屏样式4
 	 * @return
 	 */
-	@RequestMapping(value="/screen4")
-	public String adScreen4(){
+	@RequestMapping(value="/{machineId}/screen4")
+	public String adScreen4(@PathVariable String machineId,Model model){
+		VendMachine vendMachine=vendMachineService.selectByMachineId(machineId);
+		VendAd vendAd=vendAdService.selectByMachineId(machineId);
+		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
+		Date currentDate=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+		if(DateUtil.daysBetween(currentDate, vendAd.getStartTime())>0||DateUtil.daysBetween(currentDate, vendAd.getEndTime())<0){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
+		model.addAttribute("vendMachine",vendMachine);
+		model.addAttribute("vendAd",vendAd);
+		model.addAttribute("vendShopQrcode",vendShopQrcode);
 		return "front/adscreen/ad_screen4";
 	}
 	/**
 	 * 广告屏样式5
 	 * @return
 	 */
-	@RequestMapping(value="/screen5")
-	public String adScreen5(){
+	@RequestMapping(value="/{machineId}/screen5")
+	public String adScreen5(@PathVariable String machineId,Model model){
+		VendMachine vendMachine=vendMachineService.selectByMachineId(machineId);
+		VendAd vendAd=vendAdService.selectByMachineId(machineId);
+		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
+		Date currentDate=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+		if(DateUtil.daysBetween(currentDate, vendAd.getStartTime())>0||DateUtil.daysBetween(currentDate, vendAd.getEndTime())<0){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
+		model.addAttribute("vendMachine",vendMachine);
+		model.addAttribute("vendAd",vendAd);
+		model.addAttribute("vendShopQrcode",vendShopQrcode);
 		return "front/adscreen/ad_screen5";
 	}
 	/**
 	 * 广告屏样式6
 	 * @return
 	 */
-	@RequestMapping(value="/screen6")
-	public String adScreen6(){
+	@RequestMapping(value="/{machineId}/screen6")
+	public String adScreen6(@PathVariable String machineId,Model model){
+		VendMachine vendMachine=vendMachineService.selectByMachineId(machineId);
+		VendAd vendAd=vendAdService.selectByMachineId(machineId);
+		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
+		Date currentDate=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+		if(DateUtil.daysBetween(currentDate, vendAd.getStartTime())>0||DateUtil.daysBetween(currentDate, vendAd.getEndTime())<0){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
+		model.addAttribute("vendMachine",vendMachine);
+		model.addAttribute("vendAd",vendAd);
+		model.addAttribute("vendShopQrcode",vendShopQrcode);
 		return "front/adscreen/ad_screen6";
 	}
 	/**
 	 * 广告屏样式7
 	 * @return
 	 */
-	@RequestMapping(value="/screen7")
-	public String adScreen7(){
+	@RequestMapping(value="/{machineId}/screen7")
+	public String adScreen7(@PathVariable String machineId,Model model){
+		VendMachine vendMachine=vendMachineService.selectByMachineId(machineId);
+		VendAd vendAd=vendAdService.selectByMachineId(machineId);
+		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
+		Date currentDate=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+		if(DateUtil.daysBetween(currentDate, vendAd.getStartTime())>0||DateUtil.daysBetween(currentDate, vendAd.getEndTime())<0){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
+		model.addAttribute("vendMachine",vendMachine);
+		model.addAttribute("vendAd",vendAd);
+		model.addAttribute("vendShopQrcode",vendShopQrcode);
 		return "front/adscreen/ad_screen7";
 	}
 	/**
 	 * 广告屏样式8
 	 * @return
 	 */
-	@RequestMapping(value="/screen8")
-	public String adScreen8(){
+	@RequestMapping(value="/{machineId}/screen8")
+	public String adScreen8(@PathVariable String machineId,Model model){
+		VendMachine vendMachine=vendMachineService.selectByMachineId(machineId);
+		VendAd vendAd=vendAdService.selectByMachineId(machineId);
+		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
+		Date currentDate=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+		if(DateUtil.daysBetween(currentDate, vendAd.getStartTime())>0||DateUtil.daysBetween(currentDate, vendAd.getEndTime())<0){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
+		model.addAttribute("vendMachine",vendMachine);
+		model.addAttribute("vendAd",vendAd);
+		model.addAttribute("vendShopQrcode",vendShopQrcode);
 		return "front/adscreen/ad_screen8";
 	}
 	/**
 	 * 广告屏样式9
 	 * @return
 	 */
-	@RequestMapping(value="/screen9")
-	public String adScreen9(){
+	@RequestMapping(value="/{machineId}/screen9")
+	public String adScreen9(@PathVariable String machineId,Model model){
+		VendMachine vendMachine=vendMachineService.selectByMachineId(machineId);
+		VendAd vendAd=vendAdService.selectByMachineId(machineId);
+		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
+		Date currentDate=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+		if(DateUtil.daysBetween(currentDate, vendAd.getStartTime())>0||DateUtil.daysBetween(currentDate, vendAd.getEndTime())<0){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
+		model.addAttribute("vendMachine",vendMachine);
+		model.addAttribute("vendAd",vendAd);
+		model.addAttribute("vendShopQrcode",vendShopQrcode);
 		return "front/adscreen/ad_screen9";
 	}
 	/**
 	 * 广告屏样式10
 	 * @return
 	 */
-	@RequestMapping(value="/screen10")
-	public String adScreen10(){
+	@RequestMapping(value="/{machineId}/screen10")
+	public String adScreen10(@PathVariable String machineId,Model model){
+		VendMachine vendMachine=vendMachineService.selectByMachineId(machineId);
+		VendAd vendAd=vendAdService.selectByMachineId(machineId);
+		VendShopQrcode vendShopQrcode=vendShopQrcodeService.getOne(vendMachine.getShopQrcode());
+		Date currentDate=DateUtil.parseDateTime(DateUtil.getCurrentDateTimeStr());
+		if(DateUtil.daysBetween(currentDate, vendAd.getStartTime())>0||DateUtil.daysBetween(currentDate, vendAd.getEndTime())<0){
+			vendAd=new VendAd();
+			vendShopQrcode=new VendShopQrcode();
+		}
+		model.addAttribute("vendMachine",vendMachine);
+		model.addAttribute("vendAd",vendAd);
+		model.addAttribute("vendShopQrcode",vendShopQrcode);
 		return "front/adscreen/ad_screen10";
 	}
 }

@@ -40,7 +40,7 @@
     </javaClientGenerator> 
         
     <!-- 用户表 -->  
-    <table schema="t" tableName="vend_qrcode_attend" domainObjectName="VendQrcodeAttend"  
+    <table schema="t" tableName="vend_shop_qrcode" domainObjectName="VendShopQrcode"  
         enableCountByExample="false"  
         enableUpdateByExample="false" 
         enableDeleteByExample="false" 

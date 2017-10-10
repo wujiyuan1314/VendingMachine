@@ -54,10 +54,10 @@
 			      <table style="margin-bottom:5px;display:none;" class="datasearch">
 			          <tr>
 			              <th>
-		                  <input type="text" name="beginTime" id="beginTime" value="<%=DateUtil.getCurrentDateStr()%>" placeholder="开始时间" class="span2"/>
+		                  <input type="text" name="beginTime" id="beginTime" class="Wdate span2" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" value="<%=DateUtil.getCurrentDateStr()%>" placeholder="开始时间"/>
 		                  </th>
 		                  <th>
-		                  <input type="text" name="endTime" id="endTime" value="<%=DateUtil.getCurrentDateStr()%>" placeholder="结束时间" class="span2"/>
+		                  <input type="text" name="endTime" id="endTime" class="Wdate span2" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" value="<%=DateUtil.getCurrentDateStr()%>" placeholder="结束时间"/>
 		                  </th>
 		                  <th><a onclick="bydatesales();" class="btn-success btn"/>搜索</a>&nbsp;&nbsp;</th>
 			          </tr>
@@ -142,13 +142,7 @@
 		 $(".free_num").html(data.free_num);
 	 })
 }
- 
-$('#beginTime').datetimepicker({
-    format: 'yyyy-mm-dd'
-});
-$('#endTime').datetimepicker({
-    format: 'yyyy-mm-dd'
-});
 </script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/DatePicker/WdatePicker.js"></script>
 </body>
 </html>

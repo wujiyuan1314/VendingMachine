@@ -53,6 +53,12 @@ public interface VendShopQrcodeService {
 	 */
 	List<VendShopQrcode> selectByUsercode(String usercode);
 	/**
+	 * 按机器ID查找
+	 * @param usercode
+	 * @return
+	 */
+	VendShopQrcode selectByMachineId(String machineId);
+	/**
 	 * 按照类型查找
 	 * @param extend2
 	 * @return

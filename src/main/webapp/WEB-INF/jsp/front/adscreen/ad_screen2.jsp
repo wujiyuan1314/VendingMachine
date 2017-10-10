@@ -12,9 +12,9 @@
 <body>
 <div class="content">
 
-    <!-- 视频开始 -->
+  <!-- 视频开始 -->
 	<div class="video">
-	    <embed src="https://imgcache.qq.com/tencentvideo_v1/playerv3/TPout.swf?max_age=86400&v=20161117&vid=f0554dqt786&auto=0" allowFullScreen="true" quality="high" width="100%" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+	    <embed src="${pageContext.request.contextPath}/${vendAd.video}" allowFullScreen="true" quality="high" width="100%" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
 	</div>
 	<!-- 视频结束 -->
 	
@@ -100,11 +100,12 @@
 	    <div class="step">
 	    <i class="lt"></i>
 	    <i class="rb"></i>
-	    	<h2>使用步骤</h2>
+	    <p>${vendShopQrcode.intro}</p>
+	    	<!--  <h2>使用步骤</h2>
 	        <p>1、扫码进入小程序</p>
 	        <p>2、选择喜爱的产品</p>
 	        <p>3、选择机器消费码</p>
-	        <p>4、等待出杯</p>
+	        <p>4、等待出杯</p>-->
 	    </div>
 	</div>
 	<!-- 机器信息结束 -->
@@ -112,9 +113,10 @@
 </div>
 </body>
 	<script type="text/javascript">
+	var delayTime=${vendAd.picInterval}*100;
 		/*鼠标移过，左右按钮显示*/
 		jQuery(".adv_pic").hover(function(){ jQuery(this).find(".prev,.next").stop(true,true).fadeTo("show",0.2) },function(){ jQuery(this).find(".prev,.next").fadeOut() });
 		/*SuperSlide图片切换*/
-		jQuery(".adv_pic").slide({ mainCell:".pic",effect:"fold", autoPlay:true, delayTime:600, trigger:"click"});
+		jQuery(".adv_pic").slide({ mainCell:".pic",effect:"fold", autoPlay:true, delayTime:delayTime, trigger:"click"});
 	</script>
 </html>

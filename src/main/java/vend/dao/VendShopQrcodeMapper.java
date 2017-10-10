@@ -30,5 +30,7 @@ public interface VendShopQrcodeMapper {
     
     List<VendShopQrcode> selectByUsercode(String usercode);
     
+    VendShopQrcode selectByMachineId(String machineId);
+    
     List<VendShopQrcode> selectByType(String extend2);
 }

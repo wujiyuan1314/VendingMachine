@@ -35,27 +35,50 @@
 		<div class="span12">
 		  <div class="widget-box">
 		      <div class="widget-title"> <span class="icon"><i class="icon-info-sign"></i></span>
-                 <h5>机器修改</h5>
+                 <h5>二维码投放</h5>
               </div>
               
 			  <div class="widget-content nopadding">
-			    <sf:form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/machine/edit" enctype="multipart/form-data" commandName="vendMachine" name="basic_validate" id="basic_validate" novalidate="novalidate">
+			    <sf:form class="form-horizontal" method="post" action="${pageContext.request.contextPath}/qrcode/edit" enctype="multipart/form-data" commandName="vendShopQrcode" name="basic_validate" id="basic_validate" novalidate="novalidate">
 	              <sf:hidden path="id"/>
+	              <sf:hidden path="usercode"/>
+	              <sf:hidden path="extend1"/>
+	              <sf:hidden path="extend2"/>
+	              <sf:hidden path="extend4"/>
+	              <sf:hidden path="machineId"/>
+	              <sf:hidden path="createTime"/>
+	              <sf:hidden path="extend5" value="${id }"/><!-- 机器在数据库的主键 -->
 	              <div class="control-group">
-	                <label class="control-label">机器名</label>
+	                <label class="control-label">上传二维码
+	                (可上传类型:<c:forEach items="${uppictypes}" var="uppictype">
+	                  ${uppictype.itemname},
+	                  </c:forEach>)</label>
 	                <div class="controls">
-	                  <sf:input path="machineName" readonly="true" />
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="machineName" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                  <input type="file" name="file" id="file_qrcode"/>
+	                  <a href="javascript:doUpload('qrcode')" class="btn btn-success">上传</a>  
+	                  <span class="infoqrcode" style="color:#b94a48;"></span> 
+	                  <sf:hidden path="qrcode" class="filepath"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="qrcode" cssClass="errors"  style="color:#b94a48;"></sf:errors></span>
+	                  <span><c:choose>
+                         <c:when test="${vendShopQrcode.qrcode!=''}">
+                           <img src="<%=basePath1%>${vendShopQrcode.qrcode}" style="width:70px;height:50px;" class="imgqrcode"/>
+                         </c:when>
+                         <c:otherwise>
+                           <img src="" class="imgqrcode"/>
+                         </c:otherwise>
+                        </c:choose></span>
 	                </div>
 	              </div>
 	              <div class="control-group">
-	                <label class="control-label">选择商户二维码</label>
+	                <label class="control-label">广告屏文字</label>
 	                <div class="controls">
-	                  <sf:select path="shopQrcode" items="${vendShopQrcodes}" itemLabel="extend1" itemValue="id">
-	                  </sf:select>
-	                  <a href="javascript:qrcodePuton('${vendMachine.id}');" class="btn btn-success btn-mini">投放</a>
-	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="shopQrcode" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                <sf:textarea path="intro" style="width:360px;height:320px;"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="intro" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
+	              </div>
+	              <div class="form-actions">
+	                <input type="submit" value="保存" class="btn btn-success">
+	                <a href="javascript:qrcodePuton('${id}');" class="btn btn-success btn-mini">投放</a>
 	              </div>
 	            </sf:form>
 			  </div>
@@ -73,5 +96,34 @@
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
 <script src="<%=basePath2 %>resources/js/back/machine_list.js"></script>
+<script type="text/javascript">
+/** 初始化编辑器*/
+KindEditor.ready(function(K) {
+			var uploadJson = '${pageContext.request.contextPath}/resources/kindeditor/upload?a='+Math.random();
+			var editor1 = K.create('textarea[name="intro"]', {
+				cssPath : '${pageContext.request.contextPath}/resources/kindeditor/plugins/code/prettify.css',
+				uploadJson : uploadJson,
+				fileManagerJson : '${pageContext.request.contextPath}/resources/kindeditor/jsp/file_manager_json.jsp',
+				allowFileManager :false,
+				allowUpload : false, 
+				fillDescAfterUploadImage :false,//上传图片后跳转到图片编辑页面
+				//pagebreakHtml : '$$$$$$', //自定义分页符
+				afterCreate : function() {
+							var self = this;
+							self.sync();
+						},
+				afterChange : function() {
+							var self = this;
+							self.sync();
+						},
+				afterBlur : function() {
+							var self = this;
+							self.sync();
+						}
+				
+			});
+			
+		});
+</script>
 </body>
 </html>

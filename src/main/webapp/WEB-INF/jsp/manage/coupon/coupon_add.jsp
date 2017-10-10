@@ -77,8 +77,7 @@
 	                <label class="control-label">优惠券开始日期</label>
 	                <div class="controls">
 	                  <div class="input-append date datepicker">
-	                      <sf:input path="startTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true" class="span2" />
-		                  <span class="add-on"><i class="icon-th"></i></span>
+	                      <sf:input path="startTime"  class="Wdate span2" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true"/>
 		              </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="startTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
@@ -87,8 +86,7 @@
 	                <label class="control-label">优惠券结束日期</label>
 	                <div class="controls">
 	                 <div class="input-append date datepicker">
-	                      <sf:input path="endTime" value="<%=DateUtil.getCurrentDateStr()%>" readonly="true" class="span2" />
-		                  <span class="add-on"><i class="icon-th"></i></span>
+	                      <sf:input path="endTime" class="Wdate span2" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"  value="<%=DateUtil.getCurrentDateStr()%>" readonly="true"/>
 		              </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="endTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
@@ -111,13 +109,6 @@
 
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
-<script type="text/javascript">
-$('#startTime').datetimepicker({
-    format: 'yyyy-mm-dd'
-});
-$('#endTime').datetimepicker({
-    format: 'yyyy-mm-dd'
-});
-</script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/DatePicker/WdatePicker.js"></script>
 </body>
 </html>

@@ -130,7 +130,7 @@ function setDevParam(id){
  * @returns
  */
 function adPuton(id){
-	var adId=$("#id").val();
+	var adId=$("#id").val();//广告主键
 	if(confirm("确定要投放吗?")){
 		var url=basePath+"manage/"+id+"/"+adId+"/setAdItemList";
 		 $.post(url,'',function(res){
@@ -152,7 +152,7 @@ function adPuton(id){
  * @returns
  */
 function qrcodePuton(id){
-	var shopQrcode=$("#shopQrcode").val();
+	var shopQrcode=$("#id").val();//二维码主键
 	if(confirm("确定要投放吗?")){
 		var url=basePath+"manage/"+id+"/"+shopQrcode+"/setQR";
 		 $.post(url,'',function(res){

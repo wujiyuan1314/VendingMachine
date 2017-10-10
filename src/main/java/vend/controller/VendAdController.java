@@ -114,7 +114,7 @@ public class VendAdController{
     	if(user!=null&&user.getUsercode()!=null){
     		vendAd.setUsercode(user.getUsercode());
     	}
-    	if(user.getRoleId()==1){
+    	if(user.getRoleId()==1){//广告信息所属的用户级别
     		vendAd.setType("1");
     	}
     	if(user.getRoleId()==2){
@@ -126,7 +126,6 @@ public class VendAdController{
     	if(user.getRoleId()==4){
     		vendAd.setType("4");
     	}
-    	vendAd.setExtend3("0");
     	vendAdService.insertVendAd(vendAd);
     	return "redirect:ads";
 	}
@@ -175,13 +174,10 @@ public class VendAdController{
     	if(br.hasErrors()){
     		return "manage/ad/ad_edit";
     	}
-    	if(vendAd.getType().equals("4")){
-    		vendAd.setIsmachineuse("1");
-    		vendAd.setExtend3("1");
-    	}
+    	
     	vendAdService.editVendAd(vendAd);
     	String returnStr="";
-    	if(vendAd.getType().equals("4")){
+    	if(vendAd.getType().equals("5")){
     		int extend4=Function.getInt(vendAd.getExtend4(),0);
     		String bathPath=vendParaService.selectByParaCode("basePath");
     		returnStr="redirect:"+bathPath+"/machine/"+extend4+"/adputon";

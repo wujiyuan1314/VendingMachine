@@ -71,6 +71,12 @@
 	                  <span><img src="" class="imgqrcode"/></span>
 	                </div>
 	              </div>
+	               <div class="control-group">
+	                <label class="control-label">广告屏文字</label>
+	                <div class="controls">
+	                <sf:textarea path="intro" style="width:360px;height:320px;"/>
+	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="intro" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
+	                </div>
 	              </div>
 	              <div class="form-actions">
 	                <input type="submit" value="添加" class="btn btn-success">
@@ -91,12 +97,33 @@
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
 <script type="text/javascript">
-$('#startTime').datetimepicker({
-    format: 'yyyy-mm-dd'
-});
-$('#endTime').datetimepicker({
-    format: 'yyyy-mm-dd'
-});
+/** 初始化编辑器*/
+KindEditor.ready(function(K) {
+			var uploadJson = '${pageContext.request.contextPath}/resources/kindeditor/upload?a='+Math.random();
+			var editor1 = K.create('textarea[name="intro"]', {
+				cssPath : '${pageContext.request.contextPath}/resources/kindeditor/plugins/code/prettify.css',
+				uploadJson : uploadJson,
+				fileManagerJson : '${pageContext.request.contextPath}/resources/kindeditor/jsp/file_manager_json.jsp',
+				allowFileManager :false,
+				allowUpload : false, 
+				fillDescAfterUploadImage :false,//上传图片后跳转到图片编辑页面
+				//pagebreakHtml : '$$$$$$', //自定义分页符
+				afterCreate : function() {
+							var self = this;
+							self.sync();
+						},
+				afterChange : function() {
+							var self = this;
+							self.sync();
+						},
+				afterBlur : function() {
+							var self = this;
+							self.sync();
+						}
+				
+			});
+			
+		});
 </script>
 </body>
 </html>

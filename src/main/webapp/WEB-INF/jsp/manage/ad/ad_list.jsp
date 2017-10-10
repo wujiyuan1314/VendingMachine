@@ -93,7 +93,7 @@
 			                    <shiro:hasPermission name="ad:tf">
 			                    <c:choose>
 			                       <c:when test="${vendAd.extend3==0}">
-			                          &nbsp;&nbsp;<a href="javascript:void(0);" onclick="tfconfirm(${vendAd.id});" class="btn btn-success"/>投放</a>
+			                          &nbsp;&nbsp;<a href="javascript:void(0);" onclick="tfconfirm(${vendAd.id});" class="btn btn-success"/>整体投放</a>
 			                       </c:when>
 			                     </c:choose>
 			                     <c:choose>

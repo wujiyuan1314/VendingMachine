@@ -11,8 +11,10 @@ import base.util.DateUtil;
 import base.util.Page;
 import vend.dao.VendAdMapper;
 import vend.dao.VendMachineMapper;
+import vend.dao.VendShopQrcodeMapper;
 import vend.entity.VendAd;
 import vend.entity.VendMachine;
+import vend.entity.VendShopQrcode;
 import vend.service.VendMachineService;
 
 @Service
@@ -21,6 +23,8 @@ public class VendMachineServiceImpl implements VendMachineService {
 	VendMachineMapper vendMachineMapper;
 	@Autowired
 	VendAdMapper vendAdMapper;
+	@Autowired
+	VendShopQrcodeMapper vendShopQrcodeMapper;
 	/**
 	 * 根据输入信息条件查询机器列表，并分页显示
 	 * @param vendMachine
@@ -69,7 +73,23 @@ public class VendMachineServiceImpl implements VendMachineService {
 				vendAd.setUsercode(vendMachine.getUsercode());
 				vendAd.setExtend3("0");//是否有效
 				vendAd.setIsmachineuse("0");//是否单独投放改机器,0否，1是
+				vendAd.setCreateTime(createTime);
+				vendAd.setUpdateTime(createTime);
 				vendAdMapper.insert(vendAd);
+			}
+		}
+		//添加该机器二维码信息
+		if(vendMachine.getMachineId()!=null){
+			VendShopQrcode vendShopQrcode=vendShopQrcodeMapper.selectByMachineId(vendMachine.getMachineId());
+			if(vendShopQrcode==null){
+				vendShopQrcode=new VendShopQrcode();
+				vendShopQrcode.setMachineId(vendMachine.getMachineId());
+				vendShopQrcode.setExtend4("5");//机器单独设置的二维码级别
+				vendShopQrcode.setUsercode(vendMachine.getUsercode());
+				vendShopQrcode.setExtend1(vendMachine.getMachineId());
+				vendShopQrcode.setExtend2("1");
+				vendShopQrcode.setCreateTime(createTime);
+				vendShopQrcodeMapper.insert(vendShopQrcode);
 			}
 		}
 		if(isOk==1){

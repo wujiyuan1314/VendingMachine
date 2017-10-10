@@ -48,10 +48,10 @@
 			              <th>商家名:</th>
 			              <th><input type="text" value="${shopusercode }" name="shopusercode" id="shopusercode" placeholder="按商家名搜索"/>&nbsp;&nbsp;</th>
 		                  <td>
-		                  从<input type="text" value="${beginTime }" name="beginTime" id="beginTime"  placeholder="开始时间" class="span2"/>
+		                  从<input type="text" value="${beginTime }" class="Wdate span2" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" name="beginTime" id="beginTime"  placeholder="开始时间"/>
 		                  </td>
 		                  <td>
-		                  到<input type="text" value="${endTime }" name="endTime" id="endTime"  placeholder="结束时间" class="span2"/>
+		                  到<input type="text" value="${endTime }" class="Wdate span2" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" name="endTime" id="endTime"  placeholder="结束时间"/>
 		                  </td>
 		                  <th><input type="submit" value="搜索" class="btn btn-info"/>&nbsp;&nbsp;</th>
 		                  <!--<td><a href="add" class="btn btn-success"/>添加</a>&nbsp;&nbsp;</td>  -->
@@ -125,18 +125,13 @@
 
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
 function delconfirm(orderId){
 	 if(confirm("确定要删除吗?")){
 		window.location.href=basePath+"order/"+orderId+"/del";
 	 }
 }
-$('#beginTime').datetimepicker({
-    format: 'yyyy-mm-dd'
-});
-$('#endTime').datetimepicker({
-    format: 'yyyy-mm-dd'
-});
 </script>
 </body>
 </html>

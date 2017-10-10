@@ -11,17 +11,27 @@ public class VendShopQrcode {
 
     private String qrcode;
 
-    private Integer attenNum;
+    private String intro;
 
     private Date createTime;
 
-    private Date payTime;
+    private String machineId;
 
     private String extend1;
 
     private String extend2;
 
     private String extend3;
+
+    private String extend4;
+
+    private String extend5;
+
+    private String extend6;
+
+    private String extend7;
+
+    private String extend8;
 
     public Integer getId() {
         return id;
@@ -46,13 +56,13 @@ public class VendShopQrcode {
     public void setQrcode(String qrcode) {
         this.qrcode = qrcode == null ? null : qrcode.trim();
     }
-
-    public Integer getAttenNum() {
-        return attenNum;
+    @NotEmpty(message="广告屏文字不能为空")
+    public String getIntro() {
+        return intro;
     }
 
-    public void setAttenNum(Integer attenNum) {
-        this.attenNum = attenNum;
+    public void setIntro(String intro) {
+        this.intro = intro == null ? null : intro.trim();
     }
 
     public Date getCreateTime() {
@@ -63,14 +73,14 @@ public class VendShopQrcode {
         this.createTime = createTime;
     }
 
-    public Date getPayTime() {
-        return payTime;
+    public String getMachineId() {
+        return machineId;
     }
 
-    public void setPayTime(Date payTime) {
-        this.payTime = payTime;
+    public void setMachineId(String machineId) {
+        this.machineId = machineId == null ? null : machineId.trim();
     }
-    @NotEmpty(message="二维码名不能为空")
+    @NotEmpty(message="二维码名字不能为空")
     public String getExtend1() {
         return extend1;
     }
@@ -93,5 +103,45 @@ public class VendShopQrcode {
 
     public void setExtend3(String extend3) {
         this.extend3 = extend3 == null ? null : extend3.trim();
+    }
+
+    public String getExtend4() {
+        return extend4;
+    }
+
+    public void setExtend4(String extend4) {
+        this.extend4 = extend4 == null ? null : extend4.trim();
+    }
+
+    public String getExtend5() {
+        return extend5;
+    }
+
+    public void setExtend5(String extend5) {
+        this.extend5 = extend5 == null ? null : extend5.trim();
+    }
+
+    public String getExtend6() {
+        return extend6;
+    }
+
+    public void setExtend6(String extend6) {
+        this.extend6 = extend6 == null ? null : extend6.trim();
+    }
+
+    public String getExtend7() {
+        return extend7;
+    }
+
+    public void setExtend7(String extend7) {
+        this.extend7 = extend7 == null ? null : extend7.trim();
+    }
+
+    public String getExtend8() {
+        return extend8;
+    }
+
+    public void setExtend8(String extend8) {
+        this.extend8 = extend8 == null ? null : extend8.trim();
     }
 }

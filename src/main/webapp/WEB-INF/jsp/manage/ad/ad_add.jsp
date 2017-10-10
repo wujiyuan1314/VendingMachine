@@ -219,8 +219,8 @@
 	                <label class="control-label">广告开始时间</label>
 	                <div class="controls">
 	                  <div class="input-append date datepicker">
-	                      <sf:input path="startTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true" class="span2" />
-		                  <span class="add-on"><i class="icon-th"></i></span>
+	                      <sf:input path="startTime" class="Wdate span2" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true"/>
+		                 
 		              </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="startTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
@@ -229,8 +229,8 @@
 	                <label class="control-label">广告结束时间</label>
 	                <div class="controls">
 	                  <div class="input-append date datepicker">
-	                      <sf:input path="endTime" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true" class="span2" />
-		                  <span class="add-on"><i class="icon-th"></i></span>
+	                      <sf:input path="endTime" class="Wdate span2" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});" value="<%=DateUtil.getCurrentDateTimeStr()%>" readonly="true"/>
+		                  
 		              </div>
 	                  <span for="required" generated="true" class="help-inline"> <sf:errors path="endTime" cssClass="errors" style="color:#b94a48;"></sf:errors></span>
 	                </div>
@@ -253,6 +253,7 @@
 
 <!--end-Footer-part-->
 <%@ include file="../../common/common_js.jsp" %>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
 //模拟框正中
 $("#adtypename").click(function(){
@@ -281,13 +282,6 @@ function adscreen(){
 	$("#extend2").val(adtype);
 	$("#adtypename").val(adtypename);
 }
-
-$('#startTime').datetimepicker({
-    format: 'yyyy-mm-dd hh:mm:ss'
-});
-$('#endTime').datetimepicker({
-    format: 'yyyy-mm-dd hh:mm:ss'
-});
 </script>
 </body>
 </html>

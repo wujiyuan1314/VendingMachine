@@ -146,7 +146,6 @@ public class MobileController {
 							logger.info("---------24:添加用户关注商户二维码信息是否成功:----------");
 							logger.info("---------25:添加用户关注商户二维码信息:----------");
 						}
-						vendQrcodeAttendService.insertVendQrcodeAttend(vendQrcodeAttend);
 						
 						logger.info("---------12:添加用户关注商户二维码信息:----------");
 					}else{
@@ -302,9 +301,16 @@ public class MobileController {
 		vendQrcodeAttend.setUsercode(usercode);
 		vendQrcodeAttend.setExtend1(shopusercode);
 		List<VendQrcodeAttend> list=vendQrcodeAttendService.selectByParams(vendQrcodeAttend);
-		if(list.size()>1){
+		if(list.size()==0){
 			json.put("success", "0");
-			json.put("msg", "您已经免费领取过一瓶");
+			json.put("msg", "您还未关注该商家公众号");
+			response.getWriter().append(json.toJSONString());
+			return null;
+		}
+		vendQrcodeAttend=list.get(0);
+		if(vendQrcodeAttend.getExtend1()!=null&&vendQrcodeAttend.getExtend1().equals("1")){
+			json.put("success", "0");
+			json.put("msg", "您已经领取过一瓶");
 			response.getWriter().append(json.toJSONString());
 			return null;
 		}
@@ -334,6 +340,13 @@ public class MobileController {
 			if(vendMachine!=null&&vendGoods!=null){
 				vendGoodsService.sellGoods(vendMachine, vendGoods, vendOrder,heat);
 			}
+			
+			/**二维码关注商户操作*/
+			vendQrcodeAttend.setExtend1("1");
+			vendQrcodeAttend.setGoodsId(id);
+			vendQrcodeAttend.setGoodsName(vendGoods.getGoodsName());
+			vendQrcodeAttendService.editVendQrcodeAttend(vendQrcodeAttend);
+			
 			/**售卖指令*/
 			json.put("success", 1);
 			json.put("msg", "购买成功");
