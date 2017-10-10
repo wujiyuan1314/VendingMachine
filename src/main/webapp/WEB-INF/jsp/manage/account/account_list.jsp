@@ -77,6 +77,9 @@
 			                 <shiro:hasRole name="代理后台">
 			                  <td><a href="javascript:void(0);" onclick="txfirm('${vendAccount.usercode}');" class="btn btn-danger"/>提现</a></td>
 			                  </shiro:hasRole>
+			                  <shiro:hasRole name="商家">
+			                  <td><a href="javascript:void(0);" onclick="txfirm('${vendAccount.usercode}');" class="btn btn-danger"/>提现</a></td>
+			                  </shiro:hasRole>
 			                </tr>
 			           </c:forEach>
 			         </tbody>
